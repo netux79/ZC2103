@@ -1936,7 +1936,6 @@ void map_bkgsfx()
 
 /****  View Map  ****/
 
-//BITMAP *mappic = NULL;
 int mapres = 0;
 
 void ViewMap()
@@ -2060,7 +2059,7 @@ void ViewMap()
       if(b && !a)  { sc=max(sc-1,0);  delay=8; redraw=true; }
     }
 
-    if(rPbtn())
+    if(rMbtn())
       --show;
 
     px = vbound(px,-4096,4096);

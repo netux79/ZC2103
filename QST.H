@@ -15,7 +15,6 @@
 
 // define these in main code
 //extern bool init_tiles(bool validate);
-//extern bool init_combos(bool validate);
 
 #define checkstatus(ret)\
   switch (ret) \
@@ -60,7 +59,7 @@ extern word door_combo_set_count;
 char *VerStr(int version);
 char *ordinal(int num);
 
-PACKFILE *open_quest_file(int *open_error, char *filename, char *deletefilename, bool compressed, bool show_progress);
+PACKFILE *open_quest_file(int *open_error, char *filename, char *deletefilename, bool compressed);
 PACKFILE *open_quest_template(zquestheader *header, char *deletefilename, bool validate);
 
 void clear_combo(int i);
@@ -70,9 +69,6 @@ void fix_maps(mapscr *buf,int cnt);
 void reset_midi(music *m);
 void reset_midis(music *m);
 void reset_scr(int scr);
-//bool reset_items();
-//bool reset_wpns();
-
 void get_qst_buffers();
 int count_dmaps();
 int count_shops(miscQdata *misc);
@@ -80,20 +76,16 @@ int count_infos(miscQdata *misc);
 int count_warprings(miscQdata *misc);
 int count_palcycles(miscQdata *misc);
 int count_windwarps(miscQdata *misc);
-int loadquest(char *filename, zquestheader *Header, miscQdata *Misc, music *midis, bool show_progress, bool compressed, bool encrypted, bool keepall, byte *skip_flags);
+int loadquest(char *filename, zquestheader *Header, miscQdata *Misc, music *midis, bool compressed, bool encrypted, bool keepall, byte *skip_flags);
 
 char *byte_conversion(int number, int format);
 char *byte_conversion2(int number1, int number2, int format1, int format2);
 
 bool valid_zqt(PACKFILE *f);
 bool valid_zqt(char *filename);
-bool reset_mapstyles(bool validate, zquestheader *header, miscQdata *misc);
 bool reset_items(bool validate, zquestheader *header);
-bool reset_wpns(bool validate, zquestheader *header);
-bool reset_doorcombosets(bool validate, zquestheader *header);
 bool init_tiles(bool validate, zquestheader *header);
 bool init_colordata(bool validate, zquestheader *header, miscQdata *misc);
-bool init_combos(bool validate, zquestheader *header);
 
 int readheader(PACKFILE *f, zquestheader *header, bool keepdata);
 int readrules(PACKFILE *f, zquestheader *header, bool keepdata);

@@ -42,19 +42,6 @@
 extern FONT *lfont;
 extern LinkClass Link;
 extern sprite_list  guys, items, Ewpns, Lwpns, Sitems, chainlinks, decorations, particles;
-//extern movingblock mblock2; //mblock[4]?
-
-//extern int db;
-
-#ifdef ALLEGRO_DOS
-static char *qst_dir_name = "dos_qst_dir";
-#elif defined(ALLEGRO_WINDOWS)
-static char *qst_dir_name = "win_qst_dir";
-#elif defined(ALLEGRO_LINUX)
-static char *qst_dir_name = "linux_qst_dir";
-#elif defined(ALLEGRO_MACOSX)
-static char *qst_dir_name = "macosx_qst_dir";
-#endif
 
 /**********************************/
 /******** System functions ********/
@@ -71,28 +58,21 @@ void load_game_configs()
   Skey = get_config_int(cfg_sect,"key_s",KEY_ENTER);
   Lkey = get_config_int(cfg_sect,"key_l",KEY_Z);
   Rkey = get_config_int(cfg_sect,"key_r",KEY_X);
-  Pkey = get_config_int(cfg_sect,"key_p",KEY_SPACE);
+  Mkey = get_config_int(cfg_sect,"key_m",KEY_SPACE);
 
   DUkey = get_config_int(cfg_sect,"key_up",   KEY_UP);
   DDkey = get_config_int(cfg_sect,"key_down", KEY_DOWN);
   DLkey = get_config_int(cfg_sect,"key_left", KEY_LEFT);
   DRkey = get_config_int(cfg_sect,"key_right",KEY_RIGHT);
 
-  Abtn = get_config_int(cfg_sect,"btn_a",2);
-  Bbtn = get_config_int(cfg_sect,"btn_b",1);
-  Sbtn = get_config_int(cfg_sect,"btn_s",3);
-  Mbtn = get_config_int(cfg_sect,"btn_m",4);
-  Lbtn = get_config_int(cfg_sect,"btn_l",5);
-  Rbtn = get_config_int(cfg_sect,"btn_r",6);
-  Pbtn = get_config_int(cfg_sect,"btn_p",7);
-
   digi_volume = get_config_int(cfg_sect,"sfx",248);
   midi_volume = get_config_int(cfg_sect,"music",255);
   pan_style = get_config_int(cfg_sect,"pan",1);
+  
   Throttlefps = get_config_int(cfg_sect,"throttlefps",1)!=0;
   TransLayers = (bool)get_config_int(cfg_sect,"translayers",1);
   ShowFPS = (bool)get_config_int(cfg_sect,"showfps",0);
-  NESquit = (bool)get_config_int(cfg_sect,"fastquit",0);
+
 #ifdef ALLEGRO_DOS
   VidMode = get_config_int(cfg_sect,"dos_mode",GFX_AUTODETECT);
 #elif defined(ALLEGRO_WINDOWS)
@@ -106,7 +86,7 @@ void load_game_configs()
   resy = get_config_int(cfg_sect,"resy",240);
   sbig = get_config_int(cfg_sect,"sbig",0);
   scanlines = get_config_int(cfg_sect,"scanlines",0);
-  strcpy(qstpath,get_config_string(cfg_sect,qst_dir_name,""));
+  strcpy(qstpath,get_config_string(cfg_sect,"qst_dir",""));
 
   if(strlen(qstpath)==0)
   {
@@ -119,7 +99,7 @@ void load_game_configs()
   {
     chop_path(qstpath);
   }
-  heart_beep = get_config_int(cfg_sect,"heart_beep",1);
+  HeartBeep = get_config_int(cfg_sect,"heartbeep",1);
 }
 
 void save_game_configs()
@@ -129,20 +109,12 @@ void save_game_configs()
   set_config_int(cfg_sect,"key_s",Skey);
   set_config_int(cfg_sect,"key_l",Lkey);
   set_config_int(cfg_sect,"key_r",Rkey);
-  set_config_int(cfg_sect,"key_p",Pkey);
+  set_config_int(cfg_sect,"key_m",Mkey);
 
   set_config_int(cfg_sect,"key_up",   DUkey);
   set_config_int(cfg_sect,"key_down", DDkey);
   set_config_int(cfg_sect,"key_left", DLkey);
   set_config_int(cfg_sect,"key_right",DRkey);
-
-  set_config_int(cfg_sect,"btn_a",Abtn);
-  set_config_int(cfg_sect,"btn_b",Bbtn);
-  set_config_int(cfg_sect,"btn_s",Sbtn);
-  set_config_int(cfg_sect,"btn_m",Mbtn);
-  set_config_int(cfg_sect,"btn_l",Lbtn);
-  set_config_int(cfg_sect,"btn_r",Rbtn);
-  set_config_int(cfg_sect,"btn_p",Pbtn);
 
   set_config_int(cfg_sect,"sfx",digi_volume);
   set_config_int(cfg_sect,"music",midi_volume);
@@ -150,7 +122,6 @@ void save_game_configs()
   set_config_int(cfg_sect,"throttlefps", (int)Throttlefps);
   set_config_int(cfg_sect,"translayers",(int)TransLayers);
   set_config_int(cfg_sect,"showfps",(int)ShowFPS);
-  set_config_int(cfg_sect,"fastquit",(int)NESquit);
 
 #ifdef ALLEGRO_DOS
   set_config_int(cfg_sect,"dos_mode",VidMode);
@@ -168,7 +139,7 @@ void save_game_configs()
   set_config_int(cfg_sect,"scanlines",scanlines);
   chop_path(qstpath);
   set_config_string(cfg_sect,"qst_dir",qstpath);
-  set_config_int(cfg_sect,"heart_beep",heart_beep);
+  set_config_int(cfg_sect,"heartbeep",HeartBeep);
 }
 
 //----------------------------------------------------------------
@@ -3005,6 +2976,7 @@ void updatescr()
 
 		PALETTE tpal;
 		get_palette(tpal);
+		dump_pal(framebuf);
 		if (tmpscr->flags3&fNOSUBSCR)
 		{
 			BITMAP *ssbuf = create_bitmap_ex(8,256,168);
@@ -3018,9 +2990,6 @@ void updatescr()
 			save_bitmap(buf,framebuf,tpal);
 		}
 	}
-
-	if(Showpal)
-		dump_pal(framebuf);
 
 	if(!Playing)
 		black_opening_count=0;
@@ -3163,40 +3132,8 @@ void f_Quit(int type)
 
 //----------------------------------------------------------------
 
-void onHeartBeep()
-{
-  heart_beep=!heart_beep;
-} 
-
-int input_idle(bool checkmouse)
-{
-  static int mx, my, mb;
-
-  if( keypressed() || Up() || Down() || Left() || Right() || cAbtn()
-    || cBbtn() || cSbtn() || cMbtn() || cLbtn() || cRbtn() || cPbtn()
-    || (checkmouse && (mx != gui_mouse_x() || my != gui_mouse_y() || mb != gui_mouse_b())) )
-  {
-    idle_count = 0;
-  }
-  else if(idle_count < MAX_IDLE)
-  {
-    ++idle_count;
-  }
-
-  mx = gui_mouse_x();
-  my = gui_mouse_y();
-  mb = gui_mouse_b();
-
-  return idle_count;
-}
-
 void syskeys()
 {
-  if(rMbtn() || (gui_mouse_b() && !mouse_down))
-    System();
-
-  mouse_down=gui_mouse_b();
-
   if(ReadKey(KEY_F1))
   {
     if (key[KEY_ZC_LCONTROL] || key[KEY_ZC_RCONTROL])
@@ -3212,12 +3149,13 @@ void syskeys()
   }
 
   if(ReadKey(KEY_F2))    ShowFPS=!ShowFPS;
-  if(ReadKey(KEY_F3) && Playing)    Paused=!Paused;
+  if(ReadKey(KEY_F3))    TransLayers=!TransLayers;
   if(ReadKey(KEY_F4) && Playing)  { Paused=true; Advance=true; }
+  if(ReadKey(KEY_F5) && Playing)  Paused=!Paused;
   if(ReadKey(KEY_F6))    f_Quit(qQUIT);
   if(ReadKey(KEY_F7))    f_Quit(qRESET);
   if(ReadKey(KEY_F8))    f_Quit(qEXIT);
-  if(ReadKey(KEY_F9))    onHeartBeep();
+  if(ReadKey(KEY_F9))    HeartBeep=!HeartBeep;
 
   while(Playing && keypressed())
     readkey();
@@ -3543,12 +3481,6 @@ int onTransLayers()
   return D_O_K;
 }
 
-int onNESquit()
-{
-  NESquit = !NESquit;
-  return D_O_K;
-}
-
 int onShowFPS()
 {
   ShowFPS = !ShowFPS;
@@ -3720,7 +3652,7 @@ int d_stringloader(int msg,DIALOG *d,int c)
         sprintf(str_s,"%d\n%s",Skey,key_str[Skey]);
         sprintf(str_l,"%d\n%s",Lkey,key_str[Lkey]);
         sprintf(str_r,"%d\n%s",Rkey,key_str[Rkey]);
-        sprintf(str_p,"%d\n%s",Pkey,key_str[Pkey]);
+        sprintf(str_p,"%d\n%s",Mkey,key_str[Mkey]);
         break;
 
       case 1:
@@ -3728,17 +3660,6 @@ int d_stringloader(int msg,DIALOG *d,int c)
         sprintf(str_b,"%d\n%s",DDkey,key_str[DDkey]);
         sprintf(str_l,"%d\n%s",DLkey,key_str[DLkey]);
         sprintf(str_r,"%d\n%s",DRkey,key_str[DRkey]);
-        break;
-
-      case 2:
-        sprintf(str_a,"%d",Abtn);
-        sprintf(str_b,"%d",Bbtn);
-        sprintf(str_s,"%d",Sbtn);
-
-        sprintf(str_l,"%d",Lbtn);
-        sprintf(str_r,"%d",Rbtn);
-        sprintf(str_m,"%d",Mbtn);
-        sprintf(str_p,"%d",Pbtn);
         break;
 
       case 3:
@@ -3786,106 +3707,6 @@ int set_buf(void *dp3, int d2)
   return D_O_K;
 }
 
-static DIALOG key_dlg[] =
-{
-  // (dialog proc)       (x)   (y)   (w)   (h)   (fg)     (bg)     (key)    (flags)    (d1)      (d2)     (dp)     (dp2) (dp3)
-  { jwin_win_proc,       8,    44,   304,  172,  0,       0,       0,       D_EXIT,    0,        0,       (void *) "Keyboard Buttons" },
-  { d_stringloader,      0,    0,    0 },
-  { jwin_frame_proc,     14,   70,   147,  104,  0,       0,       0,       0,         FR_ETCHED,0,       NULL },
-  { jwin_frame_proc,     159,  70,   147,  104,  0,       0,       0,       0,         FR_ETCHED,0,       NULL },
-  { jwin_text_proc,         30,   76,   160,  8,    vc(0),   vc(11),  0,       0,         0,        0,       (void *) "Button  Key" },
-  { jwin_text_proc,         175,  76,   160,  8,    vc(0),   vc(11),  0,       0,         0,        0,       (void *) "Button  Key" },
-
-  { jwin_text_proc,      92,   92,   60,   8,    vc(7),   vc(11),  0,       0,         0,        0,       str_a },
-  { jwin_text_proc,      92,   120,  60,   8,    vc(7),   vc(11),  0,       0,         0,        0,       str_b },
-  { jwin_text_proc,      92,   148,  60,   8,    vc(7),   vc(11),  0,       0,         0,        0,       str_s },
-  { jwin_text_proc,      237,  92,   60,   8,    vc(7),   vc(11),  0,       0,         0,        0,       str_l },
-  { jwin_text_proc,      237,  120,  60,   8,    vc(7),   vc(11),  0,       0,         0,        0,       str_r },
-  { jwin_text_proc,      237,  148,  60,   8,    vc(7),   vc(11),  0,       0,         0,        0,       str_p },
-                                                            // 12
-  { d_kbutton_proc,      22,   90,   61,   21,   vc(14),  vc(1),   0,       0,         0,        0,       (void *) "A",     NULL, &Akey},
-  { d_kbutton_proc,      22,   118,  61,   21,   vc(14),  vc(1),   0,       0,         0,        0,       (void *) "B",     NULL, &Bkey},
-  { d_kbutton_proc,      22,   146,  61,   21,   vc(14),  vc(1),   0,       0,         0,        0,       (void *) "Start", NULL, &Skey},
-  { d_kbutton_proc,      167,  90,   61,   21,   vc(14),  vc(1),   0,       0,         0,        0,       (void *) "L",     NULL, &Lkey},
-  { d_kbutton_proc,      167,  118,  61,   21,   vc(14),  vc(1),   0,       0,         0,        0,       (void *) "R",     NULL, &Rkey},
-  { d_kbutton_proc,      167,  146,  61,   21,   vc(14),  vc(1),   0,       0,         0,        0,       (void *) "Map",   NULL, &Pkey},
-                                                            // 18
-  { jwin_button_proc,    90,   184,  61,   21,   0,       0,       0,       D_EXIT,    0,        0,       (void *) "OK" },
-  { jwin_button_proc,    170,  184,  61,   21,   0,       0,       0,       D_EXIT,    0,        0,       (void *) "Cancel" },
-  { NULL }
-};
-static DIALOG keydir_dlg[] =
-{
-                                                            /* (dialog proc)       (x)   (y)   (w)   (h)   (fg)     (bg)     (key)    (flags)    (d1)      (d2)     (dp)     (dp2) (dp3) */
-  { jwin_win_proc,       8,    44,   304,  172,  0,       0,       0,       D_EXIT,    0,        0,       (void *) "Keyboard Directions" },
-  { d_stringloader,      0,    0,    1 },
-  { jwin_frame_proc,     14,   70,   147,  104,  0,       0,       0,       0,         FR_ETCHED,0,       NULL },
-  { jwin_frame_proc,     159,  70,   147,  104,  0,       0,       0,       0,         FR_ETCHED,0,       NULL },
-  { jwin_text_proc,         30,   76,   160,  8,    vc(0),   vc(11),  0,       0,         0,        0,       (void *) "Button  Key" },
-  { jwin_text_proc,         175,  76,   160,  8,    vc(0),   vc(11),  0,       0,         0,        0,       (void *) "Button  Key" },
-
-  { jwin_text_proc,      92,   92,   60,   8,    vc(7),   vc(11),  0,       0,         0,        0,       str_a },
-  { jwin_text_proc,      92,   120,  60,   8,    vc(7),   vc(11),  0,       0,         0,        0,       str_b },
-  { jwin_text_proc,      237,  92,   60,   8,    vc(7),   vc(11),  0,       0,         0,        0,       str_l },
-  { jwin_text_proc,      237,  120,  60,   8,    vc(7),   vc(11),  0,       0,         0,        0,       str_r },
-
-  { d_kbutton_proc,      22,   90,   61,   21,   vc(14),  vc(11),  0,       0,         0,        0,       (void *) "Up",     NULL, &DUkey},
-  { d_kbutton_proc,      22,   118,  61,   21,   vc(14),  vc(1),   0,       0,         0,        0,       (void *) "Down",   NULL, &DDkey},
-  { d_kbutton_proc,      167,  90,   61,   21,   vc(14),  vc(1),   0,       0,         0,        0,       (void *) "Left",   NULL, &DLkey},
-  { d_kbutton_proc,      167,  118,  61,   21,   vc(14),  vc(1),   0,       0,         0,        0,       (void *) "Right",  NULL, &DRkey},
-                                                            // 14
-  { jwin_button_proc,    90,   184,  61,   21,   0,       0,       0,       D_EXIT,    0,        0,       (void *) "OK" },
-  { jwin_button_proc,    170,  184,  61,   21,   0,       0,       0,       D_EXIT,    0,        0,       (void *) "Cancel" },
-  { NULL }
-};
-
-int midi_dp[3] = {0,147,104};
-int digi_dp[3] = {1,147,120};
-int pan_dp[3]  = {0,147,136};
-int buf_dp[3]  = {0,147,152};
-
-static DIALOG sound_dlg[] =
-{
-  /* (dialog proc)       (x)   (y)   (w)   (h)   (fg)     (bg)     (key)    (flags)    (d1)      (d2)     (dp)  (dp2)    (dp3) */
-  { jwin_win_proc,       32,   64,   256,  162,  0,       0,       0,       D_EXIT,    0,        0,       (void *) "Sound Settings" },
-  { d_stringloader,      0,    0,    3 },
-  { jwin_frame_proc,     42,   92,   236,  96,   0,       0,       0,       0,         FR_ETCHED,0,       NULL },
-  { jwin_rtext_proc,     147,  104,  40,   8,    vc(7),   vc(11),  0,       0,         0,        0,       (void *) str_a },
-  { jwin_rtext_proc,     147,  120,  40,   8,    vc(7),   vc(11),  0,       0,         0,        0,       (void *) str_b },
-  { jwin_rtext_proc,     147,  136,  40,   8,    vc(7),   vc(11),  0,       0,         0,        0,       (void *) str_s },
-  { jwin_slider_proc,    164,  104,  96,   8,    vc(0),   jwin_pal[jcBOX],  0,       0,         32,       0,       NULL, (void *) set_vol, midi_dp },
-  { jwin_slider_proc,    164,  120,  96,   8,    vc(0),   jwin_pal[jcBOX],  0,       0,         32,       0,       NULL, (void *) set_vol, digi_dp },
-  { jwin_slider_proc,    164,  136,  96,   8,    vc(0),   jwin_pal[jcBOX],  0,       0,         3,        0,       NULL, (void *) set_pan, pan_dp },
-  { jwin_text_proc,      60,   104,  48,   8,    vc(0),   vc(11),  0,       0,         0,        0,       (void *) "BG Vol" },
-  { jwin_text_proc,      60,   120,  48,   8,    vc(0),   vc(11),  0,       0,         0,        0,       (void *) "SFX Vol" },
-  { jwin_text_proc,      60,   136,  48,   8,    vc(0),   vc(11),  0,       0,         0,        0,       (void *) "SFX Pan" },
-  { jwin_button_proc,    90,   196,  61,   21,   0,       0,       0,       D_EXIT,    0,        0,       (void *) "OK" },
-  { jwin_button_proc,    170,  196,  61,   21,   0,       0,       0,       D_EXIT,    0,        0,       (void *) "Cancel" },
-  { jwin_rtext_proc,     147,  152,  40,   8,    vc(7),   vc(11),  0,       0,         0,        0,       (void *) str_m },
-  { jwin_slider_proc,    164,  152,  96,   8,    vc(0),   jwin_pal[jcBOX],  0,       0,         31,       0,       NULL, (void *) set_buf, buf_dp },
-  { jwin_text_proc,      60,   152,  48,   8,    vc(0),   vc(11),  0,       0,         0,        0,       (void *) "BG Buf" },
-  { NULL }
-};
-
-static DIALOG quest_dlg[] =
-{
-                                                            /* (dialog proc)       (x)   (y)   (w)   (h)   (fg)     (bg)     (key)    (flags)    (d1)      (d2)     (dp)     (dp2) (dp3) */
-  { jwin_win_proc,       68,   25,   184,  190,  0,       0,       0,       D_EXIT,    0,        0,       (void *) "Quest Info" },
-  { jwin_edit_proc,      84,   54,   152,  16,   0,       0,       0,       D_READONLY, 100,     0,       NULL },
-  { jwin_text_proc,         89,   84,   141,  8,    vc(0),   vc(11),  0,       0,         0,        0,       (void *) "Number:" },
-  { jwin_text_proc,         152,  84,   24,   8,    vc(7),   vc(11),  0,       0,         0,        0,       str_a },
-  { jwin_text_proc,         89,   94,   141,  8,    vc(0),   vc(11),  0,       0,         0,        0,       (void *) "Version:" },
-  { jwin_text_proc,         160,  94,   64,   8,    vc(7),   vc(11),  0,       0,         0,        0,       QHeader.version },
-  { jwin_text_proc,         89,   104,  141,  8,    vc(0),   vc(11),  0,       0,         0,        0,       (void *) "ZQ Version:" },
-  { jwin_text_proc,         184,  104,  64,   8,    vc(7),   vc(11),  0,       0,         0,        0,       str_s },
-  { jwin_text_proc,         84,   126,  80,   8,    vc(0),   vc(11),  0,       0,         0,        0,       (void *) "Title:" },
-  { jwin_textbox_proc,   84,   136,  152,  24,   0,       0,       0,       0,         0,        0,       QHeader.title },
-  { jwin_text_proc,         84,   168,  80,   8,    vc(0),   vc(11),  0,       0,         0,        0,       (void *) "Author:" },
-  { jwin_textbox_proc,   84,   178,  152,  24,   0,       0,       0,       0,         0,        0,       QHeader.author },
-  { jwin_frame_proc,     84,   79,   152,  38,   0,       0,       0,       0,         FR_ETCHED,0,       NULL },
-  { NULL }
-};
-
 int xtoi(char *hexstr)
 {
   int val=0;
@@ -3898,26 +3719,6 @@ int xtoi(char *hexstr)
     ++hexstr;
   }
   return val;
-}
-
-int onQuest()
-{
-  char fname[100];
-  strcpy(fname, get_filename(qstpath));
-  quest_dlg[0].dp2=lfont;
-  quest_dlg[1].dp = fname;
-
-  if(QHeader.quest_number==0)
-    sprintf(str_a,"Custom");
-  else
-    sprintf(str_a,"%d",QHeader.quest_number);
-  sprintf(str_s,"%s",VerStr(QHeader.zelda_version));
-
-  quest_dlg[11].d1 = quest_dlg[9].d1 = 0;
-  quest_dlg[11].d2 = quest_dlg[9].d2 = 0;
-
-  PopUp_dialog(quest_dlg, 0);
-  return D_O_K;
 }
 
 void LogVidMode()
@@ -3962,142 +3763,6 @@ void LogVidMode()
   al_trace("Video Mode set: %s (%s)\n",str_a,str_b);
 }
 
-int onKeyboard()
-{
-  int a = Akey;
-  int b = Bkey;
-  int s = Skey;
-  int l = Lkey;
-  int r = Rkey;
-  int p = Pkey;
-
-  key_dlg[0].dp2=lfont;
-  int ret = PopUp_dialog(key_dlg,18);
-                                                            // not OK'd
-  if(ret != 18)
-  {
-    Akey = a;
-    Bkey = b;
-    Skey = s;
-    Lkey = l;
-    Rkey = r;
-    Pkey = p;
-  }
-  return D_O_K;
-}
-
-int onKeyboardDir()
-{
-  int u = DUkey;
-  int d = DDkey;
-  int l = DLkey;
-  int r = DRkey;
-
-  keydir_dlg[0].dp2=lfont;
-  int ret = PopUp_dialog(keydir_dlg,14);
-  if(ret != 14)
-  {
-    DUkey = u;
-    DDkey = d;
-    DLkey = l;
-    DRkey = r;
-  }
-  return D_O_K;
-}
-
-int onSound()
-{
-  int d = digi_volume;
-  int m = midi_volume;
-  int p = pan_style;
-
-  pan_style = vbound(pan_style,0,3);
-
-  sound_dlg[0].dp2=lfont;
-  midi_dp[1] = sound_dlg[3].x;
-  midi_dp[2] = sound_dlg[3].y;
-  digi_dp[1] = sound_dlg[4].x;
-  digi_dp[2] = sound_dlg[4].y;
-  pan_dp[1]  = sound_dlg[5].x;
-  pan_dp[2]  = sound_dlg[5].y;
-  buf_dp[1]  = sound_dlg[14].x;
-  buf_dp[2]  = sound_dlg[14].y;
-  sound_dlg[6].d2 = (midi_volume==255) ? 32 : midi_volume>>3;
-  sound_dlg[7].d2 = (digi_volume==255) ? 32 : digi_volume>>3;
-  sound_dlg[8].d2 = pan_style;
-
-  int ret = PopUp_dialog(sound_dlg,12);
-
-  if(ret==12)
-  {
-    master_volume(digi_volume,midi_volume);
-  }
-  else
-  {
-    digi_volume = d;
-    midi_volume = m;
-    pan_style = p;
-  }
-
-  return D_O_K;
-}
-
-bool rc = false;
-
-int onQstPath()
-{
-  char path[280];
-
-  chop_path(qstpath);
-  strcpy(path,qstpath);
-
-  go();
-
-  if(jwin_dfile_select_ex("Quest File Directory", path, "qst", 1024, -1, -1, lfont))
-  {
-    chop_path(path);
-    strcpy(qstpath,path);
-  }
-
-  comeback();
-  return D_O_K;
-}
-
-                                                            /*****  Menus  *****/
-
-static MENU settings_menu[] =
-{
-  { "Key &Buttons",         onKeyboard,     NULL },
-  { "Key &Directions",      onKeyboardDir,  NULL },
-  { "&Sound",               onSound,        NULL },
-  { "Limit FPS\tF1",        onVsync,        NULL },
-  { "Show &FPS\tF2",        onShowFPS,      NULL },
-  { "&Show Trans. Lyrs.",   onTransLayers,  NULL },
-  { "Fast &Quit",           onNESquit,      NULL },
-  { NULL }
-};
-
-static MENU misc_menu[] =
-{
-  { "&Quest Info...",       onQuest,     NULL },
-  { "Quest &Dir...",        onQstPath,   NULL },
-  { NULL }
-};
-
-MENU the_menu[] =
-{
-  { "&Settings",            NULL,        settings_menu },
-  { "&Misc",                NULL,        misc_menu },
-  { NULL }
-};
-
-static DIALOG system_dlg[] =
-{
-                                                            /* (dialog proc)     (x)   (y)   (w)   (h)   (fg)  (bg)  (key)    (flags)  (d1)      (d2)     (dp) */
-  { jwin_menu_proc,    0,    0,    0,    0,    0,    0,    0,       D_USER,  0,        0,       (void *) the_menu },
-  { NULL }
-};
-
 void color_layer(RGB *src,RGB *dest,char r,char g,char b,char pos,int from,int to)
 {
   PALETTE tmp;
@@ -4141,84 +3806,6 @@ void music_stop()
   stop_midi();
 }
 
-void System()
-{
-  mouse_down=gui_mouse_b();
-  music_pause();
-  pause_all_sfx();
-                                                            //  FONT *oldfont=font;
-                                                            //  font=tfont;
-
-  misc_menu[0].flags = Playing ? 0 : D_DISABLED;
-  misc_menu[1].flags = !Playing ? 0 : D_DISABLED;
-
-  clear_keybuf();
-  show_mouse(screen);
-
-  DIALOG_PLAYER *p;
-
-  p = init_dialog(system_dlg,-1);
-                                                            // drop the menu on startup if menu button pressed
-  do
-  {
-    if(mouse_down && !gui_mouse_b())
-      mouse_down=0;
-  
-    settings_menu[3].flags = Throttlefps?D_SELECTED:0;
-    settings_menu[4].flags = ShowFPS?D_SELECTED:0;
-    settings_menu[5].flags = TransLayers?D_SELECTED:0;
-    settings_menu[6].flags = NESquit?D_SELECTED:0;
-	
-    if(gui_mouse_b() && !mouse_down)
-      break;
-
-                                                            // press menu to drop the menu
-    if(rMbtn())
-      simulate_keypress(KEY_G << 8);
-
-    if(myvsync)
-    {
-      myvsync = 0;
-    }
-
-  } while(update_dialog(p));
-
-                                                            //  font=oldfont;
-  mouse_down=gui_mouse_b();
-  shutdown_dialog(p);
-  show_mouse(NULL);
-
-  if(Quit)
-  {
-    kill_sfx();
-    music_stop();
-    clear_to_color(screen,BLACK);
-  }
-  else
-  {
-    //game_pal(); //ER (2021)
-    music_resume();
-    resume_all_sfx();
-    if(rc)
-      ringcolor();
-  }
-
-  eat_buttons();
-
-  rc=false;
-  clear_keybuf();
-                                                            //  text_mode(0);
-}
-
-void fix_dialog(DIALOG *d)
-{
-  for( ; d->proc != NULL; d++)
-  {
-    d->x += scrx;
-    d->y += scry;
-  }
-}
-
 void fix_dialogs()
 {
   int x = scrx-(sbig?160:0);
@@ -4228,21 +3815,7 @@ void fix_dialogs()
   if(x<0) x=0;
   if(y<0) y=0;
 
-  system_dlg[0].x = x;
-  system_dlg[0].y = y;
-
   jwin_center_dialog(gamemode_dlg);
-  jwin_center_dialog(key_dlg);
-  jwin_center_dialog(keydir_dlg);
-  jwin_center_dialog(quest_dlg);
-  jwin_center_dialog(sound_dlg);
-
-  digi_dp[1] += scrx;
-  digi_dp[2] += scry;
-  midi_dp[1] += scrx;
-  midi_dp[2] += scry;
-  pan_dp[1]  += scrx;
-  pan_dp[2]  += scry;
 }
 
 /*****************************/
@@ -4301,9 +3874,10 @@ void play_DmapMusic()
         zcmusic_unload_file(zcmusic);
         zcmusic = NULL;
       }
-
-      sprintf(tmfname, "%s",qstdir);
-      chop_path(tmfname);
+      tmfname[0] = 0;
+#ifdef ALLEGRO_MACOSX
+      sprintf(tmfname, "../");
+#endif
       strcat(tmfname, DMaps[currdmap].tmusic);
 
       zcmusic = (ZCMUSIC*)zcmusic_load_file(tmfname);
@@ -4571,10 +4145,10 @@ bool Right()  { return key[DRkey]; }
 bool cAbtn()  { return key[Akey]; }
 bool cBbtn()  { return key[Bkey]; }
 bool cSbtn()  { return key[Skey]; }
-bool cMbtn()  { return key[KEY_ESC]; }
+bool cEbtn()  { return key[KEY_ESC]; }
 bool cLbtn()  { return key[Lkey]; }
 bool cRbtn()  { return key[Rkey]; }
-bool cPbtn()  { return key[Pkey]; }
+bool cMbtn()  { return key[Mkey]; }
 
 bool rUp()    { return rButton(Up,Udown); }
 bool rDown()  { return rButton(Down,Ddown); }
@@ -4583,10 +4157,10 @@ bool rRight() { return rButton(Right,Rdown); }
 bool rAbtn()  { return rButton(cAbtn,Adown); }
 bool rBbtn()  { return rButton(cBbtn,Bdown); }
 bool rSbtn()  { return rButton(cSbtn,Sdown); }
-bool rMbtn()  { return rButton(cMbtn,Mdown); }
+bool rEbtn()  { return rButton(cEbtn,Mdown); }
 bool rLbtn()  { return rButton(cLbtn,LBdown); }
 bool rRbtn()  { return rButton(cRbtn,RBdown); }
-bool rPbtn()  { return rButton(cPbtn,Pdown); }
+bool rMbtn()  { return rButton(cMbtn,Pdown); }
 
 bool drunk()
 {
@@ -4601,10 +4175,10 @@ bool DrunkRight()  { return drunk()?(rand()%2)?0:!Right():Right(); }
 bool DrunkcAbtn()  { return drunk()?(rand()%2)?0:!cAbtn():cAbtn(); }
 bool DrunkcBbtn()  { return drunk()?(rand()%2)?0:!cBbtn():cBbtn(); }
 bool DrunkcSbtn()  { return drunk()?(rand()%2)?0:!cSbtn():cSbtn(); }
-bool DrunkcMbtn()  { return drunk()?(rand()%2)?0:!cMbtn():cMbtn(); }
+bool DrunkcEbtn()  { return drunk()?(rand()%2)?0:!cEbtn():cEbtn(); }
 bool DrunkcLbtn()  { return drunk()?(rand()%2)?0:!cLbtn():cLbtn(); }
 bool DrunkcRbtn()  { return drunk()?(rand()%2)?0:!cRbtn():cRbtn(); }
-bool DrunkcPbtn()  { return drunk()?(rand()%2)?0:!cPbtn():cPbtn(); }
+bool DrunkcMbtn()  { return drunk()?(rand()%2)?0:!cMbtn():cMbtn(); }
 
 bool DrunkrUp()    { return drunk()?(rand()%2)?0:!rUp():rUp(); }
 bool DrunkrDown()  { return drunk()?(rand()%2)?0:!rDown():rDown(); }
@@ -4613,20 +4187,20 @@ bool DrunkrRight() { return drunk()?(rand()%2)?0:!rRight():rRight(); }
 bool DrunkrAbtn()  { return drunk()?(rand()%2)?0:!rAbtn():rAbtn(); }
 bool DrunkrBbtn()  { return drunk()?(rand()%2)?0:!rBbtn():rBbtn(); }
 bool DrunkrSbtn()  { return drunk()?(rand()%2)?0:!rSbtn():rSbtn(); }
-bool DrunkrMbtn()  { return drunk()?(rand()%2)?0:!rMbtn():rMbtn(); }
+bool DrunkrEbtn()  { return drunk()?(rand()%2)?0:!rEbtn():rEbtn(); }
 bool DrunkrLbtn()  { return drunk()?(rand()%2)?0:!rLbtn():rLbtn(); }
 bool DrunkrRbtn()  { return drunk()?(rand()%2)?0:!rRbtn():rRbtn(); }
-bool DrunkrPbtn()  { return drunk()?(rand()%2)?0:!rPbtn():rPbtn(); }
+bool DrunkrMbtn()  { return drunk()?(rand()%2)?0:!rMbtn():rMbtn(); }
 
 void eat_buttons()
 {
   rAbtn();
   rBbtn();
   rSbtn();
-  rMbtn();
+  rEbtn();
   rLbtn();
   rRbtn();
-  rPbtn();
+  rMbtn();
 }
 
 bool ReadKey(int k)

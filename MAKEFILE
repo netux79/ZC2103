@@ -1,7 +1,7 @@
 -include makefile.inc
 
 AUDIO_LIBS = -lgme -lalogg -lalmp3 -laldmb -ldumb
-IMAGE_LIBS = -ljpgal -lldpng -lpng -lz
+#IMAGE_LIBS = -ljpgal -lldpng -lpng -lz
 #LINKOPTS = -pg -g
 #OPTS = -pg -g
 OPTS = -O3
@@ -77,7 +77,8 @@ msg:
 done:
 	@echo Done!
 clean:
-	rm -f $(ZELDA_OBJECTS)
+#	rm -f $(ZELDA_OBJECTS)
+	rm -f *.o
 veryclean: clean
 	rm -f $(ZELDA_EXE)
 
@@ -188,7 +189,7 @@ pal$(PLATEXT).o: pal.cpp colors.h items.h jwin.h maps.h pal.h sfx.h sprite.h sub
 	$(CC) $(OPTS) $(CFLAG) -Wall -c pal.cpp -o pal$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 particles$(PLATEXT).o: particles.cpp particles.h sprite.h zdefs.h
 	$(CC) $(OPTS) $(CFLAG) -Wall -c particles.cpp -o particles$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-qst$(PLATEXT).o: qst.cpp colors.h defdata.h font.h guys.h items.h jwin.h midi.h qst.h sprite.h tiles.h weapons.h zdefs.h zquest.h zsys.h
+qst$(PLATEXT).o: qst.cpp colors.h defdata.h font.h guys.h items.h jwin.h midi.h qst.h sprite.h tiles.h weapons.h zdefs.h zsys.h
 	$(CC) $(OPTS) $(CFLAG) -Wall -c qst.cpp -o qst$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 sprite$(PLATEXT).o: sprite.cpp sprite.h tiles.h zdefs.h
 	$(CC) $(OPTS) $(CFLAG) -Wall -c sprite.cpp -o sprite$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
@@ -216,38 +217,8 @@ zc_sys$(PLATEXT).o: zc_sys.cpp colors.h gui.h guys.h items.h jwin.h jwinfsel.h l
 	$(CC) $(OPTS) $(CFLAG) -Wall -c zc_sys.cpp -o zc_sys$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 zcmusic$(PLATEXT).o: zcmusic.cpp zcmusic.h
 	$(CC) $(OPTS) $(CFLAG) -Wall -c zcmusic.cpp -o zcmusic$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zcmusicd$(PLATEXT).o: zcmusicd.cpp zcmusic.h
-	$(CC) $(OPTS) $(CFLAG) -Wall -c zcmusicd.cpp -o zcmusicd$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 zelda$(PLATEXT).o: zelda.cpp colors.h ending.h fontsdat.h guys.h items.h jwin.h jwinfsel.h link.h maps.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h title.h weapons.h zc_custom.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h zsys.h
 	$(CC) $(OPTS) $(CFLAG) -Wall -c zelda.cpp -o zelda$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zq_class$(PLATEXT).o: zq_class.cpp colors.h items.h jwin.h maps.h midi.h qst.h sprite.h tiles.h zc_sys.h zdefs.h zq_class.h zq_misc.h zquest.h zquestdat.h zsys.h
-	$(CC) $(OPTS) $(CFLAG) -Wall -c zq_class.cpp -o zq_class$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zq_cset$(PLATEXT).o: zq_cset.cpp zq_cset.h zdefs.h
-	$(CC) $(OPTS) $(CFLAG) -Wall -c zq_cset.cpp -o zq_cset$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zq_custom$(PLATEXT).o: zq_custom.cpp gui.h items.h jwin.h midi.h sprite.h tiles.h zc_custom.h zdefs.h zq_custom.h zq_misc.h zq_tiles.h zquest.h zsys.h
-	$(CC) $(OPTS) $(CFLAG) -Wall -c zq_custom.cpp -o zq_custom$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zq_doors$(PLATEXT).o: zq_doors.cpp zq_doors.h zdefs.h
-	$(CC) $(OPTS) $(CFLAG) -Wall -c zq_doors.cpp -o zq_doors$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zq_files$(PLATEXT).o: zq_files.cpp jwin.h midi.h qst.h tiles.h zdefs.h zq_class.h zq_files.h zq_misc.h zquest.h zsys.h
-	$(CC) $(OPTS) $(CFLAG) -Wall -c zq_files.cpp -o zq_files$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zq_icon$(PLATEXT).o: zq_icon.rc
-	windres --use-temp-file -I rc -O coff -i zq_icon.rc -o zq_icon$(PLATEXT).o
-zq_items$(PLATEXT).o: zq_items.cpp zdefs.h
-	$(CC) $(OPTS) $(CFLAG) -Wall -c zq_items.cpp -o zq_items$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zq_init$(PLATEXT).o: zq_init.cpp zq_init.h zdefs.h
-	$(CC) $(OPTS) $(CFLAG) -Wall -c zq_init.cpp -o zq_init$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zq_misc$(PLATEXT).o: zq_misc.cpp colors.h jwin.h midi.h qst.h zdefs.h zq_misc.h zquest.h zquestdat.h zsys.h
-	$(CC) $(OPTS) $(CFLAG) -Wall -c zq_misc.cpp -o zq_misc$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zq_rules$(PLATEXT).o: zq_rules.cpp zq_rules.h zdefs.h
-	$(CC) $(OPTS) $(CFLAG) -Wall -c zq_rules.cpp -o zq_rules$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zq_sprite$(PLATEXT).o: zq_sprite.cpp sprite.h zdefs.h
-	$(CC) $(OPTS) $(CFLAG) -Wall -c zq_sprite.cpp -o zq_sprite$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zq_tiles$(PLATEXT).o: zq_tiles.cpp colors.h jwin.h midi.h qst.h tiles.h zdefs.h zq_class.h zq_misc.h zq_tiles.h zquest.h
-	$(CC) $(OPTS) $(CFLAG) -D_ZQUEST_SCALE_ -Wall -c zq_tiles.cpp -o zq_tiles$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zqscale$(PLATEXT).o: zqscale.cpp zqscale.h
-	$(CC) $(OPTS) $(CFLAG) -Wall -c zqscale.cpp -o zqscale$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zquest$(PLATEXT).o: zquest.cpp colors.h editbox.h fontsdat.h gfxpal.h items.h jwin.h jwinfsel.h load_gif.h midi.h qst.h sprite.h tiles.h zcmusic.h zdefs.h zq_class.h zq_custom.h zq_files.h zq_misc.h zq_tiles.h zquest.h zquestdat.h zsys.h
-	$(CC) $(OPTS) $(CFLAG) -D_ZQUEST_SCALE_ -Wall -c zquest.cpp -o zquest$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 zsys$(PLATEXT).o: zsys.cpp jwin.h zc_sys.h zdefs.h zsys.h
 	$(CC) $(OPTS) $(CFLAG) -Wall -c zsys.cpp -o zsys$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 zsys-zq$(PLATEXT).o: zsys.cpp jwin.h zc_sys.h zdefs.h zsys.h

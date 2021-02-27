@@ -167,7 +167,7 @@ extern int homescr,currscr,frame,currmap,dlevel,warpscr,worldscr;
 extern int newscr_clk,opendoors,currdmap,fadeclk,currgame,listpos;
 extern int lastentrance,lastentrance_dmap,prices[3][2],loadside, Bwpn, Awpn;
 extern int digi_volume,midi_volume,currmidi,wand_x,wand_y,hasitem,whistleclk,pan_style;
-extern int Akey,Bkey,Skey,Lkey,Rkey,Pkey,Abtn,Bbtn,Sbtn,Mbtn,Lbtn,Rbtn,Pbtn,Quit;
+extern int Akey,Bkey,Skey,Lkey,Rkey,Mkey,Quit;
 extern int DUkey, DDkey, DLkey, DRkey;
 extern int arrow_x, arrow_y, brang_x, brang_y, chainlink_x, chainlink_y;
 extern int hs_startx, hs_starty, hs_xdist, hs_ydist, clockclk, clock_zoras;
@@ -179,15 +179,15 @@ extern float avgfps;
 
 extern bool nosecretsounds;
 extern bool blockmoving;
-extern bool Throttlefps, Paused, Advance, ShowFPS, Showpal, Playing, TransLayers;
+extern bool Throttlefps, Paused, Advance, ShowFPS, Playing, TransLayers, HeartBeep;
 extern bool refreshpal,blockpath,wand_dead,loaded_guys,freeze_guys;
 extern bool loaded_enemies,drawguys,details,watch;
 extern bool Udown,Ddown,Ldown,Rdown,Adown,Bdown,Sdown,Mdown,LBdown,RBdown,Pdown;
-extern bool SystemKeys,NESquit,boughtsomething;
+extern bool SystemKeys,boughtsomething;
 extern bool fixed_door, darkroom,BSZ,COOLSCROLL;            //,NEWSUBSCR;
 extern bool hookshot_used, hookshot_frozen, pull_link, add_chainlink;
 extern bool del_chainlink, hs_fix, checklink;
-extern bool ewind_restart, didpit, heart_beep, pausenow, castnext;
+extern bool ewind_restart, didpit, castnext;
 extern bool add_df1asparkle, add_df1bsparkle, add_nl1asparkle, add_nl1bsparkle, add_nl2asparkle, add_nl2bsparkle;
 extern bool is_on_conveyor, activated_timed_warp;
 
@@ -212,7 +212,6 @@ extern int cheat;                                           // 0 = none; 1,2,3,4
 extern int  mouse_down;                                     // used to hold the last reading of 'gui_mouse_b()' status
 extern int idle_count;
 extern char *qstpath;
-extern char *qstdir;
 extern gamedata *saves;
 extern gamedata game;
 

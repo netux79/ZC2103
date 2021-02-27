@@ -928,7 +928,6 @@ void LinkClass::check_slash_block(int bx, int by)
     s->cset[i] = s->undercset;
     s->sflag[i] = 0;
     set_bit(screengrid,i,1);
-    //    pausenow=true;
   }
 
   if(flag==mfARMOS_ITEM && !getmapflag())
@@ -1663,7 +1662,7 @@ bool LinkClass::animate(int index)
   }
   if(DrunkrLbtn())         selectBwpn(-1, 0);
   else if(DrunkrRbtn())    selectBwpn(1, 0);
-  if(rPbtn())         onViewMap();
+  if(rMbtn())         onViewMap();
 
   // make the flames from the wand
   if(wand_dead)
@@ -1941,7 +1940,7 @@ bool LinkClass::animate(int index)
 
   if(game.life<=(HP_PER_HEART))
   {
-    if (heart_beep)
+    if (HeartBeep)
     {
       cont_sfx(WAV_ER);
     }

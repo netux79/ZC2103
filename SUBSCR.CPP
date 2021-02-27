@@ -1047,11 +1047,6 @@ void dosubscr()
     sel.draw(framebuf);
 
     advanceframe();
-    if(NESquit && Up() && cAbtn() && cBbtn())
-    {
-      Udown=true;
-      Quit=qQUIT;
-    }
     if(Quit)
       return;
     if(rSbtn())

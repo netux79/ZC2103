@@ -64,15 +64,6 @@ void Z_title(char *format,...);
 
 int anim_3_4(int clk, int speed);
 
-                                                            /*0=normal, 1=jwin*/
-void box_start(int style , char *title, FONT *title_font, FONT *message_font, bool log);
-//void box_start();
-void box_out(char *msg);
-void box_save_x();
-void box_load_x();
-void box_eol();
-void box_end(bool pause);
-void box_pause();
 void dither_rect(BITMAP *bmp, PALETTE *pal, int x1, int y1, int x2, int y2,
                  int src_color1, int src_color2, byte dest_color1,
                  byte dest_color2);

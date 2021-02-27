@@ -283,7 +283,7 @@ int load_savedgames()
   if(readsaves(saves,f)!=0)
     goto reset;
 
-  for(int i=0; i<MAXSAVES; i++)
+/*  for(int i=0; i<MAXSAVES; i++)
   {
     if(strlen(saves[i].qstpath))
     {
@@ -292,7 +292,7 @@ int load_savedgames()
         load_game_icon(saves+i);
       }
     }
-  }
+  }*/
 
   pack_fclose(f);
   delete_file(tmpfilename);
@@ -674,151 +674,6 @@ static void draw_cursor(int pos,int mode)
     overtile8(framebuf,0,40,(pos-3)*16+153,cs,0);
 }
 
-/*static bool register_name()
-{
-  if(savecnt>=MAXSAVES)
-    return false;
-
-  saves[savecnt].maxlife = 3*HP_PER_HEART;
-  saves[savecnt].maxbombs = 8;
-  saves[savecnt].continue_dmap=0;
-  saves[savecnt].continue_scrn=0xFF;
-
-  int s=savecnt;
-  ++savecnt;
-  listpos=(s/3)*3;
-
-  int pos=s%3;
-  int y=pos*24+72;
-  int x=0;
-
-  register_mode();
-  clear_keybuf();
-  SystemKeys=false;
-  refreshpal=true;
-  bool done=false;
-
-  do
-  {
-    if(keypressed())
-    {
-      int k=readkey();
-      if(isprint(k&255))
-      {
-        saves[s].name[min(x,7)]=k&0xFF;
-        if(x<8)
-          ++x;
-        sfx(WAV_PLACE);
-      }
-      else
-        switch(k>>8)
-        {
-          case KEY_LEFT:  if(x>0)
-          { if(x==8) x=6; else --x; sfx(WAV_CHIME); }
-          break;
-          case KEY_RIGHT: if(x<8 && saves[s].name[min(x,7)])
-          { ++x; sfx(WAV_CHIME); }
-          break;
-          case KEY_ENTER:
-          {
-            int ltrs=0;
-          for(int i=0; i<8; i++)
-            if(saves[s].name[i]!=' ' && saves[s].name[i]!=0)
-              ++ltrs;
-          if(ltrs)
-            done=true;
-        } break;
-        case KEY_BACKSPACE:
-          if(x>0)
-          {
-            --x;
-            for(int i=min(x,7); i<8; i++)
-              saves[s].name[i]=saves[s].name[i+1];
-            sfx(WAV_OUCH);
-          }
-          break;
-        case KEY_DEL:
-          for(int i=min(x,7); i<8; i++)
-            saves[s].name[i]=saves[s].name[i+1];
-          sfx(WAV_OUCH);
-          break;
-      }
-    }
-
-    blit(scrollbuf,framebuf,0,0,0,0,256,224);
-    list_saves();
-
-    if(frame&8)
-    {
-      int tx=(min(x,7)<<3)+72;
-      for(int dy=0; dy<8; dy++)
-        for(int dx=0; dx<8; dx++)
-          if(framebuf->line[y+dy][tx+dx]==0)
-            framebuf->line[y+dy][tx+dx]=CSET(9)+1;
-    }
-
-    draw_cursor(pos,0);
-    advanceframe();
-    if(rBbtn())
-    {
-      x=-1;
-      done=true;
-    }
-
-  } while(!done && !Quit);
-
-  if(x<0)
-  {
-    done=false;
-  }
-
-  if(done)
-  {
-    int quest=1;
-    char buf[9];
-    strcpy(buf,saves[s].name);
-    strupr(buf);
-    if(!stricmp(buf,"ZELDA"))
-      quest=2;
-    if(!stricmp(buf,"ALPHA"))
-      quest=3;
-    saves[s].quest=quest;
-
-    packfile_password(datapwd);
-    if(load_quest(saves+s))
-    {
-      saves[s].maxlife=zinit.hc*HP_PER_HEART;
-      saves[s].items[itype_ring]=0;
-      if (zinit.ring)
-      {
-        saves[s].items[itype_ring]=(1<<(min(zinit.ring,3)-1));
-      }
-      ringcolor();
-      saves[s].maxbombs=zinit.max_bombs;
-      selectscreen();                                       // refresh palette
-    }
-    packfile_password(NULL);
-    load_game_icon(saves+s);
-    saves[s].timevalid=1;
-  }
-
-  if(x<0)
-  {
-    for(int i=s; i<MAXSAVES-1; i++)
-      saves[i]=saves[i+1];
-    int *di = (int*)(saves+MAXSAVES-1);
-    for(unsigned i=0; i<sizeof(gamedata)/sizeof(int); i++)
-      *(di++) = 0;
-    --savecnt;
-    if(listpos>savecnt-1)
-      listpos=max(listpos-3,0);
-  }
-
-  SystemKeys=true;
-  select_mode();
-  return done;
-}*/
-
 static bool register_name()
 {
   if(savecnt>=MAXSAVES)
@@ -1017,7 +872,6 @@ static bool register_name()
       }
       ringcolor();
       saves[s].maxbombs=zinit.max_bombs;
-      //selectscreen();                                       // refresh palette
     }
     packfile_password(NULL);
     load_game_icon(saves+s);
@@ -1037,7 +891,6 @@ static bool register_name()
 
   SystemKeys=true;
   selectscreen();
-  //select_mode();
   return done;
 }
 

@@ -95,7 +95,7 @@ int homescr,currscr,frame=0,currmap=0,dlevel,warpscr,worldscr;
 int newscr_clk=0,opendoors=0,currdmap=0,fadeclk=-1,currgame=0,listpos=0;
 int lastentrance=0,lastentrance_dmap=0,prices[3][2],loadside, Bwpn, Awpn;
 int digi_volume,midi_volume,currmidi,wand_x,wand_y,hasitem,whistleclk,pan_style;
-int Akey,Bkey,Skey,Lkey,Rkey,Pkey,Abtn,Bbtn,Sbtn,Mbtn,Lbtn,Rbtn,Pbtn,Quit=0;
+int Akey,Bkey,Skey,Lkey,Rkey,Mkey,Quit=0;
 int DUkey, DDkey, DLkey, DRkey;
 int arrow_x, arrow_y, brang_x, brang_y, chainlink_x, chainlink_y;
 int hs_startx, hs_starty, hs_xdist, hs_ydist, clockclk, clock_zoras;
@@ -110,17 +110,17 @@ int checkx, checky;
 
 bool nosecretsounds=false;
 
-bool Throttlefps, Paused=false, Advance=false, ShowFPS, Showpal=false;
+bool Throttlefps, Paused=false, Advance=false, ShowFPS=false, HeartBeep=true;
 bool Playing, TransLayers;
 bool refreshpal,blockpath,wand_dead,loaded_guys,freeze_guys,
 loaded_enemies,drawguys,details=false,watch;
 bool darkroom=false,BSZ,COOLSCROLL;                         //,NEWSUBSCR;
 bool Udown,Ddown,Ldown,Rdown,Adown,Bdown,Sdown,Mdown,LBdown,RBdown,Pdown,
-SystemKeys=true,NESquit,boughtsomething=false,
+SystemKeys=true,boughtsomething=false,
 fixed_door=false, hookshot_used=false, hookshot_frozen=false,
 pull_link=false, add_chainlink=false, del_chainlink=false, hs_fix=false,
-checklink=true, didpit=false, heart_beep=true,
-pausenow=false, castnext=false, add_df1asparkle, add_df1bsparkle, add_nl1asparkle, add_nl1bsparkle, add_nl2asparkle, add_nl2bsparkle,
+checklink=true, didpit=false,
+castnext=false, add_df1asparkle, add_df1bsparkle, add_nl1asparkle, add_nl1bsparkle, add_nl2asparkle, add_nl2bsparkle,
 is_on_conveyor, activated_timed_warp=false;
 
 int  add_asparkle=0, add_bsparkle=0;
@@ -161,7 +161,6 @@ miscQdata    QMisc;
 mapscr       *TheMaps;
 
 char     *qstpath=NULL;
-char     *qstdir=NULL;
 gamedata *saves=NULL;
 
 volatile int lastfps=0;
@@ -379,7 +378,7 @@ int load_quest(gamedata *g, bool report)
   {
     skip_flags[i]=0;
   }
-  int ret = loadquest(qstpath,&QHeader,&QMisc,tunes+MUSIC_COUNT,false,true,true,true,skip_flags);
+  int ret = loadquest(qstpath,&QHeader,&QMisc,tunes+MUSIC_COUNT,true,true,true,skip_flags);
   packfile_password(NULL);
 
   if(!g->title[0] || !g->hasplayed)
@@ -406,7 +405,7 @@ int load_quest(gamedata *g, bool report)
     char buf1[80],buf2[80];
     sprintf(buf1,"Error loading %s:",get_filename(qstpath));
     sprintf(buf2,"%s",qst_error[ret]);
-    al_trace("%s, %s",buf1,buf2);
+    al_trace("%s %s\n",buf1,buf2);
   }
 
   //  packfile_password(NULL);
@@ -1440,37 +1439,17 @@ int main(int argc, char* argv[])
 {
   Z_title("Zelda Classic %s (Build %d)",VerStr(ZELDA_VERSION), VERSION_BUILD);
 
-  // check for the ag.cfg file and 1st.qst
-  Z_message("Checking Files... ");
-  if(file_size("1st.qst")==0)
-  {
-    Z_error("\"1st.qst\" not found.");
-  }
-  if(file_size("2nd.qst")==0)
-  {
-    Z_error("\"2nd.qst\" not found.");
-  }
-  if(file_size("3rd.qst")==0)
-  {
-    Z_error("\"3rd.qst\" not found.");
-  }
-  Z_message("OK\n");
-
   // allocate quest data buffers
-
-  memrequested+=4096;
-  Z_message("Allocating quest path buffers (%s)...", byte_conversion2(4096,memrequested,-1,-1));
-  qstdir = (char*)malloc(2048);
+  memrequested+=2048;
+  Z_message("Allocating quest path buffers (%s)...", byte_conversion2(2048,memrequested,-1,-1));
   qstpath = (char*)malloc(2048);
-  if(!qstdir||!qstpath)
+  if(!qstpath)
   {
-    Z_error("Error");
+    Z_error("Error\n");
   }
-  qstdir[0] = 0;
-  qstpath[0] = 0;
 
+  qstpath[0] = 0;
 #ifdef ALLEGRO_MACOSX
-  sprintf(qstdir, "../");
   sprintf(qstpath, "../");
 #endif
 
@@ -1479,7 +1458,6 @@ int main(int argc, char* argv[])
   get_qst_buffers();
 
   // initialize Allegro
-
   Z_message("Initializing Allegro... ");
   #ifdef ALLEGRO_DOS
   three_finger_flag = FALSE;
@@ -1540,18 +1518,12 @@ int main(int argc, char* argv[])
   Z_message("OK\n");
 
   // load game configurations
-
   load_game_configs();
 
   int mode = VidMode;                                       // from config file
   int res_arg = used_switch(argc,argv,"-res");
 
-  if(used_switch(argc,argv,"-v0")) Throttlefps=false;
-  if(used_switch(argc,argv,"-v1")) Throttlefps=true;
-
   resolve_password(zeldapwd);
-
-  // load the data file
 
   resolve_password(datapwd);
   packfile_password(datapwd);
@@ -1563,6 +1535,7 @@ int main(int argc, char* argv[])
   sprintf(sfxdat_sig,"SFX.Dat %s Build %d",VerStr(SFXDAT_VERSION), SFXDAT_BUILD);
   sprintf(fontsdat_sig,"Fonts.Dat %s Build %d",VerStr(FONTSDAT_VERSION), FONTSDAT_BUILD);
 
+  // load the data file
   Z_message("Zelda.Dat...");
   if((data=load_datafile("zelda.dat"))==NULL)
   {
@@ -1641,15 +1614,7 @@ int main(int argc, char* argv[])
 
   Z_init_sound();
 
-  // quick quit
-  if(used_switch(argc,argv,"-q"))
-  {
-    printf("-q switch used, quitting program.\n");
-    goto quick_quit;
-  }
-
   // set video mode
-
   if(res_arg && (argc>(res_arg+2)))
   {
     resx = atoi(argv[res_arg+1]);
@@ -1752,11 +1717,11 @@ int main(int argc, char* argv[])
   gui_mouse_focus = FALSE;
   position_mouse(resx-16,resy-16);
 
-  // play the game
   reset_items(true, &QHeader);
 
   rgb_map = &rgb_table;
 
+  // play the game
   while(Quit!=qEXIT)
   {
     titlescreen();
@@ -1808,19 +1773,14 @@ int main(int argc, char* argv[])
   }
 
   // clean up
-
   music_stop();
   kill_sfx();
   set_gfx_mode(GFX_TEXT,80,25,0,0);
   rest(250);
 
-  quick_quit:
-
   save_savedgames();
   save_game_configs();
   unload_datafile(data);
-  //  if(mappic)
-  //    destroy_bitmap(mappic);
   destroy_bitmap(framebuf);
   destroy_bitmap(scrollbuf);
   destroy_bitmap(tmp_scr);

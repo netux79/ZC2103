@@ -29,7 +29,6 @@ void f_Quit(int type);
 void advanceframe();
 void updatescr();
 void syskeys();
-void System();
 // void game_pal(); //ER (2021)
 int  onSave();
 int  onQuit();
@@ -66,32 +65,32 @@ bool DrunkrRight();
 bool cAbtn();
 bool cBbtn();
 bool cSbtn();
-bool cMbtn();
+bool cEbtn();
 bool cLbtn();
 bool cRbtn();
-bool cPbtn();
+bool cMbtn();
 bool DrunkcAbtn();
 bool DrunkcBbtn();
 bool DrunkcSbtn();
-bool DrunkcMbtn();
+bool DrunkcEbtn();
 bool DrunkcLbtn();
 bool DrunkcRbtn();
-bool DrunkcPbtn();
+bool DrunkcMbtn();
 
 bool rAbtn();
 bool rBbtn();
 bool rSbtn();
-bool rMbtn();
+bool rEbtn();
 bool rLbtn();
 bool rRbtn();
-bool rPbtn();
+bool rMbtn();
 bool DrunkrAbtn();
 bool DrunkrBbtn();
 bool DrunkrSbtn();
-bool DrunkrMbtn();
+bool DrunkrEbtn();
 bool DrunkrLbtn();
 bool DrunkrRbtn();
-bool DrunkrPbtn();
+bool DrunkrMbtn();
 
 enum {bosCIRCLE=0, bosOVAL, bosTRIANGLE, bosSMAS, bosMAX};
 
