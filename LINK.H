@@ -22,8 +22,6 @@
 #include "pal.h"
 #include "zsys.h"
 #include "qst.h"
-#include "jwin.h"
-#include "jwinfsel.h"
 #include "sprite.h"
 #include "zc_custom.h"
 

@@ -1242,7 +1242,7 @@ typedef struct gamedata
   //82556 (65280)
   byte  guys[MAXMAPS2*128];                                 // guy counts (though dungeon guys are reset on entry)
   //115196 (32640)
-  char  qstpath[2048];
+  char  qstpath[1024];
   byte  icon[128];
   byte  pal[48];
   //115456 (260)

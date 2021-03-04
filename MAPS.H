@@ -71,7 +71,7 @@ void map_bkgsfx();
 /****  View Map  ****/
 extern int mapres;
 void ViewMap();
-int onViewMap();
+void onViewMap();
 #endif
 
 /*** end of maps.cc ***/

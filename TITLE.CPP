@@ -20,10 +20,8 @@
 #include "tiles.h"
 #include "colors.h"
 #include "pal.h"
-#include "gui.h"
 #include "sprite.h"
 #include "subscr.h"
-#include "jwinfsel.h"
 #include "title.h"
 
 /***********************************/
@@ -33,7 +31,7 @@
 // first the game saving & loading system
 
 static char *SAVE_HEADER = "Zelda Classic Save File";
-static char *SAVE_FILE = "zc.sav";
+static char SAVE_FILE[1048] = {'\0'};
 
 int readsaves(gamedata *savedata, PACKFILE *f)
 {
@@ -214,8 +212,6 @@ int readsaves(gamedata *savedata, PACKFILE *f)
 // call once at startup
 int load_savedgames()
 {
-  //  static char *too_old  = "Obsolete format.  Resetting game data...";
-  char *fname = SAVE_FILE;
   int ret;
   PACKFILE *f=NULL;
   char tmpbuf[L_tmpnam];
@@ -225,6 +221,9 @@ int load_savedgames()
   int section_version;
   int section_cversion;
   int section_size;
+  
+  // Create the save file path by replacing the ext of qstpath
+  replace_extension(SAVE_FILE, qstpath, "sav", sizeof(SAVE_FILE));
 
   if(saves==NULL)
   {
@@ -234,27 +233,22 @@ int load_savedgames()
   }
 
   // see if it's there
-  if (file_size(fname)==0)
+  if (file_size(SAVE_FILE)==0)
   {
     goto newdata;
   }
 
   // decode to temp file
-  ret = decode_file_007(fname, tmpfilename, SAVE_HEADER, ENC_METHOD_MAX-1, strstr(fname, ".dat#")!=NULL);
+  ret = decode_file_007(SAVE_FILE, tmpfilename, SAVE_HEADER, ENC_METHOD_MAX-1, strstr(SAVE_FILE, ".dat#")!=NULL);
   if(ret)
   {
-    if (f)
-    {
-      pack_fclose(f);
-    }
     delete_file(tmpfilename);
     Z_message("Format error.  Resetting game data... ");
     goto init;
   }
-  fname = tmpfilename;
 
   // load the games
-  f = pack_fopen(fname, F_READ_PACKED);
+  f = pack_fopen(tmpfilename, F_READ_PACKED);
   if(!f)
     goto newdata;
 
@@ -283,17 +277,6 @@ int load_savedgames()
   if(readsaves(saves,f)!=0)
     goto reset;
 
-/*  for(int i=0; i<MAXSAVES; i++)
-  {
-    if(strlen(saves[i].qstpath))
-    {
-      if(load_quest(saves+i, false) == 0)
-      {
-        load_game_icon(saves+i);
-      }
-    }
-  }*/
-
   pack_fclose(f);
   delete_file(tmpfilename);
   return 0;
@@ -305,7 +288,7 @@ int load_savedgames()
   reset:
   pack_fclose(f);
   delete_file(tmpfilename);
-  Z_message("Format error.  Resetting game data... ");
+  Z_message("Format error.  Resetting game data...");
 
   init:
   int *di = (int*)saves;
@@ -473,7 +456,7 @@ int writesaves(gamedata *savedata, PACKFILE *f)
   return 0;
 }
 
-int save_savedgames()
+int save_savedgames(bool freemem)
 {
   if(saves==NULL)
     return 1;
@@ -526,14 +509,16 @@ int save_savedgames()
   int ret = encode_file_007(tmpfilename, SAVE_FILE, 0x413F0000 + (frame&0xffff), SAVE_HEADER, ENC_METHOD_MAX-1);
   if(ret)
     ret += 100;
+  
   delete_file(tmpfilename);
+  if(freemem)
+	free(saves);
+
   return ret;
 }
 
 void load_game_icon(gamedata *g)
 {
-  //  int i = vbound(g->items[itype_ring],0,3);
-  //  int i = high_flag(g->items[itype_ring],itype_ring,true);
   int i = high_item(imax_ring, itype_ring, true, g->items[itype_ring], true);
   int t = QMisc.icons[i];
 
@@ -620,15 +605,6 @@ static void list_save(int save_num, int ypos)
     if(saves[save_num].quest)
       textprintf_ex(framebuf,zfont,72,ypos+24,1,0,"%3d",saves[save_num].deaths);
 
-    if(saves[save_num].quest==2)
-      overtile16(framebuf,41,56,ypos+14,9,0);             //put sword on second quests
-
-    if(saves[save_num].quest==3)
-    {
-      overtile16(framebuf,41,56,ypos+14,9,0);             //put sword on second quests
-      overtile16(framebuf,41,41,ypos+14,9,0);             //put sword on third quests
-    }
-    // maybe the triforce for the 4th quest?
     textprintf_ex(framebuf,zfont,72,ypos+16,1,0,"%s",saves[save_num].name);
   }
 
@@ -851,16 +827,8 @@ static bool register_name()
 
   if(!cancel)
   {
-    int quest=1;
-    char buf[9];
-    strcpy(buf,saves[s].name);
-    strupr(buf);
-    if(!stricmp(buf,"ZELDA"))
-      quest=2;
-    if(!stricmp(buf,"ALPHA"))
-      quest=3;
-    saves[s].quest=quest;
-
+    saves[s].quest=0xFF;
+	strncpy(saves[s].qstpath,get_filename(qstpath),80);
     packfile_password(datapwd);
     if(load_quest(saves+s))
     {
@@ -927,196 +895,6 @@ static bool delete_save(int file)
   return false;
 }
 
-/** game mode stuff **/
-
-DIALOG gamemode_dlg[] =
-{
-  // (dialog proc)     (x)   (y)   (w)   (h)   (fg)     (bg)    (key)    (flags)     (d1)           (d2)     (dp)
-  { jwin_win_proc,     40,   44,   240,  160,  0,       0,      0,       D_EXIT,     0,             0,       (void *) "Select Custom Quest" },
-  // 1
-  { jwin_button_proc,  205,  76,   61,   21,   0,       0,      'b',     D_EXIT,     0,             0,       (void *) "&Browse" },
-  { jwin_textbox_proc, 55,   78,   140,  16,   0,       0,      0,       0,          0,             0,       NULL },
-  { jwin_text_proc,       76,   106,  64,   8,    vc(0),   vc(11), 0,       0,          0,             0,       (void *) "Info:" },
-  { jwin_textbox_proc, 76,   118,  168,  40,   0,       0,      0,       0,          0,             0,       NULL },
-  // 5
-  { jwin_button_proc,  90,   171,  61,   21,   0,       0,      'k',     D_EXIT,     0,             0,       (void *) "O&K" },
-  { jwin_button_proc,  170,  171,  61,   21,   0,       0,      27,      D_EXIT,     0,             0,       (void *) "Cancel" },
-  { NULL }
-};
-
-
-static int get_quest_info(zquestheader *header,char *str)
-{
-  if(strlen(get_filename(qstpath)) == 0)
-  {
-    str[0]=0;
-    return 0;
-  }
-  bool oldquest=false;
-
-  // default error
-  strcpy(str,"Error: Invalid quest file");
-
-  char tmpbuf[L_tmpnam];
-  char *tmpfilename = tmpnam(tmpbuf);
-  int ret;
-  PACKFILE *f;
-
-  packfile_password(datapwd);
-  ret = decode_file_007(qstpath, tmpfilename, ENC_STR, ENC_METHOD_MAX-1, strstr(qstpath, ".dat#")!=NULL);
-  if(ret)
-  {
-    switch(ret)
-    {
-      case 1: strcpy(str,"Error: Unable to open file"); break;
-      case 2: strcpy(str,"Internal error occurred"); break;
-      // be sure not to delete tmpfilename now...
-    }
-    if (ret==5)                                             //old encryption?
-    {
-      ret = decode_file_007(qstpath, tmpfilename, ENC_STR, ENC_METHOD_192B105, strstr(qstpath, ".dat#")!=NULL);
-    }
-    if (ret==5)                                             //old encryption?
-    {
-      ret = decode_file_007(qstpath, tmpfilename, ENC_STR, ENC_METHOD_192B104, strstr(qstpath, ".dat#")!=NULL);
-    }
-    if (ret)
-    {
-      oldquest = true;
-    }
-  }
-
-  f = pack_fopen(oldquest ? qstpath : tmpfilename, F_READ_PACKED);
-  if(!f)
-  {
-    if(!oldquest&&(errno==EDOM))
-    {
-      f = pack_fopen(oldquest ? qstpath : tmpfilename, F_READ);
-    }
-    if (!f)
-    {
-      delete_file(tmpfilename);
-    }
-    strcpy(str,"Error: Unable to open file");
-    packfile_password(NULL);
-    return 0;
-  }
-  ret=readheader(f, header, true);
-
-  if (f)
-  {
-    pack_fclose(f);
-  }
-  if(!oldquest)
-  {
-    delete_file(tmpfilename);
-  }
-  packfile_password(NULL);
-
-  switch (ret)
-  {
-    case 0:
-      break;
-    case qe_invalid:
-      strcpy(str,"Error: Invalid quest file");
-      return 0;
-      break;
-    case qe_version:
-      strcpy(str,"Error: Invalid version");
-      return 0;
-      break;
-    case qe_obsolete:
-      strcpy(str,"Error: Obsolete version");
-      return 0;
-      break;
-  }
-
-  if(header->quest_number > 0)
-  {
-    strcpy(str,"Error: Not a custom quest");
-    return 0;
-  }
-
-  strcpy(str,"Title:\n");
-  strcat(str,header->title);
-  strcat(str,"\n\nAuthor:\n");
-  strcat(str,header->author);
-  packfile_password(NULL);
-
-  return 1;
-}
-
-static int custom_game()
-{
-  zquestheader h;
-  char infostr[200];
-  char path[260];
-  int ret=0;
-
-  gamemode_dlg[0].dp2 = lfont;
-  gamemode_dlg[2].dp = get_filename(qstpath);
-  if(get_quest_info(&h,infostr)==0)
-  {
-    gamemode_dlg[4].dp = infostr;
-    gamemode_dlg[5].flags = D_DISABLED;
-  }
-  else
-  {
-    gamemode_dlg[4].dp = infostr;
-    gamemode_dlg[5].flags = D_EXIT;
-  }
-  gamemode_dlg[2].d1 = gamemode_dlg[4].d1 = 0;
-  gamemode_dlg[2].d2 = gamemode_dlg[4].d2 = 0;
-  show_mouse(screen);
-
-  clear_keybuf();
-
-  while((ret=PopUp_dialog(gamemode_dlg,1))==1)
-  {
-    scare_mouse();
-    blit(screen,tmp_scr,scrx,scry,0,0,320,240);
-    unscare_mouse();
-
-    int  sel=0;
-    static EXT_LIST list[] =
-    {
-      { "ZC Quests (*.qst)", "qst" },
-      { NULL }
-    };
-
-    strcpy(path, qstpath);
-    //    if(jwin_file_browse("Load Quest", path, list, &sel))
-    if(jwin_file_browse_ex("Load Quest", path, list, &sel, 1024, -1, -1, lfont))
-    {
-      strcpy(qstpath, path);
-      gamemode_dlg[2].dp = get_filename(qstpath);
-//*
-      if(get_quest_info(&h,infostr)==0)
-      {
-        gamemode_dlg[4].dp = infostr;
-        gamemode_dlg[5].flags = D_DISABLED;
-      }
-      else
-      {
-        gamemode_dlg[4].dp = infostr;
-        gamemode_dlg[5].flags = D_EXIT;
-      }
-//*/
-      gamemode_dlg[2].d1 = gamemode_dlg[4].d1 = 0;
-      gamemode_dlg[2].d2 = gamemode_dlg[4].d2 = 0;
-    }
-
-    scare_mouse();
-    blit(tmp_scr,screen,0,0,scrx,scry,320,240);
-    unscare_mouse();
-  }
-
-  show_mouse(NULL);
-  //game_pal(); //ER(2021)
-  key[KEY_ESC]=0;
-  return (ret==5) ? 1 : 0;
-}
-
 static int game_details(int file)
 {
   int pos=file%3;
@@ -1140,40 +918,33 @@ static int game_details(int file)
   } while(pos && i>=70);
   destroy_bitmap(info);
 
-  textout_ex(framebuf,zfont,"GAME TYPE",40,104,3,0);
-  textout_ex(framebuf,zfont,"QUEST",40,112,3,0);
-  textout_ex(framebuf,zfont,"STATUS",40,120,3,0);
+  char title[23];
+  strncpy(title, saves[file].title, 23);
+  title[22] = '\0';
+  textout_ex(framebuf,zfont,title,40,104,1,0);
+  
+  textout_ex(framebuf,zfont,"FILE NAME",40,112,3,0);
+  textout_ex(framebuf,zfont,"QUEST VER",40,120,3,0);
+  textout_ex(framebuf,zfont,"PLAY TIME",40,128,3,0);
 
-  if(saves[file].quest<0xFf)
-  {
-    textout_ex(framebuf,zfont,"Normal Game",120,104,1,0);
-    textprintf_ex(framebuf,zfont,120,112,1,0,"%s Quest",
-      ordinal(saves[file].quest));
-  }
-  else
-  {
-    textout_ex(framebuf,zfont,"Custom Quest",120,104,1,0);
-    textprintf_ex(framebuf,zfont,120,112,1,0,"%s",
-      get_filename(saves[file].qstpath));
-  }
+  textout_ex(framebuf,zfont,saves[file].qstpath,120,112,1,0);
+  textout_ex(framebuf,zfont,saves[file].version,120,120,1,0);
 
   if(!saves[file].hasplayed)
-    textout_ex(framebuf,zfont,"Empty Game",120,120,1,0);
+    textout_ex(framebuf,zfont,"Empty Game",120,128,1,0);
   else if(!saves[file].timevalid)
-    textout_ex(framebuf,zfont,"Time Unknown",120,120,1,0);
+    textout_ex(framebuf,zfont,"Time Unknown",120,128,1,0);
   else
-    textout_ex(framebuf,zfont,time_str_med(saves[file].time),120,120,1,0);
+    textout_ex(framebuf,zfont,time_str_med(saves[file].time),120,128,1,0);
 
   if(saves[file].cheat)
-    textout_ex(framebuf,zfont,"Used Cheats",120,128,1,0);
+    textout_ex(framebuf,zfont,"(Cheats)",120,136,1,0);
 
-  textout_ex(framebuf,zfont,"START: PLAY GAME",56,152,1,0);
+  textout_ex(framebuf,zfont,"START: PLAY QUEST",56,152,1,0);
   textout_ex(framebuf,zfont,"    B: CANCEL",56,168,1,0);
-  if(!saves[file].hasplayed)
-    textout_ex(framebuf,zfont,"    A: CUSTOM QUEST",56,184,1,0);
 
   while(!Quit)
-  {
+  {  
     advanceframe();
     if(rBbtn())
     {
@@ -1184,27 +955,6 @@ static int game_details(int file)
     {
       blit(framebuf,scrollbuf,0,0,0,0,256,224);
       return 1;
-    }
-    if(!saves[file].hasplayed && rAbtn())
-    {
-      chop_path(qstpath);
-      sprintf(qstpath,"%s%s",qstpath,saves[file].qstpath);
-      //      packfile_password(datapwd);
-      if(custom_game())
-      {
-        saves[file].quest=0xFF;
-        strncpy(saves[file].qstpath,get_filename(qstpath),80);
-        packfile_password(datapwd);
-        load_quest(saves+file);
-        packfile_password(NULL);
-        saves[file].maxlife=zinit.hc*HP_PER_HEART;
-        saves[file].items[itype_ring]=(1<<(zinit.ring-1)); ringcolor();
-        saves[file].maxbombs=zinit.max_bombs;
-        load_game_icon(saves+file);
-        //      packfile_password(NULL);
-        selectscreen();
-        return 0;
-      }
     }
   }
   return 0;
@@ -1454,7 +1204,7 @@ void game_over()
       game.cheat |= cheat;
       saves[currgame] = game;
       load_game_icon(saves+currgame);
-      save_savedgames();
+      save_savedgames(false);
     }
   }
 }
@@ -1462,7 +1212,7 @@ void game_over()
 void go_quit()
 {
   clear_to_color(screen,BLACK);
-  loadfullpal();
+  //loadfullpal();
   clear_bitmap(framebuf);
 
   int pos = selection_menu();
@@ -1478,7 +1228,7 @@ void go_quit()
       game.cheat |= cheat;
       saves[currgame] = game;
       load_game_icon(saves+currgame);
-      save_savedgames();
+      save_savedgames(false);
     }
   }
 }

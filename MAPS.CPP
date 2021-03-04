@@ -12,7 +12,6 @@
 #include "zelda.h"
 #include "tiles.h"
 #include "sprite.h"
-#include "jwin.h"
 #include "zsys.h"
 #include "subscr.h"
 #include "link.h"
@@ -2121,7 +2120,7 @@ void ViewMap()
 
 }
 
-int onViewMap()
+void onViewMap()
 {
   if(Playing && currscr<128 && dlevel==0)
   {
@@ -2134,7 +2133,6 @@ int onViewMap()
       ViewMap();
     }
   }
-  return D_O_K;
 }
 
 

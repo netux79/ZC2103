@@ -21,8 +21,6 @@
 #include "pal.h"
 #include "zsys.h"
 #include "qst.h"
-#include "jwin.h"
-#include "jwinfsel.h"
 #include "fontsdat.h"
 #include "particles.h"
 
@@ -63,7 +61,7 @@ COLOR_MAP trans_table;
 
 BITMAP     *framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *screen2, *fps_undo, *msgdisplaybuf, *pricesdisplaybuf, *tb_page[3], *real_screen;
 DATAFILE   *data, *sfxdata, *fontsdata, *mididata;
-FONT       *zfont, *z3font, *deffont, *lfont, *lfont_l, *pfont;
+FONT       *zfont, *z3font, *lfont;
 PALETTE    RAMpal;
 byte       *tilebuf, *colordata, *trashbuf;
 newcombo   *combobuf;
@@ -88,8 +86,6 @@ bool halt=false;
 bool screenscrolling=false;
 
 int readsize, writesize;
-
-int jwin_pal[jcMAX];
 
 int homescr,currscr,frame=0,currmap=0,dlevel,warpscr,worldscr;
 int newscr_clk=0,opendoors=0,currdmap=0,fadeclk=-1,currgame=0,listpos=0;
@@ -146,7 +142,6 @@ bool scanlines;                                             //do scanlines if sb
 
 int cheat=0;                                                // 0 = none; 1,2,3,4 = cheat level
 
-int mouse_down;                                             // used to hold the last reading of 'gui_mouse_b()' status
 int idle_count;
 
 // quest file data
@@ -160,7 +155,7 @@ dmap         *DMaps;
 miscQdata    QMisc;
 mapscr       *TheMaps;
 
-char     *qstpath=NULL;
+char     qstpath[1024] = {'\0'};
 gamedata *saves=NULL;
 
 volatile int lastfps=0;
@@ -364,14 +359,6 @@ void CatchBrang() { Link.Catch(); }
 
 int load_quest(gamedata *g, bool report)
 {
-  //  packfile_password(datapwd);
-  chop_path(qstpath);
-
-  if(g->quest<255)
-    sprintf(qstpath,"%s%s.qst",qstpath,ordinal(g->quest));
-  else
-    sprintf(qstpath,"%s%s",qstpath,get_filename(g->qstpath));
-
   packfile_password(datapwd);
   byte skip_flags[4];
   for (int i=0; i<4; ++i)
@@ -407,8 +394,6 @@ int load_quest(gamedata *g, bool report)
     sprintf(buf2,"%s",qst_error[ret]);
     al_trace("%s %s\n",buf1,buf2);
   }
-
-  //  packfile_password(NULL);
   return ret;
 }
 
@@ -1439,44 +1424,37 @@ int main(int argc, char* argv[])
 {
   Z_title("Zelda Classic %s (Build %d)",VerStr(ZELDA_VERSION), VERSION_BUILD);
 
-  // allocate quest data buffers
-  memrequested+=2048;
-  Z_message("Allocating quest path buffers (%s)...", byte_conversion2(2048,memrequested,-1,-1));
-  qstpath = (char*)malloc(2048);
-  if(!qstpath)
-  {
-    Z_error("Error\n");
-  }
+  // Get the quest file to run.
+  char *temp = get_cmd_arg(argc,argv);
+  
+  if(temp!=NULL)
+	strcpy(qstpath, temp);
 
-  qstpath[0] = 0;
-#ifdef ALLEGRO_MACOSX
-  sprintf(qstpath, "../");
-#endif
+  set_uformat(U_ASCII);
+  set_config_file("zc.cfg");
+  
+  // load game configurations
+  load_game_configs();
 
-  Z_message("OK\n");
-
+  if (strlen(qstpath)==0)
+	Z_error("Please provide a quest name to use as the first command argument: %s quest_name.qst", argv[0]);
+  
   get_qst_buffers();
 
   // initialize Allegro
   Z_message("Initializing Allegro... ");
-  #ifdef ALLEGRO_DOS
+  /*#ifdef ALLEGRO_DOS
   three_finger_flag = FALSE;
-  #endif
+  #endif*/
   allegro_init();
+
   three_finger_flag=false;
   zcmusic_init();
-  //atexit(&dumb_exit);
-  //dumb_register_stdfiles();
-
-  set_config_file("ag.cfg");
 
   if(install_timer() < 0)
     Z_error(allegro_error);
 
   if(install_keyboard() < 0)
-    Z_error(allegro_error);
-
-  if(install_mouse() < 0)
     Z_error(allegro_error);
 
   LOCK_VARIABLE(logic_counter);
@@ -1486,17 +1464,12 @@ int main(int argc, char* argv[])
   Z_init_timers();
   Z_message("OK\n");
 
-  // allocate bitmap buffers
-
+  // Define the bit depth to use
+  set_color_depth(used_switch(argc,argv,"-16bit") ? 16 : 8);
+  set_color_conversion(COLORCONV_NONE);
+  
+  // Allocate bitmap buffers
   Z_message("Allocating bitmap buffers... ");
-  if(used_switch(argc,argv,"-16bit"))
-  {
-    set_color_depth(16);
-  }
-  else
-  {
-    set_color_depth(8);
-  }
   framebuf  = create_bitmap_ex(8,256,224);
   scrollbuf = create_bitmap_ex(8,512,406);
   screen2   = create_bitmap_ex(8,320,240);
@@ -1516,26 +1489,18 @@ int main(int argc, char* argv[])
   clear_bitmap(pricesdisplaybuf);
   set_clip_state(pricesdisplaybuf, 1);
   Z_message("OK\n");
-
-  // load game configurations
-  load_game_configs();
-
-  int mode = VidMode;                                       // from config file
+	
+  int mode = VidMode; // from config file
   int res_arg = used_switch(argc,argv,"-res");
 
-  resolve_password(zeldapwd);
-
-  resolve_password(datapwd);
-  packfile_password(datapwd);
-
   Z_message("Loading data files:\n");
-  set_color_conversion(COLORCONV_NONE);
-
   sprintf(zeldadat_sig,"Zelda.Dat %s Build %d",VerStr(ZELDADAT_VERSION), ZELDADAT_BUILD);
   sprintf(sfxdat_sig,"SFX.Dat %s Build %d",VerStr(SFXDAT_VERSION), SFXDAT_BUILD);
   sprintf(fontsdat_sig,"Fonts.Dat %s Build %d",VerStr(FONTSDAT_VERSION), FONTSDAT_BUILD);
 
-  // load the data file
+  resolve_password(datapwd);
+  packfile_password(datapwd);  
+  
   Z_message("Zelda.Dat...");
   if((data=load_datafile("zelda.dat"))==NULL)
   {
@@ -1573,15 +1538,9 @@ int main(int argc, char* argv[])
 
   mididata = (DATAFILE*)data[MUSIC].dat;
 
-  set_uformat(U_ASCII);
-  deffont = font;
   font = (FONT*)fontsdata[FONT_GUI_PROP].dat;
-  pfont = (FONT*)fontsdata[FONT_8xPROP_THIN].dat;
   lfont = (FONT*)fontsdata[FONT_LARGEPROP].dat;
-  lfont_l = (FONT*)fontsdata[FONT_LARGEPROP_L].dat;
   zfont = (FONT*)fontsdata[FONT_NES].dat;
-  z3font = (FONT*)fontsdata[FONT_Z3].dat;
-  //  text_mode(0);
 
   // load saved games
   Z_message("Loading saved games... ");
@@ -1593,7 +1552,6 @@ int main(int argc, char* argv[])
   Z_message("OK\n");
 
   // initialize sound driver
-
   Z_message("Initializing sound driver... ");
   if(used_switch(argc,argv,"-s") || used_switch(argc,argv,"-nosound"))
   {
@@ -1603,7 +1561,6 @@ int main(int argc, char* argv[])
   {
     if(install_sound(DIGI_AUTODETECT,DIGI_AUTODETECT,NULL))
     {
-      //      Z_error(allegro_error);
       Z_message("Sound driver not available.  Sound disabled.\n");
     }
     else
@@ -1713,10 +1670,6 @@ int main(int argc, char* argv[])
 
   set_window_title("Zelda Classic");
 
-  fix_dialogs();
-  gui_mouse_focus = FALSE;
-  position_mouse(resx-16,resy-16);
-
   reset_items(true, &QHeader);
 
   rgb_map = &rgb_table;
@@ -1778,7 +1731,7 @@ int main(int argc, char* argv[])
   set_gfx_mode(GFX_TEXT,80,25,0,0);
   rest(250);
 
-  save_savedgames();
+  save_savedgames(true);
   save_game_configs();
   unload_datafile(data);
   destroy_bitmap(framebuf);
@@ -1792,7 +1745,6 @@ int main(int argc, char* argv[])
   set_clip_state(pricesdisplaybuf, 1);
   destroy_bitmap(pricesdisplaybuf);
   zcmusic_exit();
-  //  dumb_exit();
   Z_message("Armageddon Games web site: http://www.armageddongames.com\n");
   Z_message("Zelda Classic web site: http://www.zeldaclassic.com\n");
 

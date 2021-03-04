@@ -20,16 +20,12 @@
 #include "zeldadat.h"
 #include "sfx.h"
 #include "zcmusic.h"
-#include "jwin.h"
 
 #define  MAXMUSIC     MUSIC_COUNT+MAXMIDIS
 #define  WAV_COUNT    WAV_ZELDA+1
 
-#define MAX_IDLE      72000                                 // 20 minutes
-
-// saved games
-//#define MAXSAVES      24
-#define MAXSAVES      15
+// saved games, 6 saves = 2 screens
+#define MAXSAVES          6
 
 // game.maps[] flags
 #define mSECRET           1                                 // only overworld and caves use this
@@ -135,7 +131,7 @@ extern COLOR_MAP trans_table;
 extern BITMAP     *framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *screen2, *fps_undo, *msgdisplaybuf, *pricesdisplaybuf, *tb_page[3], *real_screen;
 extern DATAFILE *data, *sfxdata, *fontsdata, *mididata;
 extern SAMPLE   wav_refill;
-extern FONT     *zfont, *z3font, *deffont, *lfont, *lfont_l, *pfont;
+extern FONT     *zfont, *lfont;
 extern PALETTE  RAMpal;
 extern byte     *tilebuf, *colordata;
 extern newcombo *combobuf;
@@ -161,7 +157,6 @@ extern int logic_counter;
 extern bool drawit;
 extern bool halt;
 extern bool screenscrolling;
-extern int jwin_pal[jcMAX];
 
 extern int homescr,currscr,frame,currmap,dlevel,warpscr,worldscr;
 extern int newscr_clk,opendoors,currdmap,fadeclk,currgame,listpos;
@@ -209,9 +204,8 @@ extern bool scanlines;                                      //do scanlines if sb
 
 extern int cheat;                                           // 0 = none; 1,2,3,4 = cheat level
 
-extern int  mouse_down;                                     // used to hold the last reading of 'gui_mouse_b()' status
 extern int idle_count;
-extern char *qstpath;
+extern char qstpath[1024];
 extern gamedata *saves;
 extern gamedata game;
 

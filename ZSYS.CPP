@@ -15,20 +15,6 @@
 #include "zdefs.h"
 #include "zsys.h"
 #include "zc_sys.h"
-#include "jwin.h"
-
-/*
-enum { jcBOX, jcLIGHT, jcMEDLT, jcMEDDARK, jcDARK, jcBOXFG,
-       jcTITLEL, jcTITLER, jcTITLEFG, jcTEXTBG, jcTEXTFG, jcSELBG, jcSELFG,
-       jcMAX };
-
-int jwin_pal[jcMAX] =
-{
-  vc(11),vc(15),vc(4),vc(7),vc(6),vc(0),
-  192,223,vc(14),vc(15),vc(0),vc(1),vc(14)
-};
-*/
-
 
 char *time_str_long(dword time)
 {
@@ -66,6 +52,7 @@ char *time_str_short(dword time)
   return s;
 }
 
+/*
 void extract_name(char *path,char *name,int type)
 {
   int l=strlen(path);
@@ -136,7 +123,7 @@ char *temp_name(char *s)
     sprintf(s, "%s", temporaryname);
   }
   return temporaryname;
-}
+}*/
 
 int vbound(int x,int low,int high)
 {
@@ -161,9 +148,17 @@ int used_switch(int argc,char *argv[],char *s)
   return 0;
 }
 
-char zeldapwd[8]  = { 'T'+11,'e'+22,'m'+33,'e'+44,'n'+55,'k'+66,'u'+77,0+88 };
-char zquestpwd[8] = { 'N'+11,'g'+22,'o'+33,'m'+44,'o'+55,'n'+66,'g'+77,0+88 };
-char datapwd[8]   = { 'l'+11,'o'+22,'n'+33,'g'+44,'t'+55,'a'+66,'n'+77,0+88 };
+// Returns the first no switch (-) argv param
+char *get_cmd_arg(int argc,char *argv[])
+{
+  // assumes a switch won't be in argv[0] since it is the exe name.
+  for(int i=1; i<argc; i++)
+    if(argv[i][0]!='-')
+      return argv[i];
+  return NULL;
+}
+
+char datapwd[8] = { 'l'+11,'o'+22,'n'+33,'g'+44,'t'+55,'a'+66,'n'+77,0+88 };
 
 void resolve_password(char *pwd)
 {
@@ -726,88 +721,3 @@ void copy_file(char *src, char *dest)
   fclose(fin);
   fclose(fout);
 }
-
-// Checking for double clicks is complicated. The user could release the
-// mouse button at almost any point, and I might miss it if I am doing some
-// other processing at the same time (eg. sending the single-click message).
-// To get around this I install a timer routine to do the checking for me,
-// so it will notice double clicks whenever they happen.
-
-volatile int dclick_status, dclick_time;
-
-// dclick_check:
-//  Double click checking user timer routine.
-
-void dclick_check(void)
-{
-  if (dclick_status==DCLICK_NOT)
-  {
-    if (gui_mouse_b())
-    {
-	    dclick_status = DCLICK_START;           // let's go!
-      dclick_time = 0;
-      return;
-    }
-  }
-  else if (dclick_status==DCLICK_START) {              // first click...
-    if (!gui_mouse_b()) {
-	    dclick_status = DCLICK_RELEASE;           // aah! released first
-      dclick_time = 0;
-      return;
-    }
-  }
-  else if (dclick_status==DCLICK_RELEASE) {       // wait for second click
-    if (gui_mouse_b()) {
-      dclick_status = DCLICK_AGAIN;             // yes! the second click
-      dclick_time = 0;
-      return;
-    }
-  }
-  else
-  {
-    return;
-  }
-
-  // timeout?
-  if (dclick_time++ > 10)
-  {
-    dclick_status = DCLICK_NOT;
-  }
-}
-
-END_OF_FUNCTION(dclick_check)
-
-void lock_dclick_function()
-{
-  LOCK_FUNCTION(dclick_check);
-}
-
-/*
-void dclick_check(void)
-{
-  if (dclick_status==DCLICK_START) {              // first click...
-    if (!gui_mouse_b()) {
-	    dclick_status = DCLICK_RELEASE;           // aah! released first
-      dclick_time = 0;
-      return;
-    }
-  }
-  else if (dclick_status==DCLICK_RELEASE) {       // wait for second click
-    if (gui_mouse_b()) {
-      dclick_status = DCLICK_AGAIN;             // yes! the second click
-      dclick_time = 0;
-      return;
-    }
-  }
-  else
-  {
-    return;
-  }
-
-  // timeout?
-  if (dclick_time++ > 10)
-  {
-    dclick_status = DCLICK_NOT;
-  }
-}
-*/

@@ -314,13 +314,7 @@ void ending()
   // draw the brick
   puttile16(scrollbuf,3,256,0,csBOSS,0);
 
-  int len=600*2;
-  if(game.quest>1)
-  {
-    len=720*2;
-  }
-
-  for(int f=0; f<len; f++)
+  for(int f=0; f<720*2; f++)
   {
     if(!(f&15))
     {
@@ -339,6 +333,7 @@ void ending()
       }
       switch(y)
       {
+        // Credits
         case 240: textout_ex(scrollbuf,zfont," STAFF ",104,224,white,0); break;
         case 272: textout_ex(scrollbuf,zfont,"EXECUTIVE",40,224,blue,0); break;
         case 280: textout_ex(scrollbuf,zfont,"PRODUCER... H.YAMAUCHI",40,224,blue,0); break;
@@ -351,62 +346,17 @@ void ending()
         case 512: textout_ex(scrollbuf,zfont,"          ... MARUMARU",40,224,green,0); break;
         case 552: textout_ex(scrollbuf,zfont,"SOUND",40,224,red,0); break;
         case 560: textout_ex(scrollbuf,zfont,"COMPOSER...... KONCHAN",40,224,red,0); break;
-      }
 
-      switch(game.quest)
-      {
-        case 1:
-          switch(y)
-          {
-            case 656: textout_ex(scrollbuf,zfont,"ANOTHER QUEST WILL START",32,224,white,0); break;
-            case 672: textout_ex(scrollbuf,zfont,"FROM HERE.",88,224,white,0); break;
-            case 696: textout_ex(scrollbuf,zfont,"PRESS THE START BUTTON.",40,224,white,0); break;
-            case 760: textprintf_ex(scrollbuf,zfont,72,224,white,0,"%c1986 NINTENDO",0xBB); break;
-          }
-          break;
-
-        case 2:
-          switch(y)
-          {
-            case 768: textout_ex(scrollbuf,zfont,"YOU ARE GREAT.",72,224,white,0); break;
-            case 792: textprintf_ex(scrollbuf,zfont,72,224,red,0,"%-8s -%3d",game.name,game.deaths); break;
-            case 816: textout_ex(scrollbuf,zfont,"YOU HAVE AN AMAZING",48,224,white,0); break;
-            case 832: textout_ex(scrollbuf,zfont,"WISDOM AND POWER.",64,224,white,0); break;
-            /*
-                    case 880: textout_ex(scrollbuf,zfont,"END OF",104,224,white); break;
-                    case 896: textout_ex(scrollbuf,zfont,"\"THE LEGEND OF ZELDA 1\"",32,224,white); break;
-            */
-            case 912: textprintf_ex(scrollbuf,zfont,72,224,blue,0,"%c1986 NINTENDO",0xBB); break;
-          }
-          break;
-
-        case 3:
-          switch(y)
-          {
-            case 768: textout_ex(scrollbuf,zfont,"YOU ARE GREAT.",72,224,white,0); break;
-            case 792: textprintf_ex(scrollbuf,zfont,72,224,red,0,"%-8s -%3d",game.name,game.deaths); break;
-            case 816: textout_ex(scrollbuf,zfont,"YOU HAVE AN AMAZING",48,224,white,0); break;
-            case 832: textout_ex(scrollbuf,zfont,"WISDOM AND POWER.",64,224,white,0); break;
-            case 880: textout_ex(scrollbuf,zfont,"END OF",104,224,white,0); break;
-            case 896: textout_ex(scrollbuf,zfont,"\"THE LEGEND OF ZELDA 1\"",32,224,white,0); break;
-            case 912: textprintf_ex(scrollbuf,zfont,72,224,blue,0,"%c1986 NINTENDO",0xBB); break;
-          }
-          break;
-
-        default:
-          switch(y)
-          {
-            case 768: textout_centre_ex(scrollbuf,zfont,"Congratulations!",128,224,white,0); break;
-            case 784: textprintf_ex(scrollbuf,zfont,72,224,red,0,"%-8s -%3d",game.name,game.deaths); break;
-            case 800: if(game.timevalid && !game.cheat)
-            textout_centre_ex(scrollbuf,zfont,time_str_med(game.time),128,224,blue,0); break;
-            case 816: textout_centre_ex(scrollbuf,zfont,"You beat a",128,224,white,0); break;
-            case 832: textout_centre_ex(scrollbuf,zfont,"custom quest.",128,224,white,0); break;
-            case 880: textout_centre_ex(scrollbuf,zfont,"ZELDA CLASSIC",128,224,white,0); break;
-            case 896: textout_centre_ex(scrollbuf,zfont,"1999-2007",128,224,white,0); break;
-            case 912: textout_centre_ex(scrollbuf,zfont,"Armageddon Games",128,224,blue,0); break;
-          }
-          break;
+        // Final message for ALL the quests.
+        case 768: textout_centre_ex(scrollbuf,zfont,"Congratulations!",128,224,white,0); break;
+        case 784: textprintf_ex(scrollbuf,zfont,72,224,red,0,"%-8s -%3d",game.name,game.deaths); break;
+        case 800: if(game.timevalid && !game.cheat)
+        textout_centre_ex(scrollbuf,zfont,time_str_med(game.time),128,224,blue,0); break;
+        case 816: textout_centre_ex(scrollbuf,zfont,"You beat a",128,224,white,0); break;
+        case 832: textout_centre_ex(scrollbuf,zfont,"ZC Quest.",128,224,white,0); break;
+        case 880: textout_centre_ex(scrollbuf,zfont,"ZELDA CLASSIC",128,224,white,0); break;
+        case 896: textout_centre_ex(scrollbuf,zfont,"1999-2007",128,224,white,0); break;
+        case 912: textout_centre_ex(scrollbuf,zfont,"Armageddon Games",128,224,blue,0); break;
       }
     }
 
@@ -449,11 +399,6 @@ void ending()
     }
   } while(!rSbtn());
 
-  if(game.quest>0 && game.quest<255)
-  {
-    inc_quest();
-  }
-
   ringcolor();
   packfile_password(datapwd);
   load_quest(&game);
@@ -462,26 +407,5 @@ void ending()
   game.continue_dmap=zinit.start_dmap;
   game.continue_scrn=0xFF;
   saves[currgame] = game;
-  save_savedgames();
-}
-
-void inc_quest()
-{
-  char name[9];
-  strcpy(name,game.name);
-  int quest = min(game.quest+1,QUEST_COUNT);
-  int deaths = game.deaths;
-
-  int *di = (int*)(&game);
-  for(unsigned i=0; i<sizeof(gamedata)/sizeof(int); i++)
-  {
-    *(di++) = 0;
-  }
-
-  strcpy(game.name,name);
-  game.quest = quest;
-  game.deaths = deaths;
-  game.maxlife = game.life = 3*HP_PER_HEART;
-  game.maxbombs = 8;
-  game.hasplayed = true;
+  save_savedgames(false);
 }

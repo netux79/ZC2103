@@ -19,33 +19,26 @@
 #define _ZSYS_H_
 
 #include "zdefs.h"
-#include "jwin.h"
 
 #define FILENAME8_3   0
 #define FILENAME8__   1
 #define FILENAMEALL   2
 
-extern int jwin_pal[jcMAX];
-
-extern volatile int dclick_status, dclick_time;
-
 char *time_str_short(dword time);
 char *time_str_med(dword time);
 char *time_str_long(dword time);
 
+/*
 void extract_name(char *path,char *name,int type);
 void chop_path(char *path);
-char *temp_name(char *s);
+char *temp_name(char *s);*/
 int  vbound(int x,int low,int high);
 float vbound(float x,float low,float high);
 int  used_switch(int argc,char *argv[],char *s);
+char *get_cmd_arg(int argc,char *argv[]);
 bool isinRect(int x,int y,int rx1,int ry1,int rx2,int ry2);
-void crash();
 
-extern char zeldapwd[8];
-extern char zquestpwd[8];
 extern char datapwd[8];
-extern char zcheat[4][8];
 
 void resolve_password(char *pwd);
 
@@ -63,10 +56,4 @@ void Z_message(char *format,...);
 void Z_title(char *format,...);
 
 int anim_3_4(int clk, int speed);
-
-void dither_rect(BITMAP *bmp, PALETTE *pal, int x1, int y1, int x2, int y2,
-                 int src_color1, int src_color2, byte dest_color1,
-                 byte dest_color2);
-void dclick_check(void);
-void lock_dclick_function();
 #endif                                                      // _ZSYS_H_

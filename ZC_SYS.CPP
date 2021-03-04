@@ -27,9 +27,6 @@
 #include "zsys.h"
 #include "qst.h"
 #include "zc_sys.h"
-#include "jwin.h"
-#include "jwinfsel.h"
-#include "gui.h"
 #include "midi.h"
 #include "subscr.h"
 #include "maps.h"
@@ -48,8 +45,6 @@ extern sprite_list  guys, items, Ewpns, Lwpns, Sitems, chainlinks, decorations, 
 /**********************************/
 
 static char cfg_sect[] = "zeldadx";
-
-int d_dummy_proc(int msg,DIALOG *d,int c) { return D_O_K; }
 
 void load_game_configs()
 {
@@ -86,20 +81,11 @@ void load_game_configs()
   resy = get_config_int(cfg_sect,"resy",240);
   sbig = get_config_int(cfg_sect,"sbig",0);
   scanlines = get_config_int(cfg_sect,"scanlines",0);
-  strcpy(qstpath,get_config_string(cfg_sect,"qst_dir",""));
-
-  if(strlen(qstpath)==0)
-  {
-    getcwd(qstpath,280);
-    fix_filename_case(qstpath);
-    fix_filename_slashes(qstpath);
-    put_backslash(qstpath);
-  }
-  else
-  {
-    chop_path(qstpath);
-  }
   HeartBeep = get_config_int(cfg_sect,"heartbeep",1);
+  
+  // Only get it if not already set
+  if(strlen(qstpath)==0)
+    strcpy(qstpath,get_config_string(cfg_sect,"qst_dir",""));
 }
 
 void save_game_configs()
@@ -137,7 +123,6 @@ void save_game_configs()
   set_config_int(cfg_sect,"resy",resy);
   set_config_int(cfg_sect,"sbig",sbig);
   set_config_int(cfg_sect,"scanlines",scanlines);
-  chop_path(qstpath);
   set_config_string(cfg_sect,"qst_dir",qstpath);
   set_config_int(cfg_sect,"heartbeep",HeartBeep);
 }
@@ -186,20 +171,6 @@ void Z_init_timers()
 
 //----------------------------------------------------------------
 
-void go()
-{
-  scare_mouse();
-  blit(screen,tmp_scr,scrx,scry,0,0,screen->w,screen->h);
-  unscare_mouse();
-}
-
-void comeback()
-{
-  scare_mouse();
-  blit(tmp_scr,screen,0,0,scrx,scry,screen->w,screen->h);
-  unscare_mouse();
-}
-
 void dump_pal(BITMAP *dest)
 {
   for(int i=0; i<256; i++)
@@ -243,7 +214,7 @@ void show_fps()
 
 //----------------------------------------------------------------
 
-// sets the video mode and initializes the palette and mouse sprite
+// sets the video mode and initializes the palette
 bool game_vid_mode(int mode,int wait)
 {
   //  set_color_depth(colordepth);
@@ -360,7 +331,6 @@ case GFX_AUTODETECT_WINDOWED:
   scrx = (resx-320)>>1;
   scry = (resy-240)>>1;
 
-  set_mouse_sprite((BITMAP*)data[BMP_MOUSE].dat);
   for(int i=240; i<256; i++)
     RAMpal[i]=((RGB*)data[PAL_GUI].dat)[i];
   set_palette(RAMpal);
@@ -3459,146 +3429,7 @@ int TriforceCount()
   return c;
 }
 
-int onContinue()
-{
-  return D_CLOSE;
-}
-
-int onEsc()
-{
-  return key[KEY_ESC]?D_CLOSE:D_O_K;
-}
-
-int onVsync()
-{
-  Throttlefps = !Throttlefps;
-  return D_O_K;
-}
-
-int onTransLayers()
-{
-  TransLayers = !TransLayers;
-  return D_O_K;
-}
-
-int onShowFPS()
-{
-  ShowFPS = !ShowFPS;
-  scare_mouse();
-
-  if(ShowFPS)
-    show_fps();
-  else if(sbig)
-    stretch_blit(fps_undo,screen,0,0,64,16,scrx+40-120,scry+216+96,128,32);
-  else
-    blit(fps_undo,screen,0,0,scrx+40,scry+216,64,16);
-  if(Paused)
-    show_paused();
-
-  unscare_mouse();
-  return D_O_K;
-}
-
-bool is_Fkey(int k)
-{
-  switch(k)
-  {
-    case KEY_F1:
-    case KEY_F2:
-    case KEY_F3:
-    case KEY_F4:
-    case KEY_F5:
-    case KEY_F6:
-    case KEY_F7:
-    case KEY_F8:
-    case KEY_F9:
-    case KEY_F10:
-    case KEY_F11:
-    case KEY_F12:
-      return true;
-  }
-  return false;
-}
-
-void kb_getkey(DIALOG *d)
-{
-  d->flags|=D_SELECTED;
-
-  scare_mouse();
-  jwin_button_proc(MSG_DRAW,d,0);
-  jwin_draw_win(screen, (resx-160)/2, (resy-48)/2, 160, 48, FR_WIN);
-                                                            //  text_mode(vc(11));
-  textout_centre_ex(screen, font, "Press a key", resx/2, resy/2 - 8, vc(0),vc(11));
-  textout_centre_ex(screen, font, "ESC to cancel", resx/2, resy/2, vc(0),vc(11));
-  unscare_mouse();
-
-  clear_keybuf();
-  int k = next_press_key();
-  clear_keybuf();
-
-                                                            //shnarf
-                                                            //47=f1
-                                                            //59=esc
-  if(k>0 && k<123 && !((k>46)&&(k<60)))
-    *((int*)d->dp3) = k;
-
-
-  d->flags&=~D_SELECTED;
-}
-
-int d_kbutton_proc(int msg,DIALOG *d,int c)
-{
-  switch(msg)
-  {
-    case MSG_KEY:
-    case MSG_CLICK:
-
-      kb_getkey(d);
-      while(gui_mouse_b())
-        clear_keybuf();
-      return D_REDRAW;
-  }
-
-  return jwin_button_proc(msg,d,c);
-}
-
-void j_getbtn(DIALOG *d)
-{
-  d->flags|=D_SELECTED;
-  scare_mouse();
-  jwin_button_proc(MSG_DRAW,d,0);
-  jwin_draw_win(screen, (resx-160)/2, (resy-48)/2, 160, 48, FR_WIN);
-                                                            //  text_mode(vc(11));
-  int y = resy/2 - 12;
-  textout_centre_ex(screen, font, "Press a button", resx/2, y, vc(0),vc(11));
-  textout_centre_ex(screen, font, "ESC to cancel", resx/2, y+8, vc(0),vc(11));
-  textout_centre_ex(screen, font, "SPACE to disable", resx/2, y+16, vc(0),vc(11));
-  unscare_mouse();
-
-  int b = next_press_btn();
-  if(b>=0)
-    *((int*)d->dp3) = b;
-
-  d->flags&=~D_SELECTED;
-}
-
-int d_jbutton_proc(int msg,DIALOG *d,int c)
-{
-  switch(msg)
-  {
-    case MSG_KEY:
-    case MSG_CLICK:
-
-      j_getbtn(d);
-      while(gui_mouse_b())
-        clear_keybuf();
-      return D_REDRAW;
-  }
-
-  return jwin_button_proc(msg,d,c);
-}
-
-                                                            //shnarf
+/*
 char *key_str[] =
 {
   "(none)",         "a",              "b",              "c",
@@ -3634,95 +3465,11 @@ char *key_str[] =
   "alt gr",         "left win",       "right win",      "menu",
   "scroll lock",    "number lock",    "caps lock",      "MAX"
 };
-
-char *pan_str[4] = { "MONO", " 1/2", " 3/4", "FULL" };
-//char zcmusic_bufsz = 10;
-
-static char str_a[44],str_b[44],str_s[44],str_m[16],str_l[16],str_r[16],str_p[16];
-
-int d_stringloader(int msg,DIALOG *d,int c)
-{
-  if(msg==MSG_DRAW)
-  {
-    switch(d->w)
-    {
-      case 0:
-        sprintf(str_a,"%d\n%s",Akey,key_str[Akey]);
-        sprintf(str_b,"%d\n%s",Bkey,key_str[Bkey]);
-        sprintf(str_s,"%d\n%s",Skey,key_str[Skey]);
-        sprintf(str_l,"%d\n%s",Lkey,key_str[Lkey]);
-        sprintf(str_r,"%d\n%s",Rkey,key_str[Rkey]);
-        sprintf(str_p,"%d\n%s",Mkey,key_str[Mkey]);
-        break;
-
-      case 1:
-        sprintf(str_a,"%d\n%s",DUkey,key_str[DUkey]);
-        sprintf(str_b,"%d\n%s",DDkey,key_str[DDkey]);
-        sprintf(str_l,"%d\n%s",DLkey,key_str[DLkey]);
-        sprintf(str_r,"%d\n%s",DRkey,key_str[DRkey]);
-        break;
-
-      case 3:
-        sprintf(str_a,"%3d",midi_volume);
-        sprintf(str_b,"%3d",digi_volume);
-        strcpy(str_s,pan_str[pan_style]);
-        sprintf(str_m,"%2dKB",zcmusic_bufsz);
-        break;
-    }
-  }
-  return D_O_K;
-}
-
-int set_vol(void *dp3, int d2)
-{
-  switch(((int*)dp3)[0])
-  {
-    case 0:  midi_volume = min(d2<<3,255); break;
-    case 1:  digi_volume = min(d2<<3,255); break;
-  }
-  scare_mouse();
-  // text_mode(vc(11));
-  textprintf_right_ex(screen,font,((int*)dp3)[1],((int*)dp3)[2],jwin_pal[jcBOXFG],jwin_pal[jcBOX],"%3d",min(d2<<3,255));
-  unscare_mouse();
-  return D_O_K;
-}
-
-int set_pan(void *dp3, int d2)
-{
-  pan_style = vbound(d2,0,3);
-  scare_mouse();
-                                                            // text_mode(vc(11));
-  textout_right_ex(screen,font,pan_str[pan_style],((int*)dp3)[1],((int*)dp3)[2],jwin_pal[jcBOXFG],jwin_pal[jcBOX]);
-  unscare_mouse();
-  return D_O_K;
-}
-
-int set_buf(void *dp3, int d2)
-{
-  scare_mouse();
-                                                            // text_mode(vc(11));
-  zcmusic_bufsz = d2 + 1;
-  textprintf_right_ex(screen,font,((int*)dp3)[1],((int*)dp3)[2],jwin_pal[jcBOXFG],jwin_pal[jcBOX],"%2dKB",zcmusic_bufsz);
-  unscare_mouse();
-  return D_O_K;
-}
-
-int xtoi(char *hexstr)
-{
-  int val=0;
-  while(isxdigit(*hexstr))
-  {
-    val<<=4;
-    if(*hexstr<='9')
-      val += *hexstr-'0';
-    else val+= ((*hexstr)|0x20)-'a'+10;
-    ++hexstr;
-  }
-  return val;
-}
+*/
 
 void LogVidMode()
 {
+  char str_a[44],str_b[44];
   #ifdef ALLEGRO_DOS
   switch(VidMode)
   {
@@ -3804,18 +3551,6 @@ void music_stop()
   zcmusic_stop(zcmusic);
   zcmusic_unload_file(zcmusic);
   stop_midi();
-}
-
-void fix_dialogs()
-{
-  int x = scrx-(sbig?160:0);
-  int y = scry-(sbig?120:0);
-  if(x>0) x+=3;
-  if(y>0) y+=3;
-  if(x<0) x=0;
-  if(y<0) y=0;
-
-  jwin_center_dialog(gamemode_dlg);
 }
 
 /*****************************/
@@ -4097,35 +3832,6 @@ int pan(int x)
                                                             /******* Input Handlers ********/
                                                             /*******************************/
 
-int next_press_key()
-{
-  char k[128];
-  for(int i=0; i<128; i++)
-    k[i]=key[i];
-  do
-  {
-    for(int i=0; i<128; i++)
-      if(key[i]!=k[i])
-        return i;
-  } while(1);
-}
-
-int next_press_btn()
-{
-  clear_keybuf();
-  while(1)
-  {
-    if(keypressed())
-    {
-      switch(readkey()>>8)
-      {
-        case KEY_ESC:   return -1;
-        case KEY_SPACE: return 0;
-      }
-    }
-  }
-}
-
 static bool rButton(bool(proc)(),bool &flag)
 {
   if(!proc())
@@ -4145,7 +3851,6 @@ bool Right()  { return key[DRkey]; }
 bool cAbtn()  { return key[Akey]; }
 bool cBbtn()  { return key[Bkey]; }
 bool cSbtn()  { return key[Skey]; }
-bool cEbtn()  { return key[KEY_ESC]; }
 bool cLbtn()  { return key[Lkey]; }
 bool cRbtn()  { return key[Rkey]; }
 bool cMbtn()  { return key[Mkey]; }
@@ -4157,7 +3862,6 @@ bool rRight() { return rButton(Right,Rdown); }
 bool rAbtn()  { return rButton(cAbtn,Adown); }
 bool rBbtn()  { return rButton(cBbtn,Bdown); }
 bool rSbtn()  { return rButton(cSbtn,Sdown); }
-bool rEbtn()  { return rButton(cEbtn,Mdown); }
 bool rLbtn()  { return rButton(cLbtn,LBdown); }
 bool rRbtn()  { return rButton(cRbtn,RBdown); }
 bool rMbtn()  { return rButton(cMbtn,Pdown); }
@@ -4175,7 +3879,6 @@ bool DrunkRight()  { return drunk()?(rand()%2)?0:!Right():Right(); }
 bool DrunkcAbtn()  { return drunk()?(rand()%2)?0:!cAbtn():cAbtn(); }
 bool DrunkcBbtn()  { return drunk()?(rand()%2)?0:!cBbtn():cBbtn(); }
 bool DrunkcSbtn()  { return drunk()?(rand()%2)?0:!cSbtn():cSbtn(); }
-bool DrunkcEbtn()  { return drunk()?(rand()%2)?0:!cEbtn():cEbtn(); }
 bool DrunkcLbtn()  { return drunk()?(rand()%2)?0:!cLbtn():cLbtn(); }
 bool DrunkcRbtn()  { return drunk()?(rand()%2)?0:!cRbtn():cRbtn(); }
 bool DrunkcMbtn()  { return drunk()?(rand()%2)?0:!cMbtn():cMbtn(); }
@@ -4187,7 +3890,6 @@ bool DrunkrRight() { return drunk()?(rand()%2)?0:!rRight():rRight(); }
 bool DrunkrAbtn()  { return drunk()?(rand()%2)?0:!rAbtn():rAbtn(); }
 bool DrunkrBbtn()  { return drunk()?(rand()%2)?0:!rBbtn():rBbtn(); }
 bool DrunkrSbtn()  { return drunk()?(rand()%2)?0:!rSbtn():rSbtn(); }
-bool DrunkrEbtn()  { return drunk()?(rand()%2)?0:!rEbtn():rEbtn(); }
 bool DrunkrLbtn()  { return drunk()?(rand()%2)?0:!rLbtn():rLbtn(); }
 bool DrunkrRbtn()  { return drunk()?(rand()%2)?0:!rRbtn():rRbtn(); }
 bool DrunkrMbtn()  { return drunk()?(rand()%2)?0:!rMbtn():rMbtn(); }
@@ -4197,7 +3899,6 @@ void eat_buttons()
   rAbtn();
   rBbtn();
   rSbtn();
-  rEbtn();
   rLbtn();
   rRbtn();
   rMbtn();
@@ -4211,11 +3912,6 @@ bool ReadKey(int k)
     return true;
   }
   return false;
-}
-
-void zc_putpixel(int layer, int x, int y, int cset, int color, int timer)
-{
-  particles.add(new particle(fix(x), fix(y), layer, cset, color, timer));
 }
 
                                                             /*** end of zc_sys.cc ***/

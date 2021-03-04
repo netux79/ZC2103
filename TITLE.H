@@ -12,10 +12,8 @@
 #ifndef _ZC_TITLE_H_
 #define _ZC_TITLE_H_
 
-extern DIALOG gamemode_dlg[];
-
 int  load_savedgames();
-int  save_savedgames();
+int  save_savedgames(bool freemem);
 void load_game_icon(gamedata *g);
 void titlescreen();
 void game_over();

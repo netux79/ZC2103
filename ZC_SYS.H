@@ -14,8 +14,6 @@
 
 #include "zdefs.h"
 
-extern MENU the_menu[];
-
 bool game_vid_mode(int mode,int wait);
 void Z_init_timers();
 void Z_init_sound();
@@ -30,17 +28,8 @@ void advanceframe();
 void updatescr();
 void syskeys();
 // void game_pal(); //ER (2021)
-int  onSave();
-int  onQuit();
-int  onReset();
-int  onExit();
-void fix_dialogs();
 void LogVidMode();
 
-int onCheatBombs();
-
-int  next_press_key();
-int  next_press_btn();
 bool ReadKey(int k);
 void eat_buttons();
 
@@ -65,14 +54,12 @@ bool DrunkrRight();
 bool cAbtn();
 bool cBbtn();
 bool cSbtn();
-bool cEbtn();
 bool cLbtn();
 bool cRbtn();
 bool cMbtn();
 bool DrunkcAbtn();
 bool DrunkcBbtn();
 bool DrunkcSbtn();
-bool DrunkcEbtn();
 bool DrunkcLbtn();
 bool DrunkcRbtn();
 bool DrunkcMbtn();
@@ -80,22 +67,18 @@ bool DrunkcMbtn();
 bool rAbtn();
 bool rBbtn();
 bool rSbtn();
-bool rEbtn();
 bool rLbtn();
 bool rRbtn();
 bool rMbtn();
 bool DrunkrAbtn();
 bool DrunkrBbtn();
 bool DrunkrSbtn();
-bool DrunkrEbtn();
 bool DrunkrLbtn();
 bool DrunkrRbtn();
 bool DrunkrMbtn();
 
 enum {bosCIRCLE=0, bosOVAL, bosTRIANGLE, bosSMAS, bosMAX};
 
-void go();
-void comeback();
 void dump_pal(BITMAP *dest);
 void show_paused();
 void show_fps();
@@ -147,5 +130,4 @@ void resume_all_sfx();
 void stop_sfx(int index);
 void kill_sfx();
 int  pan(int x);
-void zc_putpixel(int layer, int x, int y, int cset, int color, int timer);
 #endif                                                      // _ZC_SYS_H_

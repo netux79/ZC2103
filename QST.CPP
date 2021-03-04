@@ -4987,7 +4987,7 @@ char *skip_text[skip_max]=
 int loadquest(char *filename, zquestheader *Header, miscQdata *Misc, music *midis, bool compressed, bool encrypted, bool keepall, byte *skip_flags)
 {
   char tmpbuf[L_tmpnam];
-  char *tmpfilename = temp_name(tmpbuf);
+  char *tmpfilename = tmpnam(tmpbuf);  
   bool catchup=false;
   byte tempbyte;
   word old_map_count=map_count;
