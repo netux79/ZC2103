@@ -8,11 +8,8 @@
 //
 //--------------------------------------------------------
 
-#ifdef ALLEGRO_DOS
-//nothing to do here
-#elif defined(ALLEGRO_WINDOWS)
+#ifdef ALLEGRO_WINDOWS
 #include <conio.h>
-#elif defined(ALLEGRO_LINUX)
 #endif
 
 #ifndef _ZSYS_H_
@@ -34,7 +31,7 @@ void chop_path(char *path);
 char *temp_name(char *s);*/
 int  vbound(int x,int low,int high);
 float vbound(float x,float low,float high);
-int  used_switch(int argc,char *argv[],char *s);
+int  used_switch(int argc,char *argv[],const char *s);
 char *get_cmd_arg(int argc,char *argv[]);
 bool isinRect(int x,int y,int rx1,int ry1,int rx2,int ry2);
 
@@ -44,16 +41,16 @@ void resolve_password(char *pwd);
 
 bool decode_007(byte *buf, dword size, dword key, word check1, word check2, int method);
 void encode_007(byte *buf, dword size, dword key, word *check1, word *check2, int method);
-int encode_file_007(char *srcfile, char *destfile, int key, char *header, int method);
-int decode_file_007(char *srcfile, char *destfile, char *header, int method, bool packed);
+int encode_file_007(char *srcfile, char *destfile, unsigned int key, const char *header, int method);
+int decode_file_007(char *srcfile, char *destfile, const char *header, int method, bool packed);
 void copy_file(char *src, char *dest);
 
 int  get_bit(byte *bitstr,int bit);
 void set_bit(byte *bitstr,int bit,byte val);
 
-void Z_error(char *format,...);
-void Z_message(char *format,...);
-void Z_title(char *format,...);
+void Z_error(const char *format,...);
+void Z_message(const char *format,...);
+void Z_title(const char *format,...);
 
 int anim_3_4(int clk, int speed);
 #endif                                                      // _ZSYS_H_

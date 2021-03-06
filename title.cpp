@@ -30,7 +30,7 @@
 
 // first the game saving & loading system
 
-static char *SAVE_HEADER = "Zelda Classic Save File";
+static const char *SAVE_HEADER = "Zelda Classic Save File";
 static char SAVE_FILE[1048] = {'\0'};
 
 int readsaves(gamedata *savedata, PACKFILE *f)
@@ -233,7 +233,11 @@ int load_savedgames()
   }
 
   // see if it's there
+#ifdef ALLEGRO_DOS  
   if (file_size(SAVE_FILE)==0)
+#else
+  if (file_size_ex(SAVE_FILE)==0)
+#endif
   {
     goto newdata;
   }

@@ -361,35 +361,27 @@ void putsubscr(BITMAP *dest,int x,int y,bool showtime)
 
   int title_len1=stripspaces(dmaptitlesource[0], dmaptitle[0], 10);
   int title_len2=stripspaces(dmaptitlesource[1], dmaptitle[1], 10);
-  //  text_mode(0);
-
-  //  textprintf(subscr,zfont, COOLSCROLL?20:16, COOLSCROLL?6:8,QMisc.colors.text,"LEVEL-%d",dlevel);
 
   if ((title_len1>0)||(title_len2>0))
   {
     if ((title_len1>0)&&(title_len2>0))
     {
-      textprintf_centre_ex(subscr,zfont, 48, 0,QMisc.colors.text,0,dmaptitle[0]);
-      textprintf_centre_ex(subscr,zfont, 48, 8,QMisc.colors.text,0,dmaptitle[1]);
+      textout_centre_ex(subscr,zfont,dmaptitle[0], 48, 0,QMisc.colors.text,0);
+      textout_centre_ex(subscr,zfont,dmaptitle[1], 48, 8,QMisc.colors.text,0);
     }
     else
     {
       if (title_len1>0)
       {
-        textprintf_centre_ex(subscr,zfont, 48, 4,QMisc.colors.text,0,dmaptitle[0]);
+        textout_centre_ex(subscr,zfont,dmaptitle[0], 48, 4,QMisc.colors.text,0);
       }
       else
       {
-        textprintf_centre_ex(subscr,zfont, 48, 4,QMisc.colors.text,0,dmaptitle[1]);
+        textout_centre_ex(subscr,zfont,dmaptitle[1], 48, 4,QMisc.colors.text,0);
       }
     }
   }
 
-  /*
-    textprintf_centre(subscr,zfont, 48, 0,QMisc.colors.text,dmaptitlesource[0]);
-    textprintf_centre(subscr,zfont, 48, 8,QMisc.colors.text,dmaptitlesource[1]);
-  */
-  //  text_mode(-1);
   if(show_subscreen_dmap_dots && QMisc.colors.link_dot != 255)
   {
     if(type==dmOVERW)
@@ -640,7 +632,7 @@ void load_Sitems()
 {
   int ofs=0;                                                // = NEWSUBSCR ? 108 : 0;
   int y=0;                                                  //   = NEWSUBSCR ? 48 : 24;
-  int x[6];                                                 // = {128,148,160,176,192,204};
+  int x[6] = {0,0,0,0,0,0};
 
   switch(zinit.subscreen)
   {

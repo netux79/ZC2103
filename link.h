@@ -55,7 +55,7 @@ class LinkClass : public sprite
   int attackclk,ladderx,laddery,pushing,fairyclk,refillclk,hclk;
   int warpx,warpy,holdclk,holditem,attack,swordclk,didstuff,blowcnt;
   byte skipstep,lstep,hopclk,diveclk,whirlwind;
-  byte hitdir,ladderdir,lastdir[3];
+  byte hitdir,ladderdir,lastdir[4];
   actiontype action;
   int hshandle_id, hshead_id, itemclk;
   byte conveyor_flags;

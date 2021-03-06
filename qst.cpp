@@ -40,8 +40,12 @@ extern char         *byte_conversion2(int number1, int number2, int format1, int
 //enum { qe_OK, qe_notfound, qe_invalid, qe_version, qe_obsolete,
 //       qe_missing, qe_internal, qe_pwd, qe_match, qe_minver };
 
+static const char *QH_IDSTR     = "AG Zelda Classic Quest File\n ";
+static const char *QH_NEWIDSTR  = "AG ZC Enhanced Quest File\n   ";
+static const char *ENC_STR      = "Zelda Classic Quest File";
+
 bool keepit=true;
-char *qst_error[] =
+const char *qst_error[] =
 {
   "OK","File not found","Invalid quest file",
   "Version not supported","Obsolete version",
@@ -53,7 +57,7 @@ char *qst_error[] =
 
 char *VerStr(int version)
 {
-  static char ver_str[12];
+  static char ver_str[16];
   sprintf(ver_str,"v%d.%02X",version>>8,version&0xFF);
   return ver_str;
 }
@@ -173,24 +177,6 @@ char *byte_conversion2(int number1, int number2, int format1, int format2)
   }
   sprintf(num_str, "%s/%s", num_str1, num_str2);
   return num_str;
-}
-
-char *ordinal(int num)
-{
-  static char *ending[4] = {"st","nd","rd","th"};
-  static char ord_str[8];
-
-  char *end;
-  int t=(num%100)/10;
-  int n=num%10;
-
-  if(n>=1 && n<4 && t!=1)
-    end = ending[n-1];
-  else
-    end = ending[3];
-
-  sprintf(ord_str,"%d%s",num%10000,end);
-  return ord_str;
 }
 
 int get_version_and_build(PACKFILE *f, word *version, word *build)
@@ -617,7 +603,7 @@ PACKFILE *open_quest_template(zquestheader *header, char *deletefilename, bool v
   f=open_quest_file(&open_error, filename, deletefilename, true);
   if (!f)
   {
-    return false;
+    return NULL;
   }
   if (validate&&0)
   {
@@ -630,7 +616,7 @@ PACKFILE *open_quest_template(zquestheader *header, char *deletefilename, bool v
       {
         delete_file(deletefilename);
       }
-      return false;
+      return NULL;
     }
   }
   return f;
@@ -923,7 +909,7 @@ static MIDI *read_midi(PACKFILE *f, bool keepdata)
 {
   MIDI *m;
   int c;
-  short divisions;
+  short divisions=0;
   int len=0;
 
   m = (MIDI*)malloc(sizeof(MIDI));
@@ -1466,8 +1452,8 @@ int readheader(PACKFILE *f, zquestheader *header, bool keepdata)
     }
     if(tempheader.zelda_version < 0x177)                       // lacks new header stuff...
     {
-      memset(tempheader.minver,0,20);                          //   char minver[9], byte build
-    }                                                       //   byte foo[10]
+      memset(tempheader.minver,0,sizeof(tempheader.minver));
+    }
     else
     {
       if(!pfread(tempheader.minver,sizeof(tempheader.minver),f,true))
@@ -3205,7 +3191,7 @@ int readweapons(PACKFILE *f, zquestheader *header, bool keepdata)
 
 int init_guys()
 {
-  for(int i=0; i<MAXGUYS; i++)
+  for(int i=0; i<eMAXGUYS; i++)
     guysbuf[i] = default_guys[i];
   return 0;
 }
@@ -4405,7 +4391,7 @@ int readcheatcodes(PACKFILE *f, zquestheader *header, bool keepdata)
 {
   int dummy;
   ZCHEATS tempzcheats;
-  char temp_use_cheats;
+  char temp_use_cheats=0;
   memset(&tempzcheats, 0, sizeof(tempzcheats));
   if (header->zelda_version > 0x192)
   {
@@ -4979,7 +4965,7 @@ break;
 }
 */
 
-char *skip_text[skip_max]=
+const char *skip_text[skip_max]=
 {
   "skip_header", "skip_rules", "skip_strings", "skip_misc", "skip_tiles", "skip_combos", "skip_comboaliases", "skip_csets", "skip_maps", "skip_dmaps", "skip_doors", "skip_items", "skip_weapons", "skip_colors", "skip_icons", "skip_initdata", "skip_guys", "skip_linksprites", "skip_subscreens", "skip_ffscript", "skip_sfx", "skip_midis", "skip_cheats"
 };
@@ -4991,7 +4977,6 @@ int loadquest(char *filename, zquestheader *Header, miscQdata *Misc, music *midi
   bool catchup=false;
   byte tempbyte;
   word old_map_count=map_count;
-  byte encryption_method=0;
 
   byte old_quest_rules[QUESTRULES_SIZE];
   byte old_midi_flags[MIDIFLAGS_SIZE];
@@ -5017,7 +5002,6 @@ int loadquest(char *filename, zquestheader *Header, miscQdata *Misc, music *midi
   {
     al_trace("Decrypting...");
 
-    encryption_method=ENC_METHOD_MAX-1;
     ret = decode_file_007(filename, tmpfilename, ENC_STR, ENC_METHOD_MAX-1, strstr(filename, ".dat#")!=NULL);
     if(ret)
     {
@@ -5029,17 +5013,14 @@ int loadquest(char *filename, zquestheader *Header, miscQdata *Misc, music *midi
       }
       if (ret==5)                                             //old encryption?
       {
-        encryption_method=ENC_METHOD_192B185;
         ret = decode_file_007(filename, tmpfilename, ENC_STR, ENC_METHOD_192B185, strstr(filename, ".dat#")!=NULL);
       }
       if (ret==5)                                             //old encryption?
       {
-        encryption_method=ENC_METHOD_192B105;
         ret = decode_file_007(filename, tmpfilename, ENC_STR, ENC_METHOD_192B105, strstr(filename, ".dat#")!=NULL);
       }
       if (ret==5)                                             //old encryption?
       {
-        encryption_method=ENC_METHOD_192B104;
         ret = decode_file_007(filename, tmpfilename, ENC_STR, ENC_METHOD_192B104, strstr(filename, ".dat#")!=NULL);
       }
       if (ret)

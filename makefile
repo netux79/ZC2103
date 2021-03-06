@@ -7,7 +7,8 @@ AUDIO_LIBS = -lgme -lalogg -lalmp3 -laldmb -ldumb
 OPTS = -O3
 COMPRESS = 1
 
-CFLAG = -pedantic -Wno-long-long -Wall
+#CFLAG = -pedantic -Wno-long-long -Wall
+CFLAG = -pedantic -Wall
 #-W -Wshadow -Wpointer-arith
 
 ifdef COMPILE_FOR_WIN

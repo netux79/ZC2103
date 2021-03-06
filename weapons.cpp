@@ -774,7 +774,7 @@ bool weapon::animate(int index)
 
       if(misc==1)                                           // returning
       {
-        if(abs(LinkY()-y)<7 && abs(LinkX()-x)<7)
+        if(abs((int)(LinkY()-y))<7 && abs((int)(LinkX()-x))<7)
         {
           CatchBrang();
           stop_sfx(WAV_BRANG);
@@ -882,7 +882,7 @@ bool weapon::animate(int index)
 
       if(misc==1)                                           // returning
       {
-        if(abs(LinkY()-y)<9 && abs(LinkX()-x)<9)
+        if(abs((int)(LinkY()-y))<9 && abs((int)(LinkX()-x))<9)
         {
           hookshot_used=false;
           if (pull_link)

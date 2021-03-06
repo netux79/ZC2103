@@ -46,7 +46,7 @@ void put_triforce()
   }
 }
 
-void putendmsg(char *s,int x,int y,int speed,void(proc)())
+void putendmsg(const char *s,int x,int y,int speed,void(proc)())
 {
   int i=0;
   int c=strlen(s)*speed;
@@ -350,8 +350,12 @@ void ending()
         // Final message for ALL the quests.
         case 768: textout_centre_ex(scrollbuf,zfont,"Congratulations!",128,224,white,0); break;
         case 784: textprintf_ex(scrollbuf,zfont,72,224,red,0,"%-8s -%3d",game.name,game.deaths); break;
-        case 800: if(game.timevalid && !game.cheat)
-        textout_centre_ex(scrollbuf,zfont,time_str_med(game.time),128,224,blue,0); break;
+        case 800: 
+                  if(game.timevalid && !game.cheat)
+                  {
+                    textout_centre_ex(scrollbuf,zfont,time_str_med(game.time),128,224,blue,0);
+                  }
+                  break;
         case 816: textout_centre_ex(scrollbuf,zfont,"You beat a",128,224,white,0); break;
         case 832: textout_centre_ex(scrollbuf,zfont,"ZC Quest.",128,224,white,0); break;
         case 880: textout_centre_ex(scrollbuf,zfont,"ZELDA CLASSIC",128,224,white,0); break;

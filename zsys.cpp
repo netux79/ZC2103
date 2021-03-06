@@ -18,7 +18,7 @@
 
 char *time_str_long(dword time)
 {
-  static char s[16];
+  static char s[32];
 
   dword decs = (time%60)*100/60;
   dword secs = (time/60)%60;
@@ -31,7 +31,7 @@ char *time_str_long(dword time)
 
 char *time_str_med(dword time)
 {
-  static char s[16];
+  static char s[32];
 
   dword secs = (time/60)%60;
   dword mins = (time/3600)%60;
@@ -43,7 +43,7 @@ char *time_str_med(dword time)
 
 char *time_str_short(dword time)
 {
-  static char s[16];
+  static char s[32];
 
   dword mins = (time/3600)%60;
   dword hours = time/216000;
@@ -139,7 +139,7 @@ float vbound(float x,float low,float high)
   return x;
 }
 
-int used_switch(int argc,char *argv[],char *s)
+int used_switch(int argc,char *argv[],const char *s)
 {
   // assumes a switch won't be in argv[0]
   for(int i=1; i<argc; i++)
@@ -158,7 +158,7 @@ char *get_cmd_arg(int argc,char *argv[])
   return NULL;
 }
 
-char datapwd[8] = { 'l'+11,'o'+22,'n'+33,'g'+44,'t'+55,'a'+66,'n'+77,0+88 };
+char datapwd[8] = { char('l'+11),char('o'+22),char('n'+33),char('g'+44),char('t'+55),char('a'+66),char('n'+77),char(0+88) };
 
 void resolve_password(char *pwd)
 {
@@ -183,7 +183,7 @@ int get_bit(byte *bitstr,int bit)
   return ((*bitstr) >> (bit&7))&1;
 }
 
-void Z_error(char *format,...)
+void Z_error(const char *format,...)
 {
   char buf[256];
 
@@ -192,19 +192,14 @@ void Z_error(char *format,...)
   vsprintf(buf, format, ap);
   va_end(ap);
 
-  #ifdef ALLEGRO_DOS
+#ifdef ALLEGRO_DOS
   printf("%s\n",buf);
-  #elif defined(ALLEGRO_WINDOWS)
+#endif
   al_trace("%s\n",buf);
-  #elif defined(ALLEGRO_LINUX)
-  al_trace("%s\n",buf);
-  #elif defined(ALLEGRO_MACOSX)
-  al_trace("%s\n",buf);
-  #endif
   exit(1);
 }
 
-void Z_message(char *format,...)
+void Z_message(const char *format,...)
 {
   char buf[2048];
 
@@ -213,18 +208,13 @@ void Z_message(char *format,...)
   vsprintf(buf, format, ap);
   va_end(ap);
 
-  #ifdef ALLEGRO_DOS
-  printf("%s",buf);
-  #elif defined(ALLEGRO_WINDOWS)
-  al_trace("%s",buf);
-  #elif defined(ALLEGRO_LINUX)
-  al_trace("%s",buf);
-  #elif defined(ALLEGRO_MACOSX)
-  al_trace("%s",buf);
-  #endif
+#ifdef ALLEGRO_DOS
+  printf("%s\n",buf);
+#endif
+  al_trace("%s\n",buf);
 }
 
-void Z_title(char *format,...)
+void Z_title(const char *format,...)
 {
   char buf[256];
   va_list ap;
@@ -232,16 +222,10 @@ void Z_title(char *format,...)
   vsprintf(buf, format, ap);
   va_end(ap);
 
-  #ifdef ALLEGRO_DOS
+#ifdef ALLEGRO_DOS
   printf("%s\n",buf);
-  al_trace("%s\n",buf);  
-  #elif defined(ALLEGRO_WINDOWS)
+#endif
   al_trace("%s\n",buf);
-  #elif defined(ALLEGRO_LINUX)
-  al_trace("%s\n",buf);
-  #elif defined(ALLEGRO_MACOSX)
-  al_trace("%s\n",buf);
-  #endif
 }
 
 int anim_3_4(int clk, int speed)
@@ -260,12 +244,12 @@ int anim_3_4(int clk, int speed)
 /**********  Encryption Stuff  *****************/
 
 //#define MASK 0x4C358938
-static int seed = 0;
+static unsigned int seed = 0;
 //#define MASK 0x91B2A2D1
 //static int seed = 7351962;
-static int enc_mask[3]={0x4C358938,0x91B2A2D1,0x4A7C1B87};
-static int pvalue[3]={0x62E9,0x7D14,0x1A82};
-static int qvalue[3]={0x3619,0xA26B,0xF03C};
+static unsigned int enc_mask[3]={0x4C358938,0x91B2A2D1,0x4A7C1B87};
+static unsigned int pvalue[3]={0x62E9,0x7D14,0x1A82};
+static unsigned int qvalue[3]={0x3619,0xA26B,0xF03C};
 
 static int rand_007(int method)
 {
@@ -287,75 +271,13 @@ static int rand_007(int method)
   return (CX << 16) + BX;
 }
 
-void encode_007(byte *buf, dword size, dword key, word *check1, word *check2, int method)
-{
-  dword i;
-  byte *p;
-
-  *check1 = 0;
-  *check2 = 0;
-
-  p = buf;
-  for(i=0; i<size; i++)
-  {
-    *check1 += *p;
-    *check2 = (*check2 << 4) + (*check2 >> 12) + *p;
-    ++p;
-  }
-
-  p = buf;
-  seed = key;
-  for(i=0; i<size; i+=2)
-  {
-    byte q = rand_007(method);
-    *p ^= q;
-    ++p;
-    if(i+1 < size)
-    {
-      *p += q;
-      ++p;
-    }
-  }
-}
-
-bool decode_007(byte *buf, dword size, dword key, word check1, word check2, int method)
-{
-  dword i;
-  word c1 = 0, c2 = 0;
-  byte *p;
-
-  p = buf;
-  seed = key;
-  for(i=0; i<size; i+=2)
-  {
-    char q = rand_007(method);
-    *p ^= q;
-    ++p;
-    if(i+1 < size)
-    {
-      *p -= q;
-      ++p;
-    }
-  }
-
-  p = buf;
-  for(i=0; i<size; i++)
-  {
-    c1 += *p;
-    c2 = (c2 << 4) + (c2 >> 12) + *p;
-    ++p;
-  }
-
-  return (c1 == check1) && (c2 == check2);
-}
-
 //
 // RETURNS:
 //   0 - OK
 //   1 - srcfile not opened
 //   2 - destfile not opened
 //
-int encode_file_007(char *srcfile, char *destfile, int key, char *header, int method)
+int encode_file_007(char *srcfile, char *destfile, unsigned int key, const char *header, int method)
 {
   FILE *src, *dest;
   int tog = 0, c, r=0;
@@ -428,7 +350,7 @@ int encode_file_007(char *srcfile, char *destfile, int key, char *header, int me
 //   5 - checksum mismatch
 //   6 - header mismatch
 //
-int decode_file_007(char *srcfile, char *destfile, char *header, int method, bool packed)
+int decode_file_007(char *srcfile, char *destfile, const char *header, int method, bool packed)
 {
   FILE *normal_src=NULL, *dest=NULL;
   PACKFILE *packed_src=NULL;
@@ -437,7 +359,11 @@ int decode_file_007(char *srcfile, char *destfile, char *header, int method, boo
   short c1 = 0, c2 = 0, check1, check2;
 
   // open files
+#ifdef ALLEGRO_DOS
   size = file_size(srcfile);
+#else
+  size = file_size_ex(srcfile);
+#endif
   if(size < 1)
   {
     return 1;

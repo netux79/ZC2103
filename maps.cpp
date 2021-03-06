@@ -1122,22 +1122,24 @@ void draw_screen(mapscr* layer1, mapscr* layer2, int x1, int y1, int x2, int y2)
     }
     if(drawguys && draw_screen_clip_rect_show_guys)
     {
-    // draw likelike over Link
-    if(draw_screen_clip_rect_show_link)
-      for(int i=0; i<guys.Count(); i++)
+      // draw likelike over Link
+      if(draw_screen_clip_rect_show_link)
       {
-        if(guys.spr(i)->id == eLIKE)
+        for(int i=0; i<guys.Count(); i++)
         {
-          if(((eLikeLike*)guys.spr(i))->haslink)
+          if(guys.spr(i)->id == eLIKE)
           {
-            guys.spr(i)->draw(framebuf);
+            if(((eLikeLike*)guys.spr(i))->haslink)
+            {
+              guys.spr(i)->draw(framebuf);
+            }
           }
-        }
-        else if(guys.spr(i)->id == eWALLM)
-        {
-          if(((eWallM*)guys.spr(i))->haslink)
+          else if(guys.spr(i)->id == eWALLM)
           {
-            guys.spr(i)->draw(framebuf);
+            if(((eWallM*)guys.spr(i))->haslink)
+            {
+              guys.spr(i)->draw(framebuf);
+            }
           }
         }
       }

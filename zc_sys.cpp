@@ -69,13 +69,9 @@ void load_game_configs()
   ShowFPS = (bool)get_config_int(cfg_sect,"showfps",0);
 
 #ifdef ALLEGRO_DOS
-  VidMode = get_config_int(cfg_sect,"dos_mode",GFX_AUTODETECT);
-#elif defined(ALLEGRO_WINDOWS)
-  VidMode = get_config_int(cfg_sect,"win_mode",GFX_AUTODETECT_FULLSCREEN);
-#elif defined(ALLEGRO_LINUX)
-  VidMode = get_config_int(cfg_sect,"linux_mode",GFX_AUTODETECT_FULLSCREEN);
-#elif defined(ALLEGRO_MACOSX)
-  VidMode = get_config_int(cfg_sect,"macosx_mode",GFX_AUTODETECT_FULLSCREEN);
+  VidMode = get_config_int(cfg_sect,"vid_mode",GFX_AUTODETECT);
+#else
+  VidMode = get_config_int(cfg_sect,"vid_mode",GFX_AUTODETECT_FULLSCREEN);
 #endif
   resx = get_config_int(cfg_sect,"resx",320);
   resy = get_config_int(cfg_sect,"resy",240);
@@ -108,17 +104,7 @@ void save_game_configs()
   set_config_int(cfg_sect,"throttlefps", (int)Throttlefps);
   set_config_int(cfg_sect,"translayers",(int)TransLayers);
   set_config_int(cfg_sect,"showfps",(int)ShowFPS);
-
-#ifdef ALLEGRO_DOS
-  set_config_int(cfg_sect,"dos_mode",VidMode);
-#elif defined(ALLEGRO_WINDOWS)
-  set_config_int(cfg_sect,"win_mode",VidMode);
-#elif defined(ALLEGRO_LINUX)
-  set_config_int(cfg_sect,"linux_mode",VidMode);
-#elif defined(ALLEGRO_MACOSX)
-  set_config_int(cfg_sect,"macosx_mode",VidMode);
-#endif
-
+  set_config_int(cfg_sect,"vid_mode",VidMode);
   set_config_int(cfg_sect,"resx",resx);
   set_config_int(cfg_sect,"resy",resy);
   set_config_int(cfg_sect,"sbig",sbig);
@@ -134,7 +120,8 @@ void save_game_configs()
 void fps_callback()
 {
   lastfps=framecnt;
-  avgfps=((long double)avgfps*fps_secs+lastfps)/(++fps_secs);
+  avgfps=((long double)avgfps*fps_secs+lastfps)/(fps_secs+1);
+  ++fps_secs;
   framecnt=0;
 }
 
@@ -150,7 +137,7 @@ END_OF_FUNCTION(myvsync_callback)
 void Z_init_timers()
 {
   static bool didit = false;
-  static char *err_str = "Couldn't allocate timer";
+  const char *err_str = "Couldn't allocate timer";
 
   if(didit)
     return;
@@ -219,7 +206,7 @@ bool game_vid_mode(int mode,int wait)
 {
   //  set_color_depth(colordepth);
 
-  #ifdef ALLEGRO_DOS
+#ifdef ALLEGRO_DOS
   switch(mode)
   {
     case GFX_AUTODETECT:
@@ -260,73 +247,22 @@ bool game_vid_mode(int mode,int wait)
       return false;
       break;
   }
-  #elif defined(ALLEGRO_WINDOWS)
+#else
   switch(mode)
   {
-    case GFX_AUTODETECT_FULLSCREEN:
-    case GFX_DIRECTX:
-      if(set_gfx_mode(GFX_DIRECTX,resx,resy,0,0)==0)
-      {
-        VidMode=GFX_DIRECTX;
-        break;
-      }
-    case GFX_DIRECTX_SOFT:
-      if(set_gfx_mode(GFX_DIRECTX_SOFT,resx,resy,0,0)==0)
-      {
-        VidMode=GFX_DIRECTX_SOFT;
-        break;
-      }
-    case GFX_DIRECTX_SAFE:
-      if(set_gfx_mode(GFX_DIRECTX_SAFE,resx,resy,0,0)==0)
-      {
-        VidMode=GFX_DIRECTX_SAFE;
-      }
+    case GFX_AUTODETECT_FULLSCREEN:    
+      if(set_gfx_mode(GFX_AUTODETECT_FULLSCREEN,resx,resy,0,0)==0)
+        VidMode=GFX_AUTODETECT_FULLSCREEN;
       break;
     case GFX_AUTODETECT_WINDOWED:
-    case GFX_DIRECTX_WIN:
-      if(set_gfx_mode(GFX_DIRECTX_WIN,resx,resy,0,0)==0)
-      {
-        VidMode=GFX_DIRECTX_WIN;
-        break;
-      }
-    case GFX_GDI:
-      if(set_gfx_mode(GFX_GDI,resx,resy,0,0)==0)
-      {
-        VidMode=GFX_GDI;
-        break;
-      }
-    default:
-      return false;
-      break;
-  }
-  #elif defined(ALLEGRO_LINUX)
-  switch(mode)
-  {
-case GFX_AUTODETECT_FULLSCREEN:    
-case GFX_AUTODETECT_WINDOWED:
       if(set_gfx_mode(GFX_AUTODETECT_WINDOWED,resx,resy,0,0)==0)
-      {
         VidMode=GFX_AUTODETECT_WINDOWED;
-        break;
-      }
+      break;
     default:
       return false;
       break;
   }
-  #elif defined(ALLEGRO_MACOSX)
-  switch(mode)
-  {
-    case GFX_AUTODETECT_WINDOWED:
-      if(set_gfx_mode(GFX_AUTODETECT_WINDOWED,resx,resy,0,0)==0)
-      {
-        VidMode=GFX_AUTODETECT_WINDOWED;
-        break;
-      }
-    default:
-      return false;
-      break;
-  }
-  #endif
+#endif
 
   scrx = (resx-320)>>1;
   scry = (resy-240)>>1;
@@ -3470,7 +3406,7 @@ char *key_str[] =
 void LogVidMode()
 {
   char str_a[44],str_b[44];
-  #ifdef ALLEGRO_DOS
+#ifdef ALLEGRO_DOS
   switch(VidMode)
   {
     case GFX_MODEX:  sprintf(str_a,"VGA Mode X"); break;
@@ -3480,31 +3416,14 @@ void LogVidMode()
     case GFX_VESA3:  sprintf(str_a,"VESA3"); break;
     default:         sprintf(str_a,"Unknown... ?"); break;
   }
-  #elif defined(ALLEGRO_WINDOWS)
+#else
   switch(VidMode)
   {
-    case GFX_DIRECTX:      sprintf(str_a,"DirectX Hardware Accelerated"); break;
-    case GFX_DIRECTX_SOFT: sprintf(str_a,"DirectX Software Accelerated"); break;
-    case GFX_DIRECTX_SAFE: sprintf(str_a,"DirectX Safe"); break;
-    case GFX_DIRECTX_WIN:  sprintf(str_a,"DirectX Windowed"); break;
-    case GFX_GDI:          sprintf(str_a,"GDI"); break;
-    default:               sprintf(str_a,"Unknown... ?"); break;
+    case GFX_AUTODETECT_FULLSCREEN: sprintf(str_a,"Autodetect Fullscreen"); break;
+    case GFX_AUTODETECT_WINDOWED:   sprintf(str_a,"Autodetect Windowed"); break;
+    default:                        sprintf(str_a,"Unknown... ?"); break;
   }
-  #elif defined(ALLEGRO_MACOSX)
-  switch(VidMode)
-  {
-    case GFX_SAFE:               sprintf(str_a,"MacOS X Safe"); break;
-    case GFX_QUARTZ_FULLSCREEN:  sprintf(str_a,"MacOS X Fullscreen Quartz"); break;
-    case GFX_QUARTZ_WINDOW:      sprintf(str_a,"MacOS X Windowed Quartz"); break;
-    default:                     sprintf(str_a,"Unknown... ?"); break;
-  }
-  #elif defined(ALLEGRO_LINUX)
-  switch(VidMode)
-  {
-    case GFX_AUTODETECT_WINDOWED:  sprintf(str_a,"Autodetect Windowed"); break;
-    default:               sprintf(str_a,"Unknown... ?"); break;
-  }
-  #endif
+#endif
 
   sprintf(str_b,"%dx%d %d-bit",resx,resy, get_color_depth());
   al_trace("Video Mode set: %s (%s)\n",str_a,str_b);

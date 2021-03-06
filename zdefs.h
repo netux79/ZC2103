@@ -127,13 +127,8 @@ enum {ENC_METHOD_192B104=0, ENC_METHOD_192B105, ENC_METHOD_192B185, ENC_METHOD_M
 #endif
 */
 
-#ifdef ALLEGRO_DOS
+#ifndef ALLEGRO_DOS
 //already defined in DOS
-#elif defined(ALLEGRO_WINDOWS)
-#define PI 3.14159265358979323846
-#elif defined(ALLEGRO_MACOSX)
-#define PI 3.14159265358979323846
-#elif defined(ALLEGRO_LINUX)
 #define PI 3.14159265358979323846
 #endif
 
@@ -893,10 +888,6 @@ typedef struct ZCHEATS
   //168
 } ZCHEATS;
 
-#define QH_IDSTR    "AG Zelda Classic Quest File\n "
-#define QH_NEWIDSTR "AG ZC Enhanced Quest File\n   "
-#define ENC_STR     "Zelda Classic Quest File"
-
 typedef struct zquestheader
 {
   char  id_str[31];
@@ -1327,8 +1318,6 @@ static inline void swap(T &a,T &b)
   b = c;
 }
 
-//#define NEWALLEGRO
-
 INLINE bool pfwrite(void *p,long n,PACKFILE *f)
 {
   bool success=(pack_fwrite(p,n,f)==n);
@@ -1367,10 +1356,10 @@ INLINE bool p_getc(void *p,PACKFILE *f,bool keepdata)
   unsigned char *cp = (unsigned char *)p;
   int c;
   if (!f) return false;
-#ifdef NEWALLEGRO
-  if (f->normal.flags&PACKFILE_FLAG_WRITE) return false;    //must not be writing to file
-#else
+#ifdef ALLEGRO_DOS
   if (f->flags&PACKFILE_FLAG_WRITE) return false;           //must not be writing to file
+#else
+  if (f->normal.flags&PACKFILE_FLAG_WRITE) return false;    //must not be writing to file
 #endif
 
   if (pack_feof(f))
@@ -1393,10 +1382,10 @@ INLINE bool p_getc(void *p,PACKFILE *f,bool keepdata)
 INLINE bool p_putc(int c,PACKFILE *f)
 {
   if (!f) return false;
-#ifdef NEWALLEGRO
-  if (!(f->normal.flags&PACKFILE_FLAG_WRITE)) return false; //must be writing to file
-#else
+#ifdef ALLEGRO_DOS
   if (!(f->flags&PACKFILE_FLAG_WRITE)) return false;        //must be writing to file
+#else
+  if (!(f->normal.flags&PACKFILE_FLAG_WRITE)) return false; //must be writing to file
 #endif
 
   pack_putc(c,f);
@@ -1413,10 +1402,10 @@ INLINE bool p_igetw(void *p,PACKFILE *f,bool keepdata)
   short *cp = (short *)p;
   int c;
   if (!f) return false;
-#ifdef NEWALLEGRO
-  if (f->normal.flags&PACKFILE_FLAG_WRITE) return false;    //must not be writing to file
-#else
+#ifdef ALLEGRO_DOS
   if (f->flags&PACKFILE_FLAG_WRITE) return false;           //must not be writing to file
+#else
+  if (f->normal.flags&PACKFILE_FLAG_WRITE) return false;    //must not be writing to file
 #endif
 
   if (pack_feof(f))
@@ -1439,10 +1428,10 @@ INLINE bool p_igetw(void *p,PACKFILE *f,bool keepdata)
 INLINE bool p_iputw(int c,PACKFILE *f)
 {
   if (!f) return false;
-#ifdef NEWALLEGRO
-  if (!(f->normal.flags&PACKFILE_FLAG_WRITE)) return false; //must be writing to file
-#else
+#ifdef ALLEGRO_DOS
   if (!(f->flags&PACKFILE_FLAG_WRITE)) return false;        //must be writing to file
+#else
+  if (!(f->normal.flags&PACKFILE_FLAG_WRITE)) return false; //must be writing to file
 #endif
 
   pack_iputw(c,f);
@@ -1459,10 +1448,10 @@ INLINE bool p_igetl(void *p,PACKFILE *f,bool keepdata)
   dword *cp = (dword *)p;
   long c;
   if (!f) return false;
-#ifdef NEWALLEGRO
-  if (f->normal.flags&PACKFILE_FLAG_WRITE) return false;    //must not be writing to file
-#else
+#ifdef ALLEGRO_DOS
   if (f->flags&PACKFILE_FLAG_WRITE) return false;           //must not be writing to file
+#else
+  if (f->normal.flags&PACKFILE_FLAG_WRITE) return false;    //must not be writing to file
 #endif
 
   if (pack_feof(f))
@@ -1493,10 +1482,10 @@ INLINE bool p_igetd(void *p, PACKFILE *f, bool keepdata)
 INLINE bool p_igetf(void *p,PACKFILE *f,bool keepdata)
 {
 	if(!f) return false;
-#ifdef NEWALLEGRO
-  if (f->normal.flags&PACKFILE_FLAG_WRITE) return false;    //must not be writing to file
-#else
+#ifdef ALLEGRO_DOS
   if (f->flags&PACKFILE_FLAG_WRITE) return false;           //must not be writing to file
+#else
+  if (f->normal.flags&PACKFILE_FLAG_WRITE) return false;    //must not be writing to file
 #endif
   if (pack_feof(f))
   {
@@ -1527,10 +1516,10 @@ INLINE bool p_igetf(void *p,PACKFILE *f,bool keepdata)
 INLINE bool p_iputl(long c,PACKFILE *f)
 {
   if (!f) return false;
-#ifdef NEWALLEGRO
-  if (!(f->normal.flags&PACKFILE_FLAG_WRITE)) return false; //must be writing to file
-#else
+#ifdef ALLEGRO_DOS
   if (!(f->flags&PACKFILE_FLAG_WRITE)) return false;        //must be writing to file
+#else
+  if (!(f->normal.flags&PACKFILE_FLAG_WRITE)) return false; //must be writing to file
 #endif
 
   pack_iputl(c,f);
@@ -1547,10 +1536,10 @@ INLINE bool p_mgetw(void *p,PACKFILE *f,bool keepdata)
   short *cp = (short *)p;
   int c;
   if (!f) return false;
-#ifdef NEWALLEGRO
-  if (f->normal.flags&PACKFILE_FLAG_WRITE) return false;    //must not be writing to file
-#else
+#ifdef ALLEGRO_DOS
   if (f->flags&PACKFILE_FLAG_WRITE) return false;           //must not be writing to file
+#else
+  if (f->normal.flags&PACKFILE_FLAG_WRITE) return false;    //must not be writing to file
 #endif
 
   if (pack_feof(f))
@@ -1573,10 +1562,10 @@ INLINE bool p_mgetw(void *p,PACKFILE *f,bool keepdata)
 INLINE bool p_mputw(int c,PACKFILE *f)
 {
   if (!f) return false;
-#ifdef NEWALLEGRO
-  if (!(f->normal.flags&PACKFILE_FLAG_WRITE)) return false; //must be writing to file
-#else
+#ifdef ALLEGRO_DOS
   if (!(f->flags&PACKFILE_FLAG_WRITE)) return false;        //must be writing to file
+#else
+  if (!(f->normal.flags&PACKFILE_FLAG_WRITE)) return false; //must be writing to file
 #endif
 
   pack_mputw(c,f);
@@ -1593,10 +1582,10 @@ INLINE bool p_mgetl(void *p,PACKFILE *f,bool keepdata)
   dword *cp = (dword *)p;
   long c;
   if (!f) return false;
-#ifdef NEWALLEGRO
-  if (f->normal.flags&PACKFILE_FLAG_WRITE) return false;    //must not be writing to file
-#else
+#ifdef ALLEGRO_DOS
   if (f->flags&PACKFILE_FLAG_WRITE) return false;           //must not be writing to file
+#else
+  if (f->normal.flags&PACKFILE_FLAG_WRITE) return false;    //must not be writing to file
 #endif
 
   if (pack_feof(f))
@@ -1619,10 +1608,10 @@ INLINE bool p_mgetl(void *p,PACKFILE *f,bool keepdata)
 INLINE bool p_mputl(long c,PACKFILE *f)
 {
   if (!f) return false;
-#ifdef NEWALLEGRO
-  if (!(f->normal.flags&PACKFILE_FLAG_WRITE)) return false; //must be writing to file
-#else
+#ifdef ALLEGRO_DOS
   if (!(f->flags&PACKFILE_FLAG_WRITE)) return false;        //must be writing to file
+#else
+  if (!(f->normal.flags&PACKFILE_FLAG_WRITE)) return false; //must be writing to file
 #endif
 
   pack_mputl(c,f);

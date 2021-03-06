@@ -30,6 +30,7 @@
 *.exe
 *.out
 *.app
+zelda*
 
 #Folders
 DEPRECATED
@@ -37,3 +38,4 @@ RELEASE
 
 #other
 output
+*.log

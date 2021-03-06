@@ -5199,7 +5199,8 @@ int Bweapon(int pos)
       switch(pos)
       {
         case 0: if(current_item(itype_brang,true)==3) return iFBrang;
-        if(current_item(itype_brang,true)) return current_item(itype_brang,true)-1+iBrang; break;
+                if(current_item(itype_brang,true)) return current_item(itype_brang,true)-1+iBrang; 
+                break;
         case 1: if(current_item(itype_bomb,true)) return iBombs; break;
         case 2: if(current_item(itype_bow,true) && current_item(itype_arrow,true))
         {
@@ -5216,7 +5217,8 @@ int Bweapon(int pos)
         case 4: if(current_item(itype_whistle,true)) return iWhistle; break;
         case 5: if(current_item(itype_bait,true)) return iBait; break;
         case 6: if(current_item(itype_potion,true)) return current_item(itype_potion,true)-1+iBPotion;
-        if(current_item(itype_letter,true)) return iLetter; break;
+                if(current_item(itype_letter,true)) return iLetter; 
+                break;
         case 7: if(current_item(itype_wand,true)) return iWand; break;
         case 8: if(current_item(itype_hookshot, true)) return iHookshot; break;
         case 9: if(current_item(itype_sbomb,true)) return iSBomb; break;
@@ -5228,7 +5230,8 @@ int Bweapon(int pos)
       switch(pos)
       {
         case 0: if(current_item(itype_brang,true)==3) return iFBrang;
-        if(current_item(itype_brang,true)) return current_item(itype_brang,true)-1+iBrang; break;
+                if(current_item(itype_brang,true)) return current_item(itype_brang,true)-1+iBrang; 
+                break;
         case 1: if(current_item(itype_bomb,true)) return iBombs; break;
         case 2: if(current_item(itype_bow,true) && current_item(itype_arrow,true))
         {
@@ -5246,7 +5249,8 @@ int Bweapon(int pos)
         case 5: if(current_item(itype_whistle,true)) return iWhistle; break;
         case 6: if(current_item(itype_bait,true)) return iBait; break;
         case 7: if(current_item(itype_potion,true)) return current_item(itype_potion,true)-1+iBPotion;
-        if(current_item(itype_letter,true)) return iLetter; break;
+                if(current_item(itype_letter,true)) return iLetter; 
+                break;
         case 8: if(current_item(itype_wand,true)) return iWand; break;
         case 9: if(current_item(itype_faroreswind,true)) return iFaroresWind; break;
         case 10: if(current_item(itype_hookshot, true)) return iHookshot; break;
@@ -7026,6 +7030,7 @@ void LinkClass::setNayrusLoveShieldClk(int newclk)
     decorations.add(new dNayrusLoveShield(LinkX(), LinkY(), dNAYRUSLOVESHIELD, 0));
     d=(decoration *)decorations.spr(decorations.Count()-1);
     decorations.spr(decorations.Count()-1)->misc=1;
+    (void)d;
   }
 }
 

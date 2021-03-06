@@ -38,7 +38,7 @@ void never_return(int index);
 bool can_do_clock()
 {
   if(watch || hasBoss() || (get_bit(quest_rules,qr_NOCLOCKS))) return false;
-  if(items.idFirst(iClock)>=0,0xFFFF) return false;
+  if(items.idFirst(iClock)>=0) return false;
   return true;
 }
 
@@ -1449,7 +1449,7 @@ void removearmos(int ax,int ay)
     case mfARMOS_ITEM:
       if(!getmapflag())
       {
-        additem(ax,ay,tmpscr->catchall, ipONETIME + ipBIGRANGE
+        additem(ax,ay,tmpscr->catchall, (ipONETIME + ipBIGRANGE)
           | ((tmpscr->flags3&fHOLDITEM) ? ipHOLDUP : 0)
           );
         if (!nosecretsounds)
@@ -2674,7 +2674,7 @@ bool eWallM::animate(int index)
         if(guys.spr(i)->id==eWALLM)
       {
         register int m=((enemy*)guys.spr(i))->misc;
-        if(m && ((enemy*)guys.spr(i))->clk3==wall^1)
+        if(m && ((enemy*)guys.spr(i))->clk3==(wall^1))
           ++wallm_cnt;
       }
       if(wall>0)
@@ -5251,7 +5251,7 @@ int eDarknut::takehit(int wpnId,int power,int wpnx,int wpny,int wpnDir)
   switch(wpnId)
   {
     case wBrang:
-      if ((current_item(itype_brang,true)<3) || ((dir==up)&&(wpny<y))|| ((dir==down)&&(wpny>y))
+      if ((current_item(itype_brang,true)<3) || ((dir==up)&&(wpny<y)) || ((dir==down)&&(wpny>y))
         || ((dir==left)&&(wpnx<x)) || ((dir==right)&&(wpnx>x)) )
       {
         sfx(WAV_CHINK,pan(int(x)));
@@ -5265,8 +5265,7 @@ int eDarknut::takehit(int wpnId,int power,int wpnx,int wpny,int wpnDir)
       }
 
     case wHookshot:
-      if ( ((dir==up)&&(wpny<y))|| ((dir==down)&&(wpny>y))
-        || ((dir==left)&&(wpnx<x)) || ((dir==right)&&(wpnx>x))
+      if ( (((dir==up)&&(wpny<y)) || ((dir==down)&&(wpny>y)) || ((dir==left)&&(wpnx<x)) || ((dir==right)&&(wpnx>x)))
         && (!noshield) )
       {
         sfx(WAV_CHINK,pan(int(x)));
@@ -5362,7 +5361,7 @@ bool eWizzrobe::animate(int index)
               x=((rand()%14)+1)*16;
               y=((rand()%9)+1)*16;
             }
-            if((!m_walkflag(x,y,1))&&(abs(x-Link.getX())>=32)||(abs(y-Link.getY())>=32))
+            if((!m_walkflag(x,y,1)) && ((abs((int)(x-Link.getX()))>=32) || (abs((int)(y-Link.getY()))>=32)))
             {
               //        if(iswater(tmpscr->data[pos]) && (pos&15)>0 && (pos&15)<15) {
               //               x=(pos&15)<<4;
@@ -5371,7 +5370,7 @@ bool eWizzrobe::animate(int index)
             }
             ++t;
           }
-          if (abs(x-Link.getX())<abs(y-Link.getY()))
+          if (abs((int)(x-Link.getX()))<abs((int)(y-Link.getY())))
           {
             if (y<Link.getY())
             {
@@ -5959,7 +5958,7 @@ int eDodongo::takehit(int wpnId,int power,int wpnx,int wpny,int wpnDir)
       return 0;
     case wLitBomb:
     case wLitSBomb:
-      if(abs(wpnx-((dir==right)?x+16:x)) > 7 || abs(wpny-y) > 7)
+      if(abs((int)(wpnx-((dir==right)?x+16:x))) > 7 || abs((int)(wpny-y)) > 7)
         return 0;
       clk2=96;
       misc=power;
@@ -5968,7 +5967,7 @@ int eDodongo::takehit(int wpnId,int power,int wpnx,int wpny,int wpnDir)
       return 1;
     case wBomb:
     case wSBomb:
-      if(abs(wpnx-((dir==right)?x+16:x)) > 8 || abs(wpny-y) > 8)
+      if(abs((int)(wpnx-((dir==right)?x+16:x))) > 8 || abs((int)(wpny-y)) > 8)
         return 0;
       stunclk=160;
       misc=wpnId;                                           // store wpnId
@@ -6173,7 +6172,7 @@ int eDodongo2::takehit(int wpnId,int power,int wpnx,int wpny,int wpnDir)
       return 0;
     case wLitBomb:
     case wLitSBomb:
-      if(abs(wpnx-((dir==right)?x+16:x)) > 7 || abs(wpny-y) > 7)
+      if(abs((int)(wpnx-((dir==right)?x+16:x))) > 7 || abs((int)(wpny-y)) > 7)
         return 0;
       clk2=96;
       misc=power;
@@ -6182,7 +6181,7 @@ int eDodongo2::takehit(int wpnId,int power,int wpnx,int wpny,int wpnDir)
       return 1;
     case wBomb:
     case wSBomb:
-      if(abs(wpnx-((dir==right)?x+16:x)) > 8 || abs(wpny-y) > 8)
+      if(abs((int)(wpnx-((dir==right)?x+16:x))) > 8 || abs((int)(wpny-y)) > 8)
         return 0;
       stunclk=160;
       misc=wpnId;                                           // store wpnId
@@ -9943,14 +9942,16 @@ void loadenemies()
               COMBOTYPE(x+8,y+8)==cNOJUMPZONE
             ) ||
             (
-              !isflier(tmpscr->enemy[i])&&
-              !isjumper(tmpscr->enemy[i])&&
               (
-                _walkflag(x,y+8,2)||
-                COMBOTYPE(x+8,y+8)==cPIT
-              )
-            )&&
-            tmpscr->enemy[i]!=eZORA
+                !isflier(tmpscr->enemy[i])&&
+                !isjumper(tmpscr->enemy[i])&&
+                (
+                  _walkflag(x,y+8,2)||
+                  COMBOTYPE(x+8,y+8)==cPIT
+                )
+              )&&
+              tmpscr->enemy[i]!=eZORA
+            )
           ) ||
           (
             tooclose(x,y,40) &&

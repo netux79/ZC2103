@@ -1580,47 +1580,18 @@ int main(int argc, char* argv[])
   }
   request_refresh_rate(60);
 
-  #ifdef ALLEGRO_DOS
+#ifdef ALLEGRO_DOS
   if(used_switch(argc,argv,"-modex"))  mode=GFX_MODEX;
   if(used_switch(argc,argv,"-vesa1"))  mode=GFX_VESA1;
   if(used_switch(argc,argv,"-vesa2b")) mode=GFX_VESA2B;
   if(used_switch(argc,argv,"-vesa2l")) mode=GFX_VESA2L;
   if(used_switch(argc,argv,"-vesa3"))  mode=GFX_VESA3;
-  #elif defined(ALLEGRO_WINDOWS)
-
+#else
   if(used_switch(argc,argv,"-fullscreen"))
-  {
-    mode = GFX_AUTODETECT_FULLSCREEN;
-    if(used_switch(argc,argv,"-directx"))
-    {
-      mode=GFX_DIRECTX;
-      if(used_switch(argc,argv,"-soft"))
-      {
-        mode=GFX_DIRECTX_SOFT;
-      }
-      else if(used_switch(argc,argv,"-safe"))
-      {
-        mode=GFX_DIRECTX_SAFE;
-      }
-    }
-  }
+    mode=GFX_AUTODETECT_FULLSCREEN;
   else if(used_switch(argc,argv,"-windowed"))
-  {
     mode=GFX_AUTODETECT_WINDOWED;
-    if(used_switch(argc,argv,"-directx"))
-    {
-      mode=GFX_DIRECTX_WIN;
-    }
-    else if(used_switch(argc,argv,"-gdi"))
-    {
-      mode=GFX_GDI;
-    }
-  }
-  #elif defined(ALLEGRO_LINUX)
-//  mode = GFX_AUTODETECT_WINDOWED;
-  #elif defined(ALLEGRO_MACOSX)
-//  mode = GFX_AUTODETECT_WINDOWED;
-  #endif
+#endif
 
   al_trace("Setting video mode...\n");
   if(!game_vid_mode(mode,250))

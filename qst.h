@@ -52,12 +52,11 @@ enum
   skip_header, skip_rules, skip_strings, skip_misc, skip_tiles, skip_combos, skip_comboaliases, skip_csets, skip_maps, skip_dmaps, skip_doors, skip_items, skip_weapons, skip_colors, skip_icons, skip_initdata, skip_guys, skip_linksprites, skip_subscreens, skip_ffscript, skip_sfx, skip_midis, skip_cheats, skip_max
 };
 
-extern char *qst_error[];
+extern const char *qst_error[];
 extern word msg_count;
 extern word door_combo_set_count;
 
 char *VerStr(int version);
-char *ordinal(int num);
 
 PACKFILE *open_quest_file(int *open_error, char *filename, char *deletefilename, bool compressed);
 PACKFILE *open_quest_template(zquestheader *header, char *deletefilename, bool validate);
