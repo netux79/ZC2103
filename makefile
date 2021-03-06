@@ -5,7 +5,7 @@ AUDIO_LIBS = -lgme -lalogg -lalmp3 -laldmb -ldumb
 #LINKOPTS = -pg -g
 #OPTS = -pg -g
 OPTS = -O3
-COMPRESS = 1
+#COMPRESS = 1
 
 #CFLAG = -pedantic -Wno-long-long -Wall
 CFLAG = -pedantic -Wall
@@ -25,7 +25,7 @@ ifdef COMPILE_FOR_WIN
   LIBDIR = -L./libs/mingw
 else
 ifdef COMPILE_FOR_LINUX
-  PLATEXT = -l
+  PLATEXT =
   ALLEG_LIB = `allegro-config --libs --static`
   ZC_PLATFORM = Linux
   ZELDA_PREFIX = zelda
@@ -196,5 +196,3 @@ zelda$(PLATEXT).o: zelda.cpp colors.h ending.h fontsdat.h guys.h items.h link.h 
 	$(CC) $(OPTS) $(CFLAG) -Wall -c zelda.cpp -o zelda$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 zsys$(PLATEXT).o: zsys.cpp zc_sys.h zdefs.h zsys.h
 	$(CC) $(OPTS) $(CFLAG) -Wall -c zsys.cpp -o zsys$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zsys-zq$(PLATEXT).o: zsys.cpp zc_sys.h zdefs.h zsys.h
-	$(CC) $(OPTS) $(CFLAG) -D_ZQUEST_SCALE_ -Wall -c zsys.cpp -o zsys-zq$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)

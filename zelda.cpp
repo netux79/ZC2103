@@ -1559,7 +1559,7 @@ int main(int argc, char* argv[])
   }
   else
   {
-    if(install_sound(DIGI_AUTODETECT,DIGI_AUTODETECT,NULL))
+    if(install_sound(DIGI_AUTODETECT,MIDI_AUTODETECT,NULL))
     {
       Z_message("Sound driver not available.  Sound disabled.\n");
     }
