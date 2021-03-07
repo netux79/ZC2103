@@ -1653,8 +1653,12 @@ int main(int argc, char* argv[])
   al_trace("dword size = %ld\n", sizeof(dword));
   al_trace("short size = %ld\n", sizeof(short));
   al_trace("bool size = %ld\n", sizeof(bool));
-  al_trace("pointer size = %ld\n", sizeof(char *));
-
+  al_trace("float size = %ld\n", sizeof(float));
+  al_trace("double size = %ld\n", sizeof(double));
+  al_trace("long double size = %ld\n", sizeof(long double));
+  al_trace("long long size = %ld\n", sizeof(long long));
+  al_trace("pointer size = %ld\n", sizeof(void *));
+  
   // play the game
   while(Quit!=qEXIT)
   {
