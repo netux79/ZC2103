@@ -1414,7 +1414,7 @@ int readheader(PACKFILE *f, zquestheader *header, bool keepdata)
     {
       return qe_invalid;
     }
-    if(!pfread(dummybuf,14,f,true))
+    if(!pfread(dummybuf,14,f,false))
     {
       return qe_invalid;
     }
@@ -1422,7 +1422,7 @@ int readheader(PACKFILE *f, zquestheader *header, bool keepdata)
     {
       return qe_invalid;
     }
-    if(!p_getc(&dummybuf,f,true))
+    if(!p_getc(&dummybuf,f,false))
     {
       return qe_invalid;
     }
@@ -1468,7 +1468,7 @@ int readheader(PACKFILE *f, zquestheader *header, bool keepdata)
       {
         return qe_invalid;
       }
-      if(!pfread(dummybuf,9,f,true))
+      if(!pfread(dummybuf,9,f,false))
       {
         return qe_invalid;
       }
@@ -1502,7 +1502,7 @@ int readheader(PACKFILE *f, zquestheader *header, bool keepdata)
       {
         return qe_invalid;                                  // starting at foo2
       }
-      if(!pfread(dummybuf,18,f,true))                        // read new header additions
+      if(!pfread(dummybuf,18,f,false))                        // read new header additions
       {
         return qe_invalid;                                  // starting at foo2
       }
@@ -1528,23 +1528,23 @@ int readheader(PACKFILE *f, zquestheader *header, bool keepdata)
   else
   {
     //section id
-    if(!p_mgetl(&dummy,f,true))
+    if(!p_mgetl(&dummy,f,false))
     {
       return qe_invalid;
     }
 
     //section version info
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
 
     //section size
-    if(!p_igetl(&dummy,f,true))
+    if(!p_igetl(&dummy,f,false))
     {
       return qe_invalid;
     }
@@ -1621,7 +1621,7 @@ int readheader(PACKFILE *f, zquestheader *header, bool keepdata)
       return qe_invalid;
     }
 
-    if(!pfread(&dummybuf,4,f,true))
+    if(!pfread(&dummybuf,4,f,false))
     {
       return qe_invalid;
     }
@@ -1630,7 +1630,7 @@ int readheader(PACKFILE *f, zquestheader *header, bool keepdata)
     {
       return qe_invalid;
     }
-    if(!pfread(dummybuf,14,f,true))
+    if(!pfread(dummybuf,14,f,false))
     {
       return qe_invalid;
     }
@@ -1662,17 +1662,17 @@ int readrules(PACKFILE *f, zquestheader *header, bool keepdata)
   if (tempheader.zelda_version >= 0x193)
   {
     //section version info
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
 
     //section size
-    if(!p_igetl(&dummy,f,true))
+    if(!p_igetl(&dummy,f,false))
     {
       return qe_invalid;
     }
@@ -1808,16 +1808,16 @@ int readstrings(PACKFILE *f, zquestheader *header, bool keepdata)
 
     int dummy;
     //section version info
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
     //section size
-    if(!p_igetl(&dummy,f,true))
+    if(!p_igetl(&dummy,f,false))
     {
       return qe_invalid;
     }
@@ -2316,7 +2316,7 @@ int readdmaps(PACKFILE *f, zquestheader *Header, word version, word build, word 
     }
 
     //section size
-    if(!p_igetl(&dummy,f,true))
+    if(!p_igetl(&dummy,f,false))
     {
       return qe_invalid;
     }
@@ -2521,18 +2521,18 @@ int readmisc(PACKFILE *f, zquestheader *header, miscQdata *misc, bool keepdata)
   {
     int dummy;
     //section version info
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
 
 
     //section size
-    if(!p_igetl(&dummy,f,true))
+    if(!p_igetl(&dummy,f,false))
     {
       return qe_invalid;
     }
@@ -2992,17 +2992,17 @@ int readitems(PACKFILE *f, word version, word build, bool keepdata)
   {
     items_to_read=0;
     //section version info
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
 
     //section size
-    if(!p_igetl(&dummy,f,true))
+    if(!p_igetl(&dummy,f,false))
     {
       return qe_invalid;
     }
@@ -3111,17 +3111,17 @@ int readweapons(PACKFILE *f, zquestheader *header, bool keepdata)
   {
     weapons_to_read=0;
     //section version info
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
 
     //section size
-    if(!p_igetl(&dummy,f,true))
+    if(!p_igetl(&dummy,f,false))
     {
       return qe_invalid;
     }
@@ -3203,17 +3203,17 @@ int readguys(PACKFILE *f, zquestheader *header, bool keepdata)
   if (header->zelda_version >= 0x193)
   {
     //section version info
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
 
     //section size
-    if(!p_igetl(&dummy,f,true))
+    if(!p_igetl(&dummy,f,false))
     {
       return qe_invalid;
     }
@@ -3794,17 +3794,17 @@ int readmaps(PACKFILE *f, zquestheader *header, bool keepdata)
   if (header->zelda_version > 0x192)
   {
     //section version info
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
 
     //section size
-    if(!p_igetl(&dummy,f,true))
+    if(!p_igetl(&dummy,f,false))
     {
       return qe_invalid;
     }
@@ -3905,7 +3905,7 @@ int readcombos(PACKFILE *f, zquestheader *Header, word version, word build, word
     }
 
     //section size
-    if(!p_igetl(&dummy,f,true))
+    if(!p_igetl(&dummy,f,false))
     {
       return qe_invalid;
     }
@@ -4002,7 +4002,7 @@ int readcombos(PACKFILE *f, zquestheader *Header, word version, word build, word
     {
       for (int q=0; q<11; q++)
       {
-        if(!p_getc(&dummy,f,true))
+        if(!p_getc(&dummy,f,false))
         {
           return qe_invalid;
         }
@@ -4049,17 +4049,17 @@ int readcolordata(PACKFILE *f, miscQdata *misc, word version, word build, word s
   if (version > 0x192)
   {
     //section version info
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
 
     //section size
-    if(!p_igetl(&dummy,f,true))
+    if(!p_igetl(&dummy,f,false))
     {
       return qe_invalid;
     }
@@ -4191,17 +4191,17 @@ int readtiles(PACKFILE *f, byte *buf, zquestheader *header, word version, word b
     if (version > 0x192)
     {
       //section version info
-      if(!p_igetw(&dummy,f,true))
+      if(!p_igetw(&dummy,f,false))
       {
         return qe_invalid;
       }
-      if(!p_igetw(&dummy,f,true))
+      if(!p_igetw(&dummy,f,false))
       {
         return qe_invalid;
       }
 
       //section size
-      if(!p_igetl(&dummy,f,true))
+      if(!p_igetl(&dummy,f,false))
       {
         return qe_invalid;
       }
@@ -4294,17 +4294,17 @@ int readmidis(PACKFILE *f, zquestheader *header, music *midis, bool keepdata)
   else
   {
     //section version info
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
 
     //section size
-    if(!p_igetl(&dummy,f,true))
+    if(!p_igetl(&dummy,f,false))
     {
       return qe_invalid;
     }
@@ -4363,7 +4363,7 @@ int readmidis(PACKFILE *f, zquestheader *header, music *midis, bool keepdata)
       }
       if (header->zelda_version < 0x193)
       {
-        if(!p_igetl(&dummy,f,true))
+        if(!p_igetl(&dummy,f,false))
         {
           return qe_invalid;
         }
@@ -4396,17 +4396,17 @@ int readcheatcodes(PACKFILE *f, zquestheader *header, bool keepdata)
   if (header->zelda_version > 0x192)
   {
     //section version info
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
 
     //section size
-    if(!p_igetl(&dummy,f,true))
+    if(!p_igetl(&dummy,f,false))
     {
       return qe_invalid;
     }
@@ -4450,17 +4450,17 @@ int readinitdata(PACKFILE *f, zquestheader *header, bool keepdata)
   if (header->zelda_version > 0x192)
   {
     //section version info
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
-    if(!p_igetw(&dummy,f,true))
+    if(!p_igetw(&dummy,f,false))
     {
       return qe_invalid;
     }
 
     //section size
-    if(!p_igetl(&dummy,f,true))
+    if(!p_igetl(&dummy,f,false))
     {
       return qe_invalid;
     }
@@ -4973,7 +4973,7 @@ const char *skip_text[skip_max]=
 int loadquest(char *filename, zquestheader *Header, miscQdata *Misc, music *midis, bool compressed, bool encrypted, bool keepall, byte *skip_flags)
 {
   char tmpbuf[L_tmpnam];
-  char *tmpfilename = tmpnam(tmpbuf);  
+  char *tmpfilename = tmpnam(tmpbuf);
   bool catchup=false;
   byte tempbyte;
   word old_map_count=map_count;

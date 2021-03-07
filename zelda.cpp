@@ -1644,6 +1644,16 @@ int main(int argc, char* argv[])
   reset_items(true, &QHeader);
 
   rgb_map = &rgb_table;
+  
+  al_trace("int size = %ld\n", sizeof(int));
+  al_trace("word size = %ld\n", sizeof(word));
+  al_trace("char size = %ld\n", sizeof(char));
+  al_trace("byte size = %ld\n", sizeof(byte));
+  al_trace("long size = %ld\n", sizeof(long));
+  al_trace("dword size = %ld\n", sizeof(dword));
+  al_trace("short size = %ld\n", sizeof(short));
+  al_trace("bool size = %ld\n", sizeof(bool));
+  al_trace("pointer size = %ld\n", sizeof(char *));
 
   // play the game
   while(Quit!=qEXIT)

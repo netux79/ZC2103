@@ -572,7 +572,6 @@ static void delete_mode()
 
 static void selectscreen()
 {
-  //  text_mode(0);
   init_NES_mode();
 //  loadfullpal();
   loadlvlpal(1);
