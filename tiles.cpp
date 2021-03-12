@@ -1110,9 +1110,6 @@ void puttile8(BITMAP* dest,int tile,int x,int y,int cset,int flip)
   dword lcset = (cset<<24)+(cset<<16)+(cset<<8)+cset;
   unpack_tile(tile>>2, 0, false);
 
-  //  to go to 24-bit color, do this kind of thing...
-  //  ((long *)bmp->line[y])[x] = color;
-
   switch(flip&3)
   {
     case 1:                                                 // 1 byte at a time

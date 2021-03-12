@@ -27,7 +27,6 @@
 #include "zsys.h"
 #include "qst.h"
 #include "zc_sys.h"
-#include "midi.h"
 #include "subscr.h"
 #include "maps.h"
 #include "sprite.h"
@@ -36,7 +35,6 @@
 #include "title.h"
 #include "particles.h"
 
-extern FONT *lfont;
 extern LinkClass Link;
 extern sprite_list  guys, items, Ewpns, Lwpns, Sitems, chainlinks, decorations, particles;
 
@@ -2937,8 +2935,6 @@ void updatescr()
 		set_palette_range(RAMpal,0,255,false);
 	}
 
-	show_details();
-
 	if (Link.DrunkClock())
 	{
 		draw_wavy(Link.DrunkClock()/(MAXDRUNKCLOCK/32));
@@ -3002,18 +2998,11 @@ void updatescr()
 		waitvsync();
 	}
 
-
 	if(ShowFPS)
 		show_fps();
 
-
 	if(Paused)
 		show_paused();
-
-	if(details)
-	{
-		textprintf_ex(screen,font,0,SCREEN_H-8,254,BLACK,"%-6d (%s)", idle_count, time_str_long(idle_count));
-	}
 
 	if(panorama!=NULL) destroy_bitmap(panorama);
 

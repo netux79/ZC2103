@@ -25,7 +25,7 @@ char *time_str_long(dword time)
   dword mins = (time/3600)%60;
   dword hours = time/216000;
 
-  sprintf(s,"%ld:%02ld:%02ld.%02ld",hours,mins,secs,decs);
+  sprintf(s,"%d:%02d:%02d.%02d",hours,mins,secs,decs);
   return s;
 }
 
@@ -37,7 +37,7 @@ char *time_str_med(dword time)
   dword mins = (time/3600)%60;
   dword hours = time/216000;
 
-  sprintf(s,"%ld:%02ld:%02ld",hours,mins,secs);
+  sprintf(s,"%d:%02d:%02d",hours,mins,secs);
   return s;
 }
 
@@ -48,7 +48,7 @@ char *time_str_short(dword time)
   dword mins = (time/3600)%60;
   dword hours = time/216000;
 
-  sprintf(s,"%ld:%02ld",hours,mins);
+  sprintf(s,"%d:%02d",hours,mins);
   return s;
 }
 

@@ -217,10 +217,10 @@ int load_savedgames()
   char tmpbuf[L_tmpnam];
   char *tmpfilename = tmpnam(tmpbuf);
 
-  int section_id;
-  int section_version;
-  int section_cversion;
-  int section_size;
+  int  section_id;
+  int  section_size;
+  word section_version;
+  word section_cversion;
   
   // Create the save file path by replacing the ext of qstpath
   replace_extension(SAVE_FILE, qstpath, "sav", sizeof(SAVE_FILE));

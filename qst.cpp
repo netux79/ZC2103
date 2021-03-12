@@ -27,7 +27,6 @@ extern dmap         *DMaps;
 extern newcombo     *combobuf;
 extern byte         *colordata;
 extern byte         *tilebuf;
-extern byte         *trashbuf;
 extern itemdata     *itemsbuf;
 extern wpndata      *wpnsbuf;
 extern guydata      *guysbuf;
@@ -217,7 +216,7 @@ bool find_section(PACKFILE *f, long section_id_requested)
     return false;
   }
 
-  long section_id_read;
+  int  section_id_read;
   bool catchup=false;
   word dummy;
   byte tempbyte;
@@ -287,6 +286,7 @@ bool find_section(PACKFILE *f, long section_id_requested)
 
     while (catchup)
     {
+      al_trace("catchup = %d\n", section_id_read);
       //section id
       section_id_read=(section_id_read<<8);
       if(!p_getc(&tempbyte,f,true))
@@ -303,11 +303,11 @@ bool find_section(PACKFILE *f, long section_id_requested)
     else
     {
       //section version info
-      if(!p_igetw(&dummy,f,true))
+      if(!p_igetw(&dummy,f,false))
       {
         return false;
       }
-      if(!p_igetw(&dummy,f,true))
+      if(!p_igetw(&dummy,f,false))
       {
         return false;
       }
@@ -339,10 +339,6 @@ bool find_section(PACKFILE *f, long section_id_requested)
   return false;
 }
 
-
-
-
-
 bool valid_zqt(PACKFILE *f)
 {
 
@@ -356,17 +352,18 @@ bool valid_zqt(PACKFILE *f)
   //for now, everything else is valid
   return true;
 
-  short version;
-  byte build;
+  short dummy_short;
+  byte dummy_byte;
+  char *dummy_buff;
 
   //read the version and make sure it worked
-  if(!p_igetw(&version,f,true))
+  if(!p_igetw(&dummy_short,f,false))
   {
     goto error;
   }
 
   //read the build and make sure it worked
-  if(!p_getc(&build,f,true))
+  if(!p_getc(&dummy_byte,f,false))
     goto error;
 
   //read the tile info and make sure it worked
@@ -377,7 +374,7 @@ bool valid_zqt(PACKFILE *f)
 
   for (int i=0; i<tiles_used; i++)
   {
-    if(!pfread(trashbuf,SINGLE_TILE_SIZE,f,true))
+    if(!pfread(dummy_buff,SINGLE_TILE_SIZE,f,false))
     {
       goto error;
     }
@@ -390,7 +387,7 @@ bool valid_zqt(PACKFILE *f)
   }
   for (int i=0; i<combos_used; i++)
   {
-    if(!pfread(trashbuf,sizeof(newcombo),f,true))
+    if(!pfread(dummy_buff,sizeof(newcombo),f,false))
     {
       goto error;
     }
@@ -399,18 +396,18 @@ bool valid_zqt(PACKFILE *f)
   //read the palette info and make sure it worked
   for (int i=0; i<48; i++)
   {
-	  if(!pfread(trashbuf,newpdTOTAL,f,true))
+	  if(!pfread(dummy_buff,newpdTOTAL,f,false))
 	  {
 	    goto error;
 	  }
   }
-  if(!pfread(trashbuf,sizeof(palcycle)*256*3,f,true))
+  if(!pfread(dummy_buff,sizeof(palcycle)*256*3,f,false))
   {
     goto error;
   }
   for (int i=0; i<MAXLEVELS; i++)
   {
-    if(!pfread(trashbuf,PALNAMESIZE,f,true))
+    if(!pfread(dummy_buff,PALNAMESIZE,f,false))
     {
       goto error;
     }
@@ -419,7 +416,7 @@ bool valid_zqt(PACKFILE *f)
   //read the sprite info and make sure it worked
   for (int i=0; i<MAXITEMS; i++)
   {
-    if(!pfread(trashbuf,sizeof(itemdata),f,true))
+    if(!pfread(dummy_buff,sizeof(itemdata),f,false))
     {
       goto error;
     }
@@ -427,7 +424,7 @@ bool valid_zqt(PACKFILE *f)
 
   for (int i=0; i<MAXWPNS; i++)
   {
-    if(!pfread(trashbuf,sizeof(wpndata),f,true))
+    if(!pfread(dummy_buff,sizeof(wpndata),f,false))
     {
       goto error;
     }
@@ -436,25 +433,23 @@ bool valid_zqt(PACKFILE *f)
   //read the triforce pieces info and make sure it worked
   for (int i=0; i<8; ++i)
   {
-    if(!p_getc(&trashbuf,f,true))
+    if(!p_getc(&dummy_byte,f,false))
     {
       goto error;
     }
   }
 
-
-
   //read the game icons info and make sure it worked
   for (int i=0; i<4; ++i)
   {
-    if(!p_igetw(&trashbuf,f,true))
+    if(!p_igetw(&dummy_short,f,false))
     {
       goto error;
     }
   }
 
   //read the misc colors info and map styles info and make sure it worked
-  if(!pfread(trashbuf,sizeof(zcolors),f,true))
+  if(!pfread(dummy_buff,sizeof(zcolors),f,false))
   {
     goto error;
   }
@@ -467,7 +462,7 @@ bool valid_zqt(PACKFILE *f)
   }
   for (int i=0; i<TEMPLATES; i++)
   {
-    if(!pfread(trashbuf,sizeof(mapscr),f,true))
+    if(!pfread(dummy_buff,sizeof(mapscr),f,false))
     {
       goto error;
     }
@@ -476,7 +471,7 @@ bool valid_zqt(PACKFILE *f)
   {
     for (int i=0; i<TEMPLATES; i++)
     {
-      if(!pfread(trashbuf,sizeof(mapscr),f,true))
+      if(!pfread(dummy_buff,sizeof(mapscr),f,false))
       {
         goto error;
       }
@@ -829,12 +824,6 @@ void get_qst_buffers()
   if(!(tilebuf=(byte*)malloc(NEWTILE_SIZE2)))
     Z_error("Error");
   Z_message("OK\n");                                        // Allocating tile buffer...
-
-  memrequested+=(100000);
-  Z_message("Allocating trash buffer (%s)... ", byte_conversion2(100000,memrequested,-1,-1));
-  if(!(trashbuf=(byte*)malloc(100000)))
-    Z_error("Error");
-  Z_message("OK\n");                                        // Allocating trash buffer...
 
   memrequested+=(sizeof(itemdata)*MAXITEMS);
   Z_message("Allocating item buffer (%s)... ", byte_conversion2(sizeof(itemdata)*MAXITEMS,memrequested,-1,-1));
@@ -1873,16 +1862,16 @@ int readdoorcombosets(PACKFILE *f, zquestheader *header, bool keepdata)
   if (header->zelda_version > 0x192)
   {
     //section version info
-    if(!p_igetw(&dummy_word,f,true))
+    if(!p_igetw(&dummy_word,f,false))
     {
       return qe_invalid;
     }
-    if(!p_igetw(&dummy_word,f,true))
+    if(!p_igetw(&dummy_word,f,false))
     {
       return qe_invalid;
     }
     //section size
-    if(!p_igetl(&dummy_long,f,true))
+    if(!p_igetl(&dummy_long,f,false))
     {
       return qe_invalid;
     }

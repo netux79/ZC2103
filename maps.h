@@ -67,7 +67,6 @@ bool water_walkflag(int x,int y,int cnt);
 bool hit_walkflag(int x,int y,int cnt);
 void map_bkgsfx();
 
-//extern FONT *lfont;
 /****  View Map  ****/
 extern int mapres;
 void ViewMap();

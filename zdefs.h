@@ -218,9 +218,10 @@ extern bool triplebuffer_not_available;
 extern int CSET_SIZE;
 extern int CSET_SHFT;
 
-typedef unsigned char        byte;                               //0-                       255  ( 8 bits)
-typedef unsigned short       word;                               //0-                    65,535  (16 bits)
-typedef unsigned long        dword;                              //0-             4,294,967,295  (32 bits)
+typedef unsigned char         byte;                              //0-                       255  ( 8 bits)
+typedef unsigned short        word;                              //0-                    65,535  (16 bits)
+typedef unsigned int         dword;                              //0-             4,294,967,295  (32 bits)
+typedef int                 long32;                              //0-             4,294,967,295  (32 bits)
 typedef unsigned long long   qword;                              //0-18,446,744,073,709,551,616  (64 bits)
 
 extern int readsize, writesize;
@@ -644,7 +645,7 @@ typedef struct itemdata
   byte speed;                                               // animation speed
   byte delay;                                               // extra delay factor (-1) for first frame
   //byte padding;
-  long ltm;                                                 // Link Tile Modifier
+  long32 ltm;                                                 // Link Tile Modifier
   byte exp[10];                                             // not used
   //byte padding[2];
   // 21 bytes (uses 24)
@@ -1139,9 +1140,9 @@ typedef struct music
 {
   char title[20];
   //20
-  long start;
-  long loop_start;
-  long loop_end;
+  long32 start;
+  long32 loop_start;
+  long32 loop_end;
   //32
   short loop;
   short volume;
@@ -1218,9 +1219,9 @@ typedef struct gamedata
   byte  continue_scrn;
   byte  continue_dmap;
   //620
-  int   maxmagic;
-  int   magic;
-  int   dmagic;
+  short maxmagic;
+  short magic;
+  short dmagic;
   byte  magicdrainrate;
   byte  canslash;                                           //Link slashes instead of stabs.
   //byte  padding[2];
@@ -1446,7 +1447,7 @@ INLINE bool p_iputw(int c,PACKFILE *f)
 INLINE bool p_igetl(void *p,PACKFILE *f,bool keepdata)
 {
   dword *cp = (dword *)p;
-  long c;
+  long32 c;
   if (!f) return false;
 #ifdef ALLEGRO_DOS
   if (f->flags&PACKFILE_FLAG_WRITE) return false;           //must not be writing to file
@@ -1468,48 +1469,6 @@ INLINE bool p_igetl(void *p,PACKFILE *f,bool keepdata)
     *cp = c;
   }
   readsize+=4;
-  return true;
-}
-
-INLINE bool p_igetd(void *p, PACKFILE *f, bool keepdata)
-{
-	long temp;
-	bool result = p_igetl(&temp,f,keepdata);
-	*(int *)p=(int)temp;
-	return result;
-}
-
-INLINE bool p_igetf(void *p,PACKFILE *f,bool keepdata)
-{
-	if(!f) return false;
-#ifdef ALLEGRO_DOS
-  if (f->flags&PACKFILE_FLAG_WRITE) return false;           //must not be writing to file
-#else
-  if (f->normal.flags&PACKFILE_FLAG_WRITE) return false;    //must not be writing to file
-#endif
-  if (pack_feof(f))
-  {
-    return false;
-  }
-  byte tempfloat[sizeof(float)];
-  if(!pfread(tempfloat,sizeof(float),f,true))
-	  return false;
-  if(keepdata)
-  {
-	memset(p, 0,sizeof(float));
-#ifdef ALLEGRO_MACOSX
-	for(int i=0; i<(int)sizeof(float); i++)
-	{
-		((byte *)p)[i] = tempfloat[i];
-	}
-#else
-	for(int i=0; i<(int)sizeof(float); i++)
-	{
-		((byte *)p)[sizeof(float)-i-1] = tempfloat[i];
-	}
-#endif
-  }
-  readsize += sizeof(float);
   return true;
 }
 
@@ -1580,7 +1539,7 @@ INLINE bool p_mputw(int c,PACKFILE *f)
 INLINE bool p_mgetl(void *p,PACKFILE *f,bool keepdata)
 {
   dword *cp = (dword *)p;
-  long c;
+  long32 c;
   if (!f) return false;
 #ifdef ALLEGRO_DOS
   if (f->flags&PACKFILE_FLAG_WRITE) return false;           //must not be writing to file
@@ -1627,8 +1586,6 @@ inline bool isinRect(int x,int y,int rx1,int ry1,int rx2,int ry2)
 {
   return x>=rx1 && x<=rx2 && y>=ry1 && y<=ry2;
 }
-
-inline void SCRFIX() { putpixel(screen,0,0,getpixel(screen,0,0)); }
 #endif                                                      //_ZDEFS_H_
 
 //	-lalmp3 -lalogg -lvorbisidec -laldmb -ldumb -lalleg

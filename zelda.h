@@ -101,13 +101,11 @@ int  cont_game();
 void restart_level();
 void resume_game();
 int  load_quest(gamedata *g, bool report=true);
-void show_details();
 //int  init_palnames();
 
 inline void sfx(int index)         { sfx(index,128,false); }
 inline void sfx(int index,int pan) { sfx(index,pan,false); }
 
-//inline void SCRFIX() { putpixel(screen,0,0,getpixel(screen,0,0)); }
 
 /**********************************/
 /******** Global Variables ********/
@@ -128,10 +126,10 @@ extern int strike_hint;
 
 extern RGB_MAP rgb_table;
 extern COLOR_MAP trans_table;
-extern BITMAP     *framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *screen2, *fps_undo, *msgdisplaybuf, *pricesdisplaybuf, *tb_page[3], *real_screen;
+extern BITMAP     *framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf, *pricesdisplaybuf, *tb_page[3], *real_screen;
 extern DATAFILE *data, *sfxdata, *fontsdata, *mididata;
 extern SAMPLE   wav_refill;
-extern FONT     *zfont, *lfont;
+extern FONT     *zfont;
 extern PALETTE  RAMpal;
 extern byte     *tilebuf, *colordata;
 extern newcombo *combobuf;
@@ -176,7 +174,7 @@ extern bool nosecretsounds;
 extern bool blockmoving;
 extern bool Throttlefps, Paused, Advance, ShowFPS, Playing, TransLayers, HeartBeep;
 extern bool refreshpal,blockpath,wand_dead,loaded_guys,freeze_guys;
-extern bool loaded_enemies,drawguys,details,watch;
+extern bool loaded_enemies,drawguys,watch;
 extern bool Udown,Ddown,Ldown,Rdown,Adown,Bdown,Sdown,Mdown,LBdown,RBdown,Pdown;
 extern bool SystemKeys,boughtsomething;
 extern bool fixed_door, darkroom,BSZ,COOLSCROLL;            //,NEWSUBSCR;

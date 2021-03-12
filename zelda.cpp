@@ -59,11 +59,11 @@ bool triplebuffer_not_available=false;
 RGB_MAP rgb_table;
 COLOR_MAP trans_table;
 
-BITMAP     *framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *screen2, *fps_undo, *msgdisplaybuf, *pricesdisplaybuf, *tb_page[3], *real_screen;
+BITMAP     *framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf, *pricesdisplaybuf, *tb_page[3], *real_screen;
 DATAFILE   *data, *sfxdata, *fontsdata, *mididata;
-FONT       *zfont, *z3font, *lfont;
+FONT       *zfont;
 PALETTE    RAMpal;
-byte       *tilebuf, *colordata, *trashbuf;
+byte       *tilebuf, *colordata;
 newcombo   *combobuf;
 itemdata   *itemsbuf;
 wpndata    *wpnsbuf;
@@ -109,7 +109,7 @@ bool nosecretsounds=false;
 bool Throttlefps, Paused=false, Advance=false, ShowFPS=false, HeartBeep=true;
 bool Playing, TransLayers;
 bool refreshpal,blockpath,wand_dead,loaded_guys,freeze_guys,
-loaded_enemies,drawguys,details=false,watch;
+loaded_enemies,drawguys,watch;
 bool darkroom=false,BSZ,COOLSCROLL;                         //,NEWSUBSCR;
 bool Udown,Ddown,Ldown,Rdown,Adown,Bdown,Sdown,Mdown,LBdown,RBdown,Pdown,
 SystemKeys=true,boughtsomething=false,
@@ -982,41 +982,6 @@ void putintro()
   }
 }
 
-//static char *dirstr[4] = {"Up","Down","Left","Right"};
-//static char *dirstr[32] = {"U","D","L","R"," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "," "};
-
-//use detail_int[x] for global detail info
-void show_details()
-{
-  if(details)
-  {
-    textprintf_ex(framebuf,font,-3,-5,WHITE,BLACK,"%-4d",whistleclk);
-    textprintf_ex(framebuf,font,0,8,WHITE,BLACK,"dlvl:%-2d dngn:%d", dlevel, isdungeon());
-    textprintf_ex(framebuf,font,0,176,WHITE,BLACK,"%ld %s",game.time,time_str_long(game.time));
-/*
-    for(int i=0; i<guys.Count(); i++)
-    {
-//      textprintf_ex(framebuf,font,200,(i<<3)+16,WHITE,BLACK,"%3d %3d %3d %3d",((enemy*)guys.spr(i))->id,((enemy*)guys.spr(i))->timer,((enemy*)guys.spr(i))->clk,((enemy*)guys.spr(i))->clk2);
-      textprintf_ex(framebuf,font,100,(i<<3)+16,WHITE,BLACK,"%3d %3d %3d %2d %2d",(int)((enemy*)guys.spr(i))->x, (int)((enemy*)guys.spr(i))->y, ((enemy*)guys.spr(i))->misc, ((enemy*)guys.spr(i))->clk, ((enemy*)guys.spr(i))->clk2);//, dirstr[((enemy*)guys.spr(i))->dir], dirstr[((enemy*)guys.spr(i))->clk3]);
-    }
-*/
-    for(int i=0; i<Ewpns.Count(); i++)
-    {
-      sprite *s=Ewpns.spr(i);
-      textprintf_ex(framebuf,font,100,(i<<3)+16,WHITE,BLACK,"%3d>%3d %3d>%3d %3d<%3d %3d<%3d ",
-                                                            int(Link.getX()+0+16), int(s->x+s->hxofs),  int(Link.getY()+0+16), int(s->y+s->hyofs),
-                                                            int(Link.getX()+0), int(s->x+s->hxofs+s->hxsz), int(Link.getY()+0), int(s->y+s->hyofs+s->hysz));
-      if(halt)
-      {
-//        al_trace("/%3d %3d %3d %3d %3d %3d\n", int(s->x), int(s->hxofs), int(s->hxsz), int(s->y), int(s->hyofs),  int(s->hysz));
-        al_trace("L1 %3d %3d %3d %3d %3d %3d\n", int(Link.getX()), int(Link.getHXOfs()), int(Link.getHXSz()), int(Link.getY()), int(Link.getHYOfs()), int(Link.getHYSz()));
-        //al_trace("L2 %3d>%3d %3d>%3d %3d<%3d %3d<%3d\n", int(Link.getX()+0+16), int(s->x+s->hxofs),  int(Link.getY()+0+16), int(s->y+s->hyofs), int(Link.getX()+0), int(s->x+s->hxofs+s->hxsz), int(Link.getY()+0), int(s->y+s->hyofs+s->hysz));
-      }
-    }
-//    textprintf_ex(framebuf,font,200,16,WHITE,BLACK,"yofs=%3d",detail_int[0]);
-  }
-}
-
 void do_magic_casting()
 {
   static int tempx, tempy;
@@ -1433,20 +1398,20 @@ int main(int argc, char* argv[])
   set_uformat(U_ASCII);
   set_config_file("zc.cfg");
   
+  // initialize Allegro
+  Z_message("Initializing Allegro...");
+  allegro_init();
+
   // load game configurations
   load_game_configs();
 
   if (strlen(qstpath)==0)
-	Z_error("Please provide a quest name to use as the first command argument: %s quest_name.qst", argv[0]);
+  {
+    printf("Please provide a quest name to use as the first command argument:\n\t%s quest_name.qst\n", argv[0]);
+    exit(-1);
+  }
   
   get_qst_buffers();
-
-  // initialize Allegro
-  Z_message("Initializing Allegro... ");
-  /*#ifdef ALLEGRO_DOS
-  three_finger_flag = FALSE;
-  #endif*/
-  allegro_init();
 
   three_finger_flag=false;
   zcmusic_init();
@@ -1472,14 +1437,11 @@ int main(int argc, char* argv[])
   Z_message("Allocating bitmap buffers... ");
   framebuf  = create_bitmap_ex(8,256,224);
   scrollbuf = create_bitmap_ex(8,512,406);
-  screen2   = create_bitmap_ex(8,320,240);
   tmp_scr   = create_bitmap_ex(8,320,240);
   tmp_bmp   = create_bitmap_ex(8,32,32);
-  fps_undo  = create_bitmap_ex(8,64,16);
   msgdisplaybuf = create_bitmap_ex(8,256, 176);
   pricesdisplaybuf = create_bitmap_ex(8,256, 176);
-  if(!framebuf || !scrollbuf || !tmp_bmp || !fps_undo || !tmp_scr
-    || !screen2 || !msgdisplaybuf || !pricesdisplaybuf)
+  if(!framebuf || !scrollbuf || !tmp_bmp || !tmp_scr || !msgdisplaybuf || !pricesdisplaybuf)
     Z_error("Error");
 
   clear_bitmap(scrollbuf);
@@ -1539,7 +1501,6 @@ int main(int argc, char* argv[])
   mididata = (DATAFILE*)data[MUSIC].dat;
 
   font = (FONT*)fontsdata[FONT_GUI_PROP].dat;
-  lfont = (FONT*)fontsdata[FONT_LARGEPROP].dat;
   zfont = (FONT*)fontsdata[FONT_NES].dat;
 
   // load saved games
@@ -1553,21 +1514,10 @@ int main(int argc, char* argv[])
 
   // initialize sound driver
   Z_message("Initializing sound driver... ");
-  if(used_switch(argc,argv,"-s") || used_switch(argc,argv,"-nosound"))
-  {
-    Z_message("skipped\n");
-  }
+  if(install_sound(DIGI_AUTODETECT,MIDI_AUTODETECT,NULL))
+    Z_message("Error initialising sound\n%s\n", allegro_error);
   else
-  {
-    if(install_sound(DIGI_AUTODETECT,MIDI_AUTODETECT,NULL))
-    {
-      Z_message("Sound driver not available.  Sound disabled.\n");
-    }
-    else
-    {
-      Z_message("OK\n");
-    }
-  }
+    Z_message("OK\n");
 
   Z_init_sound();
 
@@ -1644,7 +1594,7 @@ int main(int argc, char* argv[])
   reset_items(true, &QHeader);
 
   rgb_map = &rgb_table;
-  
+/*  
   al_trace("int size = %ld\n", sizeof(int));
   al_trace("word size = %ld\n", sizeof(word));
   al_trace("char size = %ld\n", sizeof(char));
@@ -1658,7 +1608,7 @@ int main(int argc, char* argv[])
   al_trace("long double size = %ld\n", sizeof(long double));
   al_trace("long long size = %ld\n", sizeof(long long));
   al_trace("pointer size = %ld\n", sizeof(void *));
-  
+*/
   // play the game
   while(Quit!=qEXIT)
   {
@@ -1722,9 +1672,7 @@ int main(int argc, char* argv[])
   destroy_bitmap(framebuf);
   destroy_bitmap(scrollbuf);
   destroy_bitmap(tmp_scr);
-  destroy_bitmap(screen2);
   destroy_bitmap(tmp_bmp);
-  destroy_bitmap(fps_undo);
   set_clip_state(msgdisplaybuf, 1);
   destroy_bitmap(msgdisplaybuf);
   set_clip_state(pricesdisplaybuf, 1);
