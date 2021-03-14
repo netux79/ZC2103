@@ -106,7 +106,7 @@ int checkx, checky;
 
 bool nosecretsounds=false;
 
-bool Throttlefps, Paused=false, Advance=false, ShowFPS=false, HeartBeep=true;
+bool Capfps, Paused=false, Advance=false, ShowFPS=false, HeartBeep=true;
 bool Playing, TransLayers;
 bool refreshpal,blockpath,wand_dead,loaded_guys,freeze_guys,
 loaded_enemies,drawguys,watch;
@@ -763,9 +763,6 @@ int init_game()
   show_subscreen_numbers=true;
   show_subscreen_life=true;
 
-//  for(int i=0; i<128; i++)
-//    key[i]=0;
-
   Playing=true;
   lighting(2,Link.getDir());
   map_bkgsfx();
@@ -850,13 +847,6 @@ int cont_game()
 
   if(get_bit(quest_rules,qr_CONTFULL))
     game.life = game.maxlife;
-  /*
-    else
-      game.life=3*HP_PER_HEART;
-  */
-
-//  for(int i=0; i<128; i++)
-//    key[i]=0;
 
   Playing=true;
   lighting(2,Link.getDir());
@@ -1377,8 +1367,6 @@ void game_loop()
     draw_lens_over();
     --lensclk;
   }
-
-  //  putpixel(framebuf, walkflagx, walkflagy+56, vc(int(rand()%16)));
 }
 
 /**************************/
@@ -1388,12 +1376,6 @@ void game_loop()
 int main(int argc, char* argv[])
 {
   Z_title("Zelda Classic %s (Build %d)",VerStr(ZELDA_VERSION), VERSION_BUILD);
-
-  // Get the quest file to run.
-  char *temp = get_cmd_arg(argc,argv);
-  
-  if(temp!=NULL)
-	strcpy(qstpath, temp);
 
   set_uformat(U_ASCII);
   set_config_file("zc.cfg");
@@ -1405,11 +1387,24 @@ int main(int argc, char* argv[])
   // load game configurations
   load_game_configs();
 
+  // Get the quest file to run.
+  char *temp = get_cmd_arg(argc,argv);
+  
+  if(temp!=NULL)
+    strcpy(qstpath, temp);
+
   if (strlen(qstpath)==0)
   {
     printf("Please provide a quest name to use as the first command argument:\n\t%s quest_name.qst\n", argv[0]);
     exit(-1);
   }
+  
+  // Validate that the quest file really exists.
+  if(!exists(qstpath))
+  {
+    printf("Quest file doesn't exist or it's invalid: %s\n", qstpath);
+    exit(-1);
+  }    
   
   get_qst_buffers();
 

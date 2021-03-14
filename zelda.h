@@ -172,7 +172,7 @@ extern float avgfps;
 
 extern bool nosecretsounds;
 extern bool blockmoving;
-extern bool Throttlefps, Paused, Advance, ShowFPS, Playing, TransLayers, HeartBeep;
+extern bool Capfps, Paused, Advance, ShowFPS, Playing, TransLayers, HeartBeep;
 extern bool refreshpal,blockpath,wand_dead,loaded_guys,freeze_guys;
 extern bool loaded_enemies,drawguys,watch;
 extern bool Udown,Ddown,Ldown,Rdown,Adown,Bdown,Sdown,Mdown,LBdown,RBdown,Pdown;

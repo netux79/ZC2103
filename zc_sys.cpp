@@ -62,7 +62,7 @@ void load_game_configs()
   midi_volume = get_config_int(cfg_sect,"music",255);
   pan_style = get_config_int(cfg_sect,"pan",1);
   
-  Throttlefps = get_config_int(cfg_sect,"throttlefps",1)!=0;
+  Capfps = get_config_int(cfg_sect,"capfps",1)!=0;
   TransLayers = (bool)get_config_int(cfg_sect,"translayers",1);
   ShowFPS = (bool)get_config_int(cfg_sect,"showfps",0);
 
@@ -77,9 +77,7 @@ void load_game_configs()
   scanlines = get_config_int(cfg_sect,"scanlines",0);
   HeartBeep = get_config_int(cfg_sect,"heartbeep",1);
   
-  // Only get it if not already set
-  if(strlen(qstpath)==0)
-    strcpy(qstpath,get_config_string(cfg_sect,"qst_dir",""));
+  strcpy(qstpath,get_config_string(cfg_sect,"qst_dir",""));
 }
 
 void save_game_configs()
@@ -99,7 +97,7 @@ void save_game_configs()
   set_config_int(cfg_sect,"sfx",digi_volume);
   set_config_int(cfg_sect,"music",midi_volume);
   set_config_int(cfg_sect,"pan",pan_style);
-  set_config_int(cfg_sect,"throttlefps", (int)Throttlefps);
+  set_config_int(cfg_sect,"capfps", (int)Capfps);
   set_config_int(cfg_sect,"translayers",(int)TransLayers);
   set_config_int(cfg_sect,"showfps",(int)ShowFPS);
   set_config_int(cfg_sect,"vid_mode",VidMode);
@@ -2858,11 +2856,9 @@ void draw_fuzzy(int fuzz)
 
 void waitvsync()
 {
-  if((Throttlefps ^ (true && key[KEY_TILDE])))
-  {
+  if(Capfps)
     while(!myvsync) rest(1);
-    //    vsync();
-  }
+
   myvsync=0;
 }
 
@@ -2951,8 +2947,7 @@ void updatescr()
 		blit(framebuf,panorama,0,56,0,56/2,256,224-56);
 	}
 	BITMAP *target;
-	bool dontusetb = triplebuffer_not_available ||
-		!(Throttlefps ^ (true && key[KEY_TILDE]));
+	bool dontusetb = triplebuffer_not_available || !Capfps;
 	if(dontusetb)
 		target=screen;
 	else
@@ -3021,8 +3016,6 @@ void f_Quit(int type)
   Quit=type;
 
   eat_buttons();
-  if(key[KEY_ESC])
-    key[KEY_ESC]=0;
 }
 
 //----------------------------------------------------------------
@@ -3034,11 +3027,10 @@ void syskeys()
     if (key[KEY_ZC_LCONTROL] || key[KEY_ZC_RCONTROL])
     {
       halt=!halt;
-      //zinit.subscreen=(zinit.subscreen+1)%ssdtMAX;
     }
     else
     {
-      Throttlefps=!Throttlefps;
+      Capfps=!Capfps;
       logic_counter=0;
     }
   }
@@ -3061,7 +3053,7 @@ void syskeys()
 
 void advanceframe()
 {
-  if((Throttlefps ^ (true && key[KEY_TILDE])))
+  if(Capfps)
   {
 
     while(!logic_counter) rest(1);

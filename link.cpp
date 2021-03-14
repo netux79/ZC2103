@@ -6426,25 +6426,18 @@ void LinkClass::getTriforce(int id)
   dowarp(1); //side warp
 }
 
-void setup_red_screen()
+void red_shift()
 {
-  clear_bitmap(framebuf);
-  rectfill(scrollbuf, 0, 0, 255, 167, 0);
-  putscr(scrollbuf, 0, 0, tmpscr);
-  blit(scrollbuf, framebuf, 0, 0, 0, 56, 256, 168);
-  do_layer(framebuf, 0, tmpscr, 0, 0, 2);
-  do_layer(framebuf, 1, tmpscr, 0, 0, 2);
-  do_layer(framebuf, -2, tmpscr, 0, 0, 2);
+  int tnum=176;
+  // set up the new palette
+  for(int i=CSET(2); i < CSET(4); i++)
+  {
+    int r = (i-CSET(2)) << 1;
+    RAMpal[i+tnum].r = r;
+    RAMpal[i+tnum].g = r >> 3;
+    RAMpal[i+tnum].b = r >> 4;
+  }
 
-  if(!(msgdisplaybuf->clip))
-  {
-    masked_blit(msgdisplaybuf, framebuf,0,0,0,56, 256,168);
-  }
-  if(!(pricesdisplaybuf->clip))
-  {
-    masked_blit(pricesdisplaybuf, framebuf,0,0,0,56, 256,168);
-  }
-  //red shift
   // color scale the game screen
   for(int y=0; y<168; y++)
   {
@@ -6452,76 +6445,12 @@ void setup_red_screen()
     {
       int c = framebuf->line[y+56][x];
       int r = min(int(RAMpal[c].r*0.4 + RAMpal[c].g*0.6 + RAMpal[c].b*0.4)>>1,31);
-      framebuf->line[y+56][x] = (c ? (r+CSET(2)) : 0);
+      framebuf->line[y+56][x] = (c ? (r+tnum+CSET(2)) : 0);
     }
   }
 
-//  Link->draw(framebuf);
-  blit(framebuf,scrollbuf, 0, 56, 256, 56, 256, 168);
-
-  clear_bitmap(framebuf);
-
-  if (!(tmpscr->layermap[2]==0
-        && tmpscr->layermap[3]==0
-        && tmpscr->layermap[4]==0
-        && tmpscr->layermap[5]==0
-        && !overheadcombos(tmpscr)))
-  {
-    do_layer(framebuf, 2, tmpscr, 0, 0, 2);
-    do_layer(framebuf, 3, tmpscr, 0, 0, 2);
-    do_layer(framebuf, -1, tmpscr, 0, 0, 2);
-    do_layer(framebuf, 4, tmpscr, 0, 0, 2);
-    do_layer(framebuf, 5, tmpscr, 0, 0, 2);
-
-    //do an AND masked blit for messages on top of layers
-    if(!(msgdisplaybuf->clip) || !(pricesdisplaybuf->clip))
-    {
-      for(int y=0; y<168; y++)
-      {
-        for(int x=0; x<256; x++)
-        {
-          int c1 = framebuf->line[y+56][x];
-          int c2 = msgdisplaybuf->line[y][x];
-          int c3 = pricesdisplaybuf->line[y][x];
-
-          if (c1 && c3)
-          {
-            framebuf->line[y+56][x] = c3;
-          }
-          else if (c1 && c2)
-          {
-            framebuf->line[y+56][x] = c2;
-          }
-        }
-      }
-    }
-
-    //red shift
-    // color scale the game screen
-    for(int y=0; y<168; y++)
-    {
-      for(int x=0; x<256; x++)
-      {
-        int c = framebuf->line[y+56][x];
-        int r = min(int(RAMpal[c].r*0.4 + RAMpal[c].g*0.6 + RAMpal[c].b*0.4)>>1,31);
-        framebuf->line[y+56][x] = r+CSET(2);
-      }
-    }
-  }
-
-  blit(framebuf,scrollbuf, 0, 56, 0, 56, 256, 168);
-
-  // set up the new palette
-  for(int i=CSET(2); i < CSET(4); i++)
-  {
-    int r = (i-CSET(2)) << 1;
-    RAMpal[i].r = r;
-    RAMpal[i].g = r >> 3;
-    RAMpal[i].b = r >> 4;
-  }
   refreshpal = true;
 }
-
 
 void slide_in_color(int color)
 {
@@ -6578,9 +6507,9 @@ void LinkClass::gameover()
       {
         switch((f-62)%20)
         {
-          case 0:  dir=right;  break;
-          case 5:  dir=up; break;
-          case 10: dir=left;    break;
+          case 0:  dir=right; break;
+          case 5:  dir=up;    break;
+          case 10: dir=left;  break;
           case 15: dir=down;  break;
         }
         linkstep();
@@ -6589,7 +6518,7 @@ void LinkClass::gameover()
       if(f>=194 && f<208)
       {
         if(f==194)
-         action = dying;
+          action = dying;
 
         cs = wpnsbuf[iwDeath].csets&15;
         tile = wpnsbuf[iwDeath].tile;
@@ -6616,18 +6545,22 @@ void LinkClass::gameover()
             //reuse our static subscreen
             blit(scrollbuf,framebuf,256,0,0,0,256,56);
           }
+                      
           if(f==60)
-            setup_red_screen();
+          {
+            red_shift();
+          }            
 
           if(f>=60 && f<=169)
           {
-            blit(scrollbuf,framebuf,256,0,0,0,256,224);
-            draw(framebuf);
-            masked_blit(scrollbuf,framebuf,0,56,0,56,256,168);
+            draw_screen(tmpscr, 0, 0);
+            blit(scrollbuf,framebuf,256,0,0,0,256,56);
+            red_shift();
           }
+          
           if(f>=139 && f<=169)//fade from red to black
           {
-            fade_interpolate(RAMpal,black_palette,RAMpal, (f-138)<<1, CSET(2), CSET(4)-1);
+            fade_interpolate(RAMpal,black_palette,RAMpal, (f-138)<<1, 224, 255);
             refreshpal=true;
           }
         }
@@ -6635,7 +6568,7 @@ void LinkClass::gameover()
         {
           if(f==170)//make Link grayish
           {
-            fade_interpolate(RAMpal,black_palette,RAMpal,64, CSET(2), CSET(4)-1);
+            fade_interpolate(RAMpal,black_palette,RAMpal,64, 224, 255);
             for(int i=CSET(6); i < CSET(7); i++)
             {
               int g = (RAMpal[i].r + RAMpal[i].g + RAMpal[i].b)/3;
@@ -6710,8 +6643,8 @@ void LinkClass::gameover()
             RAMpal[CSET(6)+i]   = NESpal(0x10);
             RAMpal[CSET(6)+i+1] = NESpal(0x30);
             RAMpal[CSET(6)+i+2] = NESpal(0x00);
-            refreshpal = true;
           }
+          refreshpal = true;
         }
 
         if(f < 169)
@@ -6749,7 +6682,8 @@ void LinkClass::gameover()
 
     advanceframe();
     ++f;
-  } while(f<353 && !Quit);
+  }
+  while(f<353 && !Quit);
 
   action=none;
   dontdraw=false;
