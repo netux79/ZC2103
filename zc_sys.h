@@ -14,7 +14,7 @@
 
 #include "zdefs.h"
 
-bool game_vid_mode(int mode,int wait);
+bool game_vid_mode(int mode, int wait);
 void Z_init_timers();
 void Z_init_sound();
 
@@ -27,7 +27,6 @@ void f_Quit(int type);
 void advanceframe();
 void updatescr();
 void syskeys();
-// void game_pal(); //ER (2021)
 void LogVidMode();
 
 bool ReadKey(int k);
@@ -77,24 +76,24 @@ bool DrunkrLbtn();
 bool DrunkrRbtn();
 bool DrunkrMbtn();
 
-enum {bosCIRCLE=0, bosOVAL, bosTRIANGLE, bosSMAS, bosMAX};
+enum {bosCIRCLE = 0, bosOVAL, bosTRIANGLE, bosSMAS, bosMAX};
 
-void dump_pal(BITMAP *dest);
+void dump_pal(BITMAP* dest);
 void show_paused();
 void show_fps();
-bool game_vid_mode(int mode,int wait);
+bool game_vid_mode(int mode, int wait);
 void init_NES_mode();
-  
+
 extern int black_opening_count;
-extern int black_opening_x,black_opening_y;
+extern int black_opening_x, black_opening_y;
 extern int black_opening_shape;
 
 void zapout();
 void zapin();
 void wavyout();
 void wavyin();
-void blackscr(int fcnt,bool showsubscr);
-void black_opening(BITMAP *dest,int x,int y,int a,int max_a);
+void blackscr(int fcnt, bool showsubscr);
+void black_opening(BITMAP* dest, int x, int y, int a, int max_a);
 void close_black_opening(int x, int y, bool wait);
 void open_black_opening(int x, int y, bool wait);
 void openscreen();
@@ -110,19 +109,19 @@ int item_tile_mod();
 int dmap_tile_mod();
 
 void jukebox(int index);
-void jukebox(int index,int loop);
+void jukebox(int index, int loop);
 void play_DmapMusic();
 void music_pause();
 void music_resume();
 void music_stop();
-void master_volume(int dv,int mv);
+void master_volume(int dv, int mv);
 int  sfx_count();
 void sfx_cleanup();
 bool sfx_init(int index);
-void sfx(int index,int pan,bool loop);
+void sfx(int index, int pan, bool loop);
 void cont_sfx(int index);
 void stop_sfx(int index);
-void adjust_sfx(int index,int pan,bool loop);
+void adjust_sfx(int index, int pan, bool loop);
 void pause_sfx(int index);
 void resume_sfx(int index);
 void pause_all_sfx();

@@ -29,11 +29,10 @@ void killfairy(int misc) {
   return;
 }
 */
-void addfairy(fix x, fix y, int id)
-{
-  addenemy(x,y,eITEMFAIRY,id+0x1000);
-  sfx(WAV_SCALE);
-  movefairy(x,y,id);
+void addfairy(fix x, fix y, int id) {
+	addenemy(x, y, eITEMFAIRY, id + 0x1000);
+	sfx(WAV_SCALE);
+	movefairy(x, y, id);
 }
 
 /*** end of sprite.cc ***/

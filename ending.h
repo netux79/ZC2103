@@ -13,8 +13,8 @@
 
 void noproc();
 void put_triforce();
-void putendmsg(const char *s,int x,int y,int speed,void(proc)());
-void brick(int x,int y);
+void putendmsg(const char* s, int x, int y, int speed, void(proc)());
+void brick(int x, int y);
 void endingpal();
 void ending();
 #endif

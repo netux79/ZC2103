@@ -18,25 +18,23 @@
 #include "sprite.h"
 #include "zdefs.h"
 
-class particle : public sprite
-{
-  public:
-    int layer, cset, color, timer;
-    fix step;
-    particle(fix X,fix Y,int layer,int cset,int color,int timer);
-    virtual ~particle();
-    virtual bool animate(int index);
-    virtual void draw(BITMAP *dest);
+class particle : public sprite {
+public:
+	int layer, cset, color, timer;
+	fix step;
+	particle(fix X, fix Y, int layer, int cset, int color, int timer);
+	virtual ~particle();
+	virtual bool animate(int index);
+	virtual void draw(BITMAP* dest);
 };
 
-class pFaroresWindDust : public particle
-{
-  public:
-    fix os;
-    int ot;
-    bool initialized;
-    pFaroresWindDust(fix X,fix Y,int layer,int cset,int color,int timer);
-    virtual bool animate(int index);
+class pFaroresWindDust : public particle {
+public:
+	fix os;
+	int ot;
+	bool initialized;
+	pFaroresWindDust(fix X, fix Y, int layer, int cset, int color, int timer);
+	virtual bool animate(int index);
 };
 
 
