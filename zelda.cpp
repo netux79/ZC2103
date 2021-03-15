@@ -1167,7 +1167,6 @@ void update_hookshot() {
 }
 
 void game_loop() {
-	//  walkflagx=0; walkflagy=0;
 	if (fadeclk >= 0) {
 		if (fadeclk == 0 && currscr < 128) {
 			blockpath = false;
@@ -1207,8 +1206,7 @@ void game_loop() {
 	cycle_palette();
 	nosecretsounds = tmpscr->flags3 & fNOSECRETSOUND;
 	draw_screen(tmpscr, 0, 0);
-	//  v This is in draw_screen now
-	//  putsubscr(framebuf,0,0);
+
 	if (linkedmsgclk == 1) {
 		//4 is for iwMore
 		if (wpnsbuf[iwMore].tile != 0) {

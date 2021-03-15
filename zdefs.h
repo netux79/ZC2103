@@ -103,12 +103,6 @@
 #define ZQUESTDAT_VERSION     0x0210                        //version of fonts.dat
 #define ZQUESTDAT_BUILD       1                             //build of fonts.dat
 
-/*
-#define ENC_METHOD_192B104  0
-#define ENC_METHOD_192B105  1
-#define ENC_METHOD_192B185  2
-#define ENC_METHOD_CURRENT  ENC_METHOD_192B185
-*/
 enum {ENC_METHOD_192B104 = 0, ENC_METHOD_192B105, ENC_METHOD_192B185, ENC_METHOD_MAX};
 
 
@@ -119,13 +113,6 @@ enum {ENC_METHOD_192B104 = 0, ENC_METHOD_192B105, ENC_METHOD_192B185, ENC_METHOD
 #define KEY_ZC_LCONTROL KEY_LCONTROL
 #define KEY_ZC_RCONTROL KEY_RCONTROL
 #endif
-
-
-/*
-#ifndef ALLEGRO_WIP_VERSION
-  #define KEY_SLASH_PAD KEY_SLASH2
-#endif
-*/
 
 #ifndef ALLEGRO_DOS
 //already defined in DOS
@@ -243,12 +230,7 @@ extern int readsize, writesize;
 #define TILE_PAGES          252
 #define OLDMAXTILES         (TILES_PER_PAGE*6)              // 1560 tiles
 #define NEWMAXTILES         (TILES_PER_PAGE*TILE_PAGES)     // 32760 tiles
-#define NEWTILE_SIZE2       (NEWMAXTILES*SINGLE_TILE_SIZE)  // 4193280 bytes (new packed format, 6 pages)
-#define OLDTILE_SIZE2       (OLDMAXTILES*SINGLE_TILE_SIZE)  // 199680 bytes (new packed format, 6 pages)
-// 133120 bytes (new packed format, 4 pages)
-#define OLDTILE_SIZE        (TILES_PER_PAGE*4*SINGLE_TILE_SIZE)
-//#define NEWTILE_SIZE      (260*6*128) // 199680 bytes (new packed format, 6 pages)
-//#define OLDTILE_SIZE      (260*4*128) // 133120 bytes (new packed format, 4 pages)
+#define NEWTILE_SIZE        (NEWMAXTILES*SINGLE_TILE_SIZE)  // 4193280 bytes (new packed format, 6 pages)
 #define TILEBUF_SIZE        (320*480)                       // 153600 bytes (old unpacked format)
 
 #define COMBOS_PER_ROW      20
@@ -266,7 +248,6 @@ extern int readsize, writesize;
 #define MIDIFLAGS_SIZE  ((MAXMIDIS+7)>>3)
 
 #define MAXMAPS2        255                                 // 4 times the old number
-//#define MAXMAPS         16
 #define MAPSCRSNORMAL   128
 #define MAPSCRS192b136  132
 #define MAPSCRS         136

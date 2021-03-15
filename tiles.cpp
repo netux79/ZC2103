@@ -148,7 +148,7 @@ void animate_combos() {
 //clears the tile buffer
 void clear_tiles(byte* buf) {
 	dword i = 0;
-	for (; i < NEWTILE_SIZE2 / 4; ++i) {
+	for (; i < NEWTILE_SIZE / 4; ++i) {
 		((dword*)buf)[i] = 0;
 	}
 }
@@ -226,7 +226,7 @@ void pack_tiles(byte* buf) {
 		buf[di++] = (buf[si] & 15) + ((buf[si + 1] & 15) << 4);
 	}
 
-	for (; di < NEWTILE_SIZE2; ++di) {
+	for (; di < NEWTILE_SIZE; ++di) {
 		buf[di] = 0;
 	}
 }
@@ -238,25 +238,6 @@ int rotate_table[8] = {
 int rotate_value(int flip) {
 	return rotate_table[flip & 7];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void puttiletranslucent8(BITMAP* dest, int tile, int x, int y, int cset, int flip, int opacity) {
 

@@ -727,9 +727,9 @@ void get_qst_buffers() {
 	}
 	Z_message("OK\n");                                        // Allocating color data buffer...
 
-	memrequested += (NEWTILE_SIZE2);
-	Z_message("Allocating tile buffer (%s)...", byte_conversion2(NEWTILE_SIZE2, memrequested, -1, -1));
-	if (!(tilebuf = (byte*)malloc(NEWTILE_SIZE2))) {
+	memrequested += (NEWTILE_SIZE);
+	Z_message("Allocating tile buffer (%s)...", byte_conversion2(NEWTILE_SIZE, memrequested, -1, -1));
+	if (!(tilebuf = (byte*)malloc(NEWTILE_SIZE))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating tile buffer...
