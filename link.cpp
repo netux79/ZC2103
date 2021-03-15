@@ -2138,10 +2138,9 @@ bool LinkClass::startwpn(int wpn) {                         // an item index
 			fadeclk = 66;
 			msgstr = 0;
 			clear_bitmap(msgdisplaybuf);
-			set_clip_state(msgdisplaybuf, 1);
+			anymsg = false;
 			clear_bitmap(pricesdisplaybuf);
-			set_clip_state(pricesdisplaybuf, 1);
-			//    putscr(scrollbuf,0,0,tmpscr);
+			anyprice = false;
 			setmapflag();
 			game.items[itype_bait] = 0;
 			selectBwpn(0, 0);
@@ -5423,10 +5422,9 @@ void dospecialmoney(int index) {
 		fadeclk = 66;
 		msgstr = 0;
 		clear_bitmap(msgdisplaybuf);
-		set_clip_state(msgdisplaybuf, 1);
+		anymsg = false;
 		clear_bitmap(pricesdisplaybuf);
-		set_clip_state(pricesdisplaybuf, 1);
-		//    putscr(scrollbuf,0,0,tmpscr);
+		anyprice = false;
 		selectBwpn(0, 0);
 		break;
 
@@ -5449,10 +5447,9 @@ void dospecialmoney(int index) {
 		fadeclk = 66;
 		msgstr = 0;
 		clear_bitmap(msgdisplaybuf);
-		set_clip_state(msgdisplaybuf, 1);
+		anymsg = false;
 		clear_bitmap(pricesdisplaybuf);
-		set_clip_state(pricesdisplaybuf, 1);
-		//    putscr(scrollbuf,0,0,tmpscr);
+		anyprice = false;
 		break;
 	}
 }
@@ -6020,10 +6017,9 @@ void LinkClass::checkitems() {
 		if (msgstr) {
 			msgstr = 0;
 			clear_bitmap(msgdisplaybuf);
-			//      set_clip_state(msgdisplaybuf, 1);
+			//      anymsg = false;
 			clear_bitmap(pricesdisplaybuf);
-			//      set_clip_state(pricesdisplaybuf, 1);
-			//     putscr(scrollbuf,0,0,tmpscr);
+			//      anyprice = false;
 		}
 
 		fadeclk = 66;
@@ -6075,9 +6071,9 @@ void LinkClass::checkitems() {
 				}
 			}
 			clear_bitmap(msgdisplaybuf);
-			set_clip_state(msgdisplaybuf, 1);
+			anymsg = false;
 			clear_bitmap(pricesdisplaybuf);
-			set_clip_state(pricesdisplaybuf, 1);
+			anyprice = false;
 		}
 		//   items.del(index);
 	} else {
@@ -6091,9 +6087,9 @@ void LinkClass::checkitems() {
 			}
 		}
 		clear_bitmap(msgdisplaybuf);
-		set_clip_state(msgdisplaybuf, 1);
+		anymsg = false;
 		clear_bitmap(pricesdisplaybuf);
-		set_clip_state(pricesdisplaybuf, 1);
+		anyprice = false;
 	}
 	if (id == iTriforce) {
 		getTriforce(iTriforce);

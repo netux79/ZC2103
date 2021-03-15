@@ -157,6 +157,7 @@ extern int logic_counter;
 extern bool drawit;
 extern bool halt;
 extern bool screenscrolling;
+extern bool anymsg, anyprice;
 
 extern int homescr, currscr, frame, currmap, dlevel, warpscr, worldscr;
 extern int newscr_clk, opendoors, currdmap, fadeclk, currgame, listpos;

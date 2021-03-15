@@ -797,10 +797,10 @@ void draw_screen(mapscr* layer1, mapscr* layer2, int x1, int y1, int x2, int y2)
 		draw_lens_under();
 	}
 
-	if (!(msgdisplaybuf->clip)) {
+	if (anymsg) {
 		masked_blit(msgdisplaybuf, framebuf, 0, 0, 0, 56, 256, 168);
 	}
-	if (!(pricesdisplaybuf->clip)) {
+	if (anyprice) {
 		masked_blit(pricesdisplaybuf, framebuf, 0, 0, 0, 56, 256, 168);
 	}
 
@@ -871,7 +871,7 @@ void draw_screen(mapscr* layer1, mapscr* layer2, int x1, int y1, int x2, int y2)
 	//but only if the next layer group will draw to the screen
 	//and we actually have messages
 	if ((tmpscr->layermap[2] != 0 || tmpscr->layermap[3] != 0 || overheadcombos(tmpscr))
-	        && (!(msgdisplaybuf->clip) || !(pricesdisplaybuf->clip))) {
+	        && (anymsg || anyprice)) {
 		blit(framebuf, scrollbuf, 0, 56, 0, 0, 256, 168);
 	}
 
@@ -905,7 +905,7 @@ void draw_screen(mapscr* layer1, mapscr* layer2, int x1, int y1, int x2, int y2)
 	//(though messages appear on top of all layers now, so they
 	// *can* cover sprites that are under layers. got that ;-P )
 	if ((tmpscr->layermap[2] != 0 || tmpscr->layermap[3] != 0 || overheadcombos(tmpscr))
-	        && (!(msgdisplaybuf->clip) || !(pricesdisplaybuf->clip))) {
+	        && (anymsg || anyprice)) {
 		for (int y = 0; y < 168; y++) {
 			for (int x = 0; x < 256; x++) {
 				int c0 = scrollbuf->line[y][x];
@@ -935,7 +935,7 @@ void draw_screen(mapscr* layer1, mapscr* layer2, int x1, int y1, int x2, int y2)
 	//at this point save screen for messages comparison later
 	//but only if the next layer group will draw to the screen
 	if ((tmpscr->layermap[4] != 0 || tmpscr->layermap[5] != 0)
-	        && (!(msgdisplaybuf->clip) || !(pricesdisplaybuf->clip))) {
+	        && (anymsg || anyprice)) {
 		blit(framebuf, scrollbuf, 0, 56, 0, 0, 256, 168);
 	}
 
@@ -959,7 +959,7 @@ void draw_screen(mapscr* layer1, mapscr* layer2, int x1, int y1, int x2, int y2)
 	//pixels in the framebuf which don't match the saved screen
 	//are redrawn from the message bitmaps
 	if ((tmpscr->layermap[4] != 0 || tmpscr->layermap[5] != 0)
-	        && (!(msgdisplaybuf->clip) || !(pricesdisplaybuf->clip))) {
+	        && (anymsg || anyprice)) {
 		for (int y = 0; y < 168; y++) {
 			for (int x = 0; x < 256; x++) {
 				int c0 = scrollbuf->line[y][x];

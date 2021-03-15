@@ -9827,8 +9827,7 @@ placed_enemy:
 
 void moneysign() {
 	additem(48, 108, iRupy, ipDUMMY);
-	//  textout(scrollbuf,zfont,"X",64,112,CSET(0)+1);
-	set_clip_state(pricesdisplaybuf, 0);
+	anyprice = true;
 	textout_ex(pricesdisplaybuf, zfont, "X", 64, 112, CSET(0) + 1, -1);
 }
 
@@ -9852,7 +9851,7 @@ void putprices(bool sign) {
 			sprintf(buf, sign ? "%+3d" : "%3d", prices[i][0]);
 
 			int l = strlen(buf);
-			set_clip_state(pricesdisplaybuf, 0);
+			anyprice = true;
 			textout_ex(pricesdisplaybuf, zfont, buf, x - (l > 3 ? (l - 3) << 3 : 0), 112, CSET(0) + 1, -1);
 		}
 		x += step;
@@ -10008,7 +10007,7 @@ void putmsg() {
 				msgpos = 0;
 				msgstr = MsgStrings[msgstr].nextstring;
 				clear_bitmap(msgdisplaybuf);
-				set_clip_state(msgdisplaybuf, 1);
+				anymsg = false;
 				putprices(false);
 			}
 		} else {
@@ -10031,9 +10030,8 @@ void putmsg() {
 
 	sfx(WAV_MSG);
 
-	//using the clip value to indicate the bitmap is "dirty"
-	//rather than add yet another global variable
-	set_clip_state(msgdisplaybuf, 0);
+	// set the msg flag to indicate we have messages to show
+	anymsg = true;
 	textprintf_ex(msgdisplaybuf, zfont, ((msgpos % 24) << 3) + 32, ((msgpos / 24) << 3) + 40, CSET(0) + 1, -1,
 	              "%c", MsgStrings[msgstr].s[msgpos]);
 

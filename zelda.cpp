@@ -83,6 +83,7 @@ short    Bpos, lensclk, lenscnt;
 byte screengrid[22];
 bool halt = false;
 bool screenscrolling = false;
+bool anymsg, anyprice = false;
 
 int readsize, writesize;
 
@@ -248,9 +249,9 @@ void addLwpn(int x, int y, int id, int type, int power, int dir) {
 
 void ALLOFF() {
 	clear_bitmap(msgdisplaybuf);
-	set_clip_state(msgdisplaybuf, 1);
+	anymsg = false;
 	clear_bitmap(pricesdisplaybuf);
-	set_clip_state(pricesdisplaybuf, 1);
+	anyprice = false;
 	if (items.idCount(iPile)) {
 		loadlvlpal(DMaps[currdmap].color);
 	}
@@ -274,7 +275,6 @@ void ALLOFF() {
 	add_nl1bsparkle = false;
 	add_nl2asparkle = false;
 	add_nl2bsparkle = false;
-	//  for(int i=0; i<1; i++)
 	mblock2.clk = 0;
 	msgstr = 0;
 	fadeclk = -1;
@@ -284,8 +284,6 @@ void ALLOFF() {
 	if (watch) {
 		Link.setClock(false);
 	}
-	//  if(watch)
-	//    Link.setClock(false);
 	watch = freeze_guys = loaded_guys = loaded_enemies = wand_dead = blockpath = false;
 	stop_sfx(WAV_BRANG);
 	for (int i = 0; i < 176; i++) {
@@ -295,56 +293,68 @@ void ALLOFF() {
 	blockmoving = false;
 }
 
-fix  LinkX()   {
+fix LinkX() {
 	return Link.getX();
 }
-fix  LinkY()   {
+
+fix LinkY() {
 	return Link.getY();
 }
-int  LinkHClk() {
+
+int LinkHClk() {
 	return Link.getHClk();
 }
-int  LinkNayrusLoveShieldClk() {
+
+int LinkNayrusLoveShieldClk() {
 	return Link.getNayrusLoveShieldClk();
 }
-int  LinkLStep() {
+
+int LinkLStep() {
 	return Link.getLStep();
 }
-fix  GuyX(int j)   {
+
+fix GuyX(int j) {
 	return guys.getX(j);
 }
-fix  GuyY(int j)   {
+
+fix GuyY(int j) {
 	return guys.getY(j);
 }
-int  GuyID(int j)   {
+
+int GuyID(int j) {
 	return guys.getID(j);
 }
-int  GuyMisc(int j)   {
+
+int GuyMisc(int j) {
 	return guys.getMisc(j);
 }
-bool  GuySuperman(int j) {
+
+bool GuySuperman(int j) {
 	if ((j >= guys.Count()) || (j < 0)) {
 		return true;
 	}
 	return ((enemy*)guys.spr(j))->superman;
 }
 
-int  GuyCount()   {
+int GuyCount() {
 	return guys.Count();
 }
-void StunGuy(int j)   {
+void StunGuy(int j) {
 	((enemy*)guys.spr(j))->stunclk = 160;
 }
 
-fix LinkModifiedX()   {
+fix LinkModifiedX() {
 	return Link.getModifiedX();
 }
-fix LinkModifiedY()   {
+
+fix LinkModifiedY() {
 	return Link.getModifiedY();
 }
+
 int LinkDir() {
 	return Link.getDir();
 }
+
 void add_grenade(int wx, int wy, int size) {
 	if (size) {
 		Lwpns.add(new weapon((fix)wx, (fix)wy, wSBomb, 0, 16 * DAMAGE_MULTIPLIER, LinkDir()));
@@ -357,7 +367,6 @@ void add_grenade(int wx, int wy, int size) {
 }
 
 fix distance(int x1, int y1, int x2, int y2)
-
 {
 	return (fix)sqrt(pow(abs(x1 - x2), 2) + pow(abs(y1 - y2), 2));
 }
@@ -365,9 +374,11 @@ fix distance(int x1, int y1, int x2, int y2)
 bool getClock() {
 	return Link.getClock();
 }
+
 void setClock(bool state) {
 	Link.setClock(state);
 }
+
 void CatchBrang() {
 	Link.Catch();
 }
@@ -900,9 +911,8 @@ void putintro() {
 	sfx(WAV_MSG);
 
 
-	//using the clip value to indicate the bitmap is "dirty"
-	//rather than add yet another global variable
-	set_clip_state(msgdisplaybuf, 0);
+	// set the msg flag to we know we have a msg to show
+	anymsg = true;
 	textprintf_ex(msgdisplaybuf, zfont, ((intropos % 24) << 3) + 32, ((intropos / 24) << 3) + 40, CSET(0) + 1, -1,
 	              "%c", DMaps[currdmap].intro[intropos]);
 
@@ -1225,8 +1235,7 @@ void game_loop() {
 		}
 		dmapmsgclk = 0;
 		clear_bitmap(msgdisplaybuf);
-		set_clip_state(msgdisplaybuf, 1);
-		//    clear_bitmap(pricesdisplaybuf);
+		anymsg = false;
 	}
 
 	if (!dmapmsgclk) {
@@ -1323,9 +1332,7 @@ int main(int argc, char* argv[]) {
 	clear_bitmap(scrollbuf);
 	clear_bitmap(framebuf);
 	clear_bitmap(msgdisplaybuf);
-	set_clip_state(msgdisplaybuf, 1);
 	clear_bitmap(pricesdisplaybuf);
-	set_clip_state(pricesdisplaybuf, 1);
 	Z_message("OK\n");
 
 	int mode = VidMode; // from config file
@@ -1541,9 +1548,7 @@ int main(int argc, char* argv[]) {
 	destroy_bitmap(scrollbuf);
 	destroy_bitmap(tmp_scr);
 	destroy_bitmap(tmp_bmp);
-	set_clip_state(msgdisplaybuf, 1);
 	destroy_bitmap(msgdisplaybuf);
-	set_clip_state(pricesdisplaybuf, 1);
 	destroy_bitmap(pricesdisplaybuf);
 	zcmusic_exit();
 	Z_message("Armageddon Games web site: http://www.armageddongames.com\n");
