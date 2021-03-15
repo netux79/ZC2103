@@ -58,32 +58,33 @@ bool triplebuffer_not_available = false;
 RGB_MAP rgb_table;
 COLOR_MAP trans_table;
 
-BITMAP*     framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf, *pricesdisplaybuf, *tb_page[3], *real_screen;
-DATAFILE*   data, *sfxdata, *fontsdata, *mididata;
-FONT*       zfont;
-PALETTE    RAMpal;
-byte*       tilebuf, *colordata;
-newcombo*   combobuf;
-itemdata*   itemsbuf;
-wpndata*    wpnsbuf;
-guydata*    guysbuf;
-ZCHEATS    zcheats;
-byte       use_tiles;
-char       palnames[MAXLEVELS][PALNAMESIZE];
+BITMAP* framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf, *pricesdisplaybuf, *tb_page[3], *real_screen;
+DATAFILE* data, *sfxdata, *fontsdata, *mididata;
+FONT* zfont;
+PALETTE RAMpal;
+byte* tilebuf, *colordata;
+newcombo* combobuf;
+itemdata* itemsbuf;
+wpndata* wpnsbuf;
+guydata* guysbuf;
+ZCHEATS zcheats;
+byte use_tiles;
+char palnames[MAXLEVELS][PALNAMESIZE];
 word animated_combo_table[MAXCOMBOS][2];                    //[0]=position in act2, [1]=original tile
 word animated_combo_table4[MAXCOMBOS][2];                   //[0]=combo, [1]=clock
 word animated_combos;
 bool blank_tile_table[NEWMAXTILES];                         //keeps track of blank tiles
 bool blank_tile_quarters_table[NEWMAXTILES * 4];            //keeps track of blank tiles
 bool ewind_restart = false;
-word     msgclk, msgstr, msgpos, msg_count;
-word     door_combo_set_count;
-word     introclk, intropos, dmapmsgclk, linkedmsgclk;
-short    Bpos, lensclk, lenscnt;
+word msgclk, msgstr, msgpos, msg_count;
+word door_combo_set_count;
+word introclk, intropos, dmapmsgclk, linkedmsgclk;
+short Bpos, lensclk, lenscnt;
 byte screengrid[22];
 bool halt = false;
 bool screenscrolling = false;
-bool anymsg, anyprice = false;
+bool anymsg = false; 
+bool anyprice = false;
 
 int readsize, writesize;
 
@@ -415,7 +416,7 @@ int load_quest(gamedata* g, bool report) {
 		char buf1[80], buf2[80];
 		sprintf(buf1, "Error loading %s:", get_filename(qstpath));
 		sprintf(buf2, "%s", qst_error[ret]);
-		al_trace("%s %s\n", buf1, buf2);
+		Z_message("%s %s\n", buf1, buf2);
 	}
 	return ret;
 }
@@ -1241,17 +1242,10 @@ void game_loop() {
 	if (!dmapmsgclk) {
 		putmsg();
 	}
+	
 	domoney();
 	domagic();
-	/*
-	  if (tmpscr->layermap[2]!=0 || tmpscr->layermap[3]!=0 ||
-	    tmpscr->layermap[4]!=0 || tmpscr->layermap[5]!=0 ||
-	    overheadcombos(tmpscr))
-	  {
-	    masked_blit(msgdisplaybuf,framebuf,0,0,0,56,256,176);
-	    masked_blit(pricesdisplaybuf,framebuf,0,0,0,56,256,176);
-	  }
-	*/
+
 	if (lensclk) {
 		draw_lens_over();
 		--lensclk;
@@ -1263,13 +1257,13 @@ void game_loop() {
 /**************************/
 
 int main(int argc, char* argv[]) {
-	Z_title("Zelda Classic %s (Build %d)", VerStr(ZELDA_VERSION), VERSION_BUILD);
+	Z_message("Zelda Classic %s (Build %d)\n", VerStr(ZELDA_VERSION), VERSION_BUILD);
 
 	set_uformat(U_ASCII);
 	set_config_file("zc.cfg");
 
 	// initialize Allegro
-	Z_message("Initializing Allegro...");
+	Z_message("Initializing Allegro...\n");
 	allegro_init();
 
 	// load game configurations
@@ -1298,6 +1292,7 @@ int main(int argc, char* argv[]) {
 	three_finger_flag = false;
 	zcmusic_init();
 
+	Z_message("Installing keyboard and timers...");
 	if (install_timer() < 0) {
 		Z_error(allegro_error);
 	}
@@ -1318,13 +1313,13 @@ int main(int argc, char* argv[]) {
 	set_color_conversion(COLORCONV_NONE);
 
 	// Allocate bitmap buffers
-	Z_message("Allocating bitmap buffers... ");
+	Z_message("Allocating bitmap buffers...");
 	framebuf  = create_bitmap_ex(8, 256, 224);
 	scrollbuf = create_bitmap_ex(8, 512, 406);
 	tmp_scr   = create_bitmap_ex(8, 320, 240);
 	tmp_bmp   = create_bitmap_ex(8, 32, 32);
-	msgdisplaybuf = create_bitmap_ex(8, 256, 176);
-	pricesdisplaybuf = create_bitmap_ex(8, 256, 176);
+	msgdisplaybuf = create_bitmap_ex(8, 256, 168);
+	pricesdisplaybuf = create_bitmap_ex(8, 256, 168);
 	if (!framebuf || !scrollbuf || !tmp_bmp || !tmp_scr || !msgdisplaybuf || !pricesdisplaybuf) {
 		Z_error("Error");
 	}
@@ -1381,7 +1376,7 @@ int main(int argc, char* argv[]) {
 	zfont = (FONT*)fontsdata[FONT_NES].dat;
 
 	// load saved games
-	Z_message("Loading saved games... ");
+	Z_message("Loading saved games...");
 	if (load_savedgames() != 0) {
 		Z_error("Insufficient memory");
 	}
@@ -1389,7 +1384,7 @@ int main(int argc, char* argv[]) {
 	Z_message("OK\n");
 
 	// initialize sound driver
-	Z_message("Initializing sound driver... ");
+	Z_message("Initializing sound driver...");
 	if (install_sound(DIGI_AUTODETECT, MIDI_AUTODETECT, NULL)) {
 		Z_message("Error initialising sound\n%s\n", allegro_error);
 	} else {
@@ -1430,7 +1425,7 @@ int main(int argc, char* argv[]) {
 	}
 #endif
 
-	al_trace("Setting video mode...\n");
+	Z_message("Setting video mode...\n");
 	if (!game_vid_mode(mode, 250)) {
 		Z_error(allegro_error);
 	}
@@ -1466,7 +1461,7 @@ int main(int argc, char* argv[]) {
 		}
 	}
 
-	al_trace("Triplebuffer %savailable\n", triplebuffer_not_available ? "not " : "");
+	Z_message("Triplebuffer %savailable\n", triplebuffer_not_available ? "not " : "");
 
 	set_window_title("Zelda Classic");
 
@@ -1474,19 +1469,19 @@ int main(int argc, char* argv[]) {
 
 	rgb_map = &rgb_table;
 	/*
-	  al_trace("int size = %ld\n", sizeof(int));
-	  al_trace("word size = %ld\n", sizeof(word));
-	  al_trace("char size = %ld\n", sizeof(char));
-	  al_trace("byte size = %ld\n", sizeof(byte));
-	  al_trace("long size = %ld\n", sizeof(long));
-	  al_trace("dword size = %ld\n", sizeof(dword));
-	  al_trace("short size = %ld\n", sizeof(short));
-	  al_trace("bool size = %ld\n", sizeof(bool));
-	  al_trace("float size = %ld\n", sizeof(float));
-	  al_trace("double size = %ld\n", sizeof(double));
-	  al_trace("long double size = %ld\n", sizeof(long double));
-	  al_trace("long long size = %ld\n", sizeof(long long));
-	  al_trace("pointer size = %ld\n", sizeof(void *));
+	  Z_message("int size = %ld\n", sizeof(int));
+	  Z_message("word size = %ld\n", sizeof(word));
+	  Z_message("char size = %ld\n", sizeof(char));
+	  Z_message("byte size = %ld\n", sizeof(byte));
+	  Z_message("long size = %ld\n", sizeof(long));
+	  Z_message("dword size = %ld\n", sizeof(dword));
+	  Z_message("short size = %ld\n", sizeof(short));
+	  Z_message("bool size = %ld\n", sizeof(bool));
+	  Z_message("float size = %ld\n", sizeof(float));
+	  Z_message("double size = %ld\n", sizeof(double));
+	  Z_message("long double size = %ld\n", sizeof(long double));
+	  Z_message("long long size = %ld\n", sizeof(long long));
+	  Z_message("pointer size = %ld\n", sizeof(void *));
 	*/
 	// play the game
 	while (Quit != qEXIT) {

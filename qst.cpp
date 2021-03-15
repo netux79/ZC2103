@@ -257,7 +257,7 @@ bool find_section(PACKFILE* f, long section_id_requested) {
 
 
 		while (catchup) {
-			al_trace("catchup = %d\n", section_id_read);
+			Z_message("catchup = %d\n", section_id_read);
 			//section id
 			section_id_read = (section_id_read << 8);
 			if (!p_getc(&tempbyte, f, true)) {
@@ -457,11 +457,11 @@ PACKFILE* open_quest_file(int* open_error, char* filename, char* deletefilename,
 		if (ret) {
 			switch (ret) {
 			case 1:
-				al_trace("Error: quest file not found: %s.\n", filename);
+				Z_message("Error: quest file not found: %s.\n", filename);
 				*open_error = qe_notfound;
 				return NULL;
 			case 2:
-				al_trace("Internal error while decrypting quest: %s.\n", filename);
+				Z_message("Internal error while decrypting quest: %s.\n", filename);
 				*open_error = qe_internal;
 				return NULL;
 				// be sure not to delete tmpfilename now...
@@ -488,7 +488,7 @@ PACKFILE* open_quest_file(int* open_error, char* filename, char* deletefilename,
 			if (!oldquest) {
 				delete_file(tmpfilename);
 			}
-			al_trace("Error while opening quest: %s.\n", oldquest ? filename : tmpfilename);
+			Z_message("Error while opening quest: %s.\n", oldquest ? filename : tmpfilename);
 
 			*open_error = qe_invalid;
 			return NULL;
@@ -521,7 +521,7 @@ PACKFILE* open_quest_template(zquestheader* header, char* deletefilename, bool v
 	}
 	if (validate && 0) {
 		if (!valid_zqt(f)) {
-			al_trace("Error - Invalid Quest Template %s", filename);
+			Z_message("Error - Invalid Quest Template %s", filename);
 			pack_fclose(f);
 			packfile_password(NULL);
 			if (deletefilename[0]) {
@@ -686,75 +686,74 @@ bool reset_items(bool validate, zquestheader* Header) {
 
 void get_qst_buffers() {
 	memrequested += (sizeof(mapscr) * MAPSCRS);
-	Z_message("Allocating map buffer (%s)... ", byte_conversion2(sizeof(mapscr)*MAPSCRS, memrequested, -1, -1));
+	Z_message("Allocating map buffer (%s)...", byte_conversion2(sizeof(mapscr)*MAPSCRS, memrequested, -1, -1));
 	if (!(TheMaps = (mapscr*)malloc(sizeof(mapscr) * MAPSCRS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating map buffer...
 
 	memrequested += (sizeof(MsgStr) * MAXMSGS);
-	Z_message("Allocating string buffer (%s)... ", byte_conversion2(sizeof(MsgStr)*MAXMSGS, memrequested, -1, -1));
+	Z_message("Allocating string buffer (%s)...", byte_conversion2(sizeof(MsgStr)*MAXMSGS, memrequested, -1, -1));
 	if (!(MsgStrings = (MsgStr*)malloc(sizeof(MsgStr) * MAXMSGS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating string buffer...
 
 	memrequested += (sizeof(DoorComboSet) * MAXDOORCOMBOSETS);
-	Z_message("Allocating door combo buffer (%s)... ", byte_conversion2(sizeof(DoorComboSet)*MAXDOORCOMBOSETS, memrequested, -1, -1));
+	Z_message("Allocating door combo buffer (%s)...", byte_conversion2(sizeof(DoorComboSet)*MAXDOORCOMBOSETS, memrequested, -1, -1));
 	if (!(DoorComboSets = (DoorComboSet*)malloc(sizeof(DoorComboSet) * MAXDOORCOMBOSETS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating door combo buffer...
 
 	memrequested += (sizeof(dmap) * MAXDMAPS);
-	Z_message("Allocating dmap buffer (%s)... ", byte_conversion2(sizeof(dmap)*MAXDMAPS, memrequested, -1, -1));
+	Z_message("Allocating dmap buffer (%s)...", byte_conversion2(sizeof(dmap)*MAXDMAPS, memrequested, -1, -1));
 	if (!(DMaps = (dmap*)malloc(sizeof(dmap) * MAXDMAPS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating dmap buffer...
 
 	memrequested += (sizeof(newcombo) * MAXCOMBOS);
-	Z_message("Allocating combo buffer (%s)... ", byte_conversion2(sizeof(newcombo)*MAXCOMBOS, memrequested, -1, -1));
+	Z_message("Allocating combo buffer (%s)...", byte_conversion2(sizeof(newcombo)*MAXCOMBOS, memrequested, -1, -1));
 	if (!(combobuf = (newcombo*)malloc(sizeof(newcombo) * MAXCOMBOS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating combo buffer...
 
 	memrequested += (newpsTOTAL);
-	Z_message("Allocating color data buffer (%s)... ", byte_conversion2(newpsTOTAL, memrequested, -1, -1));
+	Z_message("Allocating color data buffer (%s)...", byte_conversion2(newpsTOTAL, memrequested, -1, -1));
 	if (!(colordata = (byte*)malloc(newpsTOTAL))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating color data buffer...
 
 	memrequested += (NEWTILE_SIZE2);
-	Z_message("Allocating tile buffer (%s)... ", byte_conversion2(NEWTILE_SIZE2, memrequested, -1, -1));
+	Z_message("Allocating tile buffer (%s)...", byte_conversion2(NEWTILE_SIZE2, memrequested, -1, -1));
 	if (!(tilebuf = (byte*)malloc(NEWTILE_SIZE2))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating tile buffer...
 
 	memrequested += (sizeof(itemdata) * MAXITEMS);
-	Z_message("Allocating item buffer (%s)... ", byte_conversion2(sizeof(itemdata)*MAXITEMS, memrequested, -1, -1));
+	Z_message("Allocating item buffer (%s)...", byte_conversion2(sizeof(itemdata)*MAXITEMS, memrequested, -1, -1));
 	if (!(itemsbuf = (itemdata*)malloc(sizeof(itemdata) * MAXITEMS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating item buffer...
 
 	memrequested += (sizeof(wpndata) * MAXWPNS);
-	Z_message("Allocating weapon buffer (%s)... ", byte_conversion2(sizeof(wpndata)*MAXWPNS, memrequested, -1, -1));
+	Z_message("Allocating weapon buffer (%s)...", byte_conversion2(sizeof(wpndata)*MAXWPNS, memrequested, -1, -1));
 	if (!(wpnsbuf = (wpndata*)malloc(sizeof(wpndata) * MAXWPNS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating weapon buffer...
 
 	memrequested += (sizeof(guydata) * MAXGUYS);
-	Z_message("Allocating guy buffer (%s)... ", byte_conversion2(sizeof(guydata)*MAXGUYS, memrequested, -1, -1));
+	Z_message("Allocating guy buffer (%s)...", byte_conversion2(sizeof(guydata)*MAXGUYS, memrequested, -1, -1));
 	if (!(guysbuf = (guydata*)malloc(sizeof(guydata) * MAXGUYS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating guy buffer...
-
 }
 
 bool init_palnames() {
@@ -3953,23 +3952,6 @@ int readinitdata(PACKFILE* f, zquestheader* header, bool keepdata) {
 	return 0;
 }
 
-/*
-switch (ret) {
-  case 0:
-    break;
-
-  case qe_invalid:
-    goto invalid;
-    break;
-  default:
-    pack_fclose(f);
-    if(!oldquest)
-      delete_file(tmpfilename);
-return ret;
-break;
-}
-*/
-
 const char* skip_text[skip_max] = {
 	"skip_header", "skip_rules", "skip_strings", "skip_misc", "skip_tiles", "skip_combos", "skip_comboaliases", "skip_csets", "skip_maps", "skip_dmaps", "skip_doors", "skip_items", "skip_weapons", "skip_colors", "skip_icons", "skip_initdata", "skip_guys", "skip_linksprites", "skip_subscreens", "skip_ffscript", "skip_sfx", "skip_midis", "skip_cheats"
 };
@@ -3998,18 +3980,18 @@ int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midi
 	PACKFILE* f = NULL;
 	int ret;
 
-	al_trace("Loading Quest %s...\n", filename);
+	Z_message("Loading Quest %s...\n", filename);
 	if (encrypted) {
-		al_trace("Decrypting...");
+		Z_message("Decrypting...");
 
 		ret = decode_file_007(filename, tmpfilename, ENC_STR, ENC_METHOD_MAX - 1, strstr(filename, ".dat#") != NULL);
 		if (ret) {
 			switch (ret) {
 			case 1:
-				al_trace("error.\n");
+				Z_message("error.\n");
 				return qe_notfound;
 			case 2:
-				al_trace("error.\n");
+				Z_message("error.\n");
 				return qe_internal;
 				// be sure not to delete tmpfilename now...
 			}
@@ -4026,12 +4008,12 @@ int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midi
 				oldquest = true;
 			}
 		}
-		al_trace("okay.\n");
+		Z_message("OK\n");
 
 	} else {
 		oldquest = true;
 	}
-	al_trace("Opening quest...");
+	Z_message("Opening quest...");
 	f = pack_fopen(oldquest ? filename : tmpfilename, compressed ? F_READ_PACKED : F_READ);
 	if (!f) {
 		if ((compressed == 1) && (errno == EDOM)) {
@@ -4041,20 +4023,20 @@ int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midi
 			if (!oldquest) {
 				delete_file(tmpfilename);
 			}
-			al_trace("error.\n");
+			Z_message("error.\n");
 
 
 			return qe_invalid;
 		}
 	}
 
-	al_trace("okay.\n");
+	Z_message("OK\n");
 
 	//header
-	al_trace("Reading Header...");
+	Z_message("Reading Header...");
 	ret = readheader(f, &tempheader, true);
 	checkstatus(ret);
-	al_trace("okay.\n");
+	Z_message("OK\n");
 
 
 	if (tempheader.zelda_version >= 0x193) {
@@ -4068,144 +4050,144 @@ int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midi
 			case ID_RULES:
 				//rules
 				if (catchup) {
-					al_trace("found.\n");
+					Z_message("found.\n");
 
 					catchup = false;
 				}
-				al_trace("Reading Rules...");
+				Z_message("Reading Rules...");
 				ret = readrules(f, &tempheader, keepall && !get_bit(skip_flags, skip_rules));
 				checkstatus(ret);
-				al_trace("okay.\n");
+				Z_message("OK\n");
 
 				break;
 			case ID_STRINGS:
 				//strings
 				if (catchup) {
-					al_trace("found.\n");
+					Z_message("found.\n");
 
 					catchup = false;
 				}
-				al_trace("Reading Strings...");
+				Z_message("Reading Strings...");
 				ret = readstrings(f, &tempheader, keepall && !get_bit(skip_flags, skip_strings));
 				checkstatus(ret);
-				al_trace("okay.\n");
+				Z_message("OK\n");
 
 				break;
 			case ID_MISC:
 				//misc data
 				if (catchup) {
-					al_trace("found.\n");
+					Z_message("found.\n");
 
 					catchup = false;
 				}
-				al_trace("Reading Misc. Data...");
+				Z_message("Reading Misc. Data...");
 				ret = readmisc(f, &tempheader, Misc, keepall && !get_bit(skip_flags, skip_misc));
 				checkstatus(ret);
-				al_trace("okay.\n");
+				Z_message("OK\n");
 
 				break;
 			case ID_TILES:
 				//tiles
 				if (catchup) {
-					al_trace("found.\n");
+					Z_message("found.\n");
 
 					catchup = false;
 				}
-				al_trace("Reading Tiles...");
+				Z_message("Reading Tiles...");
 				ret = readtiles(f, tilebuf, &tempheader, tempheader.zelda_version, tempheader.build, 0, NEWMAXTILES, false, keepall && !get_bit(skip_flags, skip_tiles));
 				checkstatus(ret);
-				al_trace("okay.\n");
+				Z_message("OK\n");
 
 				break;
 			case ID_COMBOS:
 				//combos
 				if (catchup) {
-					al_trace("found.\n");
+					Z_message("found.\n");
 
 					catchup = false;
 				}
-				al_trace("Reading Combos...");
+				Z_message("Reading Combos...");
 				ret = readcombos(f, &tempheader, tempheader.zelda_version, tempheader.build, 0, MAXCOMBOS, keepall && !get_bit(skip_flags, skip_combos));
 				checkstatus(ret);
-				al_trace("okay.\n");
+				Z_message("OK\n");
 
 				break;
 			case ID_CSETS:
 				//color data
 				if (catchup) {
-					al_trace("found.\n");
+					Z_message("found.\n");
 
 					catchup = false;
 				}
-				al_trace("Reading Color Data...");
+				Z_message("Reading Color Data...");
 				ret = readcolordata(f, Misc, tempheader.zelda_version, tempheader.build, 0, newpdTOTAL, keepall && !get_bit(skip_flags, skip_csets));
 				checkstatus(ret);
-				al_trace("okay.\n");
+				Z_message("OK\n");
 
 				break;
 			case ID_MAPS:
 				//maps
 				if (catchup) {
-					al_trace("found.\n");
+					Z_message("found.\n");
 
 					catchup = false;
 				}
-				al_trace("Reading Maps...");
+				Z_message("Reading Maps...");
 				ret = readmaps(f, &tempheader, keepall && !get_bit(skip_flags, skip_maps));
 				checkstatus(ret);
-				al_trace("okay.\n");
+				Z_message("OK\n");
 
 				break;
 			case ID_DMAPS:
 				//dmaps
 				if (catchup) {
-					al_trace("found.\n");
+					Z_message("found.\n");
 
 					catchup = false;
 				}
-				al_trace("Reading DMaps...");
+				Z_message("Reading DMaps...");
 				ret = readdmaps(f, &tempheader, tempheader.zelda_version, tempheader.build, 0, MAXDMAPS, keepall && !get_bit(skip_flags, skip_dmaps));
 				checkstatus(ret);
-				al_trace("okay.\n");
+				Z_message("OK\n");
 
 				break;
 			case ID_DOORS:
 				//door combo sets
 				if (catchup) {
-					al_trace("found.\n");
+					Z_message("found.\n");
 
 					catchup = false;
 				}
-				al_trace("Reading Doors...");
+				Z_message("Reading Doors...");
 				ret = readdoorcombosets(f, &tempheader, keepall && !get_bit(skip_flags, skip_doors));
 				checkstatus(ret);
-				al_trace("okay.\n");
+				Z_message("OK\n");
 
 				break;
 			case ID_ITEMS:
 				//items
 				if (catchup) {
-					al_trace("found.\n");
+					Z_message("found.\n");
 
 					catchup = false;
 				}
-				al_trace("Reading Items...");
+				Z_message("Reading Items...");
 				ret = readitems(f, tempheader.zelda_version, tempheader.build, keepall && !get_bit(skip_flags, skip_items));
 				checkstatus(ret);
-				al_trace("okay.\n");
+				Z_message("OK\n");
 
 				break;
 			case ID_WEAPONS:
 				//weapons
 				if (catchup) {
-					al_trace("found.\n");
+					Z_message("found.\n");
 
 					catchup = false;
 				}
-				al_trace("Reading Weapons...");
+				Z_message("Reading Weapons...");
 				ret = readweapons(f, &tempheader, keepall && !get_bit(skip_flags, skip_weapons));
 				checkstatus(ret);
-				al_trace("okay.\n");
+				Z_message("OK\n");
 
 				break;
 			case ID_COLORS:
@@ -4215,58 +4197,58 @@ int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midi
 			case ID_INITDATA:
 				//initialization data
 				if (catchup) {
-					al_trace("found.\n");
+					Z_message("found.\n");
 
 					catchup = false;
 				}
-				al_trace("Reading Init. Data...");
+				Z_message("Reading Init. Data...");
 				ret = readinitdata(f, &tempheader, keepall && !get_bit(skip_flags, skip_initdata));
 				checkstatus(ret);
-				al_trace("okay.\n");
+				Z_message("OK\n");
 
 				break;
 			case ID_GUYS:
 				//guys
 				if (catchup) {
-					al_trace("found.\n");
+					Z_message("found.\n");
 
 					catchup = false;
 				}
-				al_trace("Reading Custom Guy Data...");
+				Z_message("Reading Custom Guy Data...");
 				ret = readguys(f, &tempheader, keepall && !get_bit(skip_flags, skip_guys));
 				checkstatus(ret);
-				al_trace("okay.\n");
+				Z_message("OK\n");
 
 				break;
 			case ID_MIDIS:
 				//midis
 				if (catchup) {
-					al_trace("found.\n");
+					Z_message("found.\n");
 
 					catchup = false;
 				}
-				al_trace("Reading MIDIs...");
+				Z_message("Reading MIDIs...");
 				ret = readmidis(f, &tempheader, midis, keepall && !get_bit(skip_flags, skip_midis));
 				checkstatus(ret);
-				al_trace("okay.\n");
+				Z_message("OK\n");
 
 				break;
 			case ID_CHEATS:
 				//cheat codes
 				if (catchup) {
-					al_trace("found.\n");
+					Z_message("found.\n");
 
 					catchup = false;
 				}
-				al_trace("Reading Cheat Codes...");
+				Z_message("Reading Cheat Codes...");
 				ret = readcheatcodes(f, &tempheader, keepall && !get_bit(skip_flags, skip_cheats));
 				checkstatus(ret);
-				al_trace("okay.\n");
+				Z_message("OK\n");
 
 				break;
 			default:
 				if (!catchup) {
-					al_trace("Bad token!  Searching...\n");
+					Z_message("Bad token!  Searching...\n");
 
 				}
 				catchup = true;
@@ -4292,108 +4274,108 @@ int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midi
 		}
 	} else {
 		//rules
-		al_trace("Reading Rules...");
+		Z_message("Reading Rules...");
 		ret = readrules(f, &tempheader, keepall && !get_bit(skip_flags, skip_rules));
 		checkstatus(ret);
-		al_trace("okay.\n");
+		Z_message("OK\n");
 
 
 		//strings
-		al_trace("Reading Strings...");
+		Z_message("Reading Strings...");
 		ret = readstrings(f, &tempheader, keepall && !get_bit(skip_flags, skip_strings));
 		checkstatus(ret);
-		al_trace("okay.\n");
+		Z_message("OK\n");
 
 
 		//door combo sets
-		al_trace("Reading Doors...");
+		Z_message("Reading Doors...");
 		ret = readdoorcombosets(f, &tempheader, keepall && !get_bit(skip_flags, skip_doors));
 		checkstatus(ret);
-		al_trace("okay.\n");
+		Z_message("OK\n");
 
 
 		//dmaps
-		al_trace("Reading DMaps...");
+		Z_message("Reading DMaps...");
 		ret = readdmaps(f, &tempheader, tempheader.zelda_version, tempheader.build, 0, MAXDMAPS, keepall && !get_bit(skip_flags, skip_dmaps));
 		checkstatus(ret);
-		al_trace("okay.\n");
+		Z_message("OK\n");
 
 
 		// misc data
-		al_trace("Reading Misc. Data...");
+		Z_message("Reading Misc. Data...");
 		ret = readmisc(f, &tempheader, Misc, keepall && !get_bit(skip_flags, skip_misc));
 		checkstatus(ret);
-		al_trace("okay.\n");
+		Z_message("OK\n");
 
 
 		//items
-		al_trace("Reading Items...");
+		Z_message("Reading Items...");
 		ret = readitems(f, tempheader.zelda_version, tempheader.build, keepall && !get_bit(skip_flags, skip_items));
 		checkstatus(ret);
-		al_trace("okay.\n");
+		Z_message("OK\n");
 
 
 		//weapons
-		al_trace("Reading Weapons...");
+		Z_message("Reading Weapons...");
 		ret = readweapons(f, &tempheader, keepall && !get_bit(skip_flags, skip_weapons));
 		checkstatus(ret);
-		al_trace("okay.\n");
+		Z_message("OK\n");
 
 
 		//guys
-		al_trace("Reading Custom Guy Data...");
+		Z_message("Reading Custom Guy Data...");
 		ret = readguys(f, &tempheader, keepall && !get_bit(skip_flags, skip_guys));
 		checkstatus(ret);
-		al_trace("okay.\n");
+		Z_message("OK\n");
 
 
 		//maps
-		al_trace("Reading Maps...");
+		Z_message("Reading Maps...");
 		ret = readmaps(f, &tempheader, keepall && !get_bit(skip_flags, skip_maps));
 		checkstatus(ret);
-		al_trace("okay.\n");
+		Z_message("OK\n");
 
 
 		//combos
-		al_trace("Reading Combos...");
+		Z_message("Reading Combos...");
 		ret = readcombos(f, &tempheader, tempheader.zelda_version, tempheader.build, 0, MAXCOMBOS, keepall && !get_bit(skip_flags, skip_combos));
 		checkstatus(ret);
-		al_trace("okay.\n");
+		Z_message("OK\n");
 
 
 		//color data
-		al_trace("Reading Color Data...");
+		Z_message("Reading Color Data...");
 		ret = readcolordata(f, Misc, tempheader.zelda_version, tempheader.build, 0, newpdTOTAL, keepall && !get_bit(skip_flags, skip_csets));
 		checkstatus(ret);
-		al_trace("okay.\n");
+		Z_message("OK\n");
 
 
 		//tiles
-		al_trace("Reading Tiles...");
+		Z_message("Reading Tiles...");
 		ret = readtiles(f, tilebuf, &tempheader, tempheader.zelda_version, tempheader.build, 0, NEWMAXTILES, false, keepall && !get_bit(skip_flags, skip_tiles));
 		checkstatus(ret);
-		al_trace("okay.\n");
+		Z_message("OK\n");
 
 
 		//midis
-		al_trace("Reading MIDIs...");
+		Z_message("Reading MIDIs...");
 		ret = readmidis(f, &tempheader, midis, keepall && !get_bit(skip_flags, skip_midis));
 		checkstatus(ret);
-		al_trace("okay.\n");
+		Z_message("OK\n");
 
 
 		//cheat codes
-		al_trace("Reading Cheat Codes...");
+		Z_message("Reading Cheat Codes...");
 		ret = readcheatcodes(f, &tempheader, keepall && !get_bit(skip_flags, skip_cheats));
 		checkstatus(ret);
-		al_trace("okay.\n");
+		Z_message("OK\n");
 
 
 		//initialization data
-		al_trace("Reading Init. Data...");
+		Z_message("Reading Init. Data...");
 		ret = readinitdata(f, &tempheader, keepall && !get_bit(skip_flags, skip_initdata));
 		checkstatus(ret);
-		al_trace("okay.\n");
+		Z_message("OK\n");
 
 
 	}
@@ -4407,7 +4389,7 @@ int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midi
 			delete_file(tmpfilename);
 		}
 	}
-	al_trace("Done.\n\n");
+	Z_message("Done.\n");
 
 	if (keepall && !get_bit(skip_flags, skip_header)) {
 		memcpy(Header, &tempheader, sizeof(tempheader));
@@ -4424,7 +4406,7 @@ int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midi
 	return qe_OK;
 
 invalid:
-	al_trace("error.\n");
+	Z_message("error.\n");
 	if (f) {
 		pack_fclose(f);
 	}

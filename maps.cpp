@@ -1799,7 +1799,7 @@ void ViewMap() {
 	mappic = create_bitmap_ex(8, (256 * 16) >> mapres, (176 * 8) >> mapres);
 
 	if (!mappic) {
-		al_trace("View Map: Not enough memory.");
+		Z_message("View Map: Not enough memory.");
 		return;
 	}
 

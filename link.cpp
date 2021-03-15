@@ -4256,22 +4256,18 @@ bool LinkClass::dowarp(int type) {
 			        || (((wtype == wtSCROLL) && !intradmap))) {
 				if (!(wtype == wtSCROLL) || !(get_bit(quest_rules, qr_NOSCROLLCONTINUE))) {
 					game.continue_scrn = homescr;
-					//Z_message("continue_scrn = %02X\n e/e",get_gamedata_continue_scrn(game));
 				}
 			} else {
 				if (currdmap != game.continue_dmap) {
 					game.continue_scrn = DMaps[currdmap].cont + (((DMaps[currdmap].type & dmfTYPE) == dmOVERW) ? 0 : DMaps[currdmap].xoff);
-					//Z_message("continue_scrn = %02X\n dlevel",game->continue_scrn);
 				}
 			}
 		} else {
 			game.continue_scrn = DMaps[currdmap].cont + (((DMaps[currdmap].type & dmfTYPE) == dmOVERW) ? 0 : DMaps[currdmap].xoff);
-			//Z_message("continue_scrn = %02X\n !dlevel",game->continue_scrn);
 		}
 		game.continue_dmap = currdmap;
 		lastentrance_dmap = currdmap;
 		lastentrance = game.continue_scrn;
-		//Z_message("continue_map = %d\n",game.continue_dmap);
 	}
 	return true;
 }

@@ -201,7 +201,7 @@ int load_savedgames() {
 	ret = decode_file_007(SAVE_FILE, tmpfilename, SAVE_HEADER, ENC_METHOD_MAX - 1, strstr(SAVE_FILE, ".dat#") != NULL);
 	if (ret) {
 		delete_file(tmpfilename);
-		Z_message("Format error.  Resetting game data... ");
+		Z_message("Format error.  Resetting game data...\n");
 		goto init;
 	}
 
@@ -238,13 +238,13 @@ int load_savedgames() {
 	return 0;
 
 newdata:
-	Z_message("Save file not found.  Creating new save file.");
+	Z_message("Save file not found.  Creating new save file.\n");
 	goto init;
 
 reset:
 	pack_fclose(f);
 	delete_file(tmpfilename);
-	Z_message("Format error.  Resetting game data...");
+	Z_message("Format error.  Resetting game data...\n");
 
 init:
 	int* di = (int*)saves;

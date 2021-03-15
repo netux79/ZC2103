@@ -1189,7 +1189,7 @@ bool has_item(int item_type, int it) {                      //does Link possess 
 	default:
 		it = (1 << (it - 1));
 		if (item_type >= itype_max) {
-			al_trace("Error - has_item() exception.");
+			Z_message("Error - has_item() exception.");
 			return false;
 		}
 		if (game.items[item_type]&it) {
@@ -3071,7 +3071,7 @@ void LogVidMode() {
 		sprintf(str_a, "VESA3");
 		break;
 	default:
-		sprintf(str_a, "Unknown... ?");
+		sprintf(str_a, "Unknown...");
 		break;
 	}
 #else
@@ -3083,13 +3083,13 @@ void LogVidMode() {
 		sprintf(str_a, "Autodetect Windowed");
 		break;
 	default:
-		sprintf(str_a, "Unknown... ?");
+		sprintf(str_a, "Unknown...");
 		break;
 	}
 #endif
 
 	sprintf(str_b, "%dx%d %d-bit", resx, resy, get_color_depth());
-	al_trace("Video Mode set: %s (%s)\n", str_a, str_b);
+	Z_message("Video Mode set: %s (%s)\n", str_a, str_b);
 }
 
 void color_layer(RGB* src, RGB* dest, char r, char g, char b, char pos, int from, int to) {

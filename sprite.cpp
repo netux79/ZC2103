@@ -76,22 +76,12 @@ bool sprite::hit(sprite* s) {
 	if (id < 0 || s->id < 0 || clk < 0) {
 		return false;
 	}
-	if (halt) {
-		al_trace("-- %3d %3d %3d %3d %3d %3d\n", int(s->x), int(s->hxofs), int(s->hxsz), int(s->y), int(s->hyofs),  int(s->hysz));
-	}
 	return hit(s->x + s->hxofs, s->y + s->hyofs, s->hxsz, s->hysz);
 }
 
 bool sprite::hit(int tx, int ty, int txsz, int tysz) {
 	if (id < 0 || clk < 0) {
 		return false;
-	}
-	if (halt) {
-		al_trace("** %3d %3d %3d %3d %3d %3d\n", int(x), int(hxofs), int(hxsz), int(y), int(hyofs),  int(hysz));
-		if (id == 0) {
-			//al_trace("L4 ");
-		}
-		//al_trace("%3d>%3d %3d>%3d %3d<%3d %3d<%3d\n", int(tx+txsz), int(x+hxofs),  int(ty+tysz), int(y+hyofs), int(tx), int(x+hxofs+hxsz), int(ty), int(y+hyofs+hysz));
 	}
 	return (tx + txsz > x + hxofs && ty + tysz > y + hyofs && tx < x + hxofs + hxsz
 	        && ty < y + hyofs + hysz);

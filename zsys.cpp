@@ -194,9 +194,9 @@ void Z_error(const char* format, ...) {
 	va_end(ap);
 
 #ifdef ALLEGRO_DOS
-	printf("%s\n", buf);
+	printf("%s",buf);
 #endif
-	al_trace("%s\n", buf);
+	al_trace("%s",buf);
 	exit(1);
 }
 
@@ -209,22 +209,9 @@ void Z_message(const char* format, ...) {
 	va_end(ap);
 
 #ifdef ALLEGRO_DOS
-	printf("%s\n", buf);
+	printf("%s",buf);
 #endif
-	al_trace("%s\n", buf);
-}
-
-void Z_title(const char* format, ...) {
-	char buf[256];
-	va_list ap;
-	va_start(ap, format);
-	vsprintf(buf, format, ap);
-	va_end(ap);
-
-#ifdef ALLEGRO_DOS
-	printf("%s\n", buf);
-#endif
-	al_trace("%s\n", buf);
+	al_trace("%s", buf);
 }
 
 int anim_3_4(int clk, int speed) {
