@@ -827,7 +827,7 @@ static int game_details(int file) {
 	} else if (!saves[file].timevalid) {
 		textout_ex(framebuf, zfont, "Time Unknown", 120, 128, 1, 0);
 	} else {
-		textout_ex(framebuf, zfont, time_str_med(saves[file].time), 120, 128, 1, 0);
+		textout_ex(framebuf, zfont, time_str(saves[file].time), 120, 128, 1, 0);
 	}
 
 	if (saves[file].cheat) {

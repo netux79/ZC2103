@@ -437,7 +437,6 @@ void get_questpwd(char* pwd) {
 }
 
 int init_game() {
-	//  introclk=intropos=msgclk=msgpos=dmapmsgclk=0;
 	didpit = false;
 	Link.unfreeze();
 	Link.reset_hookshot();
@@ -509,10 +508,6 @@ int init_game() {
 	BSZ = get_bit(quest_rules, qr_BSZELDA);
 	setuplinktiles(zinit.linkwalkstyle);
 	COOLSCROLL = get_bit(quest_rules, qr_COOLSCROLL);
-	//  NEWSUBSCR = get_bit(quest_rules,qr_NEWSUBSCR);
-
-	//  homescr = currscr = DMaps[0].cont;
-	//  currdmap = warpscr = worldscr=0;
 	if (!game.hasplayed) {
 		game.continue_dmap = zinit.start_dmap;
 	}
@@ -1544,6 +1539,8 @@ int main(int argc, char* argv[]) {
 	destroy_bitmap(msgdisplaybuf);
 	destroy_bitmap(pricesdisplaybuf);
 	zcmusic_exit();
+	free_qst_buffers();
+	reset_midis(tunes + MUSIC_COUNT); // free midi memory.
 	Z_message("Armageddon Games web site: http://www.armageddongames.com\n");
 	Z_message("Zelda Classic web site: http://www.zeldaclassic.com\n");
 

@@ -273,8 +273,7 @@ void update_subscr_items() {
 	}
 }
 
-/****/
-int stripspaces(char* source, char* target, int stop) {
+static int stripspaces(char* source, char* target, int stop) {
 	int begin, end;
 	for (begin = 0; ((begin < stop) && (source[begin] == ' ')); begin++);
 	if (begin == stop) {
@@ -358,7 +357,7 @@ void putsubscr(BITMAP* dest, int x, int y, bool showtime) {
 	}
 
 	if (showtime) {
-		char* ts = time_str_med(game.time);
+		char* ts = time_str(game.time);
 		textout_ex(subscr, zfont, ts, 240 - (strlen(ts) << 3), 0, QMisc.colors.text, -1);
 	}
 

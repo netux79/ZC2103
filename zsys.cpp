@@ -16,19 +16,7 @@
 #include "zsys.h"
 #include "zc_sys.h"
 
-char* time_str_long(dword time) {
-	static char s[32];
-
-	dword decs = (time % 60) * 100 / 60;
-	dword secs = (time / 60) % 60;
-	dword mins = (time / 3600) % 60;
-	dword hours = time / 216000;
-
-	sprintf(s, "%d:%02d:%02d.%02d", hours, mins, secs, decs);
-	return s;
-}
-
-char* time_str_med(dword time) {
+char* time_str(dword time) {
 	static char s[32];
 
 	dword secs = (time / 60) % 60;
@@ -38,89 +26,6 @@ char* time_str_med(dword time) {
 	sprintf(s, "%d:%02d:%02d", hours, mins, secs);
 	return s;
 }
-
-char* time_str_short(dword time) {
-	static char s[32];
-
-	dword mins = (time / 3600) % 60;
-	dword hours = time / 216000;
-
-	sprintf(s, "%d:%02d", hours, mins);
-	return s;
-}
-
-/*
-void extract_name(char *path,char *name,int type)
-{
-  int l=strlen(path);
-  int i=l;
-  while(i>0 && path[i-1]!='/' && path[i-1]!='\\')
-    --i;
-  int n=0;
-  if(type==FILENAME8__)
-  {
-    while(i<l && n<8 && path[i]!='.')
-      name[n++]=path[i++];
-  }
-  else if (type==FILENAME8_3)
-  {
-    while(i<l && n<12 )
-      name[n++]=path[i++];
-  }
-  else
-  {
-    while(i<l)
-      name[n++]=path[i++];
-  }
-  name[n]=0;
-}
-
-void chop_path(char *path)
-{
-  int p = strlen(path);
-  int f = strlen(get_filename(path));
-  if(f<p)
-    path[p-f]=0;
-}
-
-char *temp_name(char *s)
-{
-  int tempnum;
-  static char *temporaryname=(char*)malloc(L_tmpnam);
-  //  sprintf(temporaryname, "tempfile.qsu");
-  //  return temporaryname;
-
-
-  for (int i=0; i<1000; ++i)
-  {
-    sprintf(temporaryname, "00000000.tmp");
-    for (int j=0; j<8; ++j)
-    {
-      tempnum=rand()%62;
-      if (tempnum<26)
-      {
-        temporaryname[j]='A'+tempnum;
-      }
-      else if (tempnum<52)
-        {
-          temporaryname[j]='A'+tempnum-26;
-        }
-        else
-        {
-          temporaryname[j]='0'+tempnum-52;
-        }
-    }
-    if (!exists(temporaryname))
-    {
-      break;
-    }
-  }
-  if (s!=NULL)
-  {
-    sprintf(s, "%s", temporaryname);
-  }
-  return temporaryname;
-}*/
 
 int vbound(int x, int low, int high) {
 	if (x < low) {

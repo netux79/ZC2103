@@ -53,7 +53,6 @@ const byte bmaptiles[8 * 5] = {
 
 void reset_subscr_items();
 void update_subscr_items();
-int stripspaces(char* source, char* target, int stop);
 void putsubscr(BITMAP* dest, int x, int y, bool showtime = false);
 void puttriframe(BITMAP* dest);
 void markBmap(int dir);

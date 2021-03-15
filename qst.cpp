@@ -503,14 +503,14 @@ PACKFILE* open_quest_file(int* open_error, char* filename, char* deletefilename,
 }
 
 PACKFILE* open_quest_template(zquestheader* header, char* deletefilename, bool validate) {
+	char defaultname[20] = "qst.dat#DAT_NESQST";
 	char* filename;
 	PACKFILE* f = NULL;
 	int open_error = 0;
 	deletefilename[0] = 0;
 
 	if (header->templatepath[0] == 0) {
-		filename = (char*)malloc(20);
-		sprintf(filename, "qst.dat#DAT_NESQST");
+		filename = defaultname;
 	} else {
 		filename = header->templatepath;
 	}
@@ -756,6 +756,19 @@ void get_qst_buffers() {
 	Z_message("OK\n");                                        // Allocating guy buffer...
 }
 
+void free_qst_buffers() {
+	free(TheMaps);
+	free(MsgStrings);
+	free(DoorComboSets);
+	free(DMaps);
+	free(combobuf);
+	free(colordata);
+	free(tilebuf);
+	free(itemsbuf);
+	free(wpnsbuf);
+	free(guysbuf);
+}
+
 bool init_palnames() {
 	if (palnames == NULL) {
 		return false;
@@ -784,7 +797,7 @@ bool init_palnames() {
 static void* read_block(PACKFILE* f, int size, int alloc_size, bool keepdata) {
 	void* p;
 
-	p = malloc(MAX(size, alloc_size));
+	p = malloc(MAX(size, alloc_size)); // This memory is later freed by the destroy_midi call.
 	if (!p) {
 		return NULL;
 	}
@@ -889,13 +902,6 @@ void reset_midis(music* m) {
 }
 
 void reset_scr(int scr) {
-	/*
-	  byte *di=((byte*)TheMaps)+(scr*sizeof(mapscr));
-	  for(unsigned i=0; i<sizeof(mapscr); i++)
-	    *(di++) = 0;
-	  TheMaps[scr].valid=mVERSION;
-	*/
-
 	byte* di = ((byte*)TheMaps) + (scr * sizeof(mapscr));
 	memset(di, 0, sizeof(mapscr));
 	for (int i = 0; i < 6; i++) {
@@ -3498,12 +3504,7 @@ int readmidis(PACKFILE* f, zquestheader* header, music* midis, bool keepdata) {
 			}
 		}
 	}
-	/*
-	  if ((header->zelda_version < 0x192)||((header->zelda_version == 0x192)&&(header->build<178)))
-	  {
-	    memset(header->data_flags+ZQ_MIDIS2,0,4);
-	  }
-	*/
+
 	return 0;
 }
 

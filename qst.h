@@ -66,6 +66,7 @@ void reset_midi(music* m);
 void reset_midis(music* m);
 void reset_scr(int scr);
 void get_qst_buffers();
+void free_qst_buffers();
 int count_dmaps();
 int count_shops(miscQdata* misc);
 int count_infos(miscQdata* misc);

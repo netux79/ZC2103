@@ -334,7 +334,7 @@ void ending() {
 				break;
 			case 800:
 				if (game.timevalid && !game.cheat) {
-					textout_centre_ex(scrollbuf, zfont, time_str_med(game.time), 128, 224, blue, 0);
+					textout_centre_ex(scrollbuf, zfont, time_str(game.time), 128, 224, blue, 0);
 				}
 				break;
 			case 816:

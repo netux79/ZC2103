@@ -21,14 +21,8 @@
 #define FILENAME8__   1
 #define FILENAMEALL   2
 
-char* time_str_short(dword time);
-char* time_str_med(dword time);
-char* time_str_long(dword time);
+char* time_str(dword time);
 
-/*
-void extract_name(char *path,char *name,int type);
-void chop_path(char *path);
-char *temp_name(char *s);*/
 int  vbound(int x, int low, int high);
 float vbound(float x, float low, float high);
 int  used_switch(int argc, char* argv[], const char* s);
@@ -36,7 +30,6 @@ char* get_cmd_arg(int argc, char* argv[]);
 bool isinRect(int x, int y, int rx1, int ry1, int rx2, int ry2);
 
 extern char datapwd[8];
-
 void resolve_password(char* pwd);
 
 bool decode_007(byte* buf, dword size, dword key, word check1, word check2, int method);
