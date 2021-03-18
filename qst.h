@@ -13,9 +13,6 @@
 
 #include "zdefs.h"
 
-// define these in main code
-//extern bool init_tiles(bool validate);
-
 #define checkstatus(ret)\
   switch (ret) \
   { \
@@ -45,10 +42,6 @@ enum {
 	zgp_maps, zgp_doors
 };
 
-enum {
-	skip_header, skip_rules, skip_strings, skip_misc, skip_tiles, skip_combos, skip_comboaliases, skip_csets, skip_maps, skip_dmaps, skip_doors, skip_items, skip_weapons, skip_colors, skip_icons, skip_initdata, skip_guys, skip_linksprites, skip_subscreens, skip_ffscript, skip_sfx, skip_midis, skip_cheats, skip_max
-};
-
 extern const char* qst_error[];
 extern word msg_count;
 extern word door_combo_set_count;
@@ -56,7 +49,7 @@ extern word door_combo_set_count;
 char* VerStr(int version);
 
 PACKFILE* open_quest_file(int* open_error, char* filename, char* deletefilename, bool compressed);
-PACKFILE* open_quest_template(zquestheader* header, char* deletefilename, bool validate);
+PACKFILE* open_quest_template(zquestheader* header, char* deletefilename);
 
 void clear_combo(int i);
 void clear_combos();
@@ -73,16 +66,16 @@ int count_infos(miscQdata* misc);
 int count_warprings(miscQdata* misc);
 int count_palcycles(miscQdata* misc);
 int count_windwarps(miscQdata* misc);
-int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midis, bool compressed, bool encrypted, bool keepall, byte* skip_flags);
+int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midis);
 
 char* byte_conversion(int number, int format);
 char* byte_conversion2(int number1, int number2, int format1, int format2);
 
 bool valid_zqt(PACKFILE* f);
 bool valid_zqt(char* filename);
-bool reset_items(bool validate, zquestheader* header);
-bool init_tiles(bool validate, zquestheader* header);
-bool init_colordata(bool validate, zquestheader* header, miscQdata* misc);
+bool reset_items(zquestheader* header);
+bool init_tiles(zquestheader* header);
+bool init_colordata(zquestheader* header);
 
 int readheader(PACKFILE* f, zquestheader* header, bool keepdata);
 int readrules(PACKFILE* f, zquestheader* header, bool keepdata);
@@ -96,35 +89,12 @@ int readguys(PACKFILE* f, zquestheader* header, bool keepdata);
 int readmapscreen(PACKFILE* f, zquestheader* header, mapscr* temp_mapscr);
 int readmaps(PACKFILE* f, zquestheader* header, bool keepdata);
 int readcombos(PACKFILE* f, zquestheader* header, word version, word build, word start_combo, word max_combos, bool keepdata);
-int readcolordata(PACKFILE* f, miscQdata* misc, word version, word build, word start_cset, word max_csets, bool keepdata);
+int readcolordata(PACKFILE* f, miscQdata* misc, word version, word build, bool keepdata);
 int readtiles(PACKFILE* f, byte* buf, zquestheader* header, word version, word build, word start_tile, word max_tiles, bool from_init, bool keepdata);
 int readmidis(PACKFILE* f, zquestheader* header, music* midis, bool keepdata);
 int readcheatcodes(PACKFILE* f, zquestheader* header, bool keepdata);
 int readinitdata(PACKFILE* f, zquestheader* header, bool keepdata);
 
-
 int get_version_and_build(PACKFILE* f, word* version, word* build);
 bool find_section(PACKFILE* f, long section_id_requested);
-
-
-inline int skipheader(PACKFILE* f, zquestheader* header) {
-	return readheader(f, header, false);
-}
-inline int skiptiles(PACKFILE* f, byte* buf, zquestheader* header, word version, word build, word start_tile, word max_tiles) {
-	return readtiles(f, buf, header, version, build, start_tile, max_tiles, false, false);
-}
-inline int skipcombos(PACKFILE* f, zquestheader* header, word version, word build, word start_combo, word max_combos) {
-	return readcombos(f, header, version, build, start_combo, max_combos, false);
-}
-inline int skipcolordata(PACKFILE* f, zquestheader* header, miscQdata* misc, word version, word build, word start_cset, word max_csets) {
-	return readcolordata(f, misc, version, build, start_cset, max_csets, false);
-}
-inline int skipstrings(PACKFILE* f, zquestheader* header, word version, word build, word start_string, word max_strings) {
-	return readstrings(f, header, false);
-}
-inline int skipdmaps(PACKFILE* f, zquestheader* header, word version, word build, word start_dmap, word max_dmaps) {
-	return readdmaps(f, header, version, build, start_dmap, max_dmaps, false);
-}
-
-
 #endif                                                      // _ZC_QST_H_

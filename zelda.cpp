@@ -69,7 +69,6 @@ wpndata* wpnsbuf;
 guydata* guysbuf;
 ZCHEATS zcheats;
 byte use_tiles;
-char palnames[MAXLEVELS][PALNAMESIZE];
 word animated_combo_table[MAXCOMBOS][2];                    //[0]=position in act2, [1]=original tile
 word animated_combo_table4[MAXCOMBOS][2];                   //[0]=combo, [1]=clock
 word animated_combos;
@@ -113,7 +112,6 @@ bool refreshpal, blockpath, wand_dead, loaded_guys, freeze_guys,
      loaded_enemies, drawguys, watch;
 bool darkroom = false, BSZ, COOLSCROLL;                     //,NEWSUBSCR;
 bool Udown, Ddown, Ldown, Rdown, Adown, Bdown, Sdown, Mdown, LBdown, RBdown, Pdown,
-     SystemKeys = true, boughtsomething = false,
      fixed_door = false, hookshot_used = false, hookshot_frozen = false,
      pull_link = false, add_chainlink = false, del_chainlink = false, hs_fix = false,
      checklink = true, didpit = false,
@@ -388,37 +386,33 @@ void CatchBrang() {
 /***** Main Game Code *****/
 /**************************/
 
-int load_quest(gamedata* g, bool report) {
+void load_game(gamedata* g) {
+	//int ret = 0;
+	
+	// Load the qst file and confirm it is valid.
 	packfile_password(datapwd);
-	byte skip_flags[4];
-	for (int i = 0; i < 4; ++i) {
-		skip_flags[i] = 0;
-	}
-	int ret = loadquest(qstpath, &QHeader, &QMisc, tunes + MUSIC_COUNT, true, true, true, skip_flags);
+	int ret = loadquest(qstpath, &QHeader, &QMisc, tunes + MUSIC_COUNT);
 	packfile_password(NULL);
-
+	
+	if (ret) {
+		printf("Error loading: %s, %s\n", get_filename(qstpath), qst_error[ret]);
+		exit(-1);
+	}	
+	
 	if (!g->title[0] || !g->hasplayed) {
 		strcpy(g->version, QHeader.version);
 		strcpy(g->title, QHeader.title);
-	} else {
-		if (!ret && strcmp(g->title, QHeader.title)) {
-			ret = qe_match;
-		}
+	} else if (strcmp(g->title, QHeader.title)) {
+		ret = qe_match;
 	}
 
-	if (QHeader.minver[0]) {
-		if (strcmp(g->version, QHeader.minver) < 0) {
-			ret = qe_minver;
-		}
+	if (!ret && QHeader.minver[0] && (strcmp(g->version, QHeader.minver) < 0)) {
+		ret = qe_minver;
 	}
 
-	if (ret && report) {
-		char buf1[80], buf2[80];
-		sprintf(buf1, "Error loading %s:", get_filename(qstpath));
-		sprintf(buf2, "%s", qst_error[ret]);
-		Z_message("%s %s\n", buf1, buf2);
+	if (ret) {
+		Z_error("Error loading %s: %s\n", get_filename(qstpath), qst_error[ret]);
 	}
-	return ret;
 }
 
 void get_questpwd(char* pwd) {
@@ -465,13 +459,7 @@ int init_game() {
 	// copy saved data to RAM data
 	game = saves[currgame];
 
-	packfile_password(datapwd);
-	if (load_quest(&game)) {
-		Quit = qERROR;
-		packfile_password(NULL);
-		return 1;
-	}
-	packfile_password(NULL);
+	load_game(&game);
 
 	cheat = 0;
 
@@ -752,7 +740,6 @@ int init_game() {
 }
 
 int cont_game() {
-	//  introclk=intropos=msgclk=msgpos=dmapmsgclk=0;
 	didpit = false;
 	Link.unfreeze();
 	Link.reset_hookshot();
@@ -767,15 +754,6 @@ int cont_game() {
 	add_nl1bsparkle = false;
 	add_nl2asparkle = false;
 	add_nl2bsparkle = false;
-	/*
-	  if(DMaps[currdmap].cont >= 0x80)
-	  {
-	    homescr = currscr = DMaps[0].cont;
-	    currdmap = warpscr = worldscr=0;
-	    currmap = DMaps[0].map;
-	    dlevel = DMaps[0].level;
-	  }
-	*/
 	currdmap = lastentrance_dmap;
 	homescr = currscr = lastentrance;
 	currmap = DMaps[currdmap].map;
@@ -881,7 +859,6 @@ void restart_level() {
 		activated_timed_warp = false;
 	}
 }
-
 
 void putintro() {
 	if (!stricmp("                                                                        ", DMaps[currdmap].intro)) {
@@ -1280,7 +1257,10 @@ int main(int argc, char* argv[]) {
 		exit(-1);
 	}
 
+	// Allocate buffers needed to load the qst file data.
 	get_qst_buffers();
+
+	resolve_password(datapwd);	
 
 	three_finger_flag = false;
 	zcmusic_init();
@@ -1326,15 +1306,14 @@ int main(int argc, char* argv[]) {
 	int mode = VidMode; // from config file
 	int res_arg = used_switch(argc, argv, "-res");
 
+	packfile_password(datapwd);
+
 	Z_message("Loading data files:\n");
 	sprintf(zeldadat_sig, "Zelda.Dat %s Build %d", VerStr(ZELDADAT_VERSION), ZELDADAT_BUILD);
 	sprintf(sfxdat_sig, "SFX.Dat %s Build %d", VerStr(SFXDAT_VERSION), SFXDAT_BUILD);
 	sprintf(fontsdat_sig, "Fonts.Dat %s Build %d", VerStr(FONTSDAT_VERSION), FONTSDAT_BUILD);
 
-	resolve_password(datapwd);
-	packfile_password(datapwd);
-
-	Z_message("Zelda.Dat...");
+	Z_message("zelda.dat...");
 	if ((data = load_datafile("zelda.dat")) == NULL) {
 		Z_error("failed");
 	}
@@ -1343,7 +1322,7 @@ int main(int argc, char* argv[]) {
 	}
 	Z_message("OK\n");
 
-	Z_message("Fonts.Dat...");
+	Z_message("fonts.dat...");
 	if ((fontsdata = load_datafile("fonts.dat")) == NULL) {
 		Z_error("failed");
 	}
@@ -1354,7 +1333,7 @@ int main(int argc, char* argv[]) {
 
 	packfile_password(NULL);
 
-	Z_message("SFX.Dat...");
+	Z_message("sfx.dat...");
 	if ((sfxdata = load_datafile("sfx.dat")) == NULL) {
 		Z_error("failed");
 	}
@@ -1364,7 +1343,6 @@ int main(int argc, char* argv[]) {
 	Z_message("OK\n");
 
 	mididata = (DATAFILE*)data[MUSIC].dat;
-
 	font = (FONT*)fontsdata[FONT_GUI_PROP].dat;
 	zfont = (FONT*)fontsdata[FONT_NES].dat;
 
@@ -1458,7 +1436,7 @@ int main(int argc, char* argv[]) {
 
 	set_window_title("Zelda Classic");
 
-	reset_items(true, &QHeader);
+	//reset_items(&QHeader);
 
 	rgb_map = &rgb_table;
 	/*
@@ -1491,29 +1469,29 @@ int main(int argc, char* argv[]) {
 		Playing = Paused = false;
 
 		switch (Quit) {
-		case qQUIT: {
-			go_quit();
-		}
-		break;
-		case qGAMEOVER: {
-			Link.setDontDraw(false);
-			show_subscreen_dmap_dots = true;
-			show_subscreen_numbers = true;
-			show_subscreen_items = true;
-			show_subscreen_life = true;
-			game_over();
-			introclk = intropos = 0;
-		}
-		break;
-		case qWON: {
-			Link.setDontDraw(false);
-			show_subscreen_dmap_dots = true;
-			show_subscreen_numbers = true;
-			show_subscreen_items = true;
-			show_subscreen_life = true;
-			ending();
-		}
-		break;
+			case qQUIT: {
+				go_quit();
+			}
+			break;
+			case qGAMEOVER: {
+				Link.setDontDraw(false);
+				show_subscreen_dmap_dots = true;
+				show_subscreen_numbers = true;
+				show_subscreen_items = true;
+				show_subscreen_life = true;
+				game_over();
+				introclk = intropos = 0;
+			}
+			break;
+			case qWON: {
+				Link.setDontDraw(false);
+				show_subscreen_dmap_dots = true;
+				show_subscreen_numbers = true;
+				show_subscreen_items = true;
+				show_subscreen_life = true;
+				ending();
+			}
+			break;
 		}
 
 		if (Quit != qRESUME) {
@@ -1532,6 +1510,8 @@ int main(int argc, char* argv[]) {
 	save_savedgames(true);
 	save_game_configs();
 	unload_datafile(data);
+	unload_datafile(fontsdata);
+	unload_datafile(sfxdata);
 	destroy_bitmap(framebuf);
 	destroy_bitmap(scrollbuf);
 	destroy_bitmap(tmp_scr);

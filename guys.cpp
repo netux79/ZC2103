@@ -9859,7 +9859,6 @@ void putprices(bool sign) {
 }
 
 void setupscreen() {
-	boughtsomething = false;
 	int t = currscr < 128 ? 0 : 1;
 	word str = tmpscr[t].str;
 

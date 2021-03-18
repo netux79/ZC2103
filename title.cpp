@@ -189,11 +189,10 @@ int load_savedgames() {
 
 	// see if it's there
 #ifdef ALLEGRO_DOS
-	if (file_size(SAVE_FILE) == 0)
+	if (file_size(SAVE_FILE) == 0) {
 #else
-	if (file_size_ex(SAVE_FILE) == 0)
+	if (file_size_ex(SAVE_FILE) == 0) {
 #endif
-	{
 		goto newdata;
 	}
 
@@ -201,7 +200,7 @@ int load_savedgames() {
 	ret = decode_file_007(SAVE_FILE, tmpfilename, SAVE_HEADER, ENC_METHOD_MAX - 1, strstr(SAVE_FILE, ".dat#") != NULL);
 	if (ret) {
 		delete_file(tmpfilename);
-		Z_message("Format error.  Resetting game data...\n");
+		Z_message("Format error.  Resetting game data...");
 		goto init;
 	}
 
@@ -238,13 +237,13 @@ int load_savedgames() {
 	return 0;
 
 newdata:
-	Z_message("Save file not found.  Creating new save file.\n");
+	Z_message("Save file not found.  Creating new save file...");
 	goto init;
 
 reset:
 	pack_fclose(f);
 	delete_file(tmpfilename);
-	Z_message("Format error.  Resetting game data...\n");
+	Z_message("Format error.  Resetting game data...");
 
 init:
 	int* di = (int*)saves;
@@ -480,8 +479,7 @@ static void delete_mode() {
 
 static void selectscreen() {
 	init_NES_mode();
-	//  loadfullpal();
-	loadlvlpal(1);
+	//loadlvlpal(1);
 	clear_bitmap(scrollbuf);
 	QMisc.colors.blueframe_tile = 238;
 	QMisc.colors.blueframe_cset = 0;
@@ -585,7 +583,6 @@ static bool register_name() {
 	memset(name, 0, 9);
 	register_mode();
 	clear_keybuf();
-	SystemKeys = true;
 	refreshpal = true;
 	bool done = false;
 	bool cancel = false;
@@ -724,17 +721,14 @@ static bool register_name() {
 	if (!cancel) {
 		saves[s].quest = 0xFF;
 		strncpy(saves[s].qstpath, get_filename(qstpath), 80);
-		packfile_password(datapwd);
-		if (load_quest(saves + s)) {
-			saves[s].maxlife = zinit.hc * HP_PER_HEART;
-			saves[s].items[itype_ring] = 0;
-			if (zinit.ring) {
-				saves[s].items[itype_ring] = (1 << (min(zinit.ring, 3) - 1));
-			}
-			ringcolor();
-			saves[s].maxbombs = zinit.max_bombs;
+		load_game(saves + s);
+		saves[s].maxlife = zinit.hc * HP_PER_HEART;
+		saves[s].items[itype_ring] = 0;
+		if (zinit.ring) {
+			saves[s].items[itype_ring] = (1 << (min(zinit.ring, 3) - 1));
 		}
-		packfile_password(NULL);
+		ringcolor();
+		saves[s].maxbombs = zinit.max_bombs;
 		load_game_icon(saves + s);
 		saves[s].timevalid = 1;
 	} else {
@@ -751,7 +745,6 @@ static bool register_name() {
 		}
 	}
 
-	SystemKeys = true;
 	selectscreen();
 	return done;
 }

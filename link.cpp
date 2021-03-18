@@ -5940,9 +5940,6 @@ void LinkClass::checkitems() {
 		return;
 	}
 
-	// if (tmpscr[tmp].room==rSHOP && boughtsomething==true)
-	//   return;
-
 	int pickup = ((item*)items.spr(index))->pickup;
 	int id = ((item*)items.spr(index))->id;
 
@@ -5988,7 +5985,6 @@ void LinkClass::checkitems() {
 				return;
 			}
 			game.drupy -= abs(prices[index - 1][0]);
-			boughtsomething = true;
 			//make the other shop items untouchable after
 			//you buy something
 			int count = 0;

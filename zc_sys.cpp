@@ -260,11 +260,11 @@ bool game_vid_mode(int mode, int wait) {
 }
 
 void init_NES_mode() {
-	if (!init_colordata(true, &QHeader, &QMisc)) {
+	if (!init_colordata(&QHeader)) {
 		return;
 	}
 	loadfullpal();
-	init_tiles(false, &QHeader);
+	init_tiles(&QHeader);
 }
 
 //----------------------------------------------------------------

@@ -48,7 +48,7 @@
 /******** Enums & Structs ********/
 /*********************************/
 
-enum { qQUIT = 1, qRESET, qEXIT, qGAMEOVER, qCONT, qWON, qERROR, qRESUME };
+enum { qQUIT = 1, qRESET, qEXIT, qGAMEOVER, qCONT, qWON, qRESUME };
 
 //magic types
 enum  { mgc_none, mgc_dinsfire, mgc_nayruslove, mgc_faroreswind };
@@ -98,8 +98,7 @@ int  init_game();
 int  cont_game();
 void restart_level();
 void resume_game();
-int  load_quest(gamedata* g, bool report = true);
-//int  init_palnames();
+void  load_game(gamedata* g);
 
 inline void sfx(int index)         {
 	sfx(index, 128, false);
@@ -140,7 +139,6 @@ extern wpndata*  wpnsbuf;
 extern guydata*  guysbuf;
 extern ZCHEATS  zcheats;
 extern byte     use_tiles;
-extern char     palnames[256][17];
 
 extern word animated_combo_table[MAXCOMBOS][2];             //[0]=position in act2, [1]=original tile
 extern word animated_combo_table4[MAXCOMBOS][2];            //[0]=combo, [1]=clock
@@ -179,7 +177,6 @@ extern bool Capfps, Paused, Advance, ShowFPS, Playing, TransLayers, HeartBeep;
 extern bool refreshpal, blockpath, wand_dead, loaded_guys, freeze_guys;
 extern bool loaded_enemies, drawguys, watch;
 extern bool Udown, Ddown, Ldown, Rdown, Adown, Bdown, Sdown, Mdown, LBdown, RBdown, Pdown;
-extern bool SystemKeys, boughtsomething;
 extern bool fixed_door, darkroom, BSZ, COOLSCROLL;          //,NEWSUBSCR;
 extern bool hookshot_used, hookshot_frozen, pull_link, add_chainlink;
 extern bool del_chainlink, hs_fix, checklink;

@@ -388,9 +388,7 @@ void ending() {
 	} while (!rSbtn());
 
 	ringcolor();
-	packfile_password(datapwd);
-	load_quest(&game);
-	packfile_password(NULL);
+	load_game(&game);
 	load_game_icon(&game);
 	game.continue_dmap = zinit.start_dmap;
 	game.continue_scrn = 0xFF;
