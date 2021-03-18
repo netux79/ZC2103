@@ -98,50 +98,50 @@ void drawdmap(BITMAP* dest) {
 	zcolors c = QMisc.colors;
 
 	switch ((DMaps[currdmap].type & dmfTYPE)) {
-	case dmOVERW:
-	case dmBSOVERW:
+		case dmOVERW:
+		case dmBSOVERW:
 
-		if (DMaps[currdmap].minimap_1_tile) {
-			draw_block(dest, 8, 8, DMaps[currdmap].minimap_1_tile, DMaps[currdmap].minimap_1_cset, 5, 3);
-		} else if (c.overworld_map_tile) {
-			draw_block(dest, 8, 8, c.overworld_map_tile, c.overworld_map_cset, 5, 3);
-		} else {
-			rectfill(dest, 16, 16, 79, 47, c.overw_bg);
-		}
-
-		if (!DMaps[currdmap].minimap_1_tile &&
-		        ((DMaps[currdmap].type & dmfTYPE) == dmBSOVERW)) {
-			drawgrid(dest, c.bs_goal, c.bs_dk);
-		}
-		break;
-
-	case dmDNGN:
-	case dmCAVE:
-
-		int maptile = (game.lvlitems[dlevel] & liMAP) ?
-		              DMaps[currdmap].minimap_2_tile :
-		              DMaps[currdmap].minimap_1_tile;
-		int mapcset = (game.lvlitems[dlevel] & liMAP) ?
-		              DMaps[currdmap].minimap_2_cset :
-		              DMaps[currdmap].minimap_1_cset;
-
-		if (maptile) {
-			draw_block(dest, 8, 8, maptile, mapcset, 5, 3);
-		} else if (c.dungeon_map_tile) {
-			draw_block(dest, 8, 8, c.dungeon_map_tile, c.dungeon_map_cset, 5, 3);
-		} else {
-			rectfill(dest, 16, 16, 79, 47, c.dngn_bg);
-		}
-
-		if (!DMaps[currdmap].minimap_2_tile &&
-		        game.lvlitems[dlevel]&liMAP) {
-			if ((DMaps[currdmap].type & dmfTYPE) == dmCAVE) {
-				drawgrid(dest, c.cave_fg, -1);
+			if (DMaps[currdmap].minimap_1_tile) {
+				draw_block(dest, 8, 8, DMaps[currdmap].minimap_1_tile, DMaps[currdmap].minimap_1_cset, 5, 3);
+			} else if (c.overworld_map_tile) {
+				draw_block(dest, 8, 8, c.overworld_map_tile, c.overworld_map_cset, 5, 3);
 			} else {
-				drawgrid(dest, c.dngn_fg, -1);
+				rectfill(dest, 16, 16, 79, 47, c.overw_bg);
 			}
-		}
-		break;
+
+			if (!DMaps[currdmap].minimap_1_tile &&
+			        ((DMaps[currdmap].type & dmfTYPE) == dmBSOVERW)) {
+				drawgrid(dest, c.bs_goal, c.bs_dk);
+			}
+			break;
+
+		case dmDNGN:
+		case dmCAVE:
+
+			int maptile = (game.lvlitems[dlevel] & liMAP) ?
+			              DMaps[currdmap].minimap_2_tile :
+			              DMaps[currdmap].minimap_1_tile;
+			int mapcset = (game.lvlitems[dlevel] & liMAP) ?
+			              DMaps[currdmap].minimap_2_cset :
+			              DMaps[currdmap].minimap_1_cset;
+
+			if (maptile) {
+				draw_block(dest, 8, 8, maptile, mapcset, 5, 3);
+			} else if (c.dungeon_map_tile) {
+				draw_block(dest, 8, 8, c.dungeon_map_tile, c.dungeon_map_cset, 5, 3);
+			} else {
+				rectfill(dest, 16, 16, 79, 47, c.dngn_bg);
+			}
+
+			if (!DMaps[currdmap].minimap_2_tile &&
+			        game.lvlitems[dlevel]&liMAP) {
+				if ((DMaps[currdmap].type & dmfTYPE) == dmCAVE) {
+					drawgrid(dest, c.cave_fg, -1);
+				} else {
+					drawgrid(dest, c.dngn_fg, -1);
+				}
+			}
+			break;
 	}
 }
 
@@ -441,26 +441,26 @@ void markBmap(int dir) {
 	int code = 0;
 
 	switch ((DMaps[currdmap].type & dmfTYPE)) {
-	case dmDNGN:
-		// check dmap
-		if ((drow & mask) == 0) {
-			return;
-		}
-		// calculate code
-		for (int i = 3; i >= 0; i--) {
-			code <<= 1;
-			code += tmpscr->door[i] & 1;
-		}
-		// mark the map
-		game.bmaps[di] = code | 128;
-		break;
+		case dmDNGN:
+			// check dmap
+			if ((drow & mask) == 0) {
+				return;
+			}
+			// calculate code
+			for (int i = 3; i >= 0; i--) {
+				code <<= 1;
+				code += tmpscr->door[i] & 1;
+			}
+			// mark the map
+			game.bmaps[di] = code | 128;
+			break;
 
-	default:
-		game.bmaps[di] |= 128;
-		if (dir >= 0) {
-			game.bmaps[di] |= (1 << dir);
-		}
-		break;
+		default:
+			game.bmaps[di] |= 128;
+			if (dir >= 0) {
+				game.bmaps[di] |= (1 << dir);
+			}
+			break;
 	}
 }
 
@@ -517,13 +517,13 @@ void putBmap(BITMAP* dest) {
 				if (bmap[si]) {
 					rectfill(dest, x, y, x + 7, y + 7, QMisc.colors.subscr_bg);
 					switch (bmap[si]) {
-					case 3:
-						draw_sprite_v_flip(dest, bmp, x, y);
-						break;
-					case 1:
-					default:
-						draw_sprite(dest, bmp, x, y);
-						break;
+						case 3:
+							draw_sprite_v_flip(dest, bmp, x, y);
+							break;
+						case 1:
+						default:
+							draw_sprite(dest, bmp, x, y);
+							break;
 					}
 				}
 				++si;
@@ -564,33 +564,33 @@ void load_Sitems() {
 	int x[6] = {0, 0, 0, 0, 0, 0};
 
 	switch (zinit.subscreen) {
-	case 0:                                                 //original
-		ofs = 0;
-		y = 24;
-		x[0] = 128;
-		x[1] = 148;
-		x[2] = 160;
-		x[3] = 176;
-		x[4] = 192;
-		x[5] = 204;
-		if (BSZ) {
-			x[1] = 146;
-		}
-		break;
-	case 1:                                                 //revision 1 ("New Subscreen")
-		ofs = 108;
-		y = 48;
-		for (int i = 0; i < 6; i++) {
-			x[i] = (i << 4) + 128;
-		}
-		break;
-	case 2:                                                 //revision 2 (1.92 beta 168)
-		ofs = 108;
-		y = 48;
-		for (int i = 0; i < 6; i++) {
-			x[i] = (i << 4) + 122;
-		}
-		break;
+		case 0:                                                 //original
+			ofs = 0;
+			y = 24;
+			x[0] = 128;
+			x[1] = 148;
+			x[2] = 160;
+			x[3] = 176;
+			x[4] = 192;
+			x[5] = 204;
+			if (BSZ) {
+				x[1] = 146;
+			}
+			break;
+		case 1:                                                 //revision 1 ("New Subscreen")
+			ofs = 108;
+			y = 48;
+			for (int i = 0; i < 6; i++) {
+				x[i] = (i << 4) + 128;
+			}
+			break;
+		case 2:                                                 //revision 2 (1.92 beta 168)
+			ofs = 108;
+			y = 48;
+			for (int i = 0; i < 6; i++) {
+				x[i] = (i << 4) + 122;
+			}
+			break;
 	}
 	/*
 	 switch(zinit.subscreen) {
@@ -670,19 +670,19 @@ void load_Sitems() {
 
 	//first row
 	switch (zinit.subscreen) {
-	case 0:                                                 //original
-		ofs = 0;
-		y = 48;
-		break;
-	case 1:                                                 //revision 1 ("New Subscreen")
-		ofs = 16;
-		y = 32;
-		break;
-	case 2:                                                 //revision 2 (1.92 beta 168)
-		ofs = -2;
-		//      y=16;
-		y = 32;
-		break;
+		case 0:                                                 //original
+			ofs = 0;
+			y = 48;
+			break;
+		case 1:                                                 //revision 1 ("New Subscreen")
+			ofs = 16;
+			y = 32;
+			break;
+		case 2:                                                 //revision 2 (1.92 beta 168)
+			ofs = -2;
+			//      y=16;
+			y = 32;
+			break;
 	}
 	//  ofs = NEWSUBSCR ? 16 : 0;
 	//  y = NEWSUBSCR ? 32 : 48;
@@ -716,16 +716,16 @@ void load_Sitems() {
 	}
 
 	switch (zinit.subscreen) {
-	case 0:                                                 //original
-		y = 64;
-		break;
-	case 1:                                                 //revision 1 ("New Subscreen")
-		y = 48;
-		break;
-	case 2:                                                 //revision 2 (1.92 beta 168)
-		//      y=32;
-		y = 48;
-		break;
+		case 0:                                                 //original
+			y = 64;
+			break;
+		case 1:                                                 //revision 1 ("New Subscreen")
+			y = 48;
+			break;
+		case 2:                                                 //revision 2 (1.92 beta 168)
+			//      y=32;
+			y = 48;
+			break;
 	}
 	//  y = NEWSUBSCR ? 48 : 64;
 
@@ -746,68 +746,68 @@ void load_Sitems() {
 
 	//  if(NEWSUBSCR)
 	switch (zinit.subscreen) {
-	case 0:                                                 //original
-		//nothing.  already drew all the items
-		break;
-	case 1:                                                 //revision 1 ("New Subscreen")
-	case 2:                                                 //revision 2 (1.92 beta 168)
-		y = 64;
-		if (zinit.subscreen == 2) {
-			//        y=48;
-		}
-		if (current_item(itype_hookshot, true)) {
-			Sitems.add(new item((fix)(128 + ofs), (fix)y, iHookshot, 0, 0));
-		}
-		if (current_item(itype_sbomb, true)) {
-			Sitems.add(new item((fix)(152 + ofs), (fix)y, iSBomb, 0, 0));
-		}
-		if (current_item(itype_lens, true)) {
-			Sitems.add(new item((fix)(176 + ofs), (fix)y, iLens, 0, 0));
-		}
-		if (current_item(itype_hammer, true)) {
-			Sitems.add(new item((fix)(200 + ofs), (fix)y, iHammer, 0, 0));
-		}
-		if (zinit.subscreen == 2) {
-			if (current_item(itype_dinsfire, true)) {
-				Sitems.add(new item((fix)(224 + ofs), (fix)(y - 32), iDinsFire, 0, 0));
+		case 0:                                                 //original
+			//nothing.  already drew all the items
+			break;
+		case 1:                                                 //revision 1 ("New Subscreen")
+		case 2:                                                 //revision 2 (1.92 beta 168)
+			y = 64;
+			if (zinit.subscreen == 2) {
+				//        y=48;
 			}
-			if (current_item(itype_faroreswind, true)) {
-				Sitems.add(new item((fix)(224 + ofs), (fix)(y - 16), iFaroresWind, 0, 0));
+			if (current_item(itype_hookshot, true)) {
+				Sitems.add(new item((fix)(128 + ofs), (fix)y, iHookshot, 0, 0));
 			}
-			if (current_item(itype_nayruslove, true)) {
-				Sitems.add(new item((fix)(224 + ofs), (fix)y, iNayrusLove, 0, 0));
+			if (current_item(itype_sbomb, true)) {
+				Sitems.add(new item((fix)(152 + ofs), (fix)y, iSBomb, 0, 0));
 			}
-		}
-		break;
+			if (current_item(itype_lens, true)) {
+				Sitems.add(new item((fix)(176 + ofs), (fix)y, iLens, 0, 0));
+			}
+			if (current_item(itype_hammer, true)) {
+				Sitems.add(new item((fix)(200 + ofs), (fix)y, iHammer, 0, 0));
+			}
+			if (zinit.subscreen == 2) {
+				if (current_item(itype_dinsfire, true)) {
+					Sitems.add(new item((fix)(224 + ofs), (fix)(y - 32), iDinsFire, 0, 0));
+				}
+				if (current_item(itype_faroreswind, true)) {
+					Sitems.add(new item((fix)(224 + ofs), (fix)(y - 16), iFaroresWind, 0, 0));
+				}
+				if (current_item(itype_nayruslove, true)) {
+					Sitems.add(new item((fix)(224 + ofs), (fix)y, iNayrusLove, 0, 0));
+				}
+			}
+			break;
 	}
 
 	int type = (DMaps[currdmap].type & dmfTYPE);
 
 	switch (zinit.subscreen) {
-	case 0:                                                 //original
-	case 1:                                                 //new subscreen
-		if (type == dmDNGN || type == dmCAVE) {
-			if (game.lvlitems[dlevel]&liMAP) {
-				Sitems.add(new item((fix)44, (fix)112, iMap, 0, 0));
+		case 0:                                                 //original
+		case 1:                                                 //new subscreen
+			if (type == dmDNGN || type == dmCAVE) {
+				if (game.lvlitems[dlevel]&liMAP) {
+					Sitems.add(new item((fix)44, (fix)112, iMap, 0, 0));
+				}
+				if (game.lvlitems[dlevel]&liCOMPASS) {
+					Sitems.add(new item((fix)44, (fix)152, iCompass, 0, 0));
+				}
 			}
-			if (game.lvlitems[dlevel]&liCOMPASS) {
-				Sitems.add(new item((fix)44, (fix)152, iCompass, 0, 0));
+			break;
+		case 2:                                                 //revision 2
+			if (type == dmDNGN || type == dmCAVE) {
+				if (game.lvlitems[dlevel]&liMAP) {
+					Sitems.add(new item((fix)24, (fix)112, iMap, 0, 0));
+				}
+				if (game.lvlitems[dlevel]&liCOMPASS) {
+					Sitems.add(new item((fix)44, (fix)112, iCompass, 0, 0));
+				}
+				if (game.lvlitems[dlevel]&liBOSSKEY) {
+					Sitems.add(new item((fix)64, (fix)112, iBossKey, 0, 0));
+				}
 			}
-		}
-		break;
-	case 2:                                                 //revision 2
-		if (type == dmDNGN || type == dmCAVE) {
-			if (game.lvlitems[dlevel]&liMAP) {
-				Sitems.add(new item((fix)24, (fix)112, iMap, 0, 0));
-			}
-			if (game.lvlitems[dlevel]&liCOMPASS) {
-				Sitems.add(new item((fix)44, (fix)112, iCompass, 0, 0));
-			}
-			if (game.lvlitems[dlevel]&liBOSSKEY) {
-				Sitems.add(new item((fix)64, (fix)112, iBossKey, 0, 0));
-			}
-		}
-		break;
+			break;
 	}
 }
 
@@ -819,20 +819,20 @@ void put_topsubscr() {
 
 	//  if(NEWSUBSCR)
 	switch (zinit.subscreen) {
-	case 0:                                                 //original
-		blueframe(subscr, 56, 40, 4, 4);
-		textout_ex(subscr, zfont, "INVENTORY", 32, 24, QMisc.colors.caption, -1);
-		textout_ex(subscr, zfont, "USE B BUTTON", 16, 72, QMisc.colors.text, -1);
-		textout_ex(subscr, zfont, "FOR THIS", 32, 80, QMisc.colors.text, -1);
-		break;
-	case 1:                                                 //revision 1 ("New Subscreen")
-		textout_ex(subscr, zfont, "INVENTORY", 32, 24, QMisc.colors.caption, -1);
-		blueframe(subscr, 12, 40, 14, 6);
-		break;
-	case 2:                                                 //revision 2 (1.92 beta 168)
-		textout_ex(subscr, zfont, "INVENTORY", 26, 24, QMisc.colors.caption, -1);
-		blueframe(subscr, 6, 40, 14, 6);
-		break;
+		case 0:                                                 //original
+			blueframe(subscr, 56, 40, 4, 4);
+			textout_ex(subscr, zfont, "INVENTORY", 32, 24, QMisc.colors.caption, -1);
+			textout_ex(subscr, zfont, "USE B BUTTON", 16, 72, QMisc.colors.text, -1);
+			textout_ex(subscr, zfont, "FOR THIS", 32, 80, QMisc.colors.text, -1);
+			break;
+		case 1:                                                 //revision 1 ("New Subscreen")
+			textout_ex(subscr, zfont, "INVENTORY", 32, 24, QMisc.colors.caption, -1);
+			blueframe(subscr, 12, 40, 14, 6);
+			break;
+		case 2:                                                 //revision 2 (1.92 beta 168)
+			textout_ex(subscr, zfont, "INVENTORY", 26, 24, QMisc.colors.caption, -1);
+			blueframe(subscr, 6, 40, 14, 6);
+			break;
 	}
 
 	if (type == dmOVERW || type == dmBSOVERW) {
@@ -847,19 +847,19 @@ void put_topsubscr() {
 	}
 
 	switch (zinit.subscreen) {
-	case 0:                                                 //original
-		blueframe(subscr, 120, 40, 13, 6);
-		break;
-	case 1:                                                 //revision 1 ("New Subscreen")
-		blueframe(subscr, 136, 24, 13, 8);
-		break;
-	case 2:                                                 //revision 2 (1.92 beta 168)
-		if (type == dmDNGN || type == dmCAVE) {
-			blueframe(subscr, 16, 104, 9, 4);
-		}
-		//      blueframe(subscr, 118, 8, 16, 10);
-		blueframe(subscr, 118, 24, 16, 8);
-		break;
+		case 0:                                                 //original
+			blueframe(subscr, 120, 40, 13, 6);
+			break;
+		case 1:                                                 //revision 1 ("New Subscreen")
+			blueframe(subscr, 136, 24, 13, 8);
+			break;
+		case 2:                                                 //revision 2 (1.92 beta 168)
+			if (type == dmDNGN || type == dmCAVE) {
+				blueframe(subscr, 16, 104, 9, 4);
+			}
+			//      blueframe(subscr, 118, 8, 16, 10);
+			blueframe(subscr, 118, 24, 16, 8);
+			break;
 	}
 
 	//  blueframe(subscr, NEWSUBSCR ? 136:120, NEWSUBSCR ? 24:40, 13, NEWSUBSCR ? 8:6);
@@ -977,19 +977,19 @@ void dosubscr() {
 
 		sel.animate(0);
 		switch (zinit.subscreen) {
-		case 0:                                               //original
-			sel.x = (Bpos % 4) * 24 + 128;
-			sel.y = (Bpos / 4) * 16 + 48 - miny;
-			break;
-		case 1:                                               //revision 1 ("New Subscreen")
-			sel.x = (Bpos % 4) * 24 + 144;
-			sel.y = (Bpos / 4) * 16 + 32 - miny;
-			break;
-		case 2:                                               //revision 2 (1.92 beta 168)
-			sel.x = (Bpos % 5) * 24 + 126;
-			//        sel.y = (Bpos/5)*16 + 16-miny;
-			sel.y = (Bpos / 5) * 16 + 32 - miny;
-			break;
+			case 0:                                               //original
+				sel.x = (Bpos % 4) * 24 + 128;
+				sel.y = (Bpos / 4) * 16 + 48 - miny;
+				break;
+			case 1:                                               //revision 1 ("New Subscreen")
+				sel.x = (Bpos % 4) * 24 + 144;
+				sel.y = (Bpos / 4) * 16 + 32 - miny;
+				break;
+			case 2:                                               //revision 2 (1.92 beta 168)
+				sel.x = (Bpos % 5) * 24 + 126;
+				//        sel.y = (Bpos/5)*16 + 16-miny;
+				sel.y = (Bpos / 5) * 16 + 32 - miny;
+				break;
 		}
 		sel.draw(framebuf);
 

@@ -101,18 +101,18 @@ void loadpalset(int cset, int dataset) {
 
 void ringcolor() {
 	switch (current_item(itype_ring, true)) {
-	case 0:
-		loadpalset(6, 6);
-		break;
-	case 1:
-		loadpalset(6, pSprite(6));
-		break;
-	case 2:
-		loadpalset(6, pSprite(7));
-		break;
-	case 3:
-		loadpalset(6, pSprite(8));
-		break;
+		case 0:
+			loadpalset(6, 6);
+			break;
+		case 1:
+			loadpalset(6, pSprite(6));
+			break;
+		case 2:
+			loadpalset(6, pSprite(7));
+			break;
+		case 3:
+			loadpalset(6, pSprite(8));
+			break;
 	}
 	refreshpal = true;
 }
@@ -154,25 +154,25 @@ void fade(int level, bool blackall, bool fromblack, bool total) {
 			refreshpal = true;
 		} else {
 			switch (cx) {
-			case 0:
-				loadlvlpal(level);
-				break;
-			case 10:
-				loadfadepal(level * pdLEVEL + poFADE1);
-				break;
-			case 20:
-				loadfadepal(level * pdLEVEL + poFADE2);
-				break;
-			case 30:
-				if (blackall) {
-					for (int i = 0; i < pdFADE * 16; i++) {
-						RAMpal[CSET(2) + i] = black_palette[0];
+				case 0:
+					loadlvlpal(level);
+					break;
+				case 10:
+					loadfadepal(level * pdLEVEL + poFADE1);
+					break;
+				case 20:
+					loadfadepal(level * pdLEVEL + poFADE2);
+					break;
+				case 30:
+					if (blackall) {
+						for (int i = 0; i < pdFADE * 16; i++) {
+							RAMpal[CSET(2) + i] = black_palette[0];
+						}
+						refreshpal = true;
+					} else {
+						loadfadepal(level * pdLEVEL + poFADE3);
 					}
-					refreshpal = true;
-				} else {
-					loadfadepal(level * pdLEVEL + poFADE3);
-				}
-				break;
+					break;
 			}
 		}
 
@@ -228,32 +228,32 @@ void lighting(int funct, int dir)
 // 4 = scrolling warp exit
 {
 	switch (funct) {
-	case 1:
-		if (darkroom) {
-			fade(DMaps[currdmap].color, false, true, false);
-			darkroom = false;
-		}
-		break;
-	case 2:                                                 //currently light.  room you are going to is supposed to be dark.
-		if (tmpscr->flags & fDARK && !darkroom) {
-			fade(DMaps[currdmap].color, false, false, false);
-			darkroom = true;
+		case 1:
+			if (darkroom) {
+				fade(DMaps[currdmap].color, false, true, false);
+				darkroom = false;
+			}
+			break;
+		case 2:                                                 //currently light.  room you are going to is supposed to be dark.
+			if (tmpscr->flags & fDARK && !darkroom) {
+				fade(DMaps[currdmap].color, false, false, false);
+				darkroom = true;
 
-		}
-		break;
-	case 3:                                                 //currently dark.  room you are going to is supposed to be light.
-		if ((!(tmpscr->flags & fDARK) && darkroom) || (DMaps[currdmap].color != currcset)) {
-			fade(DMaps[currdmap].color, false, true, false);
-			darkroom = false;
-		}
-		currcset = DMaps[currdmap].color;
-		break;
-	case 4:                                                 //currently light.  room you are going to is supposed to be dark.
-		if ((tmpscr->flags & fDARK && !darkroom) || (DMaps[(tmpscr[((currscr < 128) ? 0 : 1)].sidewarpdmap)].color != currcset)) {
-			fade(DMaps[currdmap].color, true, false, true);
-			darkroom = true;
-		}
-		break;
+			}
+			break;
+		case 3:                                                 //currently dark.  room you are going to is supposed to be light.
+			if ((!(tmpscr->flags & fDARK) && darkroom) || (DMaps[currdmap].color != currcset)) {
+				fade(DMaps[currdmap].color, false, true, false);
+				darkroom = false;
+			}
+			currcset = DMaps[currdmap].color;
+			break;
+		case 4:                                                 //currently light.  room you are going to is supposed to be dark.
+			if ((tmpscr->flags & fDARK && !darkroom) || (DMaps[(tmpscr[((currscr < 128) ? 0 : 1)].sidewarpdmap)].color != currcset)) {
+				fade(DMaps[currdmap].color, true, false, true);
+				darkroom = true;
+			}
+			break;
 	}
 }
 

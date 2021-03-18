@@ -73,21 +73,21 @@ char* byte_conversion(int number, int format) {
 		}
 	}
 	switch (format) {
-	case 1:                                                 //bytes
-		sprintf(num_str, "%db", number);
-		break;
-	case 2:                                                 //kilobytes
-		sprintf(num_str, "%.2fk", float(number) / 1024);
-		break;
-	case 3:                                                 //megabytes
-		sprintf(num_str, "%.2fM", float(number) / (1024 * 1024));
-		break;
-	case 4:                                                 //gigabytes
-		sprintf(num_str, "%.2fG", float(number) / (1024 * 1024 * 1024));
-		break;
-	default:
-		exit(1);
-		break;
+		case 1:                                                 //bytes
+			sprintf(num_str, "%db", number);
+			break;
+		case 2:                                                 //kilobytes
+			sprintf(num_str, "%.2fk", float(number) / 1024);
+			break;
+		case 3:                                                 //megabytes
+			sprintf(num_str, "%.2fM", float(number) / (1024 * 1024));
+			break;
+		case 4:                                                 //gigabytes
+			sprintf(num_str, "%.2fG", float(number) / (1024 * 1024 * 1024));
+			break;
+		default:
+			exit(1);
+			break;
 	}
 	return num_str;
 }
@@ -121,38 +121,38 @@ char* byte_conversion2(int number1, int number2, int format1, int format2) {
 		}
 	}
 	switch (format1) {
-	case 1:                                                 //bytes
-		sprintf(num_str1, "%db", number1);
-		break;
-	case 2:                                                 //kilobytes
-		sprintf(num_str1, "%.2fk", float(number1) / 1024);
-		break;
-	case 3:                                                 //megabytes
-		sprintf(num_str1, "%.2fM", float(number1) / (1024 * 1024));
-		break;
-	case 4:                                                 //gigabytes
-		sprintf(num_str1, "%.2fG", float(number1) / (1024 * 1024 * 1024));
-		break;
-	default:
-		exit(1);
-		break;
+		case 1:                                                 //bytes
+			sprintf(num_str1, "%db", number1);
+			break;
+		case 2:                                                 //kilobytes
+			sprintf(num_str1, "%.2fk", float(number1) / 1024);
+			break;
+		case 3:                                                 //megabytes
+			sprintf(num_str1, "%.2fM", float(number1) / (1024 * 1024));
+			break;
+		case 4:                                                 //gigabytes
+			sprintf(num_str1, "%.2fG", float(number1) / (1024 * 1024 * 1024));
+			break;
+		default:
+			exit(1);
+			break;
 	}
 	switch (format2) {
-	case 1:                                                 //bytes
-		sprintf(num_str2, "%db", number2);
-		break;
-	case 2:                                                 //kilobytes
-		sprintf(num_str2, "%.2fk", float(number2) / 1024);
-		break;
-	case 3:                                                 //megabytes
-		sprintf(num_str2, "%.2fM", float(number2) / (1024 * 1024));
-		break;
-	case 4:                                                 //gigabytes
-		sprintf(num_str2, "%.2fG", float(number2) / (1024 * 1024 * 1024));
-		break;
-	default:
-		exit(1);
-		break;
+		case 1:                                                 //bytes
+			sprintf(num_str2, "%db", number2);
+			break;
+		case 2:                                                 //kilobytes
+			sprintf(num_str2, "%.2fk", float(number2) / 1024);
+			break;
+		case 3:                                                 //megabytes
+			sprintf(num_str2, "%.2fM", float(number2) / (1024 * 1024));
+			break;
+		case 4:                                                 //gigabytes
+			sprintf(num_str2, "%.2fG", float(number2) / (1024 * 1024 * 1024));
+			break;
+		default:
+			exit(1);
+			break;
 	}
 	sprintf(num_str, "%s/%s", num_str1, num_str2);
 	return num_str;
@@ -197,27 +197,27 @@ bool find_section(PACKFILE* f, long section_id_requested) {
 
 
 	switch (section_id_requested) {
-	case ID_RULES:
-	case ID_STRINGS:
-	case ID_MISC:
-	case ID_TILES:
-	case ID_COMBOS:
-	case ID_CSETS:
-	case ID_MAPS:
-	case ID_DMAPS:
-	case ID_DOORS:
-	case ID_ITEMS:
-	case ID_WEAPONS:
-	case ID_COLORS:
-	case ID_ICONS:
-	case ID_INITDATA:
-	case ID_GUYS:
-	case ID_MIDIS:
-	case ID_CHEATS:
-		break;
-	default:
-		return false;
-		break;
+		case ID_RULES:
+		case ID_STRINGS:
+		case ID_MISC:
+		case ID_TILES:
+		case ID_COMBOS:
+		case ID_CSETS:
+		case ID_MAPS:
+		case ID_DMAPS:
+		case ID_DOORS:
+		case ID_ITEMS:
+		case ID_WEAPONS:
+		case ID_COLORS:
+		case ID_ICONS:
+		case ID_INITDATA:
+		case ID_GUYS:
+		case ID_MIDIS:
+		case ID_CHEATS:
+			break;
+		default:
+			return false;
+			break;
 	}
 
 	dword section_size;
@@ -229,9 +229,9 @@ bool find_section(PACKFILE* f, long section_id_requested) {
 
 	while (!pack_feof(f)) {
 		switch (section_id_read) {
-/*			case ID_RULES:
-			case ID_STRINGS:
-			case ID_MISC:*/
+			/*			case ID_RULES:
+						case ID_STRINGS:
+						case ID_MISC:*/
 			case ID_TILES:
 				al_trace("ID_TILES\n");
 				break;
@@ -304,15 +304,15 @@ PACKFILE* open_quest_file(int* open_error, char* filename, char* deletefilename,
 		ret = decode_file_007(filename, tmpfilename, ENC_STR, ENC_METHOD_MAX - 1, strstr(filename, ".dat#") != NULL);
 		if (ret) {
 			switch (ret) {
-			case 1:
-				Z_message("Error: quest file not found: %s.\n", filename);
-				*open_error = qe_notfound;
-				return NULL;
-			case 2:
-				Z_message("Internal error while decrypting quest: %s.\n", filename);
-				*open_error = qe_internal;
-				return NULL;
-				// be sure not to delete tmpfilename now...
+				case 1:
+					Z_message("Error: quest file not found: %s.\n", filename);
+					*open_error = qe_notfound;
+					return NULL;
+				case 2:
+					Z_message("Internal error while decrypting quest: %s.\n", filename);
+					*open_error = qe_internal;
+					return NULL;
+					// be sure not to delete tmpfilename now...
 			}
 			if (ret == 5) {                                         //old encryption?
 				ret = decode_file_007(filename, tmpfilename, ENC_STR, ENC_METHOD_192B105, strstr(filename, ".dat#") != NULL);
@@ -367,19 +367,19 @@ PACKFILE* open_quest_template(zquestheader* header, char* deletefilename) {
 	if (!f) {
 		return NULL;
 	}
-	
+
 	return f;
 }
 
 bool init_section(zquestheader* Header, long section_id) {
 	switch (section_id) {
-	case ID_TILES:
-	case ID_CSETS:
-	case ID_ITEMS:
-		break;
-	default:
-		return false;
-		break;
+		case ID_TILES:
+		case ID_CSETS:
+		case ID_ITEMS:
+			break;
+		default:
+			return false;
+			break;
 	}
 
 	int ret;
@@ -414,22 +414,22 @@ bool init_section(zquestheader* Header, long section_id) {
 		return false;
 	}
 	switch (section_id) {
-	case ID_TILES:
-		//tiles
-		clear_tiles(tilebuf);
-		ret = readtiles(f, tilebuf, Header, version, build, 0, NEWMAXTILES, true, true);
-		break;
-	case ID_CSETS:
-		//color data
-		ret = readcolordata(f, NULL, version, build, true);
-		break;
-	case ID_ITEMS:
-		//items
-		ret = readitems(f, version, build, true);
-		break;
-	default:
-		ret = -1;
-		break;
+		case ID_TILES:
+			//tiles
+			clear_tiles(tilebuf);
+			ret = readtiles(f, tilebuf, Header, version, build, 0, NEWMAXTILES, true, true);
+			break;
+		case ID_CSETS:
+			//color data
+			ret = readcolordata(f, NULL, version, build, true);
+			break;
+		case ID_ITEMS:
+			//items
+			ret = readitems(f, version, build, true);
+			break;
+		default:
+			ret = -1;
+			break;
 	}
 
 	pack_fclose(f);
@@ -2242,15 +2242,15 @@ int readitems(PACKFILE* f, word version, word build, bool keepdata) {
 			}
 			if ((version < 0x192) || ((version == 0x192) && (build < 186))) {
 				switch (i) {
-				case iShield:
-					tempitem.ltm = get_bit(quest_rules, qr_BSZELDA) ? -12 : 10;
-					break;
-				case iMShield:
-					tempitem.ltm = get_bit(quest_rules, qr_BSZELDA) ? -6 : -10;
-					break;
-				default:
-					tempitem.ltm = 0;
-					break;
+					case iShield:
+						tempitem.ltm = get_bit(quest_rules, qr_BSZELDA) ? -12 : 10;
+						break;
+					case iMShield:
+						tempitem.ltm = get_bit(quest_rules, qr_BSZELDA) ? -6 : -10;
+						break;
+					default:
+						tempitem.ltm = 0;
+						break;
 				}
 				if (keepdata == true) {
 					memcpy(&itemsbuf[i], &tempitem, sizeof(tempitem));
@@ -3053,7 +3053,7 @@ int readcolordata(PACKFILE* f, miscQdata* misc, word version, word build, bool k
 		if (misc != NULL) {
 			memcpy(&temp_misc, misc, sizeof(temp_misc));
 		}
-		
+
 		if (!p_igetw(&palcycles, f, true)) {
 			return qe_invalid;
 		}
@@ -3710,13 +3710,13 @@ int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midi
 	ret = decode_file_007(filename, tmpfilename, ENC_STR, ENC_METHOD_MAX - 1, strstr(filename, ".dat#") != NULL);
 	if (ret) {
 		switch (ret) {
-		case 1:
-			Z_message("error.\n");
-			return qe_notfound;
-		case 2:
-			Z_message("error.\n");
-			return qe_internal;
-			// be sure not to delete tmpfilename now...
+			case 1:
+				Z_message("error.\n");
+				return qe_notfound;
+			case 2:
+				Z_message("error.\n");
+				return qe_internal;
+				// be sure not to delete tmpfilename now...
 		}
 		if (ret == 5) {                                         //old encryption?
 			ret = decode_file_007(filename, tmpfilename, ENC_STR, ENC_METHOD_192B185, strstr(filename, ".dat#") != NULL);
@@ -3766,212 +3766,212 @@ int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midi
 		}
 		while (!pack_feof(f)) {
 			switch (section_id) {
-			case ID_RULES:
-				//rules
-				if (catchup) {
-					Z_message("found.\n");
+				case ID_RULES:
+					//rules
+					if (catchup) {
+						Z_message("found.\n");
 
-					catchup = false;
-				}
-				Z_message("Reading Rules...");
-				ret = readrules(f, &tempheader, true);
-				checkstatus(ret);
-				Z_message("OK\n");
+						catchup = false;
+					}
+					Z_message("Reading Rules...");
+					ret = readrules(f, &tempheader, true);
+					checkstatus(ret);
+					Z_message("OK\n");
 
-				break;
-			case ID_STRINGS:
-				//strings
-				if (catchup) {
-					Z_message("found.\n");
+					break;
+				case ID_STRINGS:
+					//strings
+					if (catchup) {
+						Z_message("found.\n");
 
-					catchup = false;
-				}
-				Z_message("Reading Strings...");
-				ret = readstrings(f, &tempheader, true);
-				checkstatus(ret);
-				Z_message("OK\n");
+						catchup = false;
+					}
+					Z_message("Reading Strings...");
+					ret = readstrings(f, &tempheader, true);
+					checkstatus(ret);
+					Z_message("OK\n");
 
-				break;
-			case ID_MISC:
-				//misc data
-				if (catchup) {
-					Z_message("found.\n");
+					break;
+				case ID_MISC:
+					//misc data
+					if (catchup) {
+						Z_message("found.\n");
 
-					catchup = false;
-				}
-				Z_message("Reading Misc. Data...");
-				ret = readmisc(f, &tempheader, Misc, true);
-				checkstatus(ret);
-				Z_message("OK\n");
+						catchup = false;
+					}
+					Z_message("Reading Misc. Data...");
+					ret = readmisc(f, &tempheader, Misc, true);
+					checkstatus(ret);
+					Z_message("OK\n");
 
-				break;
-			case ID_TILES:
-				//tiles
-				if (catchup) {
-					Z_message("found.\n");
+					break;
+				case ID_TILES:
+					//tiles
+					if (catchup) {
+						Z_message("found.\n");
 
-					catchup = false;
-				}
-				Z_message("Reading Tiles...");
-				ret = readtiles(f, tilebuf, &tempheader, tempheader.zelda_version, tempheader.build, 0, NEWMAXTILES, false, true);
-				checkstatus(ret);
-				Z_message("OK\n");
+						catchup = false;
+					}
+					Z_message("Reading Tiles...");
+					ret = readtiles(f, tilebuf, &tempheader, tempheader.zelda_version, tempheader.build, 0, NEWMAXTILES, false, true);
+					checkstatus(ret);
+					Z_message("OK\n");
 
-				break;
-			case ID_COMBOS:
-				//combos
-				if (catchup) {
-					Z_message("found.\n");
+					break;
+				case ID_COMBOS:
+					//combos
+					if (catchup) {
+						Z_message("found.\n");
 
-					catchup = false;
-				}
-				Z_message("Reading Combos...");
-				ret = readcombos(f, &tempheader, tempheader.zelda_version, tempheader.build, 0, MAXCOMBOS, true);
-				checkstatus(ret);
-				Z_message("OK\n");
+						catchup = false;
+					}
+					Z_message("Reading Combos...");
+					ret = readcombos(f, &tempheader, tempheader.zelda_version, tempheader.build, 0, MAXCOMBOS, true);
+					checkstatus(ret);
+					Z_message("OK\n");
 
-				break;
-			case ID_CSETS:
-				//color data
-				if (catchup) {
-					Z_message("found.\n");
+					break;
+				case ID_CSETS:
+					//color data
+					if (catchup) {
+						Z_message("found.\n");
 
-					catchup = false;
-				}
-				Z_message("Reading Color Data...");
-				ret = readcolordata(f, Misc, tempheader.zelda_version, tempheader.build, true);
-				checkstatus(ret);
-				Z_message("OK\n");
+						catchup = false;
+					}
+					Z_message("Reading Color Data...");
+					ret = readcolordata(f, Misc, tempheader.zelda_version, tempheader.build, true);
+					checkstatus(ret);
+					Z_message("OK\n");
 
-				break;
-			case ID_MAPS:
-				//maps
-				if (catchup) {
-					Z_message("found.\n");
+					break;
+				case ID_MAPS:
+					//maps
+					if (catchup) {
+						Z_message("found.\n");
 
-					catchup = false;
-				}
-				Z_message("Reading Maps...");
-				ret = readmaps(f, &tempheader, true);
-				checkstatus(ret);
-				Z_message("OK\n");
+						catchup = false;
+					}
+					Z_message("Reading Maps...");
+					ret = readmaps(f, &tempheader, true);
+					checkstatus(ret);
+					Z_message("OK\n");
 
-				break;
-			case ID_DMAPS:
-				//dmaps
-				if (catchup) {
-					Z_message("found.\n");
+					break;
+				case ID_DMAPS:
+					//dmaps
+					if (catchup) {
+						Z_message("found.\n");
 
-					catchup = false;
-				}
-				Z_message("Reading DMaps...");
-				ret = readdmaps(f, &tempheader, tempheader.zelda_version, tempheader.build, 0, MAXDMAPS, true);
-				checkstatus(ret);
-				Z_message("OK\n");
+						catchup = false;
+					}
+					Z_message("Reading DMaps...");
+					ret = readdmaps(f, &tempheader, tempheader.zelda_version, tempheader.build, 0, MAXDMAPS, true);
+					checkstatus(ret);
+					Z_message("OK\n");
 
-				break;
-			case ID_DOORS:
-				//door combo sets
-				if (catchup) {
-					Z_message("found.\n");
+					break;
+				case ID_DOORS:
+					//door combo sets
+					if (catchup) {
+						Z_message("found.\n");
 
-					catchup = false;
-				}
-				Z_message("Reading Doors...");
-				ret = readdoorcombosets(f, &tempheader, true);
-				checkstatus(ret);
-				Z_message("OK\n");
+						catchup = false;
+					}
+					Z_message("Reading Doors...");
+					ret = readdoorcombosets(f, &tempheader, true);
+					checkstatus(ret);
+					Z_message("OK\n");
 
-				break;
-			case ID_ITEMS:
-				//items
-				if (catchup) {
-					Z_message("found.\n");
+					break;
+				case ID_ITEMS:
+					//items
+					if (catchup) {
+						Z_message("found.\n");
 
-					catchup = false;
-				}
-				Z_message("Reading Items...");
-				ret = readitems(f, tempheader.zelda_version, tempheader.build, true);
-				checkstatus(ret);
-				Z_message("OK\n");
+						catchup = false;
+					}
+					Z_message("Reading Items...");
+					ret = readitems(f, tempheader.zelda_version, tempheader.build, true);
+					checkstatus(ret);
+					Z_message("OK\n");
 
-				break;
-			case ID_WEAPONS:
-				//weapons
-				if (catchup) {
-					Z_message("found.\n");
+					break;
+				case ID_WEAPONS:
+					//weapons
+					if (catchup) {
+						Z_message("found.\n");
 
-					catchup = false;
-				}
-				Z_message("Reading Weapons...");
-				ret = readweapons(f, &tempheader, true);
-				checkstatus(ret);
-				Z_message("OK\n");
+						catchup = false;
+					}
+					Z_message("Reading Weapons...");
+					ret = readweapons(f, &tempheader, true);
+					checkstatus(ret);
+					Z_message("OK\n");
 
-				break;
-			case ID_COLORS:
-				break;
-			case ID_ICONS:
-				break;
-			case ID_INITDATA:
-				//initialization data
-				if (catchup) {
-					Z_message("found.\n");
+					break;
+				case ID_COLORS:
+					break;
+				case ID_ICONS:
+					break;
+				case ID_INITDATA:
+					//initialization data
+					if (catchup) {
+						Z_message("found.\n");
 
-					catchup = false;
-				}
-				Z_message("Reading Init. Data...");
-				ret = readinitdata(f, &tempheader, true);
-				checkstatus(ret);
-				Z_message("OK\n");
+						catchup = false;
+					}
+					Z_message("Reading Init. Data...");
+					ret = readinitdata(f, &tempheader, true);
+					checkstatus(ret);
+					Z_message("OK\n");
 
-				break;
-			case ID_GUYS:
-				//guys
-				if (catchup) {
-					Z_message("found.\n");
+					break;
+				case ID_GUYS:
+					//guys
+					if (catchup) {
+						Z_message("found.\n");
 
-					catchup = false;
-				}
-				Z_message("Reading Custom Guy Data...");
-				ret = readguys(f, &tempheader, true);
-				checkstatus(ret);
-				Z_message("OK\n");
+						catchup = false;
+					}
+					Z_message("Reading Custom Guy Data...");
+					ret = readguys(f, &tempheader, true);
+					checkstatus(ret);
+					Z_message("OK\n");
 
-				break;
-			case ID_MIDIS:
-				//midis
-				if (catchup) {
-					Z_message("found.\n");
+					break;
+				case ID_MIDIS:
+					//midis
+					if (catchup) {
+						Z_message("found.\n");
 
-					catchup = false;
-				}
-				Z_message("Reading MIDIs...");
-				ret = readmidis(f, &tempheader, midis, true);
-				checkstatus(ret);
-				Z_message("OK\n");
+						catchup = false;
+					}
+					Z_message("Reading MIDIs...");
+					ret = readmidis(f, &tempheader, midis, true);
+					checkstatus(ret);
+					Z_message("OK\n");
 
-				break;
-			case ID_CHEATS:
-				//cheat codes
-				if (catchup) {
-					Z_message("found.\n");
+					break;
+				case ID_CHEATS:
+					//cheat codes
+					if (catchup) {
+						Z_message("found.\n");
 
-					catchup = false;
-				}
-				Z_message("Reading Cheat Codes...");
-				ret = readcheatcodes(f, &tempheader, true);
-				checkstatus(ret);
-				Z_message("OK\n");
+						catchup = false;
+					}
+					Z_message("Reading Cheat Codes...");
+					ret = readcheatcodes(f, &tempheader, true);
+					checkstatus(ret);
+					Z_message("OK\n");
 
-				break;
-			default:
-				if (!catchup) {
-					Z_message("Bad token!  Searching...\n");
+					break;
+				default:
+					if (!catchup) {
+						Z_message("Bad token!  Searching...\n");
 
-				}
-				catchup = true;
-				break;
+					}
+					catchup = true;
+					break;
 			}
 			if (catchup) {
 				//section id
@@ -4111,7 +4111,7 @@ int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midi
 	Z_message("Done.\n");
 
 	memcpy(Header, &tempheader, sizeof(tempheader));
-	
+
 	return qe_OK;
 
 invalid:

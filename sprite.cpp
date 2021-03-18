@@ -54,12 +54,12 @@ bool sprite::animate(int index) {
 int sprite::real_x(fix fx) {
 	int rx = fx.v >> 16;
 	switch (dir) {
-	case 9:
-	case 13:
-		if (fx.v & 0xFFFF) {
-			++rx;
-		}
-		break;
+		case 9:
+		case 13:
+			if (fx.v & 0xFFFF) {
+				++rx;
+			}
+			break;
 	}
 	return rx;
 }
@@ -111,42 +111,42 @@ void sprite::move(fix s) {
 	}
 
 	switch (dir) {
-	case 8:
-	case up:
-		y -= s;
-		break;
-	case 12:
-	case down:
-		y += s;
-		break;
-	case 14:
-	case left:
-		x -= s;
-		break;
-	case 10:
-	case right:
-		x += s;
-		break;
-	case 15:
-	case l_up:
-		x -= s;
-		y -= s;
-		break;
-	case 9:
-	case r_up:
-		x += s;
-		y -= s;
-		break;
-	case 13:
-	case l_down:
-		x -= s;
-		y += s;
-		break;
-	case 11:
-	case r_down:
-		x += s;
-		y += s;
-		break;
+		case 8:
+		case up:
+			y -= s;
+			break;
+		case 12:
+		case down:
+			y += s;
+			break;
+		case 14:
+		case left:
+			x -= s;
+			break;
+		case 10:
+		case right:
+			x += s;
+			break;
+		case 15:
+		case l_up:
+			x -= s;
+			y -= s;
+			break;
+		case 9:
+		case r_up:
+			x += s;
+			y -= s;
+			break;
+		case 13:
+		case l_down:
+			x -= s;
+			y += s;
+			break;
+		case 11:
+		case r_down:
+			x += s;
+			y += s;
+			break;
 	}
 }
 
@@ -159,15 +159,15 @@ void sprite::draw(BITMAP* dest) {
 	}
 	if (clk >= 0) {
 		switch (drawstyle) {
-		case 0:                                               //normal
-			overtile16(dest, tile, sx, sy, cs, flip);
-			break;
-		case 1:                                               //phantom
-			overtiletranslucent16(dest, tile, sx, sy, cs, flip, 128);
-			break;
-		case 2:                                               //cloaked
-			overtilecloaked16(dest, tile, sx, sy, flip);
-			break;
+			case 0:                                               //normal
+				overtile16(dest, tile, sx, sy, cs, flip);
+				break;
+			case 1:                                               //phantom
+				overtiletranslucent16(dest, tile, sx, sy, cs, flip, 128);
+				break;
+			case 2:                                               //cloaked
+				overtilecloaked16(dest, tile, sx, sy, flip);
+				break;
 		}
 	} else {
 		int t  = wpnsbuf[iwSpawn].tile;
@@ -200,12 +200,12 @@ void sprite::draw8(BITMAP* dest) {
 	}
 	if (clk >= 0) {
 		switch (drawstyle) {
-		case 0:                                               //normal
-			overtile8(dest, tile, sx, sy, cs, flip);
-			break;
-		case 1:                                               //phantom
-			overtiletranslucent8(dest, tile, sx, sy, cs, flip, 128);
-			break;
+			case 0:                                               //normal
+				overtile8(dest, tile, sx, sy, cs, flip);
+				break;
+			case 1:                                               //phantom
+				overtiletranslucent8(dest, tile, sx, sy, cs, flip, 128);
+				break;
 		}
 	}
 }
@@ -401,62 +401,62 @@ bool sprite_list::del(int j) {
 
 void sprite_list::draw(BITMAP* dest, bool lowfirst) {
 	switch (lowfirst) {
-	case true:
-		for (int i = 0; i < count; i++) {
-			sprites[i]->draw(dest);
-		}
-		break;
-	case false:
-		for (int i = count - 1; i >= 0; i--) {
-			sprites[i]->draw(dest);
-		}
-		break;
+		case true:
+			for (int i = 0; i < count; i++) {
+				sprites[i]->draw(dest);
+			}
+			break;
+		case false:
+			for (int i = count - 1; i >= 0; i--) {
+				sprites[i]->draw(dest);
+			}
+			break;
 	}
 }
 
 void sprite_list::drawshadow(BITMAP* dest, bool translucent, bool lowfirst) {
 	switch (lowfirst) {
-	case true:
-		for (int i = 0; i < count; i++) {
-			sprites[i]->drawshadow(dest, translucent);
-		}
-		break;
-	case false:
-		for (int i = count - 1; i >= 0; i--) {
-			sprites[i]->drawshadow(dest, translucent);
-		}
-		break;
+		case true:
+			for (int i = 0; i < count; i++) {
+				sprites[i]->drawshadow(dest, translucent);
+			}
+			break;
+		case false:
+			for (int i = count - 1; i >= 0; i--) {
+				sprites[i]->drawshadow(dest, translucent);
+			}
+			break;
 	}
 }
 
 void sprite_list::draw2(BITMAP* dest, bool lowfirst) {
 	switch (lowfirst) {
-	case true:
-		for (int i = 0; i < count; i++) {
-			sprites[i]->draw2(dest);
-		}
-		break;
-	case false:
-		for (int i = count - 1; i >= 0; i--) {
-			sprites[i]->draw2(dest);
-		}
-		break;
+		case true:
+			for (int i = 0; i < count; i++) {
+				sprites[i]->draw2(dest);
+			}
+			break;
+		case false:
+			for (int i = count - 1; i >= 0; i--) {
+				sprites[i]->draw2(dest);
+			}
+			break;
 	}
 }
 
 void sprite_list::drawcloaked2(BITMAP* dest, bool lowfirst) {
 	switch (lowfirst) {
-	case true:
-		for (int i = 0; i < count; i++) {
-			sprites[i]->drawcloaked2(dest);
-		}
-		break;
-	case false:
+		case true:
+			for (int i = 0; i < count; i++) {
+				sprites[i]->drawcloaked2(dest);
+			}
+			break;
+		case false:
 
-		for (int i = count - 1; i >= 0; i--) {
-			sprites[i]->drawcloaked2(dest);
-		}
-		break;
+			for (int i = count - 1; i >= 0; i--) {
+				sprites[i]->drawcloaked2(dest);
+			}
+			break;
 	}
 }
 

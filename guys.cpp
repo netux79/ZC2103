@@ -63,18 +63,18 @@ bool m_walkflag(int x, int y, int special) {
 	}
 
 	switch (special) {
-	case spw_clipbottomright:
-		if (y >= 128) {
-			return true;
-		}
-	case spw_clipright:
-		if (x >= 208) {
-			return true;
-		}
-		break;
-	case spw_wizzrobe:
-	case spw_floater:
-		return false;
+		case spw_clipbottomright:
+			if (y >= 128) {
+				return true;
+			}
+		case spw_clipright:
+			if (x >= 208) {
+				return true;
+			}
+			break;
+		case spw_wizzrobe:
+		case spw_floater:
+			return false;
 	}
 
 	x &= (special == spw_halfstep) ? (~7) : (~15);
@@ -119,34 +119,34 @@ bool tooclose(int x, int y, int d) {
 
 bool isflier(int id) {
 	switch (id & 0x0FFF) {
-	case ePEAHAT:
-	case eKEESE1:
-	case eKEESE2:
-	case eKEESE3:
+		case ePEAHAT:
+		case eKEESE1:
+		case eKEESE2:
+		case eKEESE3:
 
 
 
 
-	case eKEESETRIB:
-	case eBAT:
-	case ePATRA1:
-	case ePATRA2:
-	case ePATRAL2:
-	case ePATRAL3:
-	case ePATRABS:
-	case eITEMFAIRY:
-		return true;
-		break;
+		case eKEESETRIB:
+		case eBAT:
+		case ePATRA1:
+		case ePATRA2:
+		case ePATRAL2:
+		case ePATRAL3:
+		case ePATRABS:
+		case eITEMFAIRY:
+			return true;
+			break;
 	}
 	return false;
 }
 
 bool isfloater(int id) {
 	switch (id & 0x0FFF) {
-	case eMANHAN:
-	case eMANHAN2:
-		return true;
-		break;
+		case eMANHAN:
+		case eMANHAN2:
+			return true;
+			break;
 	}
 	return isflier(id);
 }
@@ -287,200 +287,200 @@ void enemy::leave_item()
 	if (get_bit(quest_rules, qr_ENABLEMAGIC)
 	        && (game.maxmagic > 0)) {
 		switch (item_set) {
-		case isDEFAULT:
-			if (r < 3) {
-				i = iFairyMoving;    // 3%
-			} else if (r < 8) {
-				i = i5Rupies;    // 5%
-			} else if (r < 20) {
-				i = iHeart;    // 12%
-			} else if (r < 40) {
-				i = iRupy;    // 20%
-			}
-			break;                                              // 60%
+			case isDEFAULT:
+				if (r < 3) {
+					i = iFairyMoving;    // 3%
+				} else if (r < 8) {
+					i = i5Rupies;    // 5%
+				} else if (r < 20) {
+					i = iHeart;    // 12%
+				} else if (r < 40) {
+					i = iRupy;    // 20%
+				}
+				break;                                              // 60%
 
-		case isBOMBS:
-			if (r < 2) {
-				i = iFairyMoving;    // 2%
-			} else if (r < 6) {
-				i = can_do_clock() ? iClock : -1;    // 4%
-			} else if (r < 16) {
-				i = iRupy;    // 10%
-			} else if (r < 20) {
-				i = i5Rupies;    // 4%
-			} else if (r < 30) {
-				i = iHeart;    // 10%
-			} else if (r < 42) {
-				i = iBombs;    // 12%
-			}
-			break;                                              // 58%
+			case isBOMBS:
+				if (r < 2) {
+					i = iFairyMoving;    // 2%
+				} else if (r < 6) {
+					i = can_do_clock() ? iClock : -1;    // 4%
+				} else if (r < 16) {
+					i = iRupy;    // 10%
+				} else if (r < 20) {
+					i = i5Rupies;    // 4%
+				} else if (r < 30) {
+					i = iHeart;    // 10%
+				} else if (r < 42) {
+					i = iBombs;    // 12%
+				}
+				break;                                              // 58%
 
-		case isMAGICBOMBS:
-			if (r < 2) {
-				i = iFairyMoving;    // 2%
-			}
+			case isMAGICBOMBS:
+				if (r < 2) {
+					i = iFairyMoving;    // 2%
+				}
 
-			else if (r < 4) {
-				i = iLMagic;    // 2%
-			} else if (r < 8) {
-				i = iSMagic;    // 4%
-			} else if (r < 12) {
-				i = can_do_clock() ? iClock : -1;    // 4%
-			} else if (r < 22) {
-				i = iRupy;    // 10%
-			} else if (r < 26) {
-				i = i5Rupies;    // 4%
-			} else if (r < 36) {
-				i = iHeart;    // 10%
-			} else if (r < 48) {
-				i = iBombs;    // 12%
-			}
-			break;                                              // 52%
+				else if (r < 4) {
+					i = iLMagic;    // 2%
+				} else if (r < 8) {
+					i = iSMagic;    // 4%
+				} else if (r < 12) {
+					i = can_do_clock() ? iClock : -1;    // 4%
+				} else if (r < 22) {
+					i = iRupy;    // 10%
+				} else if (r < 26) {
+					i = i5Rupies;    // 4%
+				} else if (r < 36) {
+					i = iHeart;    // 10%
+				} else if (r < 48) {
+					i = iBombs;    // 12%
+				}
+				break;                                              // 52%
 
-		case isMONEY:
-			if (r < 3) {
-				i = iFairyMoving;    // 3%
-			} else if (r < 8) {
-				i = can_do_clock() ? iClock : -1;    // 5%
-			} else if (r < 23) {
-				i = i5Rupies;    // 15%
-			} else if (r < 33) {
-				i = iHeart;    // 10%
-			} else if (r < 55) {
-				i = iRupy;    // 22%
-			}
-			break;                                              // 45%
+			case isMONEY:
+				if (r < 3) {
+					i = iFairyMoving;    // 3%
+				} else if (r < 8) {
+					i = can_do_clock() ? iClock : -1;    // 5%
+				} else if (r < 23) {
+					i = i5Rupies;    // 15%
+				} else if (r < 33) {
+					i = iHeart;    // 10%
+				} else if (r < 55) {
+					i = iRupy;    // 22%
+				}
+				break;                                              // 45%
 
-		case isMAGICMONEY:
-			if (r < 3) {
-				i = iFairyMoving;    // 3%
-			} else if (r < 6) {
-				i = iLMagic;    // 3%
-			} else if (r < 12) {
-				i = iSMagic;    // 6%
-			} else if (r < 17) {
-				i = can_do_clock() ? iClock : -1;    // 5%
-			} else if (r < 32) {
-				i = i5Rupies;    // 15%
-			} else if (r < 42) {
-				i = iHeart;    // 10%
-			} else if (r < 64) {
-				i = iRupy;    // 22%
-			}
-			break;                                              // 36%
+			case isMAGICMONEY:
+				if (r < 3) {
+					i = iFairyMoving;    // 3%
+				} else if (r < 6) {
+					i = iLMagic;    // 3%
+				} else if (r < 12) {
+					i = iSMagic;    // 6%
+				} else if (r < 17) {
+					i = can_do_clock() ? iClock : -1;    // 5%
+				} else if (r < 32) {
+					i = i5Rupies;    // 15%
+				} else if (r < 42) {
+					i = iHeart;    // 10%
+				} else if (r < 64) {
+					i = iRupy;    // 22%
+				}
+				break;                                              // 36%
 
-		case isLIFE:
-			if (r < 8) {
-				i = iFairyMoving;    // 8%
-			} else if (r < 16) {
-				i = iRupy;    // 8%
-			} else if (r < 48) {
-				i = iHeart;    // 32%
-			}
-			break;                                              // 52%
+			case isLIFE:
+				if (r < 8) {
+					i = iFairyMoving;    // 8%
+				} else if (r < 16) {
+					i = iRupy;    // 8%
+				} else if (r < 48) {
+					i = iHeart;    // 32%
+				}
+				break;                                              // 52%
 
-		case isMAGICLIFE:
-			if (r < 4) {
-				i = iFairyMoving;    // 4%
-			} else if (r < 8) {
-				i = iLMagic;    // 4%
-			} else if (r < 16) {
-				i = iSMagic;    // 8%
-			} else if (r < 32) {
-				i = iRupy;    // 16%
-			} else if (r < 80) {
-				i = iHeart;    // 48%
-			}
-			break;                                              // 20%
+			case isMAGICLIFE:
+				if (r < 4) {
+					i = iFairyMoving;    // 4%
+				} else if (r < 8) {
+					i = iLMagic;    // 4%
+				} else if (r < 16) {
+					i = iSMagic;    // 8%
+				} else if (r < 32) {
+					i = iRupy;    // 16%
+				} else if (r < 80) {
+					i = iHeart;    // 48%
+				}
+				break;                                              // 20%
 
-		case isMAGIC:
-			if (r < 8) {
-				i = iLMagic;    // 8%
-			} else if (r < 32) {
-				i = iSMagic;    // 16%
-			}
-			break;                                              // 76%
+			case isMAGIC:
+				if (r < 8) {
+					i = iLMagic;    // 8%
+				} else if (r < 32) {
+					i = iSMagic;    // 16%
+				}
+				break;                                              // 76%
 
-		case isMAGIC2:
-			if (r < 25) {
-				i = iLMagic;    // 25%
-			} else {
-				i = iSMagic;    // 75%
-			}
-			break;                                              // 0%
+			case isMAGIC2:
+				if (r < 25) {
+					i = iLMagic;    // 25%
+				} else {
+					i = iSMagic;    // 75%
+				}
+				break;                                              // 0%
 
-		case isBOMB100:
-			i = iBombs;
-			break;                      //100%
-		case isSBOMB100:
-			i = iSBomb;
-			break;                     //100%
+			case isBOMB100:
+				i = iBombs;
+				break;                      //100%
+			case isSBOMB100:
+				i = iSBomb;
+				break;                     //100%
 		}
 	} else {
 		switch (item_set) {
-		case isDEFAULT:
-			if (r < 3) {
-				i = iFairyMoving;    // 3%
-			}
+			case isDEFAULT:
+				if (r < 3) {
+					i = iFairyMoving;    // 3%
+				}
 
-			else if (r < 8) {
-				i = i5Rupies;    // 5%
-			} else if (r < 20) {
-				i = iHeart;    // 12%
-			} else if (r < 40) {
-				i = iRupy;    // 20%
-			}
-			break;                                              // 60%
+				else if (r < 8) {
+					i = i5Rupies;    // 5%
+				} else if (r < 20) {
+					i = iHeart;    // 12%
+				} else if (r < 40) {
+					i = iRupy;    // 20%
+				}
+				break;                                              // 60%
 
-		case isMAGICBOMBS:
-		case isBOMBS:
-			if (r < 2) {
-				i = iFairyMoving;    // 2%
-			} else if (r < 6) {
-				i = can_do_clock() ? iClock : -1;    // 4%
-			} else if (r < 16) {
-				i = iRupy;    // 10%
-			} else if (r < 20) {
-				i = i5Rupies;    // 4%
-			} else if (r < 30) {
-				i = iHeart;    // 10%
-			} else if (r < 42) {
-				i = iBombs;    // 12%
-			}
-			break;                                              // 58%
+			case isMAGICBOMBS:
+			case isBOMBS:
+				if (r < 2) {
+					i = iFairyMoving;    // 2%
+				} else if (r < 6) {
+					i = can_do_clock() ? iClock : -1;    // 4%
+				} else if (r < 16) {
+					i = iRupy;    // 10%
+				} else if (r < 20) {
+					i = i5Rupies;    // 4%
+				} else if (r < 30) {
+					i = iHeart;    // 10%
+				} else if (r < 42) {
+					i = iBombs;    // 12%
+				}
+				break;                                              // 58%
 
-		case isMAGICMONEY:
-		case isMONEY:
-			if (r < 3) {
-				i = iFairyMoving;    // 3%
-			} else if (r < 8) {
-				i = can_do_clock() ? iClock : -1;    // 5%
-			} else if (r < 23) {
-				i = i5Rupies;    // 15%
-			} else if (r < 33) {
-				i = iHeart;    // 10%
-			} else if (r < 55) {
-				i = iRupy;    // 22%
-			}
-			break;                                              // 45%
+			case isMAGICMONEY:
+			case isMONEY:
+				if (r < 3) {
+					i = iFairyMoving;    // 3%
+				} else if (r < 8) {
+					i = can_do_clock() ? iClock : -1;    // 5%
+				} else if (r < 23) {
+					i = i5Rupies;    // 15%
+				} else if (r < 33) {
+					i = iHeart;    // 10%
+				} else if (r < 55) {
+					i = iRupy;    // 22%
+				}
+				break;                                              // 45%
 
-		case isMAGICLIFE:
-		case isLIFE:
-			if (r < 8) {
-				i = iFairyMoving;    // 8%
-			} else if (r < 16) {
-				i = iRupy;    // 8%
-			} else if (r < 48) {
-				i = iHeart;    // 32%
-			}
-			break;                                              // 52%
+			case isMAGICLIFE:
+			case isLIFE:
+				if (r < 8) {
+					i = iFairyMoving;    // 8%
+				} else if (r < 16) {
+					i = iRupy;    // 8%
+				} else if (r < 48) {
+					i = iHeart;    // 32%
+				}
+				break;                                              // 52%
 
-		case isBOMB100:
-			i = iBombs;
-			break;                      //100%
-		case isSBOMB100:
-			i = iSBomb;
-			break;                     //100%
+			case isBOMB100:
+				i = iBombs;
+				break;                      //100%
+			case isSBOMB100:
+				i = iSBomb;
+				break;                     //100%
 		}
 	}
 
@@ -513,44 +513,44 @@ int enemy::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 	}
 
 	switch (wpnId) {
-	case wPhantom:
-		return 0;
-	case wLitBomb:
-	case wLitSBomb:
-	case wBait:
-	case wWhistle:
-	case wWind:
-	case wSSparkle:
-	case wGSparkle:
-	case wMSparkle:
-		return 0;
-	case wFSparkle:
-		takehit(wSword, DAMAGE_MULTIPLIER >> 1, wpnx, wpny, wpnDir);
-		break;
-	case wBrang:
-		if (!(d->flags & guy_bhit)) {
-			stunclk = 160;
-			if (current_item(itype_brang, true) == 3) {
-				takehit(wSword, 2 * DAMAGE_MULTIPLIER, wpnx, wpny, wpnDir);
+		case wPhantom:
+			return 0;
+		case wLitBomb:
+		case wLitSBomb:
+		case wBait:
+		case wWhistle:
+		case wWind:
+		case wSSparkle:
+		case wGSparkle:
+		case wMSparkle:
+			return 0;
+		case wFSparkle:
+			takehit(wSword, DAMAGE_MULTIPLIER >> 1, wpnx, wpny, wpnDir);
+			break;
+		case wBrang:
+			if (!(d->flags & guy_bhit)) {
+				stunclk = 160;
+				if (current_item(itype_brang, true) == 3) {
+					takehit(wSword, 2 * DAMAGE_MULTIPLIER, wpnx, wpny, wpnDir);
+				}
+				break;
 			}
-			break;
-		}
-	case wHookshot:
-		if (!(d->flags & guy_bhit)) {
-			stunclk = 160;
-			break;
-		}
-	case wHSHandle:
-		if (!(d->flags & guy_bhit)) {
-			stunclk = 160;
-			break;
-		}
-	default:
-		hp -= power;
-		hclk = 33;
-		if ((dir & 2) == (wpnDir & 2)) {
-			sclk = (wpnDir << 8) + 16;
-		}
+		case wHookshot:
+			if (!(d->flags & guy_bhit)) {
+				stunclk = 160;
+				break;
+			}
+		case wHSHandle:
+			if (!(d->flags & guy_bhit)) {
+				stunclk = 160;
+				break;
+			}
+		default:
+			hp -= power;
+			hclk = 33;
+			if ((dir & 2) == (wpnDir & 2)) {
+				sclk = (wpnDir << 8) + 16;
+			}
 	}
 
 	if (((wpnId == wBrang) || (get_bit(quest_rules, qr_NOFLASHDEATH))) && hp <= 0) {
@@ -642,56 +642,56 @@ void enemy::drawblock(BITMAP* dest, int mask) {
 	int t3 = tile + 1;
 	int t4 = tile + 21;
 	switch (mask) {
-	case 1:
-		enemy::draw(dest);
-		break;
-	case 3:
-		if (flip & 2) {
-			swap(t1, t2);
-		}
-		tile = t1;
-		enemy::draw(dest);
-		tile = t2;
-		yofs += 16;
-		enemy::draw(dest);
-		yofs -= 16;
-		break;
-	case 5:
-		t2 = tile + 1;
-		if (flip & 1) {
-			swap(t1, t2);
-		}
-		tile = t1;
-		enemy::draw(dest);
-		tile = t2;
-		xofs += 16;
-		enemy::draw(dest);
-		xofs -= 16;
-		break;
-	case 15:
-		if (flip & 1) {
-			swap(t1, t3);
-			swap(t2, t4);
-		}
-		if (flip & 2) {
-			swap(t1, t2);
-			swap(t3, t4);
-		}
-		tile = t1;
-		enemy::draw(dest);
-		tile = t2;
-		yofs += 16;
-		enemy::draw(dest);
-		yofs -= 16;
-		tile = t3;
-		xofs += 16;
-		enemy::draw(dest);
-		tile = t4;
-		yofs += 16;
-		enemy::draw(dest);
-		xofs -= 16;
-		yofs -= 16;
-		break;
+		case 1:
+			enemy::draw(dest);
+			break;
+		case 3:
+			if (flip & 2) {
+				swap(t1, t2);
+			}
+			tile = t1;
+			enemy::draw(dest);
+			tile = t2;
+			yofs += 16;
+			enemy::draw(dest);
+			yofs -= 16;
+			break;
+		case 5:
+			t2 = tile + 1;
+			if (flip & 1) {
+				swap(t1, t2);
+			}
+			tile = t1;
+			enemy::draw(dest);
+			tile = t2;
+			xofs += 16;
+			enemy::draw(dest);
+			xofs -= 16;
+			break;
+		case 15:
+			if (flip & 1) {
+				swap(t1, t3);
+				swap(t2, t4);
+			}
+			if (flip & 2) {
+				swap(t1, t2);
+				swap(t3, t4);
+			}
+			tile = t1;
+			enemy::draw(dest);
+			tile = t2;
+			yofs += 16;
+			enemy::draw(dest);
+			yofs -= 16;
+			tile = t3;
+			xofs += 16;
+			enemy::draw(dest);
+			tile = t4;
+			yofs += 16;
+			enemy::draw(dest);
+			xofs -= 16;
+			yofs -= 16;
+			break;
 	}
 	tile = thold;
 }
@@ -756,45 +756,45 @@ void enemy::fix_coords() {
 bool enemy::canmove(int ndir, fix s, int special, int dx1, int dy1, int dx2, int dy2) {
 	bool ok;
 	switch (ndir) {
-	case 8:
-	case up:
-		ok = !m_walkflag(x, y + dy1 - s, (special == spw_clipbottomright) ? spw_none : special) && !((special == spw_floater) && (COMBOTYPE(x, y + dy1 - s) == cNOFLYZONE));
-		break;
-	case 12:
-	case down:
-		ok = !m_walkflag(x, y + dy2 + s, special) && !((special == spw_floater) && (COMBOTYPE(x, y + dy2 + s) == cNOFLYZONE));
-		break;
-	case 14:
-	case left:
-		ok = !m_walkflag(x + dx1 - s, y + 8, (special == spw_clipbottomright || special == spw_clipright) ? spw_none : special) && !((special == spw_floater) && (COMBOTYPE(x + dx1 - s, y + 8) == cNOFLYZONE));
-		break;
-	case 10:
-	case right:
-		ok = !m_walkflag(x + dx2 + s, y + 8, special) && !((special == spw_floater) && (COMBOTYPE(x + dx2 + s, y + 8) == cNOFLYZONE));
-		break;
-	case 9:
-	case r_up:
-		ok = !m_walkflag(x, y + dy1 - s, special) && !m_walkflag(x + dx2 + s, y + 8, special)
-		     && !((special == spw_floater) && (COMBOTYPE(x, y + dy1 - s) == cNOFLYZONE)) && !((special == spw_floater) && (COMBOTYPE(x + dx2 + s, y + 8) == cNOFLYZONE));
-		break;
-	case 11:
-	case r_down:
-		ok = !m_walkflag(x, y + dy2 + s, special) && !m_walkflag(x + dx2 + s, y + 8, special)
-		     && !((special == spw_floater) && (COMBOTYPE(x, y + dy2 + s) == cNOFLYZONE)) && !((special == spw_floater) && (COMBOTYPE(x + dx2 + s, y + 8) == cNOFLYZONE));
-		break;
-	case 13:
-	case l_down:
-		ok = !m_walkflag(x, y + dy2 + s, special) && !m_walkflag(x + dx1 - s, y + 8, special)
-		     && !((special == spw_floater) && (COMBOTYPE(x, y + dy2 + s) == cNOFLYZONE)) && !((special == spw_floater) && (COMBOTYPE(x + dx1 - s, y + 8) == cNOFLYZONE));
-		break;
-	case 15:
-	case l_up:
-		ok = !m_walkflag(x, y + dy1 - s, special) && !m_walkflag(x + dx1 - s, y + 8, special)
-		     && !((special == spw_floater) && (COMBOTYPE(x, y + dy1 - s) == cNOFLYZONE)) && !((special == spw_floater) && (COMBOTYPE(x + dx1 - s, y + 8) == cNOFLYZONE));
-		break;
-	default:
-		db = 99;
-		ok = true;
+		case 8:
+		case up:
+			ok = !m_walkflag(x, y + dy1 - s, (special == spw_clipbottomright) ? spw_none : special) && !((special == spw_floater) && (COMBOTYPE(x, y + dy1 - s) == cNOFLYZONE));
+			break;
+		case 12:
+		case down:
+			ok = !m_walkflag(x, y + dy2 + s, special) && !((special == spw_floater) && (COMBOTYPE(x, y + dy2 + s) == cNOFLYZONE));
+			break;
+		case 14:
+		case left:
+			ok = !m_walkflag(x + dx1 - s, y + 8, (special == spw_clipbottomright || special == spw_clipright) ? spw_none : special) && !((special == spw_floater) && (COMBOTYPE(x + dx1 - s, y + 8) == cNOFLYZONE));
+			break;
+		case 10:
+		case right:
+			ok = !m_walkflag(x + dx2 + s, y + 8, special) && !((special == spw_floater) && (COMBOTYPE(x + dx2 + s, y + 8) == cNOFLYZONE));
+			break;
+		case 9:
+		case r_up:
+			ok = !m_walkflag(x, y + dy1 - s, special) && !m_walkflag(x + dx2 + s, y + 8, special)
+			     && !((special == spw_floater) && (COMBOTYPE(x, y + dy1 - s) == cNOFLYZONE)) && !((special == spw_floater) && (COMBOTYPE(x + dx2 + s, y + 8) == cNOFLYZONE));
+			break;
+		case 11:
+		case r_down:
+			ok = !m_walkflag(x, y + dy2 + s, special) && !m_walkflag(x + dx2 + s, y + 8, special)
+			     && !((special == spw_floater) && (COMBOTYPE(x, y + dy2 + s) == cNOFLYZONE)) && !((special == spw_floater) && (COMBOTYPE(x + dx2 + s, y + 8) == cNOFLYZONE));
+			break;
+		case 13:
+		case l_down:
+			ok = !m_walkflag(x, y + dy2 + s, special) && !m_walkflag(x + dx1 - s, y + 8, special)
+			     && !((special == spw_floater) && (COMBOTYPE(x, y + dy2 + s) == cNOFLYZONE)) && !((special == spw_floater) && (COMBOTYPE(x + dx1 - s, y + 8) == cNOFLYZONE));
+			break;
+		case 15:
+		case l_up:
+			ok = !m_walkflag(x, y + dy1 - s, special) && !m_walkflag(x + dx1 - s, y + 8, special)
+			     && !((special == spw_floater) && (COMBOTYPE(x, y + dy1 - s) == cNOFLYZONE)) && !((special == spw_floater) && (COMBOTYPE(x + dx1 - s, y + 8) == cNOFLYZONE));
+			break;
+		default:
+			db = 99;
+			ok = true;
 	}
 	return ok;
 }
@@ -874,37 +874,37 @@ bool enemy::slide() {
 	}
 	--sclk;
 	switch (sclk >> 8) {
-	case up:
-		y -= 4;
-		break;
-	case down:
-		y += 4;
-		break;
-	case left:
-		x -= 4;
-		break;
-	case right:
-		x += 4;
-		break;
+		case up:
+			y -= 4;
+			break;
+		case down:
+			y += 4;
+			break;
+		case left:
+			x -= 4;
+			break;
+		case right:
+			x += 4;
+			break;
 	}
 	if (!canmove(sclk >> 8, (fix)0, 0)) {
 		switch (sclk >> 8) {
-		case up:
-		case down:
-			if ((int(y) & 15) > 7) {
-				y = (int(y) & 0xF0) + 16;
-			} else {
-				y = (int(y) & 0xF0);
-			}
-			break;
-		case left:
-		case right:
-			if ((int(x) & 15) > 7) {
-				x = (int(x) & 0xF0) + 16;
-			} else {
-				x = (int(x) & 0xF0);
-			}
-			break;
+			case up:
+			case down:
+				if ((int(y) & 15) > 7) {
+					y = (int(y) & 0xF0) + 16;
+				} else {
+					y = (int(y) & 0xF0);
+				}
+				break;
+			case left:
+			case right:
+				if ((int(x) & 15) > 7) {
+					x = (int(x) & 0xF0) + 16;
+				} else {
+					x = (int(x) & 0xF0);
+				}
+				break;
 		}
 		sclk = 0;
 		clk3 = 0;
@@ -926,37 +926,37 @@ bool enemy::fslide() {
 	}
 	--sclk;
 	switch (sclk >> 8) {
-	case up:
-		y -= 4;
-		break;
-	case down:
-		y += 4;
-		break;
-	case left:
-		x -= 4;
-		break;
-	case right:
-		x += 4;
-		break;
+		case up:
+			y -= 4;
+			break;
+		case down:
+			y += 4;
+			break;
+		case left:
+			x -= 4;
+			break;
+		case right:
+			x += 4;
+			break;
 	}
 	if (!canmove(sclk >> 8, (fix)0, spw_floater)) {
 		switch (sclk >> 8) {
-		case up:
-		case down:
-			if ((int(y) & 15) > 7) {
-				y = (int(y) & 0xF0) + 16;
-			} else {
-				y = (int(y) & 0xF0);
-			}
-			break;
-		case left:
-		case right:
-			if ((int(x) & 15) > 7) {
-				x = (int(x) & 0xF0) + 16;
-			} else {
-				x = (int(x) & 0xF0);
-			}
-			break;
+			case up:
+			case down:
+				if ((int(y) & 15) > 7) {
+					y = (int(y) & 0xF0) + 16;
+				} else {
+					y = (int(y) & 0xF0);
+				}
+				break;
+			case left:
+			case right:
+				if ((int(x) & 15) > 7) {
+					x = (int(x) & 0xF0) + 16;
+				} else {
+					x = (int(x) & 0xF0);
+				}
+				break;
 		}
 		sclk = 0;
 		clk3 = 0;
@@ -1037,14 +1037,14 @@ fix enemy::distance_left() {
 	int b = y.v >> 16;
 
 	switch (dir) {
-	case up:
-		return (fix)(b & 0xF);
-	case down:
-		return (fix)(16 - (b & 0xF));
-	case left:
-		return (fix)(a & 0xF);
-	case right:
-		return (fix)(16 - (a & 0xF));
+		case up:
+			return (fix)(b & 0xF);
+		case down:
+			return (fix)(16 - (b & 0xF));
+		case left:
+			return (fix)(a & 0xF);
+		case right:
+			return (fix)(16 - (a & 0xF));
 	}
 	return (fix)0;
 }
@@ -1179,43 +1179,43 @@ void enemy::variable_walk_8(int rate, int newclk, int special, int dx1, int dy1,
 void enemy::floater_walk(int rate, int newclk, fix ms, fix ss, int s, int p, int g) {
 	++clk2;
 	switch (movestatus) {
-	case 0:                                                 // paused
-		if (clk2 >= p) {
-			movestatus = 1;
-			clk2 = 0;
-		}
-		break;
-
-	case 1:                                                 // speeding up
-		if (clk2 < g * s) {
-			if (!((clk2 - 1) % g)) {
-				step += ss;
+		case 0:                                                 // paused
+			if (clk2 >= p) {
+				movestatus = 1;
+				clk2 = 0;
 			}
-		} else {
-			movestatus = 2;
-			clk2 = 0;
-		}
-		break;
+			break;
 
-	case 2:                                                 // normal
-		step = ms;
-		if (clk2 > 48 && !(rand() % 768)) {
-			step = ss * s;
-			movestatus = 3;
-			clk2 = 0;
-		}
-		break;
-
-	case 3:                                                 // slowing down
-		if (clk2 <= g * s) {
-			if (!(clk2 % g)) {
-				step -= ss;
+		case 1:                                                 // speeding up
+			if (clk2 < g * s) {
+				if (!((clk2 - 1) % g)) {
+					step += ss;
+				}
+			} else {
+				movestatus = 2;
+				clk2 = 0;
 			}
-		} else {
-			movestatus = 0;
-			clk2 = 0;
-		}
-		break;
+			break;
+
+		case 2:                                                 // normal
+			step = ms;
+			if (clk2 > 48 && !(rand() % 768)) {
+				step = ss * s;
+				movestatus = 3;
+				clk2 = 0;
+			}
+			break;
+
+		case 3:                                                 // slowing down
+			if (clk2 <= g * s) {
+				if (!(clk2 % g)) {
+					step -= ss;
+				}
+			} else {
+				movestatus = 0;
+				clk2 = 0;
+			}
+			break;
 	}
 	variable_walk_8(movestatus == 2 ? rate : 0, newclk, spw_floater);
 }
@@ -1305,94 +1305,94 @@ void enemy::update_enemy_frame() {
 	tile = d->tile;
 
 	switch (d->anim) {
-	case aFLIP:
-		flip  = f2 ? 1 : 0;
-		break;
-	case a2FRM:
-		tile += f2 ? 0 : 1;
-		break;
+		case aFLIP:
+			flip  = f2 ? 1 : 0;
+			break;
+		case a2FRM:
+			tile += f2 ? 0 : 1;
+			break;
 
-	case aOCTO:
-		switch (dir) {
-		case up:
-			flip = 2;
-			tile += f2 ? 1 : 0;
-			break;
-		case down:
-			flip = 0;
-			tile += f2 ? 1 : 0;
-			break;
-		case left:
-			flip = 0;
-			tile += f2 ? 3 : 2;
-			break;
-		case right:
-			flip = 1;
-			tile += f2 ? 3 : 2;
-			break;
-		}
-		break;
-
-	case aWALK:
-		switch (dir) {
-		case up:
-			tile += 3;
-			flip = f2 ? 1 : 0;
-			break;
-		case down:
-			tile += 2;
-			flip = f2 ? 1 : 0;
-			break;
-		case left:
-			flip = 1;
-			tile += f2 ? 1 : 0;
-			break;
-		case right:
-			flip = 0;
-			tile += f2 ? 1 : 0;
-			break;
-		}
-		break;
-
-	case aTEK:
-		if (misc == 0) {
-			tile += f2 ? 1 : 0;
-		} else if (misc != 1) {
-			++tile;
-		}
-		break;
-
-	case aARMOS:
-		if (misc) {
-			tile += f2 ? 1 : 0;
-			if (dir == up) {
-				tile += 2;
+		case aOCTO:
+			switch (dir) {
+				case up:
+					flip = 2;
+					tile += f2 ? 1 : 0;
+					break;
+				case down:
+					flip = 0;
+					tile += f2 ? 1 : 0;
+					break;
+				case left:
+					flip = 0;
+					tile += f2 ? 3 : 2;
+					break;
+				case right:
+					flip = 1;
+					tile += f2 ? 3 : 2;
+					break;
 			}
-		}
-		break;
+			break;
 
-	case aGHINI:
-		switch (dir) {
-		case 8:
-		case 9:
-		case up:
-			++tile;
-			flip = 0;
+		case aWALK:
+			switch (dir) {
+				case up:
+					tile += 3;
+					flip = f2 ? 1 : 0;
+					break;
+				case down:
+					tile += 2;
+					flip = f2 ? 1 : 0;
+					break;
+				case left:
+					flip = 1;
+					tile += f2 ? 1 : 0;
+					break;
+				case right:
+					flip = 0;
+					tile += f2 ? 1 : 0;
+					break;
+			}
 			break;
-		case 15:
-			++tile;
-			flip = 1;
+
+		case aTEK:
+			if (misc == 0) {
+				tile += f2 ? 1 : 0;
+			} else if (misc != 1) {
+				++tile;
+			}
 			break;
-		case 10:
-		case 11:
-		case right:
-			flip = 1;
+
+		case aARMOS:
+			if (misc) {
+				tile += f2 ? 1 : 0;
+				if (dir == up) {
+					tile += 2;
+				}
+			}
 			break;
-		default:
-			flip = 0;
+
+		case aGHINI:
+			switch (dir) {
+				case 8:
+				case 9:
+				case up:
+					++tile;
+					flip = 0;
+					break;
+				case 15:
+					++tile;
+					flip = 1;
+					break;
+				case 10:
+				case 11:
+				case right:
+					flip = 1;
+					break;
+				default:
+					flip = 0;
+					break;
+			}
 			break;
-		}
-		break;
 
 	}                                                         // switch(d->anim)
 
@@ -1489,37 +1489,37 @@ void eFire::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
-		case l_up:
-			flip = 0;
-			tile += 20;
-			break;
-		case r_up:
-			flip = 0;
-			tile += 24;
-			break;
-		case l_down:
-			flip = 0;
-			tile += 28;
-			break;
-		case r_down:
-			flip = 0;
-			tile += 32;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
+			case l_up:
+				flip = 0;
+				tile += 20;
+				break;
+			case r_up:
+				flip = 0;
+				tile += 24;
+				break;
+			case l_down:
+				flip = 0;
+				tile += 28;
+				break;
+			case r_down:
+				flip = 0;
+				tile += 32;
+				break;
 		}
 
 		tile += f2;
@@ -1543,25 +1543,25 @@ void removearmos(int ax, int ay) {
 	tmpscr->sflag[cd] = 0;
 
 	switch (f) {
-	case mfARMOS_SECRET:
-		tmpscr->data[cd] = tmpscr->secretcombo[sSTAIRS];
-		tmpscr->cset[cd] = tmpscr->secretcset[sSTAIRS];
-		tmpscr->sflag[cd] = tmpscr->secretflag[sSTAIRS];
-		if (!nosecretsounds) {
-			sfx(WAV_SECRET);
-		}
-		break;
-
-	case mfARMOS_ITEM:
-		if (!getmapflag()) {
-			additem(ax, ay, tmpscr->catchall, (ipONETIME + ipBIGRANGE)
-			        | ((tmpscr->flags3 & fHOLDITEM) ? ipHOLDUP : 0)
-			       );
+		case mfARMOS_SECRET:
+			tmpscr->data[cd] = tmpscr->secretcombo[sSTAIRS];
+			tmpscr->cset[cd] = tmpscr->secretcset[sSTAIRS];
+			tmpscr->sflag[cd] = tmpscr->secretflag[sSTAIRS];
 			if (!nosecretsounds) {
 				sfx(WAV_SECRET);
 			}
-		}
-		break;
+			break;
+
+		case mfARMOS_ITEM:
+			if (!getmapflag()) {
+				additem(ax, ay, tmpscr->catchall, (ipONETIME + ipBIGRANGE)
+				        | ((tmpscr->flags3 & fHOLDITEM) ? ipHOLDUP : 0)
+				       );
+				if (!nosecretsounds) {
+					sfx(WAV_SECRET);
+				}
+			}
+			break;
 	}
 	putcombo(scrollbuf, ax, ay, tmpscr->data[cd], tmpscr->cset[cd]);
 }
@@ -1615,21 +1615,21 @@ void eArmos::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		if (step > 1) {
 			tile += 20;
@@ -1717,79 +1717,79 @@ void eGhini::draw(BITMAP* dest) {
 			tile += 20;
 			switch (dir - 8) {                                    //directions get screwed up after 8.  *shrug*
 
-			case up:                                            //u
-				flip = 0;
-				break;
-			case l_up:                                          //d
-				flip = 0;
-				tile += 4;
-				break;
-			case l_down:                                        //l
-				flip = 0;
-				tile += 8;
-				break;
-			case left:                                          //r
-				flip = 0;
-				tile += 12;
-				break;
-			case r_down:                                        //ul
-				flip = 0;
-				tile += 20;
-				break;
-			case down:                                          //ur
-				flip = 0;
-				tile += 24;
-				break;
-			case r_up:                                          //dl
-				flip = 0;
-				tile += 28;
-				break;
-			case right:                                         //dr
-				flip = 0;
-				tile += 32;
-				break;
+				case up:                                            //u
+					flip = 0;
+					break;
+				case l_up:                                          //d
+					flip = 0;
+					tile += 4;
+					break;
+				case l_down:                                        //l
+					flip = 0;
+					tile += 8;
+					break;
+				case left:                                          //r
+					flip = 0;
+					tile += 12;
+					break;
+				case r_down:                                        //ul
+					flip = 0;
+					tile += 20;
+					break;
+				case down:                                          //ur
+					flip = 0;
+					tile += 24;
+					break;
+				case r_up:                                          //dl
+					flip = 0;
+					tile += 28;
+					break;
+				case right:                                         //dr
+					flip = 0;
+					tile += 32;
+					break;
 			}
 		} else {
 			switch (dir) {
-			case up:
-				flip = 0;
-				break;
-			case down:
-				flip = 0;
-				tile += 4;
-				break;
-			case left:
-				flip = 0;
-				tile += 8;
-				break;
-			case right:
-				flip = 0;
-				tile += 12;
-				break;
+				case up:
+					flip = 0;
+					break;
+				case down:
+					flip = 0;
+					tile += 4;
+					break;
+				case left:
+					flip = 0;
+					tile += 8;
+					break;
+				case right:
+					flip = 0;
+					tile += 12;
+					break;
 			}
 		}
 		tile += dummy_int[1];
 	} else {
 		//      tile+=dummy_int[1];
 		switch (dir) {
-		case 8:
-		case 9:
-		case up:
-			++tile;
-			flip = 0;
-			break;
-		case 15:
-			++tile;
-			flip = 1;
-			break;
-		case 10:
-		case 11:
-		case right:
-			flip = 1;
-			break;
-		default:
-			flip = 0;
-			break;
+			case 8:
+			case 9:
+			case up:
+				++tile;
+				flip = 0;
+				break;
+			case 15:
+				++tile;
+				flip = 1;
+				break;
+			case 10:
+			case 11:
+			case right:
+				flip = 1;
+				break;
+			default:
+				flip = 0;
+				break;
 		}
 	}
 
@@ -1828,72 +1828,72 @@ bool eTektite::animate(int index) {
 	}
 	if (clk >= 0 && !stunclk && (!watch || misc == 0))
 		switch (misc) {
-		case 0:                                               // normal
-			if (!(rand() % d->misc1)) {
-				misc = 1;
-				clk2 = 32;
-			}
-			break;
-
-		case 1:                                               // waiting to pounce
-			if (--clk2 <= 0) {
-				int r = rand();
-				misc = 2;
-				step = -2.5;                                        // initial speed
-				clk3 = (r & 1) + 2;                                 // left or right
-				clk2start = clk2 = (r & 31) + 10;                   // flight time
-				if (y < 32) {
-					clk2 += 2;    // make them come down from top of screen
-				}
-				if (y > 112) {
-					clk2 -= 2;    // make them go back up
-				}
-				cstart = c = 9 - ((r & 31) >> 3);                   // time before gravity kicks in
-			}
-			break;
-
-		case 2:                                                 // in flight
-			move(step);
-			if (step > 0) {                                       //going down
-				if (COMBOTYPE(x + 8, y + 16) == cNOJUMPZONE) {
-					step = 0 - step;
-				}
-			} else if (step < 0) {
-				if (COMBOTYPE(x + 8, y) == cNOJUMPZONE) {
-					step = 0 - step;
-				}
-			}
-
-			if (clk3 == left) {
-				if (COMBOTYPE(x, y + 8) == cNOJUMPZONE) {
-					clk3 ^= 1;
-				}
-			} else {
-				if (COMBOTYPE(x + 16, y + 8) == cNOJUMPZONE) {
-					clk3 ^= 1;
-				}
-			}
-			--c;
-			if (c < 0 && step < 2.5) {
-				step += .5;
-			}
-			if (x <= 16) {
-				clk3 = right;
-			}
-			if (x >= 224) {
-				clk3 = left;
-			}
-			x += (clk3 == left) ? -1 : 1;
-			if ((--clk2 <= 0 && y >= 16) || y >= 144) {
-				if (rand() % d->misc2) {                            //land and wait
-					clk = misc = 0;
-				}                                                   //land and jump again
-				else {
+			case 0:                                               // normal
+				if (!(rand() % d->misc1)) {
 					misc = 1;
-					clk2 = 0;
+					clk2 = 32;
 				}
-			}
-			break;
+				break;
+
+			case 1:                                               // waiting to pounce
+				if (--clk2 <= 0) {
+					int r = rand();
+					misc = 2;
+					step = -2.5;                                        // initial speed
+					clk3 = (r & 1) + 2;                                 // left or right
+					clk2start = clk2 = (r & 31) + 10;                   // flight time
+					if (y < 32) {
+						clk2 += 2;    // make them come down from top of screen
+					}
+					if (y > 112) {
+						clk2 -= 2;    // make them go back up
+					}
+					cstart = c = 9 - ((r & 31) >> 3);                   // time before gravity kicks in
+				}
+				break;
+
+			case 2:                                                 // in flight
+				move(step);
+				if (step > 0) {                                       //going down
+					if (COMBOTYPE(x + 8, y + 16) == cNOJUMPZONE) {
+						step = 0 - step;
+					}
+				} else if (step < 0) {
+					if (COMBOTYPE(x + 8, y) == cNOJUMPZONE) {
+						step = 0 - step;
+					}
+				}
+
+				if (clk3 == left) {
+					if (COMBOTYPE(x, y + 8) == cNOJUMPZONE) {
+						clk3 ^= 1;
+					}
+				} else {
+					if (COMBOTYPE(x + 16, y + 8) == cNOJUMPZONE) {
+						clk3 ^= 1;
+					}
+				}
+				--c;
+				if (c < 0 && step < 2.5) {
+					step += .5;
+				}
+				if (x <= 16) {
+					clk3 = right;
+				}
+				if (x >= 224) {
+					clk3 = left;
+				}
+				x += (clk3 == left) ? -1 : 1;
+				if ((--clk2 <= 0 && y >= 16) || y >= 144) {
+					if (rand() % d->misc2) {                            //land and wait
+						clk = misc = 0;
+					}                                                   //land and jump again
+					else {
+						misc = 1;
+						clk2 = 0;
+					}
+				}
+				break;
 
 		}                                                         // switch
 
@@ -1938,37 +1938,37 @@ void eTektite::draw(BITMAP* dest) {
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		if (step < 0) {                                         //up
 			switch (clk3) {
-			case left:
-				flip = 0;
-				tile += 20;
-				break;
-			case right:
-				flip = 0;
-				tile += 24;
-				break;
+				case left:
+					flip = 0;
+					tile += 20;
+					break;
+				case right:
+					flip = 0;
+					tile += 24;
+					break;
 			}
 		} else if (step == 0) {
 			switch (clk3) {
-			case left:
-				flip = 0;
-				tile += 8;
-				break;
-			case right:
-				flip = 0;
-				tile += 12;
-				break;
+				case left:
+					flip = 0;
+					tile += 8;
+					break;
+				case right:
+					flip = 0;
+					tile += 12;
+					break;
 			}
 		}                                                       //down
 		else {
 			switch (clk3) {
-			case left:
-				flip = 0;
-				tile += 28;
-				break;
-			case right:
-				flip = 0;
-				tile += 32;
-				break;
+				case left:
+					flip = 0;
+					tile += 28;
+					break;
+				case right:
+					flip = 0;
+					tile += 32;
+					break;
 			}
 		}
 		if (id == eBTEK) {
@@ -2083,37 +2083,37 @@ void ePeahat::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir - 8) {                                      //directions get screwed up after 8.  *shrug*
-		case up:                                              //u
-			flip = 0;
-			break;
-		case l_up:                                            //d
-			flip = 0;
-			tile += 4;
-			break;
-		case l_down:                                          //l
-			flip = 0;
-			tile += 8;
-			break;
-		case left:                                            //r
-			flip = 0;
-			tile += 12;
-			break;
-		case r_down:                                          //ul
-			flip = 0;
-			tile += 20;
-			break;
-		case down:                                            //ur
-			flip = 0;
-			tile += 24;
-			break;
-		case r_up:                                            //dl
-			flip = 0;
-			tile += 28;
-			break;
-		case right:                                           //dr
-			flip = 0;
-			tile += 32;
-			break;
+			case up:                                              //u
+				flip = 0;
+				break;
+			case l_up:                                            //d
+				flip = 0;
+				tile += 4;
+				break;
+			case l_down:                                          //l
+				flip = 0;
+				tile += 8;
+				break;
+			case left:                                            //r
+				flip = 0;
+				tile += 12;
+				break;
+			case r_down:                                          //ul
+				flip = 0;
+				tile += 20;
+				break;
+			case down:                                            //ur
+				flip = 0;
+				tile += 24;
+				break;
+			case r_up:                                            //dl
+				flip = 0;
+				tile += 28;
+				break;
+			case right:                                           //dr
+				flip = 0;
+				tile += 32;
+				break;
 		}
 	}
 
@@ -2136,34 +2136,34 @@ int ePeahat::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 
 
 	switch (wpnId) {
-	case wPhantom:
-		return 0;
-	case wLitBomb:
-	case wLitSBomb:
-	case wBait:
-	case wWhistle:
-	case wWind:
-		return 0;
-	case wBrang:
-		if (!(d->flags & guy_bhit)) {
-			if (current_item(itype_brang, true) == 3) {
-				stunclk = 160;
-				clk2 = 0;
-				movestatus = 0;
-				misc = 0;
-				clk = 0;
-				step = 0;
-				//            floater_walk(misc?4:0,8,0.625,0.0625,10,240,16);
+		case wPhantom:
+			return 0;
+		case wLitBomb:
+		case wLitSBomb:
+		case wBait:
+		case wWhistle:
+		case wWind:
+			return 0;
+		case wBrang:
+			if (!(d->flags & guy_bhit)) {
+				if (current_item(itype_brang, true) == 3) {
+					stunclk = 160;
+					clk2 = 0;
+					movestatus = 0;
+					misc = 0;
+					clk = 0;
+					step = 0;
+					//            floater_walk(misc?4:0,8,0.625,0.0625,10,240,16);
 
+				}
+				break;
 			}
-			break;
-		}
-	default:
-		hp -= power;
-		hclk = 33;
-		if ((dir & 2) == (wpnDir & 2)) {
-			sclk = (wpnDir << 8) + 16;
-		}
+		default:
+			hp -= power;
+			hclk = 33;
+			if ((dir & 2) == (wpnDir & 2)) {
+				sclk = (wpnDir << 8) + 16;
+			}
 	}
 	//    if(wpnId==wBrang && hp<=0)
 	if (((wpnId == wBrang) || (get_bit(quest_rules, qr_NOFLASHDEATH))) && hp <= 0) {
@@ -2193,103 +2193,103 @@ bool eLeever::animate(int index) {
 	}
 	if (clk >= 0 && !slide())
 		switch (d->misc1) {
-		case 0:
-			switch (misc) {
-			case -1: {
-				int active = 0;
-				for (int i = 0; i < guys.Count(); i++)
-					if (guys.spr(i)->id == id && ((enemy*)guys.spr(i))->misc >= 0) {
-						++active;
+			case 0:
+				switch (misc) {
+					case -1: {
+						int active = 0;
+						for (int i = 0; i < guys.Count(); i++)
+							if (guys.spr(i)->id == id && ((enemy*)guys.spr(i))->misc >= 0) {
+								++active;
+							}
+						if (active < 2) {
+							misc = 0;
+						}
 					}
-				if (active < 2) {
-					misc = 0;
-				}
-			}
-			break;
-
-			case 0: {
-				int s = 0;
-				for (int i = 0; i < guys.Count(); i++)
-					if (guys.spr(i)->id == id && ((enemy*)guys.spr(i))->misc == 1) {
-						++s;
-					}
-				if (s > 0) {
 					break;
-				}
-				int d = rand() & 1;
-				if (LinkDir() >= left) {
-					d += 2;
-				}
-				if (canplace(d) || canplace(d ^ 1)) {
+
+					case 0: {
+						int s = 0;
+						for (int i = 0; i < guys.Count(); i++)
+							if (guys.spr(i)->id == id && ((enemy*)guys.spr(i))->misc == 1) {
+								++s;
+							}
+						if (s > 0) {
+							break;
+						}
+						int d = rand() & 1;
+						if (LinkDir() >= left) {
+							d += 2;
+						}
+						if (canplace(d) || canplace(d ^ 1)) {
+							misc = 1;
+							clk2 = 0;
+							clk = 0;
+						}
+					}
+					break;
+
+					case 1:
+						if (++clk2 > 16) {
+							misc = 2;
+						}
+						break;
+					case 2:
+						if (++clk2 > 24) {
+							misc = 3;
+						}
+						break;
+					case 3:
+						if (stunclk) {
+							break;
+						}
+						if (scored) {
+							dir ^= 1;
+						}
+						if (!canmove(dir)) {
+							misc = 4;
+						} else {
+							move((fix)0.5);
+						}
+						break;
+
+					case 4:
+						if (--clk2 == 16) {
+							misc = 5;
+							clk = 8;
+						}
+						break;
+					case 5:
+						if (--clk2 == 0) {
+							misc = 0;
+						}
+						break;
+				}                                                       // switch(misc)
+				break;
+
+			default:
+				step = 0.167;
+				++clk2;
+				if (clk2 < 32) {
 					misc = 1;
+				} else if (clk2 < 48) {
+					misc = 2;
+				} else if (clk2 < 300) {
+					misc = 3;
+					step = d->step / 100.0;
+				} else if (clk2 < 316) {
+					misc = 2;
+				} else if (clk2 < 412) {
+					misc = 1;
+				} else if (clk2 < 540) {
+					misc = 0;
+					step = 0;
+				} else {
 					clk2 = 0;
+				}
+				if (clk2 == 48) {
 					clk = 0;
 				}
-			}
-			break;
-
-			case 1:
-				if (++clk2 > 16) {
-					misc = 2;
-				}
-				break;
-			case 2:
-				if (++clk2 > 24) {
-					misc = 3;
-				}
-				break;
-			case 3:
-				if (stunclk) {
-					break;
-				}
-				if (scored) {
-					dir ^= 1;
-				}
-				if (!canmove(dir)) {
-					misc = 4;
-				} else {
-					move((fix)0.5);
-				}
-				break;
-
-			case 4:
-				if (--clk2 == 16) {
-					misc = 5;
-					clk = 8;
-				}
-				break;
-			case 5:
-				if (--clk2 == 0) {
-					misc = 0;
-				}
-				break;
-			}                                                       // switch(misc)
-			break;
-
-		default:
-			step = 0.167;
-			++clk2;
-			if (clk2 < 32) {
-				misc = 1;
-			} else if (clk2 < 48) {
-				misc = 2;
-			} else if (clk2 < 300) {
-				misc = 3;
-				step = d->step / 100.0;
-			} else if (clk2 < 316) {
-				misc = 2;
-			} else if (clk2 < 412) {
-				misc = 1;
-			} else if (clk2 < 540) {
-				misc = 0;
-				step = 0;
-			} else {
-				clk2 = 0;
-			}
-			if (clk2 == 48) {
-				clk = 0;
-			}
-			variable_walk(d->rate, d->homing, 0);
+				variable_walk(d->rate, d->homing, 0);
 		}                                                         // switch(d->misc1)
 
 	hxofs = (misc >= 2) ? 0 : 1000;
@@ -2307,24 +2307,24 @@ bool eLeever::canplace(int d) {
 	}
 
 	switch (d) {
-	case up:
-		ny -= 32;
-		break;
-	case down:
-		ny += 32;
-		if (ny - LinkY() < 32) {
-			ny += 16;
-		}
-		break;
-	case left:
-		nx -= 32;
-		break;
-	case right:
-		nx += 32;
-		if (nx - LinkX() < 32) {
-			nx += 16;
-		}
-		break;
+		case up:
+			ny -= 32;
+			break;
+		case down:
+			ny += 32;
+			if (ny - LinkY() < 32) {
+				ny += 16;
+			}
+			break;
+		case left:
+			nx -= 32;
+			break;
+		case right:
+			nx += 32;
+			if (nx - LinkX() < 32) {
+				nx += 16;
+			}
+			break;
 	}
 	if (m_walkflag(nx, ny, spw_halfstep)) {                   /*none*/
 		return false;
@@ -2344,59 +2344,59 @@ void eLeever::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		if (id == eBLEV) {
 			tile += 60;
 		}
 		switch (misc) {
-		case -1:
-		case 0:
-			return;
-		case 1:
-		case 5:
-			cs = d->misc2;
-			break;
-		case 2:
-		case 4:
-			tile += 20;
-			break;
-		case 3:
-			tile += 40;
-			break;
+			case -1:
+			case 0:
+				return;
+			case 1:
+			case 5:
+				cs = d->misc2;
+				break;
+			case 2:
+			case 4:
+				tile += 20;
+				break;
+			case 3:
+				tile += 40;
+				break;
 		}
 		tile += f2;
 	} else {
 		switch (misc) {
-		case -1:
-		case 0:
-			return;
-		case 1:
-		case 5:
-			tile += (f2) ? 1 : 0;
-			cs = d->misc2;
-			break;
-		case 2:
-		case 4:
-			tile += 2;
-			break;
-		case 3:
-			tile += (f4) ? 4 : 3;
-			break;
+			case -1:
+			case 0:
+				return;
+			case 1:
+			case 5:
+				tile += (f2) ? 1 : 0;
+				cs = d->misc2;
+				break;
+			case 2:
+			case 4:
+				tile += 2;
+				break;
+			case 3:
+				tile += (f4) ? 4 : 3;
+				break;
 		}
 	}
 
@@ -2423,42 +2423,42 @@ bool eGel::animate(int index) {
 	}
 	if (clk >= 0)
 		switch (id >> 12) {
-		case 0:
-			halting_walk(d->rate, d->homing, spw_none, d->hrate, ((rand() & 7) << 3) + 2);
-			break;
-		case 1:
-			if (misc == 1) {
-				dir = up;
-				step = 8;
-			}
-			if (misc <= 2) {
-				move(step);
-				if (!canmove(dir, (fix)0, 0)) {
+			case 0:
+				halting_walk(d->rate, d->homing, spw_none, d->hrate, ((rand() & 7) << 3) + 2);
+				break;
+			case 1:
+				if (misc == 1) {
+					dir = up;
+					step = 8;
+				}
+				if (misc <= 2) {
+					move(step);
+					if (!canmove(dir, (fix)0, 0)) {
+						dir = down;
+					}
+				}
+				if (misc == 3) {
+					if (canmove(right, (fix)16, 0)) {
+						x += 16;
+					}
+				}
+				++misc;
+				break;
+			case 2:
+				if (misc == 1) {
 					dir = down;
+					step = 8;
 				}
-			}
-			if (misc == 3) {
-				if (canmove(right, (fix)16, 0)) {
-					x += 16;
+				if (misc <= 2) {
+					move(step);
 				}
-			}
-			++misc;
-			break;
-		case 2:
-			if (misc == 1) {
-				dir = down;
-				step = 8;
-			}
-			if (misc <= 2) {
-				move(step);
-			}
-			if (misc == 3) {
-				if (canmove(left, (fix)16, 0)) {
-					x -= 16;
+				if (misc == 3) {
+					if (canmove(left, (fix)16, 0)) {
+						x -= 16;
+					}
 				}
-			}
-			++misc;
-			break;
+				++misc;
+				break;
 		}
 	if (misc >= 4) {
 		id &= 0xFFF;
@@ -2487,21 +2487,21 @@ void eGel::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		tile += f2;
 	} else {
@@ -2542,21 +2542,21 @@ void eZol::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		tile += f2;
 	} else {
@@ -2596,42 +2596,42 @@ bool eGelTrib::animate(int index) {
 	}
 	if (clk >= 0)
 		switch (id >> 12) {
-		case 0:
-			halting_walk(d->rate, d->homing, spw_none, d->hrate, ((rand() & 7) << 3) + 2);
-			break;
-		case 1:
-			if (misc == 1) {
-				dir = up;
-				step = 8;
-			}
-			if (misc <= 2) {
-				move(step);
-				if (!canmove(dir, (fix)0, 0)) {
+			case 0:
+				halting_walk(d->rate, d->homing, spw_none, d->hrate, ((rand() & 7) << 3) + 2);
+				break;
+			case 1:
+				if (misc == 1) {
+					dir = up;
+					step = 8;
+				}
+				if (misc <= 2) {
+					move(step);
+					if (!canmove(dir, (fix)0, 0)) {
+						dir = down;
+					}
+				}
+				if (misc == 3) {
+					if (canmove(right, (fix)16, 0)) {
+						x += 16;
+					}
+				}
+				++misc;
+				break;
+			case 2:
+				if (misc == 1) {
 					dir = down;
+					step = 8;
 				}
-			}
-			if (misc == 3) {
-				if (canmove(right, (fix)16, 0)) {
-					x += 16;
+				if (misc <= 2) {
+					move(step);
 				}
-			}
-			++misc;
-			break;
-		case 2:
-			if (misc == 1) {
-				dir = down;
-				step = 8;
-			}
-			if (misc <= 2) {
-				move(step);
-			}
-			if (misc == 3) {
-				if (canmove(left, (fix)16, 0)) {
-					x -= 16;
+				if (misc == 3) {
+					if (canmove(left, (fix)16, 0)) {
+						x -= 16;
+					}
 				}
-			}
-			++misc;
-			break;
+				++misc;
+				break;
 		}
 	if (misc >= 4) {
 		id &= 0xFFF;
@@ -2671,22 +2671,22 @@ void eGelTrib::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
 
-			break;
+				break;
 		}
 		tile += f2;
 	} else {
@@ -2727,22 +2727,22 @@ void eZolTrib::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
+			case up:
+				flip = 0;
+				break;
 
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		tile += f2;
 	} else {
@@ -2805,36 +2805,36 @@ bool eWallM::animate(int index) {
 					}
 				}
 				switch (wall) {
-				case up:
-					y = 0;
-					break;
-				case down:
-					y = 160;
-					break;
-				case left:
-					x = 0;
-					break;
-				case right:
-					x = 240;
-					break;
+					case up:
+						y = 0;
+						break;
+					case down:
+						y = 160;
+						break;
+					case left:
+						x = 0;
+						break;
+					case right:
+						x = 240;
+						break;
 				}
 				switch (dir) {
-				case up:
-					y = LinkY() + 48 - (wallm_cnt & 1) * 12;
-					flip = wall & 1;
-					break;
-				case down:
-					y = LinkY() - 48 + (wallm_cnt & 1) * 12;
-					flip = ((wall & 1) ^ 1) + 2;
-					break;
-				case left:
-					x = LinkX() + 48 - (wallm_cnt & 1) * 12;
-					flip = (wall == up ? 2 : 0) + 1;
-					break;
-				case right:
-					x = LinkX() - 48 + (wallm_cnt & 1) * 12;
-					flip = (wall == up ? 2 : 0);
-					break;
+					case up:
+						y = LinkY() + 48 - (wallm_cnt & 1) * 12;
+						flip = wall & 1;
+						break;
+					case down:
+						y = LinkY() - 48 + (wallm_cnt & 1) * 12;
+						flip = ((wall & 1) ^ 1) + 2;
+						break;
+					case left:
+						x = LinkX() + 48 - (wallm_cnt & 1) * 12;
+						flip = (wall == up ? 2 : 0) + 1;
+						break;
+					case right:
+						x = LinkX() - 48 + (wallm_cnt & 1) * 12;
+						flip = (wall == up ? 2 : 0);
+						break;
 				}
 			}
 		}
@@ -2855,28 +2855,28 @@ void eWallM::wallm_crawl() {
 	++clk2;
 	misc = (clk2 / 40) + 1;
 	switch (misc) {
-	case 1:
-	case 2:
-		swap(dir, clk3);
-		move(step);
-		swap(dir, clk3);
-		break;
-	case 3:
-	case 4:
-	case 5:
-		move(step);
-		break;
-	case 6:
-	case 7:
-		swap(dir, clk3);
-		dir ^= 1;
-		move(step);
-		dir ^= 1;
-		swap(dir, clk3);
-		break;
-	default:
-		misc = 0;
-		break;
+		case 1:
+		case 2:
+			swap(dir, clk3);
+			move(step);
+			swap(dir, clk3);
+			break;
+		case 3:
+		case 4:
+		case 5:
+			move(step);
+			break;
+		case 6:
+		case 7:
+			swap(dir, clk3);
+			dir ^= 1;
+			move(step);
+			dir ^= 1;
+			swap(dir, clk3);
+			break;
+		default:
+			misc = 0;
+			break;
 	}
 }
 
@@ -2893,37 +2893,37 @@ void eWallM::draw(BITMAP* dest) {
 	tile = dummy_int[0];
 
 	switch (misc) {
-	case 1:
-	case 2:
-		tempdir = clk3;
-		break;
-	case 3:
-	case 4:
-	case 5:
-		tempdir = dir;
-		break;
-	case 6:
-	case 7:
-		tempdir = clk3 ^ 1;
-		break;
+		case 1:
+		case 2:
+			tempdir = clk3;
+			break;
+		case 3:
+		case 4:
+		case 5:
+			tempdir = dir;
+			break;
+		case 6:
+		case 7:
+			tempdir = clk3 ^ 1;
+			break;
 	}
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (tempdir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		if (!haslink) {
 			tile += f2;
@@ -2994,26 +2994,26 @@ bool eTrap::animate(int index) {
 	if (misc == 2) {                                          // retreating
 		step = (++clk2 & 1) ? 1 : 0;
 		switch (dir) {
-		case up:
-		case left:
-			if (int(x) <= ox && int(y) <= oy) {
-				x = ox;
-				y = oy;
-				misc = 0;
-			} else {
-				sprite::move(step);
-			}
-			break;
-		case down:
-		case right:
-			if (int(x) >= ox && int(y) >= oy) {
-				x = ox;
-				y = oy;
-				misc = 0;
-			} else {
-				sprite::move(step);
-			}
-			break;
+			case up:
+			case left:
+				if (int(x) <= ox && int(y) <= oy) {
+					x = ox;
+					y = oy;
+					misc = 0;
+				} else {
+					sprite::move(step);
+				}
+				break;
+			case down:
+			case right:
+				if (int(x) >= ox && int(y) >= oy) {
+					x = ox;
+					y = oy;
+					misc = 0;
+				} else {
+					sprite::move(step);
+				}
+				break;
 		}
 	}
 
@@ -3049,50 +3049,50 @@ bool eTrap::trapmove(int ndir) {
 bool eTrap::clip() {
 	if (get_bit(quest_rules, qr_MEANPLACEDTRAPS)) {
 		switch (dir) {
-		case up:
-			if (y <= 0) {
-				return true;
-			}
-			break;
-		case down:
-			if (y >= 160) {
-				return true;
-			}
-			break;
-		case left:
-			if (x <= 0) {
-				return true;
-			}
-			break;
-		case right:
-			if (x >= 240) {
-				return true;
-			}
-			break;
+			case up:
+				if (y <= 0) {
+					return true;
+				}
+				break;
+			case down:
+				if (y >= 160) {
+					return true;
+				}
+				break;
+			case left:
+				if (x <= 0) {
+					return true;
+				}
+				break;
+			case right:
+				if (x >= 240) {
+					return true;
+				}
+				break;
 		}
 		return false;
 	} else {
 		switch (dir) {
-		case up:
-			if (oy > 80 && y <= 86) {
-				return true;
-			}
-			break;
-		case down:
-			if (oy < 80 && y >= 80) {
-				return true;
-			}
-			break;
-		case left:
-			if (ox > 128 && x <= 124) {
-				return true;
-			}
-			break;
-		case right:
-			if (ox < 120 && x >= 116) {
-				return true;
-			}
-			break;
+			case up:
+				if (oy > 80 && y <= 86) {
+					return true;
+				}
+				break;
+			case down:
+				if (oy < 80 && y >= 80) {
+					return true;
+				}
+				break;
+			case left:
+				if (ox > 128 && x <= 124) {
+					return true;
+				}
+				break;
+			case right:
+				if (ox < 120 && x >= 116) {
+					return true;
+				}
+				break;
 		}
 		return false;
 	}
@@ -3106,32 +3106,32 @@ void eTrap::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		switch (id) {
-		case eTRAP:
-			tile += dummy_int[1] * 20;
-			break;
-		case eTRAP_V:
-			tile += 60;
-			break;
-		case eTRAP_H:
-			tile += 80;
-			break;
+			case eTRAP:
+				tile += dummy_int[1] * 20;
+				break;
+			case eTRAP_V:
+				tile += 60;
+				break;
+			case eTRAP_H:
+				tile += 80;
+				break;
 		}
 		tile += f2;
 	}
@@ -3217,26 +3217,26 @@ bool eTrap2::trapmove(int ndir) {
 
 bool eTrap2::clip() {
 	switch (dir) {
-	case up:
-		if (y <= 0) {
-			return true;
-		}
-		break;
-	case down:
-		if (y >= 160) {
-			return true;
-		}
-		break;
-	case left:
-		if (x <= 0) {
-			return true;
-		}
-		break;
-	case right:
-		if (x >= 240) {
-			return true;
-		}
-		break;
+		case up:
+			if (y <= 0) {
+				return true;
+			}
+			break;
+		case down:
+			if (y >= 160) {
+				return true;
+			}
+			break;
+		case left:
+			if (x <= 0) {
+				return true;
+			}
+			break;
+		case right:
+			if (x >= 240) {
+				return true;
+			}
+			break;
 	}
 	return false;
 }
@@ -3249,21 +3249,21 @@ void eTrap2::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		tile += f2;
 	}
@@ -3357,37 +3357,37 @@ void eRock::draw(BITMAP* dest) {
 	if (clk >= 0) {
 		if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 			switch (dummy_int[2]) {
-			case up:
-				flip = 0;
-				break;
-			case down:
-				flip = 0;
-				tile += 4;
-				break;
-			case left:
-				flip = 0;
-				tile += 8;
-				break;
-			case right:
-				flip = 0;
-				tile += 12;
-				break;
-			case l_up:
-				flip = 0;
-				tile += 20;
-				break;
-			case r_up:
-				flip = 0;
-				tile += 24;
-				break;
-			case l_down:
-				flip = 0;
-				tile += 28;
-				break;
-			case r_down:
-				flip = 0;
-				tile += 32;
-				break;
+				case up:
+					flip = 0;
+					break;
+				case down:
+					flip = 0;
+					tile += 4;
+					break;
+				case left:
+					flip = 0;
+					tile += 8;
+					break;
+				case right:
+					flip = 0;
+					tile += 12;
+					break;
+				case l_up:
+					flip = 0;
+					tile += 20;
+					break;
+				case r_up:
+					flip = 0;
+					tile += 24;
+					break;
+				case l_down:
+					flip = 0;
+					tile += 28;
+					break;
+				case r_down:
+					flip = 0;
+					tile += 32;
+					break;
 			}
 		}
 		tile += f2;
@@ -3447,45 +3447,45 @@ bool eNPC::animate(int index) {
 	}
 
 	switch (id) {
-	case eNPCSTAND1:
-	case eNPCSTAND2:
-	case eNPCSTAND3:
-	case eNPCSTAND4:
-	case eNPCSTAND5:
-	case eNPCSTAND6: {
-		double ddir = atan2(double(y - (Link.y)), double(Link.x - x));
-		if ((ddir <= (((-1)*PI) / 4)) && (ddir > (((-3)*PI) / 4))) {
-			dir = down;
-		}
+		case eNPCSTAND1:
+		case eNPCSTAND2:
+		case eNPCSTAND3:
+		case eNPCSTAND4:
+		case eNPCSTAND5:
+		case eNPCSTAND6: {
+			double ddir = atan2(double(y - (Link.y)), double(Link.x - x));
+			if ((ddir <= (((-1)*PI) / 4)) && (ddir > (((-3)*PI) / 4))) {
+				dir = down;
+			}
 
-		else if ((ddir <= (((1)*PI) / 4)) && (ddir > (((-1)*PI) / 4))) {
-			dir = right;
-		} else if ((ddir <= (((3)*PI) / 4)) && (ddir > (((1)*PI) / 8))) {
-			dir = up;
-		} else {
-			dir = left;
+			else if ((ddir <= (((1)*PI) / 4)) && (ddir > (((-1)*PI) / 4))) {
+				dir = right;
+			} else if ((ddir <= (((3)*PI) / 4)) && (ddir > (((1)*PI) / 8))) {
+				dir = up;
+			} else {
+				dir = left;
+			}
 		}
-	}
-	break;
-	case eNPCWALK1:
-	case eNPCWALK2:
-	case eNPCWALK3:
-	case eNPCWALK4:
-	case eNPCWALK5:
-	case eNPCWALK6:
-		halting_walk(d->rate, d->homing, 0, d->hrate, 48);
-
-		if (clk2 == 1 && (misc < d->misc1) && !(rand() & 15)) {
-			newdir(d->rate, d->homing, 0);
-			clk2 = 48;
-			++misc;
-		}
-
-		if (clk2 == 0) {
-			misc = 0;
-		}
-
 		break;
+		case eNPCWALK1:
+		case eNPCWALK2:
+		case eNPCWALK3:
+		case eNPCWALK4:
+		case eNPCWALK5:
+		case eNPCWALK6:
+			halting_walk(d->rate, d->homing, 0, d->hrate, 48);
+
+			if (clk2 == 1 && (misc < d->misc1) && !(rand() & 15)) {
+				newdir(d->rate, d->homing, 0);
+				clk2 = 48;
+				++misc;
+			}
+
+			if (clk2 == 0) {
+				misc = 0;
+			}
+
+			break;
 	}
 	return enemy::animate(index);
 }
@@ -3498,42 +3498,42 @@ void eNPC::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
 
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 
 		tile += f2;
 	} else {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 2;
-			break;
-		case left:
-			flip = 0;
-			tile += 4;
-			break;
-		case right:
-			flip = 1;
-			tile += 4;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 2;
+				break;
+			case left:
+				flip = 0;
+				tile += 4;
+				break;
+			case right:
+				flip = 1;
+				tile += 4;
+				break;
 		}
 		tile += (f2 ? 1 : 0);
 	}
@@ -3597,46 +3597,46 @@ bool eZora::animate(int index) {
 		facelink();
 	}
 	switch (clk) {
-	case 0: {                                               // reposition him
-		int t = 0;
-		int pos = rand() % 160 + 16;
-		bool placed = false;
-		while (!placed && t < 160) {
-			if (iswater(tmpscr->data[pos]) && (pos & 15) > 0 && (pos & 15) < 15) {
-				x = (pos & 15) << 4;
-				y = pos & 0xF0;
-				hp = guysbuf[eZORA].hp;                           // refill life each time
-				hxofs = 1000;                                     // avoid hit detection
-				stunclk = 0;
-				placed = true;
+		case 0: {                                               // reposition him
+			int t = 0;
+			int pos = rand() % 160 + 16;
+			bool placed = false;
+			while (!placed && t < 160) {
+				if (iswater(tmpscr->data[pos]) && (pos & 15) > 0 && (pos & 15) < 15) {
+					x = (pos & 15) << 4;
+					y = pos & 0xF0;
+					hp = guysbuf[eZORA].hp;                           // refill life each time
+					hxofs = 1000;                                     // avoid hit detection
+					stunclk = 0;
+					placed = true;
+				}
+				pos += 19;
+				if (pos >= 176) {
+					pos -= 160;
+				}
+				++t;
 			}
-			pos += 19;
-			if (pos >= 176) {
-				pos -= 160;
+			if (!placed || whistleclk >= 88) {                    // can't place him, he's gone
+				return true;
 			}
-			++t;
-		}
-		if (!placed || whistleclk >= 88) {                    // can't place him, he's gone
-			return true;
-		}
 
-	}
-	break;
-	case 35:
-		if (!get_bit(quest_rules, qr_NEWENEMYTILES)) {
-			dir = (Link.y + 8 < y) ? up : down;
 		}
-		hxofs = 0;
 		break;
-	case 35+19:
-		addEwpn(x, y, ewFireball, 0, d->wdp, 0);
-		break;
-	case 35+66:
-		hxofs = 1000;
-		break;
-	case 198:
-		clk = -1;
-		break;
+		case 35:
+			if (!get_bit(quest_rules, qr_NEWENEMYTILES)) {
+				dir = (Link.y + 8 < y) ? up : down;
+			}
+			hxofs = 0;
+			break;
+		case 35+19:
+			addEwpn(x, y, ewFireball, 0, d->wdp, 0);
+			break;
+		case 35+66:
+			hxofs = 1000;
+			break;
+		case 198:
+			clk = -1;
+			break;
 	}
 
 	return enemy::animate(index);
@@ -3655,37 +3655,37 @@ void eZora::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
-		case l_up:
-			flip = 0;
-			tile += 20;
-			break;
-		case r_up:
-			flip = 0;
-			tile += 24;
-			break;
-		case l_down:
-			flip = 0;
-			tile += 28;
-			break;
-		case r_down:
-			flip = 0;
-			tile += 32;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
+			case l_up:
+				flip = 0;
+				tile += 20;
+				break;
+			case r_up:
+				flip = 0;
+				tile += 24;
+				break;
+			case l_down:
+				flip = 0;
+				tile += 28;
+				break;
+			case r_down:
+				flip = 0;
+				tile += 32;
+				break;
 		}
 
 		int dl;
@@ -3769,21 +3769,21 @@ void eStalfos::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		tile += f2;
 		if (id != eSTALFOS) {
@@ -3828,21 +3828,21 @@ void eGibdo::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		tile += f2;
 	} else {
@@ -3878,41 +3878,41 @@ void eBubble::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		switch (id) {
-		case eBUBBLE:
-			break;
-		case eRBUBBLE:
-			tile += 20;
-			break;
-		case eBBUBBLE:
-			tile += 40;
-			break;
-		case eIBUBBLE:
-			tile += 60;
-			break;
+			case eBUBBLE:
+				break;
+			case eRBUBBLE:
+				tile += 20;
+				break;
+			case eBBUBBLE:
+				tile += 40;
+				break;
+			case eIBUBBLE:
+				tile += 60;
+				break;
 
-		case eRIBUBBLE:
-			tile += 80;
-			break;
-		case eBIBUBBLE:
-			tile += 100;
-			break;
+			case eRIBUBBLE:
+				tile += 80;
+				break;
+			case eBIBUBBLE:
+				tile += 100;
+				break;
 		}
 		tile += f2;
 	} else {
@@ -3983,21 +3983,21 @@ void eRope::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		tile += f2;
 		if (id == eROPE2) {
@@ -4079,50 +4079,50 @@ void eKeese::draw(BITMAP* dest) {
 	tile = dummy_int[0];
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir - 8) {                                      //directions get screwed up after 8.  *shrug*
-		case up:                                              //u
-			flip = 0;
-			break;
-		case l_up:                                            //d
-			flip = 0;
-			tile += 4;
-			break;
-		case l_down:                                          //l
-			flip = 0;
-			tile += 8;
-			break;
-		case left:                                            //r
-			flip = 0;
-			tile += 12;
-			break;
-		case r_down:                                          //ul
-			flip = 0;
-			tile += 20;
-			break;
-		case down:                                            //ur
-			flip = 0;
-			tile += 24;
-			break;
-		case r_up:                                            //dl
-			flip = 0;
-			tile += 28;
-			break;
-		case right:                                           //dr
-			flip = 0;
-			tile += 32;
-			break;
+			case up:                                              //u
+				flip = 0;
+				break;
+			case l_up:                                            //d
+				flip = 0;
+				tile += 4;
+				break;
+			case l_down:                                          //l
+				flip = 0;
+				tile += 8;
+				break;
+			case left:                                            //r
+				flip = 0;
+				tile += 12;
+				break;
+			case r_down:                                          //ul
+				flip = 0;
+				tile += 20;
+				break;
+			case down:                                            //ur
+				flip = 0;
+				tile += 24;
+				break;
+			case r_up:                                            //dl
+				flip = 0;
+				tile += 28;
+				break;
+			case right:                                           //dr
+				flip = 0;
+				tile += 32;
+				break;
 		}
 		switch (id) {
-		case eKEESE1:
-			break;
-		case eKEESE2:
-			tile += 40;
-			break;
-		case eKEESE3:
-			tile += 80;
-			break;
-		case eBAT:
-			tile += 3300;
-			break;
+			case eKEESE1:
+				break;
+			case eKEESE2:
+				tile += 40;
+				break;
+			case eKEESE3:
+				tile += 80;
+				break;
+			case eBAT:
+				tile += 3300;
+				break;
 		}
 	}
 
@@ -4181,22 +4181,22 @@ void eVire::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
 
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 	}
 	tile += f2;
@@ -4301,37 +4301,37 @@ void eKeeseTrib::draw(BITMAP* dest) {
 	tile = dummy_int[0];
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir - 8) {                                      //directions get screwed up after 8.  *shrug*
-		case up:                                              //u
-			flip = 0;
-			break;
-		case l_up:                                            //d
-			flip = 0;
-			tile += 4;
-			break;
-		case l_down:                                          //l
-			flip = 0;
-			tile += 8;
-			break;
-		case left:                                            //r
-			flip = 0;
-			tile += 12;
-			break;
-		case r_down:                                          //ul
-			flip = 0;
-			tile += 20;
-			break;
-		case down:                                            //ur
-			flip = 0;
-			tile += 24;
-			break;
-		case r_up:                                            //dl
-			flip = 0;
-			tile += 28;
-			break;
-		case right:                                           //dr
-			flip = 0;
-			tile += 32;
-			break;
+			case up:                                              //u
+				flip = 0;
+				break;
+			case l_up:                                            //d
+				flip = 0;
+				tile += 4;
+				break;
+			case l_down:                                          //l
+				flip = 0;
+				tile += 8;
+				break;
+			case left:                                            //r
+				flip = 0;
+				tile += 12;
+				break;
+			case r_down:                                          //ul
+				flip = 0;
+				tile += 20;
+				break;
+			case down:                                            //ur
+				flip = 0;
+				tile += 24;
+				break;
+			case r_up:                                            //dl
+				flip = 0;
+				tile += 28;
+				break;
+			case right:                                           //dr
+				flip = 0;
+				tile += 32;
+				break;
 		}
 	}
 
@@ -4388,21 +4388,21 @@ void eVireTrib::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		tile += f2;
 	} else {
@@ -4477,21 +4477,21 @@ void ePolsVoice::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		tile += f2;
 		if (clk2 >= 0) {
@@ -4509,40 +4509,40 @@ int ePolsVoice::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 	}
 
 	switch (wpnId) {
-	case wPhantom:
-		return 0;
-	case wBomb:
-	case wSBomb:
-	case wLitBomb:
-	case wLitSBomb:
-	case wFire:
-	case wBait:
-	case wWhistle:
-	case wWind:
-	case wSSparkle:
+		case wPhantom:
+			return 0;
+		case wBomb:
+		case wSBomb:
+		case wLitBomb:
+		case wLitSBomb:
+		case wFire:
+		case wBait:
+		case wWhistle:
+		case wWind:
+		case wSSparkle:
 
-	case wGSparkle:
-	case wMSparkle:
-		return 0;
-	case wBrang:
-		if (current_item(itype_brang, true) < 3) {
-			sfx(WAV_CHINK, pan(int(x)));
-			return 1;
-		} else {
+		case wGSparkle:
+		case wMSparkle:
+			return 0;
+		case wBrang:
+			if (current_item(itype_brang, true) < 3) {
+				sfx(WAV_CHINK, pan(int(x)));
+				return 1;
+			} else {
+				stunclk = 160;
+				break;
+			}
+		case wHookshot:
 			stunclk = 160;
 			break;
-		}
-	case wHookshot:
-		stunclk = 160;
-		break;
-	case wMagic:
-		sfx(WAV_CHINK, pan(int(x)));
-		return 1;
-	case wArrow:
-		hp = 0;
-		break;
-	default:
-		hp -= power;
+		case wMagic:
+			sfx(WAV_CHINK, pan(int(x)));
+			return 1;
+		case wArrow:
+			hp = 0;
+			break;
+		default:
+			hp -= power;
 	}
 	hclk = 33;
 	sfx(WAV_EHIT, pan(int(x)));
@@ -4633,34 +4633,34 @@ void eLikeLike::draw(BITMAP* dest) {
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		tile += f2;
 		enemy::draw(dest);
 	} else {
 		switch (clk & 0x18) {
-		//        case 0:  tile=162; break;
-		case 8:
-		case 24:
-			tile += 1;
-			break;
-		case 16:
-			tile += 2;
-			break;
+			//        case 0:  tile=162; break;
+			case 8:
+			case 24:
+				tile += 1;
+				break;
+			case 16:
+				tile += 2;
+				break;
 		}
 		enemy::draw(dest);
 	}
@@ -4750,21 +4750,21 @@ void eOctorok::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		if (clk2 > 0) {                                         //stopped to fire
 			tile += 20;
@@ -4773,38 +4773,38 @@ void eOctorok::draw(BITMAP* dest) {
 			}
 		}
 		switch (id) {
-		case eROCTO1:                                         //already the right tile
-			break;
-		case eROCTO2:
-			tile += 60;
-			break;
-		case eBOCTO1:
-			tile += 120;
-			break;
-		case eBOCTO2:
-			tile += 180;
-			break;
-		case eCOCTO:
-			tile += 240;
-			break;
+			case eROCTO1:                                         //already the right tile
+				break;
+			case eROCTO2:
+				tile += 60;
+				break;
+			case eBOCTO1:
+				tile += 120;
+				break;
+			case eBOCTO2:
+				tile += 180;
+				break;
+			case eCOCTO:
+				tile += 240;
+				break;
 		}
 		tile += f2;
 	} else {
 		switch (dir) {
-		case up:
-			flip = 2;
-			break;
-		case down:
-			flip = 0;
-			break;
-		case left:
-			flip = 0;
-			tile += 2;
-			break;
-		case right:
-			flip = 1;
-			tile += 2;
-			break;
+			case up:
+				flip = 2;
+				break;
+			case down:
+				flip = 0;
+				break;
+			case left:
+				flip = 0;
+				tile += 2;
+				break;
+			case right:
+				flip = 1;
+				tile += 2;
+				break;
 		}
 		tile += (f2 ? 1 : 0);
 	}
@@ -4851,21 +4851,21 @@ void eMoblin::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		if (clk2 > 0) {                                         //stopped to fire
 			tile += 20;
@@ -4881,22 +4881,22 @@ void eMoblin::draw(BITMAP* dest) {
 		tile += f2;
 	} else {
 		switch (dir) {
-		case up:
-			tile += 3;
-			flip = f2 ? 1 : 0;
-			break;
-		case down:
-			tile += 2;
-			flip = f2 ? 1 : 0;
-			break;
-		case left:
-			flip = 1;
-			tile += f2 ? 1 : 0;
-			break;
-		case right:
-			flip = 0;
-			tile += f2 ? 1 : 0;
-			break;
+			case up:
+				tile += 3;
+				flip = f2 ? 1 : 0;
+				break;
+			case down:
+				tile += 2;
+				flip = f2 ? 1 : 0;
+				break;
+			case left:
+				flip = 1;
+				tile += f2 ? 1 : 0;
+				break;
+			case right:
+				flip = 0;
+				tile += f2 ? 1 : 0;
+				break;
 		}
 	}
 	enemy::draw(dest);
@@ -4943,21 +4943,21 @@ void eLynel::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		if (clk2 > 0) {                                         //stopped to fire
 			tile += 20;
@@ -4971,22 +4971,22 @@ void eLynel::draw(BITMAP* dest) {
 		tile += f2;
 	} else {
 		switch (dir) {
-		case up:
-			tile += 3;
-			flip = f2 ? 1 : 0;
-			break;
-		case down:
-			tile += 2;
-			flip = f2 ? 1 : 0;
-			break;
-		case left:
-			flip = 1;
-			tile += f2 ? 1 : 0;
-			break;
-		case right:
-			flip = 0;
-			tile += f2 ? 1 : 0;
-			break;
+			case up:
+				tile += 3;
+				flip = f2 ? 1 : 0;
+				break;
+			case down:
+				tile += 2;
+				flip = f2 ? 1 : 0;
+				break;
+			case left:
+				flip = 1;
+				tile += f2 ? 1 : 0;
+				break;
+			case right:
+				flip = 0;
+				tile += f2 ? 1 : 0;
+				break;
 		}
 	}
 	enemy::draw(dest);
@@ -5040,21 +5040,21 @@ void eGoriya::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		if (clk2 > 0) {                                         //stopped to fire
 
@@ -5069,22 +5069,22 @@ void eGoriya::draw(BITMAP* dest) {
 		tile += f2;
 	} else {
 		switch (dir) {
-		case up:
-			tile += 1;
-			flip = f2 ? 1 : 0;
-			break;
+			case up:
+				tile += 1;
+				flip = f2 ? 1 : 0;
+				break;
 
-		case down:
-			flip = f2 ? 1 : 0;
-			break;
-		case left:
-			flip = 1;
-			tile += f2 ? 3 : 2;
-			break;
-		case right:
-			flip = 0;
-			tile += f2 ? 3 : 2;
-			break;
+			case down:
+				flip = f2 ? 1 : 0;
+				break;
+			case left:
+				flip = 1;
+				tile += f2 ? 3 : 2;
+				break;
+			case right:
+				flip = 0;
+				tile += f2 ? 3 : 2;
+				break;
 		}
 	}
 	enemy::draw(dest);
@@ -5105,37 +5105,37 @@ bool eDarknut::animate(int index) {
 		return Dead();
 	}
 	switch (id) {
-	case eRDKNUT:
-		constant_walk(5, 144, 0);
-		break;
-	case eBDKNUT:
-		constant_walk(4, 160, 0);
-		break;
-	case eSDKNUT:
-		constant_walk(3, 200, 0);
-		if (hp <= 0) {
-			guys.add(new eDarknut(x, y, eBDKNUT, -25));
-			guys.add(new eDarknut(x, y, eBDKNUT, -25));
-		}
-		break;
-	case eDKNIGHT:
-		//switch later to:  halting_walk(6,128,0,(id==eRGORIYA)?5:6,1);
-		constant_walk(2, 255, 0);
-		if (sclk == 0 && !stunclk && !watch) {
-			if (clk2 > 64) {
-				clk2 = 0;
-				fired = false;
+		case eRDKNUT:
+			constant_walk(5, 144, 0);
+			break;
+		case eBDKNUT:
+			constant_walk(4, 160, 0);
+			break;
+		case eSDKNUT:
+			constant_walk(3, 200, 0);
+			if (hp <= 0) {
+				guys.add(new eDarknut(x, y, eBDKNUT, -25));
+				guys.add(new eDarknut(x, y, eBDKNUT, -25));
 			}
-			clk2 += rand() & 3;
-			if ((clk2 > 24) && (clk2 < 52)) {
-				tile += 20;                                       //firing
-				if (!fired && (clk2 >= 38)) {
-					Ewpns.add(new weapon(x, y, d->weapon, 0, d->wdp, dir));
-					fired = true;
+			break;
+		case eDKNIGHT:
+			//switch later to:  halting_walk(6,128,0,(id==eRGORIYA)?5:6,1);
+			constant_walk(2, 255, 0);
+			if (sclk == 0 && !stunclk && !watch) {
+				if (clk2 > 64) {
+					clk2 = 0;
+					fired = false;
+				}
+				clk2 += rand() & 3;
+				if ((clk2 > 24) && (clk2 < 52)) {
+					tile += 20;                                       //firing
+					if (!fired && (clk2 >= 38)) {
+						Ewpns.add(new weapon(x, y, d->weapon, 0, d->wdp, dir));
+						fired = true;
+					}
 				}
 			}
-		}
-		break;
+			break;
 	}
 	return enemy::animate(index);
 }
@@ -5149,34 +5149,34 @@ void eDarknut::draw(BITMAP* dest)
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		switch (id) {
-		case eRDKNUT:
-			break;
-		case eBDKNUT:
-			tile += 20;
-			break;
-		case eSDKNUT:
-			tile += 40;
-			break;
-		case eDKNIGHT:
-			tile += 60;
-			break;
+			case eRDKNUT:
+				break;
+			case eBDKNUT:
+				tile += 20;
+				break;
+			case eSDKNUT:
+				tile += 40;
+				break;
+			case eDKNIGHT:
+				tile += 60;
+				break;
 		}
 		if ((get_bit(quest_rules, qr_BRKNSHLDTILES)) && (noshield == true)) {
 			tile += 120;
@@ -5188,22 +5188,22 @@ void eDarknut::draw(BITMAP* dest)
 		}
 
 		switch (dir) {
-		case up:
-			tile += 2;
-			flip = f2 ? 1 : 0;
-			break;
-		case down:
-			flip = 0;
-			tile += f2 ? 0 : 1;
-			break;
-		case left:
-			flip = 1;
-			tile += f2 ? 3 : 4;
-			break;
-		case right:
-			flip = 0;
-			tile += f2 ? 3 : 4;
-			break;
+			case up:
+				tile += 2;
+				flip = f2 ? 1 : 0;
+				break;
+			case down:
+				flip = 0;
+				tile += f2 ? 0 : 1;
+				break;
+			case left:
+				flip = 1;
+				tile += f2 ? 3 : 4;
+				break;
+			case right:
+				flip = 0;
+				tile += f2 ? 3 : 4;
+				break;
 		}
 	}
 
@@ -5217,24 +5217,24 @@ int eDarknut::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 	}
 
 	switch (wpnId) {
-	case wLitBomb:
-	case wLitSBomb:
-	case wBait:
-	case wWhistle:
-	case wFire:
-	case wWind:
-	case wSSparkle:
-	case wGSparkle:
-	case wMSparkle:
-	case wFSparkle:
-	case wPhantom:
-		return 0;
-	case wBomb:
-	case wSBomb:
-	case wRefMagic:
-	case wHookshot:
-	case wHammer:
-		goto skip1;
+		case wLitBomb:
+		case wLitSBomb:
+		case wBait:
+		case wWhistle:
+		case wFire:
+		case wWind:
+		case wSSparkle:
+		case wGSparkle:
+		case wMSparkle:
+		case wFSparkle:
+		case wPhantom:
+			return 0;
+		case wBomb:
+		case wSBomb:
+		case wRefMagic:
+		case wHookshot:
+		case wHammer:
+			goto skip1;
 	}
 
 
@@ -5246,42 +5246,42 @@ int eDarknut::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 skip1:
 
 	switch (wpnId) {
-	case wBrang:
-		if ((current_item(itype_brang, true) < 3) || ((dir == up) && (wpny < y)) || ((dir == down) && (wpny > y))
-		        || ((dir == left) && (wpnx < x)) || ((dir == right) && (wpnx > x))) {
+		case wBrang:
+			if ((current_item(itype_brang, true) < 3) || ((dir == up) && (wpny < y)) || ((dir == down) && (wpny > y))
+			        || ((dir == left) && (wpnx < x)) || ((dir == right) && (wpnx > x))) {
+				sfx(WAV_CHINK, pan(int(x)));
+				return 1;
+
+			} else {
+				stunclk = 160;
+				break;
+			}
+
+		case wHookshot:
+			if ((((dir == up) && (wpny < y)) || ((dir == down) && (wpny > y)) || ((dir == left) && (wpnx < x)) || ((dir == right) && (wpnx > x)))
+			        && (!noshield)) {
+				sfx(WAV_CHINK, pan(int(x)));
+				return 1;
+			} else {
+				stunclk = 160;
+				break;
+			}
+
+		case wArrow:
+		case wMagic:
 			sfx(WAV_CHINK, pan(int(x)));
 			return 1;
-
-		} else {
-			stunclk = 160;
-			break;
-		}
-
-	case wHookshot:
-		if ((((dir == up) && (wpny < y)) || ((dir == down) && (wpny > y)) || ((dir == left) && (wpnx < x)) || ((dir == right) && (wpnx > x)))
-		        && (!noshield)) {
-			sfx(WAV_CHINK, pan(int(x)));
-			return 1;
-		} else {
-			stunclk = 160;
-			break;
-		}
-
-	case wArrow:
-	case wMagic:
-		sfx(WAV_CHINK, pan(int(x)));
-		return 1;
-	case wBomb:
-	case wSBomb:
-		if ((wpnDir == (dir ^ 1)) && !noshield) {
-			break;
-		}
-	case wHammer:
-		if (wpnDir == (dir ^ 1) && get_bit(quest_rules, qr_BRKBLSHLDS)) {
-			noshield = true;
-		}
-	default:
-		hp -= power;
+		case wBomb:
+		case wSBomb:
+			if ((wpnDir == (dir ^ 1)) && !noshield) {
+				break;
+			}
+		case wHammer:
+			if (wpnDir == (dir ^ 1) && get_bit(quest_rules, qr_BRKBLSHLDS)) {
+				noshield = true;
+			}
+		default:
+			hp -= power;
 	}
 
 	hclk = 33;
@@ -5294,15 +5294,15 @@ skip1:
 
 eWizzrobe::eWizzrobe(fix X, fix Y, int Id, int Clk) : enemy(X, Y, Id, Clk) {
 	switch (d->misc1) {
-	case 0:
-		hxofs = 1000;
-		fading = fade_invisible;
-		clk += 220 + 14;
-		break;
-	default:
-		dir = (loadside == right) ? right : left;
-		misc = -3;
-		break;
+		case 0:
+			hxofs = 1000;
+			fading = fade_invisible;
+			clk += 220 + 14;
+			break;
+		default:
+			dir = (loadside == right) ? right : left;
+			misc = -3;
+			break;
 	}
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 
@@ -5327,98 +5327,98 @@ bool eWizzrobe::animate(int index) {
 			fading = 0;
 			hxofs = 0;
 		} else switch (clk) {
-			case 0:
-				if (id == eRWIZ) {
-					place_on_axis(true);
-				} else {
-					int t = 0;
-					bool placed = false;
-					while (!placed && t < 160) {
-						if (isdungeon()) {
-							x = ((rand() % 12) + 2) * 16;
-							y = ((rand() % 7) + 2) * 16;
-						} else {
-							x = ((rand() % 14) + 1) * 16;
-							y = ((rand() % 9) + 1) * 16;
-						}
-						if ((!m_walkflag(x, y, 1)) && ((abs((int)(x - Link.getX())) >= 32) || (abs((int)(y - Link.getY())) >= 32))) {
-							//        if(iswater(tmpscr->data[pos]) && (pos&15)>0 && (pos&15)<15) {
-							//               x=(pos&15)<<4;
-							//               y=pos&0xF0;
-							placed = true;
-						}
-						++t;
-					}
-					if (abs((int)(x - Link.getX())) < abs((int)(y - Link.getY()))) {
-						if (y < Link.getY()) {
-							dir = down;
-						} else {
-							dir = up;
-						}
+				case 0:
+					if (id == eRWIZ) {
+						place_on_axis(true);
 					} else {
-						if (x < Link.getX()) {
-							dir = right;
+						int t = 0;
+						bool placed = false;
+						while (!placed && t < 160) {
+							if (isdungeon()) {
+								x = ((rand() % 12) + 2) * 16;
+								y = ((rand() % 7) + 2) * 16;
+							} else {
+								x = ((rand() % 14) + 1) * 16;
+								y = ((rand() % 9) + 1) * 16;
+							}
+							if ((!m_walkflag(x, y, 1)) && ((abs((int)(x - Link.getX())) >= 32) || (abs((int)(y - Link.getY())) >= 32))) {
+								//        if(iswater(tmpscr->data[pos]) && (pos&15)>0 && (pos&15)<15) {
+								//               x=(pos&15)<<4;
+								//               y=pos&0xF0;
+								placed = true;
+							}
+							++t;
+						}
+						if (abs((int)(x - Link.getX())) < abs((int)(y - Link.getY()))) {
+							if (y < Link.getY()) {
+								dir = down;
+							} else {
+								dir = up;
+							}
 						} else {
-							dir = left;
+							if (x < Link.getX()) {
+								dir = right;
+							} else {
+								dir = left;
+							}
 						}
-					}
 
-					if (!placed) {                                    // can't place him, he's gone
-						return true;
-					}
-				}
-				//         place_on_axis(true);
-				fading = fade_flicker;
-				hxofs = 0;
-				break;
-			case 64:
-				fading = 0;
-				charging = true;
-				break;
-			case 73:
-				charging = false;
-				firing = 40;
-				break;
-			case 83:
-				if (id == eRWIZ) {
-					addEwpn(x, y, ewMagic, 0, d->wdp, dir);
-					sfx(WAV_WAND, pan(int(x)));
-				} else if (id == eWWIZ) {
-					addEwpn(x, y, ewWind, 0, d->wdp, dir);
-					sfx(WAV_WAND, pan(int(x)));
-				} else {
-					int bc = 0;
-					for (int gc = 0; gc < guys.Count(); gc++) {
-						if ((((enemy*)guys.spr(gc))->id) == eBAT) {
-							++bc;
+						if (!placed) {                                    // can't place him, he's gone
+							return true;
 						}
 					}
-					if (bc <= 40) {
-						int kids = guys.Count();
-						int bats = (rand() % 3) + 1;
-						for (int i = 0; i < bats; i++) {
-							guys.add(new eKeese(x, y, eBAT, -10));
-							((enemy*)guys.spr(kids + i))->count_enemy = false;
-							sfx(WAV_FIRE, pan(int(x)));
+					//         place_on_axis(true);
+					fading = fade_flicker;
+					hxofs = 0;
+					break;
+				case 64:
+					fading = 0;
+					charging = true;
+					break;
+				case 73:
+					charging = false;
+					firing = 40;
+					break;
+				case 83:
+					if (id == eRWIZ) {
+						addEwpn(x, y, ewMagic, 0, d->wdp, dir);
+						sfx(WAV_WAND, pan(int(x)));
+					} else if (id == eWWIZ) {
+						addEwpn(x, y, ewWind, 0, d->wdp, dir);
+						sfx(WAV_WAND, pan(int(x)));
+					} else {
+						int bc = 0;
+						for (int gc = 0; gc < guys.Count(); gc++) {
+							if ((((enemy*)guys.spr(gc))->id) == eBAT) {
+								++bc;
+							}
+						}
+						if (bc <= 40) {
+							int kids = guys.Count();
+							int bats = (rand() % 3) + 1;
+							for (int i = 0; i < bats; i++) {
+								guys.add(new eKeese(x, y, eBAT, -10));
+								((enemy*)guys.spr(kids + i))->count_enemy = false;
+								sfx(WAV_FIRE, pan(int(x)));
+							}
 						}
 					}
-				}
-				break;
-			case 119:
-				firing = false;
-				charging = true;
-				break;
-			case 128:
-				fading = fade_flicker;
-				charging = false;
-				break;
-			case 146:
-				fading = fade_invisible;
-				hxofs = 1000;
-				break;
-			case 220:
-				clk = -1;
-				break;
+					break;
+				case 119:
+					firing = false;
+					charging = true;
+					break;
+				case 128:
+					fading = fade_flicker;
+					charging = false;
+					break;
+				case 146:
+					fading = fade_invisible;
+					hxofs = 1000;
+					break;
+				case 220:
+					clk = -1;
+					break;
 			}
 	}
 	return enemy::animate(index);
@@ -5435,72 +5435,72 @@ void eWizzrobe::wizzrobe_attack() {
 	if (clk3 <= 0 || ((clk3 & 31) == 0 && !canmove(dir, (fix)1, spw_door) && !misc)) {
 		fix_coords();
 		switch (misc) {
-		case 1:                                               //walking
-			if (!m_walkflag(x, y, spw_door)) {
-				misc = 0;
-			} else {
-				clk3 = 16;
-				if (!canmove(dir, (fix)1, spw_wizzrobe)) {
-					newdir(4, 0, spw_wizzrobe);
+			case 1:                                               //walking
+				if (!m_walkflag(x, y, spw_door)) {
+					misc = 0;
+				} else {
+					clk3 = 16;
+					if (!canmove(dir, (fix)1, spw_wizzrobe)) {
+						newdir(4, 0, spw_wizzrobe);
+					}
+				}
+				break;
+
+			case 2: {                                             //phasing
+				int jx = x;
+				int jy = y;
+				int jdir = -1;
+				switch (rand() & 7) {
+					case 0:
+						jx -= 32;
+						jy -= 32;
+						jdir = 15;
+						break;
+					case 1:
+						jx += 32;
+						jy -= 32;
+						jdir = 9;
+						break;
+					case 2:
+						jx += 32;
+						jy += 32;
+						jdir = 11;
+						break;
+					case 3:
+						jx -= 32;
+						jy += 32;
+						jdir = 13;
+						break;
+				}
+				if (jdir > 0 && jx >= 32 && jx <= 208 && jy >= 32 && jy <= 128) {
+					misc = 3;
+					clk3 = 32;
+					dir = jdir;
+					break;
 				}
 			}
-			break;
 
-		case 2: {                                             //phasing
-			int jx = x;
-			int jy = y;
-			int jdir = -1;
-			switch (rand() & 7) {
-			case 0:
-				jx -= 32;
-				jy -= 32;
-				jdir = 15;
-				break;
-			case 1:
-				jx += 32;
-				jy -= 32;
-				jdir = 9;
-				break;
-			case 2:
-				jx += 32;
-				jy += 32;
-				jdir = 11;
-				break;
 			case 3:
-				jx -= 32;
-				jy += 32;
-				jdir = 13;
-				break;
-			}
-			if (jdir > 0 && jx >= 32 && jx <= 208 && jy >= 32 && jy <= 128) {
-				misc = 3;
-				clk3 = 32;
-				dir = jdir;
-				break;
-			}
-		}
+				dir &= 3;
+				misc = 0;
 
-		case 3:
-			dir &= 3;
-			misc = 0;
+			case 0:
+				newdir(4, 64, spw_wizzrobe);
 
-		case 0:
-			newdir(4, 64, spw_wizzrobe);
-
-		default:
-			if (!canmove(dir, (fix)1, spw_door)) {
-				if (canmove(dir, (fix)15, spw_wizzrobe)) {
-					misc = 1;
-					clk3 = 16;
+			default:
+				if (!canmove(dir, (fix)1, spw_door)) {
+					if (canmove(dir, (fix)15, spw_wizzrobe)) {
+						misc = 1;
+						clk3 = 16;
+					} else {
+						newdir(4, 64, spw_wizzrobe);
+						misc = 0;
+						clk3 = 32;
+					}
 				} else {
-					newdir(4, 64, spw_wizzrobe);
-					misc = 0;
 					clk3 = 32;
 				}
-			} else {
-				clk3 = 32;
-			}
-			break;
+				break;
 		}
 		if (misc < 0) {
 			++misc;
@@ -5508,16 +5508,16 @@ void eWizzrobe::wizzrobe_attack() {
 	}
 	--clk3;
 	switch (misc) {
-	case 1:
-	case 3:
-		step = 1.0;
-		break;
-	case 2:
-		step = 0;
-		break;
-	default:
-		step = 0.5;
-		break;
+		case 1:
+		case 3:
+			step = 1.0;
+			break;
+		case 2:
+			step = 0;
+			break;
+		default:
+			step = 0.5;
+			break;
 
 	}
 
@@ -5562,37 +5562,37 @@ void eWizzrobe::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
-		case 15:
-			flip = 0;
-			tile += 20;
-			break;
-		case 9:
-			flip = 0;
-			tile += 24;
-			break;
-		case 13:
-			flip = 0;
-			tile += 28;
-			break;
-		case 11:
-			flip = 0;
-			tile += 32;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
+			case 15:
+				flip = 0;
+				tile += 20;
+				break;
+			case 9:
+				flip = 0;
+				tile += 24;
+				break;
+			case 13:
+				flip = 0;
+				tile += 28;
+				break;
+			case 11:
+				flip = 0;
+				tile += 32;
+				break;
 		}
 		if (d->misc1) {                                         //walking wizzrobe
 			if (clk & 8) {
@@ -5624,23 +5624,23 @@ void eWizzrobe::draw(BITMAP* dest) {
 		}
 
 		switch (id) {
-		case eBWIZ:
-			break;
-		case eFWIZ:
-			tile += 80;
-			break;
-		case eMWIZ:
-			tile += 160;
-			break;
-		case eRWIZ:
-			tile += 240;
-			break;
-		case eWWIZ:
-			tile += 300;
-			break;
-		case eBATROBE:
-			tile += 360;
-			break;
+			case eBWIZ:
+				break;
+			case eFWIZ:
+				tile += 80;
+				break;
+			case eMWIZ:
+				tile += 160;
+				break;
+			case eRWIZ:
+				tile += 240;
+				break;
+			case eWWIZ:
+				tile += 300;
+				break;
+			case eBATROBE:
+				tile += 360;
+				break;
 		}
 	} else {
 
@@ -5655,20 +5655,20 @@ void eWizzrobe::draw(BITMAP* dest) {
 		}
 
 		switch (dir) {
-		case 9:
-		case 15:
-		case up:
-			tile += 2;
-			break;
-		case down:
-			break;
-		case 13:
-		case left:
-			flip = 1;
-			break;
-		default:
-			flip = 0;
-			break;
+			case 9:
+			case 15:
+			case up:
+				tile += 2;
+				break;
+			case down:
+				break;
+			case 13:
+			case left:
+				flip = 1;
+				break;
+			default:
+				flip = 0;
+				break;
 		}
 	}
 	enemy::draw(dest);
@@ -5682,47 +5682,47 @@ int eWizzrobe::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 	switch (wpnId)
 
 	{
-	case wPhantom:
-		return 0;
-	case wFire:
-	case wArrow:
-	case wWand:
-	case wLitBomb:
-	case wLitSBomb:
-	case wBait:
-	case wWhistle:
-	case wWind:
-	case wSSparkle:
-	case wGSparkle:
-	case wMSparkle:
-	case wFSparkle:
-		return 0;
-	case wBrang:
-		if (id == eMWIZ) {
+		case wPhantom:
 			return 0;
-		}
+		case wFire:
+		case wArrow:
+		case wWand:
+		case wLitBomb:
+		case wLitSBomb:
+		case wBait:
+		case wWhistle:
+		case wWind:
+		case wSSparkle:
+		case wGSparkle:
+		case wMSparkle:
+		case wFSparkle:
+			return 0;
+		case wBrang:
+			if (id == eMWIZ) {
+				return 0;
+			}
 
-		if (current_item(itype_brang, true) < 3) {
-			sfx(WAV_CHINK, pan(int(x)));
-			return 1;
-		} else {
+			if (current_item(itype_brang, true) < 3) {
+				sfx(WAV_CHINK, pan(int(x)));
+				return 1;
+			} else {
+				stunclk = 160;
+				break;
+			}
+		case wHookshot:
+			if (id == eMWIZ) {
+				return 0;
+			}
 			stunclk = 160;
 			break;
-		}
-	case wHookshot:
-		if (id == eMWIZ) {
-			return 0;
-		}
-		stunclk = 160;
-		break;
-	case wMagic:
-		sfx(WAV_CHINK, pan(int(x)));
-		return 1;
-	default:
-		if ((id == eMWIZ) && (wpnId != wRefMagic)) {
-			return 0;
-		}
-		hp -= power;
+		case wMagic:
+			sfx(WAV_CHINK, pan(int(x)));
+			return 1;
+		default:
+			if ((id == eMWIZ) && (wpnId != wRefMagic)) {
+				return 0;
+			}
+			hp -= power;
 	}
 	hclk = 33;
 	sfx(WAV_EHIT, pan(int(x)));
@@ -5797,53 +5797,53 @@ void eDodongo::draw(BITMAP* dest) {
 				fr4 = 0;
 			}
 			switch (dir) {
-			case up:
-				tile += 8 + fr4;
-				break;
-			case down:
-				tile += 12 + fr4;
-				break;
-			case left:
-				tile += 29 + (2 * fr4);
+				case up:
+					tile += 8 + fr4;
+					break;
+				case down:
+					tile += 12 + fr4;
+					break;
+				case left:
+					tile += 29 + (2 * fr4);
 
-				xofs = 16;
-				enemy::draw(dest);
-				xofs = 0;
-				--tile;
-				break;
-			case right:
-				tile += 49 + (2 * fr4);
-				xofs = 16;
-				enemy::draw(dest);
-				xofs = 0;
-				--tile;
-				break;
+					xofs = 16;
+					enemy::draw(dest);
+					xofs = 0;
+					--tile;
+					break;
+				case right:
+					tile += 49 + (2 * fr4);
+					xofs = 16;
+					enemy::draw(dest);
+					xofs = 0;
+					--tile;
+					break;
 			}
 		} else if (!dying || clk2 > 19) {
 			// normal
 			switch (dir) {
-			case up:
-				tile += ((clk & 12) >> 2);
-				break;
-			case down:
-				tile += 4 + ((clk & 12) >> 2);
-				break;
-			case left:
+				case up:
+					tile += ((clk & 12) >> 2);
+					break;
+				case down:
+					tile += 4 + ((clk & 12) >> 2);
+					break;
+				case left:
 
-				tile += 21 + ((clk & 12) >> 1);
-				xofs = 16;
-				enemy::draw(dest);
-				xofs = 0;
-				--tile;
-				break;
-			case right:
-				flip = 0;
-				tile += 41 + ((clk & 12) >> 1);
-				xofs = 16;
-				enemy::draw(dest);
-				xofs = 0;
-				--tile;
-				break;
+					tile += 21 + ((clk & 12) >> 1);
+					xofs = 16;
+					enemy::draw(dest);
+					xofs = 0;
+					--tile;
+					break;
+				case right:
+					flip = 0;
+					tile += 41 + ((clk & 12) >> 1);
+					xofs = 16;
+					enemy::draw(dest);
+					xofs = 0;
+					--tile;
+					break;
 			}
 		}
 		enemy::draw(dest);
@@ -5851,58 +5851,58 @@ void eDodongo::draw(BITMAP* dest) {
 		if (!dying && clk2 > 0 && clk2 <= 64) {
 			// bloated
 			switch (dir) {
-			case up:
-				tile += 9;
-				flip = 0;
-				break;
-			case down:
-				tile += 7;
-				flip = 0;
-				break;
-			case left:
-				flip = 1;
-				tile += 4;
-				xofs = 16;
-				enemy::draw(dest);
-				xofs = 0;
-				++tile;
-				break;
-			case right:
-				flip = 0;
-				tile += 5;
-				xofs = 16;
-				enemy::draw(dest);
-				xofs = 0;
-				--tile;
-				break;
+				case up:
+					tile += 9;
+					flip = 0;
+					break;
+				case down:
+					tile += 7;
+					flip = 0;
+					break;
+				case left:
+					flip = 1;
+					tile += 4;
+					xofs = 16;
+					enemy::draw(dest);
+					xofs = 0;
+					++tile;
+					break;
+				case right:
+					flip = 0;
+					tile += 5;
+					xofs = 16;
+					enemy::draw(dest);
+					xofs = 0;
+					--tile;
+					break;
 			}
 		} else if (!dying || clk2 > 19) {
 			// normal
 			switch (dir) {
-			case up:
-				tile += 8;
-				flip = (clk & fr) ? 1 : 0;
-				break;
-			case down:
-				tile += 6;
-				flip = (clk & fr) ? 1 : 0;
-				break;
-			case left:
-				flip = 1;
-				tile += (clk & fr) ? 2 : 0;
-				xofs = 16;
-				enemy::draw(dest);
-				xofs = 0;
-				++tile;
-				break;
-			case right:
-				flip = 0;
-				tile += (clk & fr) ? 3 : 1;
-				xofs = 16;
-				enemy::draw(dest);
-				xofs = 0;
-				--tile;
-				break;
+				case up:
+					tile += 8;
+					flip = (clk & fr) ? 1 : 0;
+					break;
+				case down:
+					tile += 6;
+					flip = (clk & fr) ? 1 : 0;
+					break;
+				case left:
+					flip = 1;
+					tile += (clk & fr) ? 2 : 0;
+					xofs = 16;
+					enemy::draw(dest);
+					xofs = 0;
+					++tile;
+					break;
+				case right:
+					flip = 0;
+					tile += (clk & fr) ? 3 : 1;
+					xofs = 16;
+					enemy::draw(dest);
+					xofs = 0;
+					--tile;
+					break;
 			}
 		}
 		enemy::draw(dest);
@@ -5915,47 +5915,47 @@ int eDodongo::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 	}
 
 	switch (wpnId) {
-	case wPhantom:
-		return 0;
-	case wFire:
-	case wBait:
-	case wWhistle:
-	case wWind:
-	case wSSparkle:
-	case wGSparkle:
-	case wMSparkle:
-	case wFSparkle:
-		return 0;
-	case wLitBomb:
-	case wLitSBomb:
-		if (abs((int)(wpnx - ((dir == right) ? x + 16 : x))) > 7 || abs((int)(wpny - y)) > 7) {
+		case wPhantom:
 			return 0;
-		}
-		clk2 = 96;
-		misc = power;
-		if (wpnId == wLitSBomb) {
-			item_set = isSBOMB100;
-		}
-		return 1;
-	case wBomb:
-	case wSBomb:
-		if (abs((int)(wpnx - ((dir == right) ? x + 16 : x))) > 8 || abs((int)(wpny - y)) > 8) {
+		case wFire:
+		case wBait:
+		case wWhistle:
+		case wWind:
+		case wSSparkle:
+		case wGSparkle:
+		case wMSparkle:
+		case wFSparkle:
 			return 0;
-		}
-		stunclk = 160;
-		misc = wpnId;                                         // store wpnId
-		return 1;
-	case wSword:
-	case wBeam:
-		if (stunclk) {
-			sfx(WAV_EHIT, pan(int(x)));
-			hp = 0;
-			item_set = (misc == wSBomb) ? isSBOMB100 : isBOMB100;
-			fading = 0;                                         // don't flash
+		case wLitBomb:
+		case wLitSBomb:
+			if (abs((int)(wpnx - ((dir == right) ? x + 16 : x))) > 7 || abs((int)(wpny - y)) > 7) {
+				return 0;
+			}
+			clk2 = 96;
+			misc = power;
+			if (wpnId == wLitSBomb) {
+				item_set = isSBOMB100;
+			}
 			return 1;
-		}
-	default:
-		sfx(WAV_CHINK, pan(int(x)));
+		case wBomb:
+		case wSBomb:
+			if (abs((int)(wpnx - ((dir == right) ? x + 16 : x))) > 8 || abs((int)(wpny - y)) > 8) {
+				return 0;
+			}
+			stunclk = 160;
+			misc = wpnId;                                         // store wpnId
+			return 1;
+		case wSword:
+		case wBeam:
+			if (stunclk) {
+				sfx(WAV_EHIT, pan(int(x)));
+				hp = 0;
+				item_set = (misc == wSBomb) ? isSBOMB100 : isBOMB100;
+				fading = 0;                                         // don't flash
+				return 1;
+			}
+		default:
+			sfx(WAV_CHINK, pan(int(x)));
 	}
 	return 1;
 }
@@ -6024,81 +6024,81 @@ void eDodongo2::draw(BITMAP* dest) {
 			fr4 = 0;
 		}
 		switch (dir) {
-		case up:
-			tile += 28 + fr4;
-			yofs += 16;
-			enemy::draw(dest);
-			yofs -= 16;
-			tile -= 20;
-			enemy::draw(dest);
-			break;
-		case down:
-			tile += 12 + fr4;
-			yofs -= 16;
-			enemy::draw(dest);
-			yofs += 16;
-			tile += 20;
-			enemy::draw(dest);
-			break;
-		case left:
-			tile += 49 + (2 * fr4);
-			xofs = 16;
-			enemy::draw(dest);
-			xofs = 0;
-			--tile;
-			enemy::draw(dest);
-			break;
-		case right:
-			tile += 69 + (2 * fr4);
-			xofs = 16;
-			enemy::draw(dest);
-			xofs = 0;
-			--tile;
-			enemy::draw(dest);
-			break;
+			case up:
+				tile += 28 + fr4;
+				yofs += 16;
+				enemy::draw(dest);
+				yofs -= 16;
+				tile -= 20;
+				enemy::draw(dest);
+				break;
+			case down:
+				tile += 12 + fr4;
+				yofs -= 16;
+				enemy::draw(dest);
+				yofs += 16;
+				tile += 20;
+				enemy::draw(dest);
+				break;
+			case left:
+				tile += 49 + (2 * fr4);
+				xofs = 16;
+				enemy::draw(dest);
+				xofs = 0;
+				--tile;
+				enemy::draw(dest);
+				break;
+			case right:
+				tile += 69 + (2 * fr4);
+				xofs = 16;
+				enemy::draw(dest);
+				xofs = 0;
+				--tile;
+				enemy::draw(dest);
+				break;
 		}
 	} else if (!dying || clk2 > 19) {
 		// normal
 		switch (dir) {
-		case up:
-			if (previous_dir == down) {
-				y -= 16;
-			}
-			tile += 20 + ((clk & 24) >> 3);
-			yofs += 16;
-			enemy::draw(dest);
-			yofs -= 16;
-			tile -= 20;
-			enemy::draw(dest);
-			break;
-		case down:
-			if (previous_dir != down) {
-				y += 16;
-			}
-			tile += 4 + ((clk & 24) >> 3);
-			yofs -= 16;
-			enemy::draw(dest);
-			yofs += 16;
+			case up:
+				if (previous_dir == down) {
+					y -= 16;
+				}
+				tile += 20 + ((clk & 24) >> 3);
+				yofs += 16;
+				enemy::draw(dest);
+				yofs -= 16;
+				tile -= 20;
+				enemy::draw(dest);
+				break;
+			case down:
+				if (previous_dir != down) {
+					y += 16;
+				}
+				tile += 4 + ((clk & 24) >> 3);
+				yofs -= 16;
+				enemy::draw(dest);
+				yofs += 16;
 
-			tile += 20;
-			enemy::draw(dest);
-			break;
-		case left:
-			tile += 40 + ((clk & 24) >> 2);
-			enemy::draw(dest);
-			xofs = 16;
-			++tile;
-			enemy::draw(dest);
-			xofs = 0;
-			break;
-		case right:
-			tile += 61 + ((clk & 24) >> 2);
-			xofs = 16;
-			enemy::draw(dest);
-			xofs = 0;
-			--tile;
-			enemy::draw(dest);
-			break;
+				tile += 20;
+				enemy::draw(dest);
+				break;
+			case left:
+				tile += 40 + ((clk & 24) >> 2);
+				enemy::draw(dest);
+				xofs = 16;
+				++tile;
+				enemy::draw(dest);
+				xofs = 0;
+				break;
+			case right:
+				tile += 61 + ((clk & 24) >> 2);
+				xofs = 16;
+				enemy::draw(dest);
+				xofs = 0;
+				--tile;
+				enemy::draw(dest);
+				break;
 		}
 	}
 	previous_dir = dir;
@@ -6111,47 +6111,47 @@ int eDodongo2::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 	}
 
 	switch (wpnId) {
-	case wPhantom:
-		return 0;
-	case wFire:
-	case wBait:
-	case wWhistle:
-	case wWind:
-	case wSSparkle:
-	case wGSparkle:
-	case wMSparkle:
-	case wFSparkle:
-		return 0;
-	case wLitBomb:
-	case wLitSBomb:
-		if (abs((int)(wpnx - ((dir == right) ? x + 16 : x))) > 7 || abs((int)(wpny - y)) > 7) {
+		case wPhantom:
 			return 0;
-		}
-		clk2 = 96;
-		misc = power;
-		if (wpnId == wLitSBomb) {
-			item_set = isSBOMB100;
-		}
-		return 1;
-	case wBomb:
-	case wSBomb:
-		if (abs((int)(wpnx - ((dir == right) ? x + 16 : x))) > 8 || abs((int)(wpny - y)) > 8) {
+		case wFire:
+		case wBait:
+		case wWhistle:
+		case wWind:
+		case wSSparkle:
+		case wGSparkle:
+		case wMSparkle:
+		case wFSparkle:
 			return 0;
-		}
-		stunclk = 160;
-		misc = wpnId;                                         // store wpnId
-		return 1;
-	case wSword:
-	case wBeam:
-		if (stunclk) {
-			sfx(WAV_EHIT, pan(int(x)));
-			hp = 0;
-			item_set = (misc == wSBomb) ? isSBOMB100 : isBOMB100;
-			fading = 0;                                         // don't flash
+		case wLitBomb:
+		case wLitSBomb:
+			if (abs((int)(wpnx - ((dir == right) ? x + 16 : x))) > 7 || abs((int)(wpny - y)) > 7) {
+				return 0;
+			}
+			clk2 = 96;
+			misc = power;
+			if (wpnId == wLitSBomb) {
+				item_set = isSBOMB100;
+			}
 			return 1;
-		}
-	default:
-		sfx(WAV_CHINK, pan(int(x)));
+		case wBomb:
+		case wSBomb:
+			if (abs((int)(wpnx - ((dir == right) ? x + 16 : x))) > 8 || abs((int)(wpny - y)) > 8) {
+				return 0;
+			}
+			stunclk = 160;
+			misc = wpnId;                                         // store wpnId
+			return 1;
+		case wSword:
+		case wBeam:
+			if (stunclk) {
+				sfx(WAV_EHIT, pan(int(x)));
+				hp = 0;
+				item_set = (misc == wSBomb) ? isSBOMB100 : isBOMB100;
+				fading = 0;                                         // don't flash
+				return 1;
+			}
+		default:
+			sfx(WAV_CHINK, pan(int(x)));
 	}
 	return 1;
 }
@@ -6276,9 +6276,9 @@ void eAquamentus::draw(BITMAP* dest) {
 
 bool eAquamentus::hit(weapon* w) {
 	switch (w->id) {
-	case wBeam:
-	case wMagic:
-		hysz = 32;
+		case wBeam:
+		case wMagic:
+			hysz = 32;
 	}
 	bool ret = (dying || hclk > 0) ? false : sprite::hit(w);
 	hysz = 16;
@@ -6291,26 +6291,26 @@ int eAquamentus::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 		return 0;
 	}
 	switch (wpnId) {
-	case wPhantom:
-		return 0;
-	case wFire:
-	case wLitBomb:
-	case wLitSBomb:
-	case wBait:
-	case wWhistle:
-	case wWind:
-	case wSSparkle:
-	case wGSparkle:
-	case wMSparkle:
-	case wFSparkle:
-		return 0;
-	case wHookshot:
-	case wBrang:
-		sfx(WAV_CHINK, pan(int(x)));
-		return 1;
-	default:
-		hp -= power;
-		hclk = 33;
+		case wPhantom:
+			return 0;
+		case wFire:
+		case wLitBomb:
+		case wLitSBomb:
+		case wBait:
+		case wWhistle:
+		case wWind:
+		case wSSparkle:
+		case wGSparkle:
+		case wMSparkle:
+		case wFSparkle:
+			return 0;
+		case wHookshot:
+		case wBrang:
+			sfx(WAV_CHINK, pan(int(x)));
+			return 1;
+		default:
+			hp -= power;
+			hclk = 33;
 	}
 	sfx(WAV_EHIT, pan(int(x)));
 	sfx(WAV_GASP, pan(int(x)));
@@ -6333,15 +6333,15 @@ eGohma::eGohma(fix X, fix Y, int Id, int Clk) : enemy((fix)128, (fix)48, Id, 0) 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		dummy_int[0] = nets + 5340;
 		switch (id) {
-		case eBGOHMA:
-			dummy_int[0] += 20;
-			break;
-		case eGOHMA3:
-			dummy_int[0] += 40;
-			break;
-		case eGOHMA4:
-			dummy_int[0] += 60;
-			break;
+			case eBGOHMA:
+				dummy_int[0] += 20;
+				break;
+			case eGOHMA3:
+				dummy_int[0] += 40;
+				break;
+			case eGOHMA4:
+				dummy_int[0] += 60;
+				break;
 		}
 	} else {
 		dummy_int[0] = 180;
@@ -6362,15 +6362,15 @@ bool eGohma::animate(int index) {
 	}
 	if ((clk & 63) == 3) {
 		switch (id) {
-		case eRGOHMA:
-		case eBGOHMA:
-			addEwpn(x, y + 2, ewFireball, 1, d->wdp, 0);
-			break;
-		case eGOHMA3:
-			addEwpn(x, y + 2, ewFireball, 1, d->wdp, left + 1);
-			addEwpn(x, y + 2, ewFireball, 1, d->wdp, 0);
-			addEwpn(x, y + 2, ewFireball, 1, d->wdp, right + 1);
-			break;
+			case eRGOHMA:
+			case eBGOHMA:
+				addEwpn(x, y + 2, ewFireball, 1, d->wdp, 0);
+				break;
+			case eGOHMA3:
+				addEwpn(x, y + 2, ewFireball, 1, d->wdp, left + 1);
+				addEwpn(x, y + 2, ewFireball, 1, d->wdp, 0);
+				addEwpn(x, y + 2, ewFireball, 1, d->wdp, right + 1);
+				break;
 		}
 	}
 	if ((id == eGOHMA4) && clk3 >= 16 && clk3 < 116) {
@@ -6476,36 +6476,36 @@ int eGohma::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 		return 0;
 	}
 	switch (wpnId) {
-	case wFire:
-	case wLitBomb:
-	case wBomb:
-	case wLitSBomb:
-	case wSBomb:
-	case wBait:
-	case wWhistle:
-	case wWind:
-	case wSSparkle:
-	case wGSparkle:
-	case wMSparkle:
-	case wFSparkle:
-	case wPhantom:
-		return 0;
-	case wArrow:
-		if (wpnDir == up && abs(int(x) - wpnx) <= 8 && clk3 >= 16 && clk3 < 116) {
-			if ((id < eGOHMA3) ||
-			        ((id == eGOHMA3) && (current_item(itype_arrow, true) >= 2)) ||
-			        ((id == eGOHMA4) && (current_item(itype_arrow, true) == 3))) {
-				hp -= power;
-				hclk = 33;
-				break;
-				//        } else {
-				//          return 0;
+		case wFire:
+		case wLitBomb:
+		case wBomb:
+		case wLitSBomb:
+		case wSBomb:
+		case wBait:
+		case wWhistle:
+		case wWind:
+		case wSSparkle:
+		case wGSparkle:
+		case wMSparkle:
+		case wFSparkle:
+		case wPhantom:
+			return 0;
+		case wArrow:
+			if (wpnDir == up && abs(int(x) - wpnx) <= 8 && clk3 >= 16 && clk3 < 116) {
+				if ((id < eGOHMA3) ||
+				        ((id == eGOHMA3) && (current_item(itype_arrow, true) >= 2)) ||
+				        ((id == eGOHMA4) && (current_item(itype_arrow, true) == 3))) {
+					hp -= power;
+					hclk = 33;
+					break;
+					//        } else {
+					//          return 0;
+				}
 			}
-		}
-	// fall through
-	default:
-		sfx(WAV_CHINK, pan(int(x)));
-		return 1;
+		// fall through
+		default:
+			sfx(WAV_CHINK, pan(int(x)));
+			return 1;
 	}
 	sfx(WAV_EHIT, pan(int(x)));
 	sfx(WAV_GASP, pan(int(x)));
@@ -6559,37 +6559,37 @@ void eLilDig::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir - 8) {                                      //directions get screwed up after 8.  *shrug*
-		case up:                                              //u
-			flip = 0;
-			break;
-		case l_up:                                            //d
-			flip = 0;
-			tile += 4;
-			break;
-		case l_down:                                          //l
-			flip = 0;
-			tile += 8;
-			break;
-		case left:                                            //r
-			flip = 0;
-			tile += 12;
-			break;
-		case r_down:                                          //ul
-			flip = 0;
-			tile += 20;
-			break;
-		case down:                                            //ur
-			flip = 0;
-			tile += 24;
-			break;
-		case r_up:                                            //dl
-			flip = 0;
-			tile += 28;
-			break;
-		case right:                                           //dr
-			flip = 0;
-			tile += 32;
-			break;
+			case up:                                              //u
+				flip = 0;
+				break;
+			case l_up:                                            //d
+				flip = 0;
+				tile += 4;
+				break;
+			case l_down:                                          //l
+				flip = 0;
+				tile += 8;
+				break;
+			case left:                                            //r
+				flip = 0;
+				tile += 12;
+				break;
+			case r_down:                                          //ul
+				flip = 0;
+				tile += 20;
+				break;
+			case down:                                            //ur
+				flip = 0;
+				tile += 24;
+				break;
+			case r_up:                                            //dl
+				flip = 0;
+				tile += 28;
+				break;
+			case right:                                           //dr
+				flip = 0;
+				tile += 32;
+				break;
 		}
 		tile += f2;
 	} else {
@@ -6620,24 +6620,24 @@ bool eBigDig::animate(int index) {
 		return Dead();
 	}
 	switch (misc) {
-	case 0:
-		variable_walk_8(2, 16, spw_floater, -8, -16, 23, 23);
-		break;
-	case 1:
-		++misc;
-		break;
-	case 2:
-		if (id == eDIG3) {
-			guys.add(new eLilDig(x, y, eDIGPUP2 + 0x1000, -15));
-			guys.add(new eLilDig(x, y, eDIGPUP3 + 0x1000, -15));
-			guys.add(new eLilDig(x, y, eDIGPUP4 + 0x1000, -15));
-		} else {
-			guys.add(new eLilDig(x, y, eDIGPUP1 + 0x1000, -15));
-		}
+		case 0:
+			variable_walk_8(2, 16, spw_floater, -8, -16, 23, 23);
+			break;
+		case 1:
+			++misc;
+			break;
+		case 2:
+			if (id == eDIG3) {
+				guys.add(new eLilDig(x, y, eDIGPUP2 + 0x1000, -15));
+				guys.add(new eLilDig(x, y, eDIGPUP3 + 0x1000, -15));
+				guys.add(new eLilDig(x, y, eDIGPUP4 + 0x1000, -15));
+			} else {
+				guys.add(new eLilDig(x, y, eDIGPUP1 + 0x1000, -15));
+			}
 
-		stop_sfx(WAV_VADER);
-		sfx(WAV_GASP, pan(int(x)));
-		return true;
+			stop_sfx(WAV_VADER);
+			sfx(WAV_GASP, pan(int(x)));
+			return true;
 	}
 	return enemy::animate(index);
 }
@@ -6649,38 +6649,38 @@ void eBigDig::draw(BITMAP* dest) {
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir - 8) {                                      //directions get screwed up after 8.  *shrug*
-		case up:                                              //u
-			flip = 0;
-			break;
-		case l_up:                                            //d
-			flip = 0;
-			tile += 8;
-			break;
-		case l_down:                                          //l
-			flip = 0;
-			tile += 40;
-			break;
-		case left:                                            //r
-			flip = 0;
-			tile += 48;
-			break;
-		case r_down:                                          //ul
-			flip = 0;
-			tile += 80;
-			break;
-		case down:                                            //ur
-			flip = 0;
-			tile += 88;
+			case up:                                              //u
+				flip = 0;
+				break;
+			case l_up:                                            //d
+				flip = 0;
+				tile += 8;
+				break;
+			case l_down:                                          //l
+				flip = 0;
+				tile += 40;
+				break;
+			case left:                                            //r
+				flip = 0;
+				tile += 48;
+				break;
+			case r_down:                                          //ul
+				flip = 0;
+				tile += 80;
+				break;
+			case down:                                            //ur
+				flip = 0;
+				tile += 88;
 
-			break;
-		case r_up:                                            //dl
-			flip = 0;
-			tile += 120;
-			break;
-		case right:                                           //dr
-			flip = 0;
-			tile += 128;
-			break;
+				break;
+			case r_up:                                            //dl
+				flip = 0;
+				tile += 120;
+				break;
+			case right:                                           //dr
+				flip = 0;
+				tile += 128;
+				break;
 		}
 		tile += (f2 * 2);
 	} else {
@@ -6718,63 +6718,63 @@ bool eGanon::animate(int index) {
 	}
 
 	switch (misc) {
-	case -1:
-		misc = 0;
-	case 0:
-		if (++clk2 > 72 && !(rand() & 3)) {
-			addEwpn(x, y, ewFireball, 1, d->wdp, 0);
-			clk2 = 0;
-		}
-		Stunclk = 0;
-		constant_walk(5, 72, spw_none);
-		break;
-
-	case 1:
-	case 2:
-		if (--Stunclk <= 0) {
-			int r = rand();
-			if (r & 1) {
-				y = 96;
-				if (r & 2) {
-					x = 160;
-				} else {
-					x = 48;
-				}
-				if (tooclose(x, y, 48)) {
-					x = 208 - x;
-				}
-			}
-			loadpalset(csBOSS, pSprite(spGANON));
+		case -1:
 			misc = 0;
-		}
-		break;
-	case 3:
-		if (hclk > 0) {
-			break;
-		}
-		misc = 4;
-		clk = 0;
-		hxofs = 1000;
-		loadpalset(9, pSprite(spPILE));
-		music_stop();
-		stop_sfx(WAV_ROAR);
-		sfx(WAV_GASP, pan(int(x)));
-		sfx(WAV_GANON);
-		items.add(new item(x + 8, y + 8, iPile, ipDUMMY, 0));
-		break;
-
-	case 4:
-		if (clk >= 80) {
-			misc = 5;
-			if (getmapflag()) {
-				game.lvlitems[dlevel] |= liBOSS;
-				play_DmapMusic();
-				return true;
+		case 0:
+			if (++clk2 > 72 && !(rand() & 3)) {
+				addEwpn(x, y, ewFireball, 1, d->wdp, 0);
+				clk2 = 0;
 			}
-			sfx(WAV_CLEARED);
-			items.add(new item(x + 8, y + 8, iBigTri, ipBIGTRI, 0));
-		}
-		break;
+			Stunclk = 0;
+			constant_walk(5, 72, spw_none);
+			break;
+
+		case 1:
+		case 2:
+			if (--Stunclk <= 0) {
+				int r = rand();
+				if (r & 1) {
+					y = 96;
+					if (r & 2) {
+						x = 160;
+					} else {
+						x = 48;
+					}
+					if (tooclose(x, y, 48)) {
+						x = 208 - x;
+					}
+				}
+				loadpalset(csBOSS, pSprite(spGANON));
+				misc = 0;
+			}
+			break;
+		case 3:
+			if (hclk > 0) {
+				break;
+			}
+			misc = 4;
+			clk = 0;
+			hxofs = 1000;
+			loadpalset(9, pSprite(spPILE));
+			music_stop();
+			stop_sfx(WAV_ROAR);
+			sfx(WAV_GASP, pan(int(x)));
+			sfx(WAV_GANON);
+			items.add(new item(x + 8, y + 8, iPile, ipDUMMY, 0));
+			break;
+
+		case 4:
+			if (clk >= 80) {
+				misc = 5;
+				if (getmapflag()) {
+					game.lvlitems[dlevel] |= liBOSS;
+					play_DmapMusic();
+					return true;
+				}
+				sfx(WAV_CLEARED);
+				items.add(new item(x + 8, y + 8, iBigTri, ipBIGTRI, 0));
+			}
+			break;
 	}
 	return enemy::animate(index);
 }
@@ -6782,58 +6782,58 @@ bool eGanon::animate(int index) {
 
 int eGanon::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 	switch (misc) {
-	case 0:
-		if (wpnId != wSword) {
-			return 0;
-		}
-		hp -= power;
-		if (hp > 0) {
-			misc = 1;
-			Stunclk = 64;
-		} else {
-			loadpalset(csBOSS, pSprite(spBROWN));
-			misc = 2;
-			Stunclk = 284;
-			hp = guysbuf[eGANON].hp;                            //16*DAMAGE_MULTIPLIER;
-		}
-		sfx(WAV_EHIT, pan(int(x)));
-		sfx(WAV_GASP, pan(int(x)));
-		return 1;
+		case 0:
+			if (wpnId != wSword) {
+				return 0;
+			}
+			hp -= power;
+			if (hp > 0) {
+				misc = 1;
+				Stunclk = 64;
+			} else {
+				loadpalset(csBOSS, pSprite(spBROWN));
+				misc = 2;
+				Stunclk = 284;
+				hp = guysbuf[eGANON].hp;                            //16*DAMAGE_MULTIPLIER;
+			}
+			sfx(WAV_EHIT, pan(int(x)));
+			sfx(WAV_GASP, pan(int(x)));
+			return 1;
 
-	case 2:
-		if (wpnId != wArrow || current_item(itype_arrow, true) < 2) {
-			return 0;
-		}
-		misc = 3;
-		hclk = 81;
-		loadpalset(9, pSprite(spBROWN));
-		return 1;
+		case 2:
+			if (wpnId != wArrow || current_item(itype_arrow, true) < 2) {
+				return 0;
+			}
+			misc = 3;
+			hclk = 81;
+			loadpalset(9, pSprite(spBROWN));
+			return 1;
 	}
 	return 0;
 }
 
 void eGanon::draw(BITMAP* dest) {
 	switch (misc) {
-	case 0:
-		if ((clk & 3) == 3) {
-			tile = (rand() % 5) * 2 + 260;
-		}
-		if (db != 999) {
+		case 0:
+			if ((clk & 3) == 3) {
+				tile = (rand() % 5) * 2 + 260;
+			}
+			if (db != 999) {
+				break;
+			}
+		case 2:
+			if (Stunclk < 64 && (Stunclk & 1)) {
+				break;
+			}
+		case -1:
+		case 1:
+		case 3:
+			drawblock(dest, 15);
 			break;
-		}
-	case 2:
-		if (Stunclk < 64 && (Stunclk & 1)) {
+		case 4:
+			draw_guts(dest);
+			draw_flash(dest);
 			break;
-		}
-	case -1:
-	case 1:
-	case 3:
-		drawblock(dest, 15);
-		break;
-	case 4:
-		draw_guts(dest);
-		draw_flash(dest);
-		break;
 	}
 }
 
@@ -7016,38 +7016,38 @@ void esMoldorm::draw(BITMAP* dest) {
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		tile += dummy_int[1] * 40;
 		switch (dir - 8) {                                      //directions get screwed up after 8.  *shrug*
-		case up:                                              //u
-			flip = 0;
-			break;
-		case l_up:                                            //d
-			flip = 0;
-			tile += 4;
-			break;
-		case l_down:                                          //l
-			flip = 0;
-			tile += 8;
-			break;
-		case left:                                            //r
-			flip = 0;
-			tile += 12;
-			break;
-		case r_down:                                          //ul
-			flip = 0;
-			tile += 20;
-			break;
-		case down:                                            //ur
-			flip = 0;
-			tile += 24;
-			break;
-		case r_up:                                            //dl
-			flip = 0;
-			tile += 28;
-			break;
-		case right:                                           //dr
-			flip = 0;
-			tile += 32;
+			case up:                                              //u
+				flip = 0;
+				break;
+			case l_up:                                            //d
+				flip = 0;
+				tile += 4;
+				break;
+			case l_down:                                          //l
+				flip = 0;
+				tile += 8;
+				break;
+			case left:                                            //r
+				flip = 0;
+				tile += 12;
+				break;
+			case r_down:                                          //ul
+				flip = 0;
+				tile += 20;
+				break;
+			case down:                                            //ur
+				flip = 0;
+				tile += 24;
+				break;
+			case r_up:                                            //dl
+				flip = 0;
+				tile += 28;
+				break;
+			case right:                                           //dr
+				flip = 0;
+				tile += 32;
 
-			break;
+				break;
 		}
 		tile += f2;
 	}
@@ -7164,21 +7164,21 @@ void esLanmola::draw(BITMAP* dest) {
 			}
 		}
 		switch (dir) {
-		case up:
-			flip = 0;
-			break;
-		case down:
-			flip = 0;
-			tile += 4;
-			break;
-		case left:
-			flip = 0;
-			tile += 8;
-			break;
-		case right:
-			flip = 0;
-			tile += 12;
-			break;
+			case up:
+				flip = 0;
+				break;
+			case down:
+				flip = 0;
+				tile += 4;
+				break;
+			case left:
+				flip = 0;
+				tile += 8;
+				break;
+			case right:
+				flip = 0;
+				tile += 12;
+				break;
 		}
 		tile += f2;
 	} else {
@@ -7247,36 +7247,36 @@ bool eManhandla::animate(int index) {
 		if (id == eMANHAN) {
 			for (int i = 0; i < armcnt; i++) {
 				switch (arm[i]) {
-				case 0:
-					dy1 = -24;
-					break;
-				case 1:
-					dy2 = 31;
-					break;
-				case 2:
-					dx1 = -16;
-					break;
-				case 3:
-					dx2 = 31;
-					break;
+					case 0:
+						dy1 = -24;
+						break;
+					case 1:
+						dy2 = 31;
+						break;
+					case 2:
+						dx1 = -16;
+						break;
+					case 3:
+						dx2 = 31;
+						break;
 				}
 			}
 		} else {
 			dx1 = -8, dy1 = -16, dx2 = 23, dy2 = 23;
 			for (int i = 0; i < armcnt; i++) {
 				switch (arm[i] & 3) {
-				case 0:
-					dy1 = -32;
-					break;
-				case 1:
-					dy2 = 39;
-					break;
-				case 2:
-					dx1 = -24;
-					break;
-				case 3:
-					dx2 = 39;
-					break;
+					case 0:
+						dy1 = -32;
+						break;
+					case 1:
+						dy2 = 39;
+						break;
+					case 2:
+						dx1 = -24;
+						break;
+					case 3:
+						dx2 = 39;
+						break;
 				}
 			}
 		}
@@ -7285,53 +7285,53 @@ bool eManhandla::animate(int index) {
 			fix dx = (fix)0, dy = (fix)0;
 			if (id == eMANHAN) {
 				switch (arm[i]) {
-				case 0:
-					dy = -16;
-					break;
-				case 1:
-					dy = 16;
-					break;
-				case 2:
-					dx = -16;
-					break;
-				case 3:
-					dx = 16;
-					break;
+					case 0:
+						dy = -16;
+						break;
+					case 1:
+						dy = 16;
+						break;
+					case 2:
+						dx = -16;
+						break;
+					case 3:
+						dx = 16;
+						break;
 				}
 			} else {
 				switch (arm[i]) {
-				case 0:
-					dy = -24;
-					dx = -8;
-					break;
-				case 1:
-					dy = 24;
-					dx = 8;
-					break;
-				case 2:
-					dx = -24;
-					dy = 8;
-					break;
-				case 3:
-					dx = 24;
-					dy = -8;
-					break;
-				case 4:
-					dy = -24;
-					dx = 8;
-					break;
-				case 5:
-					dy = 24;
-					dx = -8;
-					break;
-				case 6:
-					dx = -24;
-					dy = -8;
-					break;
-				case 7:
-					dx = 24;
-					dy = 8;
-					break;
+					case 0:
+						dy = -24;
+						dx = -8;
+						break;
+					case 1:
+						dy = 24;
+						dx = 8;
+						break;
+					case 2:
+						dx = -24;
+						dy = 8;
+						break;
+					case 3:
+						dx = 24;
+						dy = -8;
+						break;
+					case 4:
+						dy = -24;
+						dx = 8;
+						break;
+					case 5:
+						dy = 24;
+						dx = -8;
+						break;
+					case 6:
+						dx = -24;
+						dy = -8;
+						break;
+					case 7:
+						dx = 24;
+						dy = 8;
+						break;
 				}
 			}
 			guys.spr(index + i + 1)->x = x + dx;
@@ -7353,24 +7353,24 @@ int eManhandla::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 		return 0;
 	}
 	switch (wpnId) {
-	case wLitBomb:
-	case wLitSBomb:
-	case wBait:
-	case wWhistle:
-	case wFire:
-	case wWind:
-	case wSSparkle:
-	case wGSparkle:
-	case wMSparkle:
-	case wFSparkle:
-	case wPhantom:
-		return 0;
-	case wHookshot:
-	case wBrang:
-		sfx(WAV_CHINK, pan(int(x)));
-		break;
-	default:
-		sfx(WAV_EHIT, pan(int(x)));
+		case wLitBomb:
+		case wLitSBomb:
+		case wBait:
+		case wWhistle:
+		case wFire:
+		case wWind:
+		case wSSparkle:
+		case wGSparkle:
+		case wMSparkle:
+		case wFSparkle:
+		case wPhantom:
+			return 0;
+		case wHookshot:
+		case wBrang:
+			sfx(WAV_CHINK, pan(int(x)));
+			break;
+		default:
+			sfx(WAV_EHIT, pan(int(x)));
 
 	}
 	return 1;
@@ -7384,37 +7384,37 @@ void eManhandla::draw(BITMAP* dest) {
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		if (id == eMANHAN) {
 			switch (dir - 8) {                                    //directions get screwed up after 8.  *shrug*
-			case up:                                            //u
-				flip = 0;
-				break;
-			case l_up:                                          //d
-				flip = 0;
-				tile += 4;
-				break;
-			case l_down:                                        //l
-				flip = 0;
-				tile += 8;
-				break;
-			case left:                                          //r
-				flip = 0;
-				tile += 12;
-				break;
-			case r_down:                                        //ul
-				flip = 0;
-				tile += 20;
-				break;
-			case down:                                          //ur
-				flip = 0;
-				tile += 24;
-				break;
-			case r_up:                                          //dl
-				flip = 0;
-				tile += 28;
-				break;
-			case right:                                         //dr
-				flip = 0;
-				tile += 32;
-				break;
+				case up:                                            //u
+					flip = 0;
+					break;
+				case l_up:                                          //d
+					flip = 0;
+					tile += 4;
+					break;
+				case l_down:                                        //l
+					flip = 0;
+					tile += 8;
+					break;
+				case left:                                          //r
+					flip = 0;
+					tile += 12;
+					break;
+				case r_down:                                        //ul
+					flip = 0;
+					tile += 20;
+					break;
+				case down:                                          //ur
+					flip = 0;
+					tile += 24;
+					break;
+				case r_up:                                          //dl
+					flip = 0;
+					tile += 28;
+					break;
+				case right:                                         //dr
+					flip = 0;
+					tile += 32;
+					break;
 			}
 			tile += f2;
 			enemy::draw(dest);
@@ -7422,37 +7422,37 @@ void eManhandla::draw(BITMAP* dest) {
 		else {
 
 			switch (dir - 8) {                                    //directions get screwed up after 8.  *shrug*
-			case up:                                            //u
-				flip = 0;
-				break;
-			case l_up:                                          //d
-				flip = 0;
-				tile += 8;
-				break;
-			case l_down:                                        //l
-				flip = 0;
-				tile += 40;
-				break;
-			case left:                                          //r
-				flip = 0;
-				tile += 48;
-				break;
-			case r_down:                                        //ul
-				flip = 0;
-				tile += 80;
-				break;
-			case down:                                          //ur
-				flip = 0;
-				tile += 88;
-				break;
-			case r_up:                                          //dl
-				flip = 0;
-				tile += 120;
-				break;
-			case right:                                         //dr
-				flip = 0;
-				tile += 128;
-				break;
+				case up:                                            //u
+					flip = 0;
+					break;
+				case l_up:                                          //d
+					flip = 0;
+					tile += 8;
+					break;
+				case l_down:                                        //l
+					flip = 0;
+					tile += 40;
+					break;
+				case left:                                          //r
+					flip = 0;
+					tile += 48;
+					break;
+				case r_down:                                        //ul
+					flip = 0;
+					tile += 80;
+					break;
+				case down:                                          //ur
+					flip = 0;
+					tile += 88;
+					break;
+				case r_up:                                          //dl
+					flip = 0;
+					tile += 120;
+					break;
+				case right:                                         //dr
+					flip = 0;
+					tile += 128;
+					break;
 			}
 			tile += (f2 * 2);
 			xofs -= 8;
@@ -7509,27 +7509,27 @@ int esManhandla::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 		return 0;
 	}
 	switch (wpnId) {
-	case wLitBomb:
-	case wLitSBomb:
-	case wBait:
-	case wWhistle:
-	case wFire:
-	case wWind:
-	case wSSparkle:
-	case wGSparkle:
-	case wMSparkle:
-	case wFSparkle:
-	case wPhantom:
-		return 0;
-	case wHookshot:
-	case wBrang:
-		sfx(WAV_CHINK, pan(int(x)));
-		break;
-	default:
-		hp -= power;
-		hclk = 33;
-		sfx(WAV_EHIT, pan(int(x)));
-		sfx(WAV_GASP, pan(int(x)));
+		case wLitBomb:
+		case wLitSBomb:
+		case wBait:
+		case wWhistle:
+		case wFire:
+		case wWind:
+		case wSSparkle:
+		case wGSparkle:
+		case wMSparkle:
+		case wFSparkle:
+		case wPhantom:
+			return 0;
+		case wHookshot:
+		case wBrang:
+			sfx(WAV_CHINK, pan(int(x)));
+			break;
+		default:
+			hp -= power;
+			hclk = 33;
+			sfx(WAV_EHIT, pan(int(x)));
+			sfx(WAV_GASP, pan(int(x)));
 	}
 	return 1;
 }
@@ -7540,31 +7540,31 @@ void esManhandla::draw(BITMAP* dest) {
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (misc & 3) {
-		case up:
-			break;
-		case down:
-			tile += 4;
-			break;
-		case left:
-			tile += 8;
-			break;
-		case right:
-			tile += 12;
-			break;
+			case up:
+				break;
+			case down:
+				tile += 4;
+				break;
+			case left:
+				tile += 8;
+				break;
+			case right:
+				tile += 12;
+				break;
 		}
 		tile += f2;
 	} else {
 		switch (misc & 3) {
-		case down:
-			flip = 2;
-		case up:
-			tile = (clk3) ? 188 : 189;
-			break;
-		case right:
-			flip = 1;
-		case left:
-			tile = (clk3) ? 186 : 187;
-			break;
+			case down:
+				flip = 2;
+			case up:
+				tile = (clk3) ? 188 : 189;
+				break;
+			case right:
+				flip = 1;
+			case left:
+				tile = (clk3) ? 186 : 187;
+				break;
 		}
 	}
 	enemy::draw(dest);
@@ -7695,33 +7695,33 @@ void eGleeok::draw(BITMAP* dest) {
 		switch (f)
 
 		{
-		case 0:
-			tile += 0;
-			break;
-		case 1:
-			tile += 2;
-			break;
-		case 2:
-			tile += 4;
-			break;
-		default:
-			tile += 6;
-			break;
+			case 0:
+				tile += 0;
+				break;
+			case 1:
+				tile += 2;
+				break;
+			case 2:
+				tile += 4;
+				break;
+			default:
+				tile += 6;
+				break;
 		}
 	} else {
 		// body
 		xofs = -8;
 		yofs = 32;
 		switch (f) {
-		case 0:
-			tile += 0;
-			break;
-		case 2:
-			tile += 4;
-			break;
-		default:
-			tile += 2;
-			break;
+			case 0:
+				tile += 0;
+				break;
+			case 2:
+				tile += 4;
+				break;
+			default:
+				tile += 2;
+				break;
 		}
 	}
 	enemy::drawblock(dest, 15);
@@ -7793,86 +7793,86 @@ bool esGleeok::animate(int index) {
 	//    ?((dummy_bool[0])?(nets+4052+(16+((clk&24)>>3))):(nets+4040+(8+((clk&24)>>3)))):145)
 
 	switch (misc) {
-	case 0:                                                 // live head
-		//  set up the attached head tiles
-		if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
-			tile = headtile;
-			tile += ((clk & 24) >> 3);
-			/*
-			        if (dummy_bool[0]) {
-			          tile+=1561;
-			        }
-			*/
-		} else {
-			tile = 146;
-		}
-		if (++clk2 >= 0 && !(clk2 & 3)) {
-			if (y <= 56) {
-				dir = down;
-			}
-			if (y >= 80) {
-				dir = up;
-			}
-			if (y <= 58 && !(rand() & 31)) {                    // y jig
-				dir ^= 1;
-			}
-			sprite::move(step);
-			if (clk2 >= 4) {
-				clk3 ^= 1;
-				clk2 = -4;
+		case 0:                                                 // live head
+			//  set up the attached head tiles
+			if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
+				tile = headtile;
+				tile += ((clk & 24) >> 3);
+				/*
+				        if (dummy_bool[0]) {
+				          tile+=1561;
+				        }
+				*/
 			} else {
-				if (x <= 96) {
-					clk3 = right;
+				tile = 146;
+			}
+			if (++clk2 >= 0 && !(clk2 & 3)) {
+				if (y <= 56) {
+					dir = down;
 				}
-				if (x >= 144) {
-					clk3 = left;
+				if (y >= 80) {
+					dir = up;
 				}
-				if (y <= 72 && !(rand() & 15)) {
-					clk3 ^= 1;                                      // x jig
-				} else {
-					if (y <= 64 && !(rand() & 31)) {
-						clk3 ^= 1;                                    // x switch back
-					}
+				if (y <= 58 && !(rand() & 31)) {                    // y jig
+					dir ^= 1;
+				}
+				sprite::move(step);
+				if (clk2 >= 4) {
+					clk3 ^= 1;
 					clk2 = -4;
+				} else {
+					if (x <= 96) {
+						clk3 = right;
+					}
+					if (x >= 144) {
+						clk3 = left;
+					}
+					if (y <= 72 && !(rand() & 15)) {
+						clk3 ^= 1;                                      // x jig
+					} else {
+						if (y <= 64 && !(rand() & 31)) {
+							clk3 ^= 1;                                    // x switch back
+						}
+						clk2 = -4;
+					}
+				}
+				swap(dir, clk3);
+				sprite::move(step);
+				swap(dir, clk3);
+
+				for (int i = 1; i < 4; i++) {
+					nx[i] = ((((i * x) + (4 - i) * 120)) >> 2) + (rand() % 3) + 3;
+					ny[i] = ((((i * y) + (4 - i) * 48)) >> 2) + (rand() % 3);
 				}
 			}
-			swap(dir, clk3);
-			sprite::move(step);
-			swap(dir, clk3);
+			break;
+		case 1:                                                 // flying head
+			if (clk >= 0)
 
-			for (int i = 1; i < 4; i++) {
-				nx[i] = ((((i * x) + (4 - i) * 120)) >> 2) + (rand() % 3) + 3;
-				ny[i] = ((((i * y) + (4 - i) * 48)) >> 2) + (rand() % 3);
+			{
+				variable_walk_8(2, 9, spw_floater);
+				//        if(++clk2>=80 && !(rand()%63)) {
+				//          addEwpn(x,y,ewFireball,1,d->wdp,0);
+				//          clk2=0;
+				//          }
 			}
+
+			break;
+		// the following are messages sent from the main guy...
+		case -1: {                                              // got chopped off
+			misc = 1;
+			superman = 1;
+			hxofs = xofs = 0;
+			hxsz = 16;
+			cs = 8;
+			clk = -24;
+			clk2 = 40;
+			dir = (rand() & 7) + 8;
+			step = 8.0 / 9.0;
 		}
 		break;
-	case 1:                                                 // flying head
-		if (clk >= 0)
-
-		{
-			variable_walk_8(2, 9, spw_floater);
-			//        if(++clk2>=80 && !(rand()%63)) {
-			//          addEwpn(x,y,ewFireball,1,d->wdp,0);
-			//          clk2=0;
-			//          }
-		}
-
-		break;
-	// the following are messages sent from the main guy...
-	case -1: {                                              // got chopped off
-		misc = 1;
-		superman = 1;
-		hxofs = xofs = 0;
-		hxsz = 16;
-		cs = 8;
-		clk = -24;
-		clk2 = 40;
-		dir = (rand() & 7) + 8;
-		step = 8.0 / 9.0;
-	}
-	break;
-	case -2:                                                // the big guy is dead
-		return true;
+		case -2:                                                // the big guy is dead
+			return true;
 	}
 
 	if (timer) {
@@ -7900,80 +7900,80 @@ int esGleeok::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 		return 0;
 	}
 	switch (wpnId) {
-	case wPhantom:
-		return 0;
-	case wArrow:
-	case wMagic:
-	case wRefMagic:
-	case wHookshot:
-	case wBrang:
-		sfx(WAV_CHINK, pan(int(x)));
-		return 1;
-	case wWand:
-	case wBeam:
-	case wHammer:
-	case wSword:
-		hp -= power;
-		hclk = 33;
-		return 2;                                             // force it to wait a frame before checking sword attacks again
+		case wPhantom:
+			return 0;
+		case wArrow:
+		case wMagic:
+		case wRefMagic:
+		case wHookshot:
+		case wBrang:
+			sfx(WAV_CHINK, pan(int(x)));
+			return 1;
+		case wWand:
+		case wBeam:
+		case wHammer:
+		case wSword:
+			hp -= power;
+			hclk = 33;
+			return 2;                                             // force it to wait a frame before checking sword attacks again
 	}
 	return 0;
 }
 
 void esGleeok::draw(BITMAP* dest) {
 	switch (misc) {
-	case 0:                                                 //neck
-		/*
-		      if(!dont_draw())
-		      {
-		        for(int i=1; i<4; i++)                              //draw the neck
-		        {
-		          if (get_bit(quest_rules,qr_NEWENEMYTILES))
-		          {
-		            overtile16(dest,necktile+(i*40),nx[i]-4,ny[i]+56,cs,0);
-		          }
-		          else
-		          {
-		            overtile16(dest,necktile,nx[i]-4,ny[i]+56,cs,0);
-		          }
-		        }
-		      }
-		*/
+		case 0:                                                 //neck
+			/*
+			      if(!dont_draw())
+			      {
+			        for(int i=1; i<4; i++)                              //draw the neck
+			        {
+			          if (get_bit(quest_rules,qr_NEWENEMYTILES))
+			          {
+			            overtile16(dest,necktile+(i*40),nx[i]-4,ny[i]+56,cs,0);
+			          }
+			          else
+			          {
+			            overtile16(dest,necktile,nx[i]-4,ny[i]+56,cs,0);
+			          }
+			        }
+			      }
+			*/
 
-		if (!dont_draw()) {
-			for (int i = 1; i < 4; i++) {                       //draw the neck
-				if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
-					if ((tmpscr->flags3 & fINVISROOM) && !(current_item(itype_amulet, true))) {
-						overtilecloaked16(dest, necktile + (i * 40), nx[i] - 4, ny[i] + 56, 0);
+			if (!dont_draw()) {
+				for (int i = 1; i < 4; i++) {                       //draw the neck
+					if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
+						if ((tmpscr->flags3 & fINVISROOM) && !(current_item(itype_amulet, true))) {
+							overtilecloaked16(dest, necktile + (i * 40), nx[i] - 4, ny[i] + 56, 0);
+						} else {
+							overtile16(dest, necktile + (i * 40), nx[i] - 4, ny[i] + 56, cs, 0);
+						}
 					} else {
-						overtile16(dest, necktile + (i * 40), nx[i] - 4, ny[i] + 56, cs, 0);
-					}
-				} else {
-					if ((tmpscr->flags3 & fINVISROOM) && !(current_item(itype_amulet, true))) {
-						overtilecloaked16(dest, necktile, nx[i] - 4, ny[i] + 56, 0);
-					} else {
-						overtile16(dest, necktile, nx[i] - 4, ny[i] + 56, cs, 0);
+						if ((tmpscr->flags3 & fINVISROOM) && !(current_item(itype_amulet, true))) {
+							overtilecloaked16(dest, necktile, nx[i] - 4, ny[i] + 56, 0);
+						} else {
+							overtile16(dest, necktile, nx[i] - 4, ny[i] + 56, cs, 0);
+						}
 					}
 				}
 			}
-		}
 
-		break;
+			break;
 
-	case 1:                                                 //flying head
-		if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
-			tile = flyingheadtile;
-			tile += ((clk & 24) >> 3);
-			/*
-			        if (dummy_bool[0]) {
-			          tile+=1561;
-			        }
-			*/
-			break;
-		} else {
-			tile = (clk & 1) ? 147 : 148;
-			break;
-		}
+		case 1:                                                 //flying head
+			if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
+				tile = flyingheadtile;
+				tile += ((clk & 24) >> 3);
+				/*
+				        if (dummy_bool[0]) {
+				          tile+=1561;
+				        }
+				*/
+				break;
+			} else {
+				tile = (clk & 1) ? 147 : 148;
+				break;
+			}
 	}
 }
 
@@ -7996,17 +7996,17 @@ ePatra::ePatra(fix X, fix Y, int Id, int Clk) : enemy((fix)128, (fix)48, Id, Clk
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		dummy_int[0] = nets + 3440;
 		switch (id) {
-		case ePATRA1:
-			break;
-		case ePATRA2:
-			dummy_int[0] += 80;
-			break;
-		case ePATRAL2:
-			dummy_int[0] += 160;
-			break;
-		case ePATRAL3:
-			dummy_int[0] += 360;
-			break;
+			case ePATRA1:
+				break;
+			case ePATRA2:
+				dummy_int[0] += 80;
+				break;
+			case ePATRAL2:
+				dummy_int[0] += 160;
+				break;
+			case ePATRAL3:
+				dummy_int[0] += 360;
+				break;
 		}
 	} else {
 		dummy_int[0] = tile;
@@ -8041,18 +8041,18 @@ bool ePatra::animate(int index) {
 		if (!adjusted) {
 			if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 				switch (id) {
-				case ePATRA1:
-					((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 40;
-					break;
-				case ePATRA2:
-					((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 40;
-					break;
-				case ePATRAL2:
-					((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 160;
-					break;
-				case ePATRAL3:
-					((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 160;
-					break;
+					case ePATRA1:
+						((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 40;
+						break;
+					case ePATRA2:
+						((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 40;
+						break;
+					case ePATRAL2:
+						((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 160;
+						break;
+					case ePATRAL3:
+						((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 160;
+						break;
 				}
 			} else {
 				((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 1;
@@ -8134,12 +8134,12 @@ bool ePatra::animate(int index) {
 				((enemy*)guys.spr(i))->hp = 12 * DAMAGE_MULTIPLIER;
 				if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 					switch (id) {
-					case ePATRAL2:
-						((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 120;
-						break;
-					case ePATRAL3:
-						((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 40;
-						break;
+						case ePATRAL2:
+							((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 120;
+							break;
+						case ePATRAL3:
+							((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 40;
+							break;
 					}
 				} else {
 					((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 1;
@@ -8226,37 +8226,37 @@ void ePatra::draw(BITMAP* dest) {
 			lookat = left;
 		}
 		switch (lookat) {                                       //directions get screwed up after 8.  *shrug*
-		case up:                                              //u
-			flip = 0;
-			break;
-		case down:                                            //d
-			flip = 0;
-			tile += 4;
-			break;
-		case left:                                            //l
-			flip = 0;
-			tile += 8;
-			break;
-		case right:                                           //r
-			flip = 0;
-			tile += 12;
-			break;
-		case l_up:                                            //ul
-			flip = 0;
-			tile += 20;
-			break;
-		case r_up:                                            //ur
-			flip = 0;
-			tile += 24;
-			break;
-		case l_down:                                          //dl
-			flip = 0;
-			tile += 28;
-			break;
-		case r_down:                                          //dr
-			flip = 0;
-			tile += 32;
-			break;
+			case up:                                              //u
+				flip = 0;
+				break;
+			case down:                                            //d
+				flip = 0;
+				tile += 4;
+				break;
+			case left:                                            //l
+				flip = 0;
+				tile += 8;
+				break;
+			case right:                                           //r
+				flip = 0;
+				tile += 12;
+				break;
+			case l_up:                                            //ul
+				flip = 0;
+				tile += 20;
+				break;
+			case r_up:                                            //ur
+				flip = 0;
+				tile += 24;
+				break;
+			case l_down:                                          //dl
+				flip = 0;
+				tile += 28;
+				break;
+			case r_down:                                          //dr
+				flip = 0;
+				tile += 32;
+				break;
 		}
 		tile += ((clk & 3));
 	} else {
@@ -8270,27 +8270,27 @@ int ePatra::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 		return 0;
 	}
 	switch (wpnId) {
-	case wPhantom:
-		return 0;
-	case wArrow:
-	case wMagic:
-	case wRefMagic:
-	case wHookshot:
-	case wBrang:
-		sfx(WAV_CHINK, pan(int(x)));
-		return 1;
-	case wWand:
-	case wBeam:
-	case wHammer:
-	case wSword:
-		if (flycnt || flycnt2) {
+		case wPhantom:
 			return 0;
-		}
-		hp -= power;
-		hclk = 33;
-		sfx(WAV_EHIT, pan(int(x)));
-		sfx(WAV_GASP, pan(int(x)));
-		return 1;
+		case wArrow:
+		case wMagic:
+		case wRefMagic:
+		case wHookshot:
+		case wBrang:
+			sfx(WAV_CHINK, pan(int(x)));
+			return 1;
+		case wWand:
+		case wBeam:
+		case wHammer:
+		case wSword:
+			if (flycnt || flycnt2) {
+				return 0;
+			}
+			hp -= power;
+			hclk = 33;
+			sfx(WAV_EHIT, pan(int(x)));
+			sfx(WAV_GASP, pan(int(x)));
+			return 1;
 	}
 	return 0;
 }
@@ -8328,23 +8328,23 @@ int esPatra::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 		return 0;
 	}
 	switch (wpnId) {
-	case wPhantom:
-		return 0;
-	case wArrow:
-	case wMagic:
-	case wRefMagic:
-	case wHookshot:
-	case wBrang:
-		sfx(WAV_CHINK, pan(int(x)));
-		return 1;
-	case wWand:
-	case wBeam:
-	case wHammer:
-	case wSword:
-		hp -= power;
-		hclk = 33;
-		sfx(WAV_EHIT, pan(int(x)));
-		return 1;
+		case wPhantom:
+			return 0;
+		case wArrow:
+		case wMagic:
+		case wRefMagic:
+		case wHookshot:
+		case wBrang:
+			sfx(WAV_CHINK, pan(int(x)));
+			return 1;
+		case wWand:
+		case wBeam:
+		case wHammer:
+		case wSword:
+			hp -= power;
+			hclk = 33;
+			sfx(WAV_EHIT, pan(int(x)));
+			return 1;
 	}
 	return 0;
 }
@@ -8353,37 +8353,37 @@ void esPatra::draw(BITMAP* dest) {
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		tile = dummy_int[0] + (clk & 3);
 		switch (dir) {                                          //directions get screwed up after 8.  *shrug*
-		case up:                                              //u
-			flip = 0;
-			break;
-		case down:                                            //d
-			flip = 0;
-			tile += 4;
-			break;
-		case left:                                            //l
-			flip = 0;
-			tile += 8;
-			break;
-		case right:                                           //r
-			flip = 0;
-			tile += 12;
-			break;
-		case l_up:                                            //ul
-			flip = 0;
-			tile += 20;
-			break;
-		case r_up:                                            //ur
-			flip = 0;
-			tile += 24;
-			break;
-		case l_down:                                          //dl
-			flip = 0;
-			tile += 28;
-			break;
-		case r_down:                                          //dr
-			flip = 0;
-			tile += 32;
-			break;
+			case up:                                              //u
+				flip = 0;
+				break;
+			case down:                                            //d
+				flip = 0;
+				tile += 4;
+				break;
+			case left:                                            //l
+				flip = 0;
+				tile += 8;
+				break;
+			case right:                                           //r
+				flip = 0;
+				tile += 12;
+				break;
+			case l_up:                                            //ul
+				flip = 0;
+				tile += 20;
+				break;
+			case r_up:                                            //ur
+				flip = 0;
+				tile += 24;
+				break;
+			case l_down:                                          //dl
+				flip = 0;
+				tile += 28;
+				break;
+			case r_down:                                          //dr
+				flip = 0;
+				tile += 32;
+				break;
 		}
 	} else {
 		tile = dummy_int[0] + ((clk & 2) >> 1);
@@ -8505,37 +8505,37 @@ void ePatraBS::draw(BITMAP* dest) {
 			lookat = left;
 		}
 		switch (lookat) {                                       //directions get screwed up after 8.  *shrug*
-		case up:                                              //u
-			flip = 0;
-			break;
-		case down:                                            //d
-			flip = 0;
-			tile += 8;
-			break;
-		case left:                                            //l
-			flip = 0;
-			tile += 40;
-			break;
-		case right:                                           //r
-			flip = 0;
-			tile += 48;
-			break;
-		case l_up:                                            //ul
-			flip = 0;
-			tile += 80;
-			break;
-		case r_up:                                            //ur
-			flip = 0;
-			tile += 88;
-			break;
-		case l_down:                                          //dl
-			flip = 0;
-			tile += 120;
-			break;
-		case r_down:                                          //dr
-			flip = 0;
-			tile += 128;
-			break;
+			case up:                                              //u
+				flip = 0;
+				break;
+			case down:                                            //d
+				flip = 0;
+				tile += 8;
+				break;
+			case left:                                            //l
+				flip = 0;
+				tile += 40;
+				break;
+			case right:                                           //r
+				flip = 0;
+				tile += 48;
+				break;
+			case l_up:                                            //ul
+				flip = 0;
+				tile += 80;
+				break;
+			case r_up:                                            //ur
+				flip = 0;
+				tile += 88;
+				break;
+			case l_down:                                          //dl
+				flip = 0;
+				tile += 120;
+				break;
+			case r_down:                                          //dr
+				flip = 0;
+				tile += 128;
+				break;
 		}
 		tile += (2 * (clk & 3));
 		xofs -= 8;
@@ -8564,27 +8564,27 @@ int ePatraBS::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 		return 0;
 	}
 	switch (wpnId) {
-	case wPhantom:
-		return 0;
-	case wArrow:
-	case wMagic:
-	case wRefMagic:
-	case wHookshot:
-	case wBrang:
-		sfx(WAV_CHINK, pan(int(x)));
-		return 1;
-	case wWand:
-	case wBeam:
-	case wHammer:
-	case wSword:
-		if (flycnt || flycnt2) {
+		case wPhantom:
 			return 0;
-		}
-		hp -= power;
-		hclk = 33;
-		sfx(WAV_EHIT, pan(int(x)));
-		sfx(WAV_GASP, pan(int(x)));
-		return 1;
+		case wArrow:
+		case wMagic:
+		case wRefMagic:
+		case wHookshot:
+		case wBrang:
+			sfx(WAV_CHINK, pan(int(x)));
+			return 1;
+		case wWand:
+		case wBeam:
+		case wHammer:
+		case wSword:
+			if (flycnt || flycnt2) {
+				return 0;
+			}
+			hp -= power;
+			hclk = 33;
+			sfx(WAV_EHIT, pan(int(x)));
+			sfx(WAV_GASP, pan(int(x)));
+			return 1;
 	}
 	return 0;
 }
@@ -8621,23 +8621,23 @@ int esPatraBS::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 		return 0;
 	}
 	switch (wpnId) {
-	case wPhantom:
-		return 0;
-	case wArrow:
-	case wMagic:
-	case wRefMagic:
-	case wHookshot:
-	case wBrang:
-		sfx(WAV_CHINK, pan(int(x)));
-		return 1;
-	case wWand:
-	case wBeam:
-	case wHammer:
-	case wSword:
-		hp -= power;
-		hclk = 33;
-		sfx(WAV_EHIT, pan(int(x)));
-		return 1;
+		case wPhantom:
+			return 0;
+		case wArrow:
+		case wMagic:
+		case wRefMagic:
+		case wHookshot:
+		case wBrang:
+			sfx(WAV_CHINK, pan(int(x)));
+			return 1;
+		case wWand:
+		case wBeam:
+		case wHammer:
+		case wSword:
+			hp -= power;
+			hclk = 33;
+			sfx(WAV_EHIT, pan(int(x)));
+			return 1;
 	}
 	return 0;
 }
@@ -8646,37 +8646,37 @@ void esPatraBS::draw(BITMAP* dest) {
 	tile = dummy_int[0];
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {                                          //directions get screwed up after 8.  *shrug*
-		case up:                                              //u
-			flip = 0;
-			break;
-		case down:                                            //d
-			flip = 0;
-			tile += 4;
-			break;
-		case left:                                            //l
-			flip = 0;
-			tile += 8;
-			break;
-		case right:                                           //r
-			flip = 0;
-			tile += 12;
-			break;
-		case l_up:                                            //ul
-			flip = 0;
-			tile += 20;
-			break;
-		case r_up:                                            //ur
-			flip = 0;
-			tile += 24;
-			break;
-		case l_down:                                          //dl
-			flip = 0;
-			tile += 28;
-			break;
-		case r_down:                                          //dr
-			flip = 0;
-			tile += 32;
-			break;
+			case up:                                              //u
+				flip = 0;
+				break;
+			case down:                                            //d
+				flip = 0;
+				tile += 4;
+				break;
+			case left:                                            //l
+				flip = 0;
+				tile += 8;
+				break;
+			case right:                                           //r
+				flip = 0;
+				tile += 12;
+				break;
+			case l_up:                                            //ul
+				flip = 0;
+				tile += 20;
+				break;
+			case r_up:                                            //ur
+				flip = 0;
+				tile += 24;
+				break;
+			case l_down:                                          //dl
+				flip = 0;
+				tile += 28;
+				break;
+			case r_down:                                          //dr
+				flip = 0;
+				tile += 32;
+				break;
 		}
 		tile += ((clk & 6) >> 1);
 	} else {
@@ -8806,225 +8806,225 @@ void killfairy(int misc) {
 void addenemy(int x, int y, int id, int clk) {
 	sprite* e;
 	switch (id) {
-	case eROCTO1:
-	case eROCTO2:
-	case eBOCTO1:
-	case eBOCTO2:
-	case eCOCTO:
-		e = new eOctorok((fix)x, (fix)y, id, clk);
-		break;
-	case eRMOBLIN:
-	case eBMOBLIN:
-		e = new eMoblin((fix)x, (fix)y, id, clk);
-		break;
-	case eRLYNEL:
+		case eROCTO1:
+		case eROCTO2:
+		case eBOCTO1:
+		case eBOCTO2:
+		case eCOCTO:
+			e = new eOctorok((fix)x, (fix)y, id, clk);
+			break;
+		case eRMOBLIN:
+		case eBMOBLIN:
+			e = new eMoblin((fix)x, (fix)y, id, clk);
+			break;
+		case eRLYNEL:
 
-	case eBLYNEL:
-		e = new eLynel((fix)x, (fix)y, id, clk);
-		break;
-	// case eBLYNEL:    e = new eShooter((fix)x,(fix)y,id,clk); break;
-	case eRLEV:
-	case eBLEV:
-		e = new eLeever((fix)x, (fix)y, id, clk);
-		break;
-	case eRTEK:
-	case eBTEK:
-		e = new eTektite((fix)x, (fix)y, id, clk);
-		break;
-	case ePEAHAT:
-		e = new ePeahat((fix)x, (fix)y, id, clk);
-		break;
-	case eZORA:
-		e = new eZora((fix)x, (fix)y, id, clk);
-		break;
-	case eROCK:
-		e = new eRock((fix)x, (fix)y, id, clk);
-		break;
-	case eARMOS:
-		e = new eArmos((fix)x, (fix)y, id, clk);
-		break;
-	case eGHINI1:
-	case eGHINI2:
-		e = new eGhini((fix)x, (fix)y, id, clk);
-		break;
-	case eBAT:
-	case eKEESE1:
-	case eKEESE2:
-	case eKEESE3:
-		e = new eKeese((fix)x, (fix)y, id, clk);
-		break;
-	case eTRAP:
-	case eTRAP_H:
-	case eTRAP_V:
-		e = new eTrap((fix)x, (fix)y, id, clk);
-		break;
-	case eSTALFOS:
+		case eBLYNEL:
+			e = new eLynel((fix)x, (fix)y, id, clk);
+			break;
+		// case eBLYNEL:    e = new eShooter((fix)x,(fix)y,id,clk); break;
+		case eRLEV:
+		case eBLEV:
+			e = new eLeever((fix)x, (fix)y, id, clk);
+			break;
+		case eRTEK:
+		case eBTEK:
+			e = new eTektite((fix)x, (fix)y, id, clk);
+			break;
+		case ePEAHAT:
+			e = new ePeahat((fix)x, (fix)y, id, clk);
+			break;
+		case eZORA:
+			e = new eZora((fix)x, (fix)y, id, clk);
+			break;
+		case eROCK:
+			e = new eRock((fix)x, (fix)y, id, clk);
+			break;
+		case eARMOS:
+			e = new eArmos((fix)x, (fix)y, id, clk);
+			break;
+		case eGHINI1:
+		case eGHINI2:
+			e = new eGhini((fix)x, (fix)y, id, clk);
+			break;
+		case eBAT:
+		case eKEESE1:
+		case eKEESE2:
+		case eKEESE3:
+			e = new eKeese((fix)x, (fix)y, id, clk);
+			break;
+		case eTRAP:
+		case eTRAP_H:
+		case eTRAP_V:
+			e = new eTrap((fix)x, (fix)y, id, clk);
+			break;
+		case eSTALFOS:
 
-	case eSTALFOS2:
-	case eSTALFOS3:
-		e = new eStalfos((fix)x, (fix)y, id, clk);
-		break;
-	// case eSTALFOS2:  e = new eShooter((fix)x,(fix)y,id,clk); break;
-	case eGEL:
-		e = new eGel((fix)x, (fix)y, id, clk);
-		break;
-	case eZOL:
-		e = new eZol((fix)x, (fix)y, id, clk);
-		break;
-	case eROPE:
-	case eROPE2:
-		e = new eRope((fix)x, (fix)y, id, clk);
-		break;
-	case eVIRE:
-		e = new eVire((fix)x, (fix)y, id, clk);
-		break;
-	case eIBUBBLE:
-	case eBIBUBBLE:
-	case eRIBUBBLE:
-	case eBBUBBLE:
-	case eRBUBBLE:
-	case eBUBBLE:
-		e = new eBubble((fix)x, (fix)y, id, clk);
-		break;
-	case eLIKE:
-		e = new eLikeLike((fix)x, (fix)y, id, clk);
-		break;
-	case eGIBDO:
-		e = new eGibdo((fix)x, (fix)y, id, clk);
-		break;
-	case ePOLSV:
-		e = new ePolsVoice((fix)x, (fix)y, id, clk);
-		break;
-	case eRGORIYA:
-	case eBGORIYA:
-		e = new eGoriya((fix)x, (fix)y, id, clk);
-		break;
-	case eSDKNUT:
-	case eDKNIGHT:
-	case eRDKNUT:
-	case eBDKNUT:
-		e = new eDarknut((fix)x, (fix)y, id, clk);
-		break;
-	case eMWIZ:
-	case eBATROBE:
-	case eFWIZ:
-	case eWWIZ:
-	case eRWIZ:
-	case eBWIZ:
-		e = new eWizzrobe((fix)x, (fix)y, id, clk);
-		break;
-	case eFBALL:
-		e = new eFBall((fix)x, (fix)y, id, clk);
-		break;
-	case eWALLM:
-		e = new eWallM((fix)x, (fix)y, id, clk);
-		break;
-	case eDODONGO:
-		e = new eDodongo((fix)x, (fix)y, id, clk);
-		break;
-	case eDODONGOBS:
-	case eDODONGOF:
-		e = new eDodongo2((fix)x, (fix)y, id, clk);
-		break;
-	case eLAQUAM:
-	case eRAQUAM:
-		e = new eAquamentus((fix)x, (fix)y, id, clk);
-		break;
-	case eMOLDORM:
-		e = new eMoldorm((fix)x, (fix)y, id, 5);
-		break;
-	case eMANHAN:
-	case eMANHAN2:
-		e = new eManhandla((fix)x, (fix)y, id, clk);
-		break;
-	case eGLEEOK1F:
-	case eGLEEOK1:
-		e = new eGleeok((fix)x, (fix)y, id, 1);
-		break;
-	case eGLEEOK2F:
-	case eGLEEOK2:
-		e = new eGleeok((fix)x, (fix)y, id, 2);
-		break;
-	case eGLEEOK3F:
-	case eGLEEOK3:
-		e = new eGleeok((fix)x, (fix)y, id, 3);
-		break;
-	case eGLEEOK4F:
-	case eGLEEOK4:
-		e = new eGleeok((fix)x, (fix)y, id, 4);
-		break;
-	case eDIGPUP1:
-	case eDIGPUP2:
-	case eDIGPUP3:
-	case eDIGPUP4:
-		e = new eLilDig((fix)x, (fix)y, id, clk);
-		break;
-	case eDIG1:
-	case eDIG3:
-		e = new eBigDig((fix)x, (fix)y, id, clk);
-		break;
-	case eRGOHMA:
-	case eBGOHMA:
-	case eGOHMA3:
-	case eGOHMA4:
-		e = new eGohma((fix)x, (fix)y, id, clk);
-		break;
-	case eRCENT:
-	case eBCENT:
-		e = new eLanmola((fix)x, (fix)y, id, 5);
-		break;
-	case ePATRABS:
-		e = new ePatraBS((fix)x, (fix)y, id, clk);
-		break;
-	case ePATRAL2:
-	case ePATRAL3:
-	case ePATRA1:
-	case ePATRA2:
-		e = new ePatra((fix)x, (fix)y, id, clk);
-		break;
-	case eGANON:
-		e = new eGanon((fix)x, (fix)y, id, clk);
-		break;
-	case eITEMFAIRY:
-		e = new eItemFairy((fix)x, (fix)y, id + clk, 0);
-		break;
-	case eFIRE:
-		e = new eFire((fix)x, (fix)y, id, clk);
-		break;
-	case eKEESETRIB:
-		e = new eKeeseTrib((fix)x, (fix)y, id, clk);
-		break;
-	case eVIRETRIB:
-		e = new eVireTrib((fix)x, (fix)y, id, clk);
-		break;
-	case eGELTRIB:
-		e = new eGelTrib((fix)x, (fix)y, id, clk);
-		break;
-	case eZOLTRIB:
-		e = new eZolTrib((fix)x, (fix)y, id, clk);
-		break;
-	case eTRAP_LR:
-	case eTRAP_UD:
-		e = new eTrap2((fix)x, (fix)y, id, clk);
-		break;
-	case eTRIGGER:
-		e = new eTrigger((fix)x, (fix)y, id, clk);
-		break;
-	case eNPCSTAND1:
-	case eNPCSTAND2:
-	case eNPCSTAND3:
-	case eNPCSTAND4:
-	case eNPCSTAND5:
-	case eNPCWALK1:
-	case eNPCWALK2:
-	case eNPCWALK3:
-	case eNPCWALK4:
-	case eNPCWALK5:
-		e = new eNPC((fix)x, (fix)y, id, clk);
-		break;
-	default:
-		e = new enemy((fix)x, (fix)y, -1, clk);
-		break;
+		case eSTALFOS2:
+		case eSTALFOS3:
+			e = new eStalfos((fix)x, (fix)y, id, clk);
+			break;
+		// case eSTALFOS2:  e = new eShooter((fix)x,(fix)y,id,clk); break;
+		case eGEL:
+			e = new eGel((fix)x, (fix)y, id, clk);
+			break;
+		case eZOL:
+			e = new eZol((fix)x, (fix)y, id, clk);
+			break;
+		case eROPE:
+		case eROPE2:
+			e = new eRope((fix)x, (fix)y, id, clk);
+			break;
+		case eVIRE:
+			e = new eVire((fix)x, (fix)y, id, clk);
+			break;
+		case eIBUBBLE:
+		case eBIBUBBLE:
+		case eRIBUBBLE:
+		case eBBUBBLE:
+		case eRBUBBLE:
+		case eBUBBLE:
+			e = new eBubble((fix)x, (fix)y, id, clk);
+			break;
+		case eLIKE:
+			e = new eLikeLike((fix)x, (fix)y, id, clk);
+			break;
+		case eGIBDO:
+			e = new eGibdo((fix)x, (fix)y, id, clk);
+			break;
+		case ePOLSV:
+			e = new ePolsVoice((fix)x, (fix)y, id, clk);
+			break;
+		case eRGORIYA:
+		case eBGORIYA:
+			e = new eGoriya((fix)x, (fix)y, id, clk);
+			break;
+		case eSDKNUT:
+		case eDKNIGHT:
+		case eRDKNUT:
+		case eBDKNUT:
+			e = new eDarknut((fix)x, (fix)y, id, clk);
+			break;
+		case eMWIZ:
+		case eBATROBE:
+		case eFWIZ:
+		case eWWIZ:
+		case eRWIZ:
+		case eBWIZ:
+			e = new eWizzrobe((fix)x, (fix)y, id, clk);
+			break;
+		case eFBALL:
+			e = new eFBall((fix)x, (fix)y, id, clk);
+			break;
+		case eWALLM:
+			e = new eWallM((fix)x, (fix)y, id, clk);
+			break;
+		case eDODONGO:
+			e = new eDodongo((fix)x, (fix)y, id, clk);
+			break;
+		case eDODONGOBS:
+		case eDODONGOF:
+			e = new eDodongo2((fix)x, (fix)y, id, clk);
+			break;
+		case eLAQUAM:
+		case eRAQUAM:
+			e = new eAquamentus((fix)x, (fix)y, id, clk);
+			break;
+		case eMOLDORM:
+			e = new eMoldorm((fix)x, (fix)y, id, 5);
+			break;
+		case eMANHAN:
+		case eMANHAN2:
+			e = new eManhandla((fix)x, (fix)y, id, clk);
+			break;
+		case eGLEEOK1F:
+		case eGLEEOK1:
+			e = new eGleeok((fix)x, (fix)y, id, 1);
+			break;
+		case eGLEEOK2F:
+		case eGLEEOK2:
+			e = new eGleeok((fix)x, (fix)y, id, 2);
+			break;
+		case eGLEEOK3F:
+		case eGLEEOK3:
+			e = new eGleeok((fix)x, (fix)y, id, 3);
+			break;
+		case eGLEEOK4F:
+		case eGLEEOK4:
+			e = new eGleeok((fix)x, (fix)y, id, 4);
+			break;
+		case eDIGPUP1:
+		case eDIGPUP2:
+		case eDIGPUP3:
+		case eDIGPUP4:
+			e = new eLilDig((fix)x, (fix)y, id, clk);
+			break;
+		case eDIG1:
+		case eDIG3:
+			e = new eBigDig((fix)x, (fix)y, id, clk);
+			break;
+		case eRGOHMA:
+		case eBGOHMA:
+		case eGOHMA3:
+		case eGOHMA4:
+			e = new eGohma((fix)x, (fix)y, id, clk);
+			break;
+		case eRCENT:
+		case eBCENT:
+			e = new eLanmola((fix)x, (fix)y, id, 5);
+			break;
+		case ePATRABS:
+			e = new ePatraBS((fix)x, (fix)y, id, clk);
+			break;
+		case ePATRAL2:
+		case ePATRAL3:
+		case ePATRA1:
+		case ePATRA2:
+			e = new ePatra((fix)x, (fix)y, id, clk);
+			break;
+		case eGANON:
+			e = new eGanon((fix)x, (fix)y, id, clk);
+			break;
+		case eITEMFAIRY:
+			e = new eItemFairy((fix)x, (fix)y, id + clk, 0);
+			break;
+		case eFIRE:
+			e = new eFire((fix)x, (fix)y, id, clk);
+			break;
+		case eKEESETRIB:
+			e = new eKeeseTrib((fix)x, (fix)y, id, clk);
+			break;
+		case eVIRETRIB:
+			e = new eVireTrib((fix)x, (fix)y, id, clk);
+			break;
+		case eGELTRIB:
+			e = new eGelTrib((fix)x, (fix)y, id, clk);
+			break;
+		case eZOLTRIB:
+			e = new eZolTrib((fix)x, (fix)y, id, clk);
+			break;
+		case eTRAP_LR:
+		case eTRAP_UD:
+			e = new eTrap2((fix)x, (fix)y, id, clk);
+			break;
+		case eTRIGGER:
+			e = new eTrigger((fix)x, (fix)y, id, clk);
+			break;
+		case eNPCSTAND1:
+		case eNPCSTAND2:
+		case eNPCSTAND3:
+		case eNPCSTAND4:
+		case eNPCSTAND5:
+		case eNPCWALK1:
+		case eNPCWALK2:
+		case eNPCWALK3:
+		case eNPCWALK4:
+		case eNPCWALK5:
+			e = new eNPC((fix)x, (fix)y, id, clk);
+			break;
+		default:
+			e = new enemy((fix)x, (fix)y, -1, clk);
+			break;
 	}
 	guys.add(e);
 
@@ -9032,83 +9032,83 @@ void addenemy(int x, int y, int id, int clk) {
 	int c = 0;
 	switch (id) {
 
-	case eMOLDORM:
-		for (int i = 0; i < 5; i++) {
-			guys.add(new esMoldorm((fix)x, (fix)y, id + 0x1000, -(i << 4)));
+		case eMOLDORM:
+			for (int i = 0; i < 5; i++) {
+				guys.add(new esMoldorm((fix)x, (fix)y, id + 0x1000, -(i << 4)));
+			}
+			break;
+
+		case eRCENT:
+
+		case eBCENT: {
+			int shft = (id == eRCENT) ? 3 : 2;
+			guys.add(new esLanmola((fix)x, (fix)y, id + 0x1000, 0));
+			for (int i = 1; i < 5; i++) {
+				guys.add(new esLanmola((fix)x, (fix)y, id + 0x2000, -(i << shft)));
+			}
 		}
 		break;
 
-	case eRCENT:
+		case eMANHAN:
+		case eMANHAN2:
+			for (int i = 0; i < ((id == eMANHAN) ? 4 : 8); i++) {
+				guys.add(new esManhandla((fix)x, (fix)y, id + 0x1000, i));
+			}
+			break;
 
-	case eBCENT: {
-		int shft = (id == eRCENT) ? 3 : 2;
-		guys.add(new esLanmola((fix)x, (fix)y, id + 0x1000, 0));
-		for (int i = 1; i < 5; i++) {
-			guys.add(new esLanmola((fix)x, (fix)y, id + 0x2000, -(i << shft)));
-		}
-	}
-	break;
-
-	case eMANHAN:
-	case eMANHAN2:
-		for (int i = 0; i < ((id == eMANHAN) ? 4 : 8); i++) {
-			guys.add(new esManhandla((fix)x, (fix)y, id + 0x1000, i));
-		}
-		break;
-
-	case eGLEEOK4F:
-	case eGLEEOK4:
-		guys.add(new esGleeok((fix)x, (fix)y, id + 0x1000, c));
-		c -= 48;
-	case eGLEEOK3F:
-	case eGLEEOK3:
-		guys.add(new esGleeok((fix)x, (fix)y, id + 0x1000, c));
-		c -= 48;
-	case eGLEEOK2F:
-	case eGLEEOK2:
-		guys.add(new esGleeok((fix)x, (fix)y, id + 0x1000, c));
-		c -= 48;
-	case eGLEEOK1F:
-	case eGLEEOK1:
-		guys.add(new esGleeok((fix)x, (fix)y, id + 0x1000, c));
-		c -= 48;
-		break;
+		case eGLEEOK4F:
+		case eGLEEOK4:
+			guys.add(new esGleeok((fix)x, (fix)y, id + 0x1000, c));
+			c -= 48;
+		case eGLEEOK3F:
+		case eGLEEOK3:
+			guys.add(new esGleeok((fix)x, (fix)y, id + 0x1000, c));
+			c -= 48;
+		case eGLEEOK2F:
+		case eGLEEOK2:
+			guys.add(new esGleeok((fix)x, (fix)y, id + 0x1000, c));
+			c -= 48;
+		case eGLEEOK1F:
+		case eGLEEOK1:
+			guys.add(new esGleeok((fix)x, (fix)y, id + 0x1000, c));
+			c -= 48;
+			break;
 
 
-	case ePATRAL2:
-	case ePATRAL3:
-		for (int i = 0; i < 8; i++) {
-			guys.add(new esPatra((fix)x, (fix)y, id + 0x1000, i));
-		}
-	case ePATRA1:
-	case ePATRA2:
-		for (int i = 0; i < 8; i++) {
+		case ePATRAL2:
+		case ePATRAL3:
+			for (int i = 0; i < 8; i++) {
+				guys.add(new esPatra((fix)x, (fix)y, id + 0x1000, i));
+			}
+		case ePATRA1:
+		case ePATRA2:
+			for (int i = 0; i < 8; i++) {
 
-			guys.add(new esPatra((fix)x, (fix)y, id + 0x1000, i));
-		}
-		break;
-	case ePATRABS:
-		for (int i = 0; i < 6; i++) {
-			guys.add(new esPatraBS((fix)x, (fix)y, id + 0x1000, i));
-		}
-		break;
+				guys.add(new esPatra((fix)x, (fix)y, id + 0x1000, i));
+			}
+			break;
+		case ePATRABS:
+			for (int i = 0; i < 6; i++) {
+				guys.add(new esPatraBS((fix)x, (fix)y, id + 0x1000, i));
+			}
+			break;
 	}
 }
 
 bool checkpos(int id) {
 	switch (id) {
-	case eRTEK:
-	case eBTEK:
-		return false;
+		case eRTEK:
+		case eBTEK:
+			return false;
 	}
 	return true;
 }
 
 bool isjumper(int id) {
 	switch (id) {
-	case eRTEK:
-	case eBTEK:
-		return true;
+		case eRTEK:
+		case eBTEK:
+			return true;
 	}
 	return false;
 }
@@ -9170,29 +9170,29 @@ void loadguys() {
 				Guy = 0;
 			}
 		switch (tmpscr->room) {
-		case rSP_ITEM:
-		case rGRUMBLE:
-		case rBOMBS:
-		case rSWINDLE:
-		case rMUPGRADE:
-		case rLEARNSLASH:
-			if (getmapflag()) {
-				Guy = 0;
+			case rSP_ITEM:
+			case rGRUMBLE:
+			case rBOMBS:
+			case rSWINDLE:
+			case rMUPGRADE:
+			case rLEARNSLASH:
+				if (getmapflag()) {
+					Guy = 0;
+				}
+				break;
+			case rTRIFORCE: {
+				int tc = TriforceCount();
+				if (get_bit(quest_rules, qr_4TRI)) {
+					if ((get_bit(quest_rules, qr_3TRI) && tc >= 3) || tc >= 4) {
+						Guy = 0;
+					}
+				} else {
+					if ((get_bit(quest_rules, qr_3TRI) && tc >= 6) || tc >= 8) {
+						Guy = 0;
+					}
+				}
 			}
 			break;
-		case rTRIFORCE: {
-			int tc = TriforceCount();
-			if (get_bit(quest_rules, qr_4TRI)) {
-				if ((get_bit(quest_rules, qr_3TRI) && tc >= 3) || tc >= 4) {
-					Guy = 0;
-				}
-			} else {
-				if ((get_bit(quest_rules, qr_3TRI) && tc >= 6) || tc >= 8) {
-					Guy = 0;
-				}
-			}
-		}
-		break;
 		}
 		if (Guy) {
 			blockpath = true;
@@ -9260,6 +9260,98 @@ dontdoit:
 bool hasBoss() {
 	for (int i = 0; i < guys.Count(); i++) {
 		switch (guys.spr(i)->id) {
+			case eLAQUAM:
+			case eRAQUAM:
+			case eGLEEOK1:
+			case eGLEEOK2:
+			case eGLEEOK3:
+			case eGLEEOK4:
+			case eGLEEOK1F:
+			case eGLEEOK2F:
+			case eGLEEOK3F:
+			case eGLEEOK4F:
+			case eRGOHMA:
+			case eBGOHMA:
+			case eGOHMA3:
+			case eGOHMA4:
+			case eMOLDORM:
+			case eMANHAN:
+			case eMANHAN2:
+			case eRCENT:
+			case eBCENT:
+			case ePATRA1:
+			case ePATRA2:
+			case ePATRAL2:
+			case ePATRAL3:
+			case ePATRABS:
+			case eDIG1:
+			case eDIG3:
+				return true;
+		}
+	}
+	return false;
+}
+
+bool slowguy(int id) {
+	switch (id) {
+		case eROCTO1:
+		case eBOCTO1:
+		case eROCTO2:
+		case eBOCTO2:
+		case eRLEV:
+		case eBLEV:
+		case eROCK:
+			return true;
+	}
+	return false;
+}
+
+bool countguy(int id) {
+	switch (id) {
+		case eFBALL:
+		case eROCK:
+
+		case eZORA:
+		case eTRAP:
+			return false;
+		case eBUBBLE:
+		case eRBUBBLE:
+		case eBBUBBLE:
+			return dlevel;
+	}
+	return true;
+}
+
+bool ok2add(int id) {
+	switch (id) {
+		/*
+		  case eARMOS:
+		  case eGHINI2:
+		  case eTRAP:
+		  case eGANON:
+		    return false;
+		*/
+		//  case eGHINI2:
+		case eGANON:
+		case eTRAP:
+			return false;
+
+		/*
+		  case eGLEEOK2:
+		  case eGLEEOK3:
+		  case eGLEEOK4:
+		  case eMOLDORM:
+		  case eMANHAN:
+		  case eMANHAN2:
+		  case eLAQUAM:
+		  case eRAQUAM:
+		  case eRGOHMA:
+		  case eBGOHMA:
+		case eDIG1:
+		case eDIG3:
+		case ePATRA1:
+		case ePATRA2:
+		*/
 		case eLAQUAM:
 		case eRAQUAM:
 		case eGLEEOK1:
@@ -9272,111 +9364,19 @@ bool hasBoss() {
 		case eGLEEOK4F:
 		case eRGOHMA:
 		case eBGOHMA:
-		case eGOHMA3:
-		case eGOHMA4:
 		case eMOLDORM:
 		case eMANHAN:
 		case eMANHAN2:
 		case eRCENT:
 		case eBCENT:
+		case eDIG1:
+		case eDIG3:
 		case ePATRA1:
 		case ePATRA2:
 		case ePATRAL2:
 		case ePATRAL3:
 		case ePATRABS:
-		case eDIG1:
-		case eDIG3:
-			return true;
-		}
-	}
-	return false;
-}
-
-bool slowguy(int id) {
-	switch (id) {
-	case eROCTO1:
-	case eBOCTO1:
-	case eROCTO2:
-	case eBOCTO2:
-	case eRLEV:
-	case eBLEV:
-	case eROCK:
-		return true;
-	}
-	return false;
-}
-
-bool countguy(int id) {
-	switch (id) {
-	case eFBALL:
-	case eROCK:
-
-	case eZORA:
-	case eTRAP:
-		return false;
-	case eBUBBLE:
-	case eRBUBBLE:
-	case eBBUBBLE:
-		return dlevel;
-	}
-	return true;
-}
-
-bool ok2add(int id) {
-	switch (id) {
-	/*
-	  case eARMOS:
-	  case eGHINI2:
-	  case eTRAP:
-	  case eGANON:
-	    return false;
-	*/
-	//  case eGHINI2:
-	case eGANON:
-	case eTRAP:
-		return false;
-
-	/*
-	  case eGLEEOK2:
-	  case eGLEEOK3:
-	  case eGLEEOK4:
-	  case eMOLDORM:
-	  case eMANHAN:
-	  case eMANHAN2:
-	  case eLAQUAM:
-	  case eRAQUAM:
-	  case eRGOHMA:
-	  case eBGOHMA:
-	case eDIG1:
-	case eDIG3:
-	case ePATRA1:
-	case ePATRA2:
-	*/
-	case eLAQUAM:
-	case eRAQUAM:
-	case eGLEEOK1:
-	case eGLEEOK2:
-	case eGLEEOK3:
-	case eGLEEOK4:
-	case eGLEEOK1F:
-	case eGLEEOK2F:
-	case eGLEEOK3F:
-	case eGLEEOK4F:
-	case eRGOHMA:
-	case eBGOHMA:
-	case eMOLDORM:
-	case eMANHAN:
-	case eMANHAN2:
-	case eRCENT:
-	case eBCENT:
-	case eDIG1:
-	case eDIG3:
-	case ePATRA1:
-	case ePATRA2:
-	case ePATRAL2:
-	case ePATRAL3:
-	case ePATRABS:
-		return !getmapflag(mNEVERRET);
+			return !getmapflag(mNEVERRET);
 	}
 
 	if (!get_bit(quest_rules, qr_NOTMPNORET)) {
@@ -9513,43 +9513,43 @@ int next_side_pos()
 
 bool can_side_load(int id) {
 	switch (id & 0x0FFF) {
-	case eRTEK:
-	case eBTEK:
-	case eRLEV:
-	case eBLEV:
-	case eRAQUAM:
-	case eDODONGO:
-	case eMANHAN:
-	case eGLEEOK1:
-	case eGLEEOK2:
-	case eGLEEOK3:
-	case eGLEEOK4:
-	case eDIG1:
-	case eDIG3:
-	case eRGOHMA:
-	case eBGOHMA:
-	case eRCENT:
-	case eBCENT:
-	case ePATRA1:
-	case ePATRA2:
-	case eGANON:
-	case eLAQUAM:
-	case eMANHAN2:
-	case eCEILINGM:
-	case eFLOORM:
-	case ePATRABS:
-	case ePATRAL2:
-	case ePATRAL3:
-	case eGLEEOK1F:
-	case eGLEEOK2F:
-	case eGLEEOK3F:
-	case eGLEEOK4F:
-	case eDODONGOBS:
-	case eDODONGOF:
-	case eGOHMA3:
-	case eGOHMA4:
-		return false;
-		break;
+		case eRTEK:
+		case eBTEK:
+		case eRLEV:
+		case eBLEV:
+		case eRAQUAM:
+		case eDODONGO:
+		case eMANHAN:
+		case eGLEEOK1:
+		case eGLEEOK2:
+		case eGLEEOK3:
+		case eGLEEOK4:
+		case eDIG1:
+		case eDIG3:
+		case eRGOHMA:
+		case eBGOHMA:
+		case eRCENT:
+		case eBCENT:
+		case ePATRA1:
+		case ePATRA2:
+		case eGANON:
+		case eLAQUAM:
+		case eMANHAN2:
+		case eCEILINGM:
+		case eFLOORM:
+		case ePATRABS:
+		case ePATRAL2:
+		case ePATRAL3:
+		case eGLEEOK1F:
+		case eGLEEOK2F:
+		case eGLEEOK3F:
+		case eGLEEOK4F:
+		case eDODONGOBS:
+		case eDODONGOF:
+		case eGOHMA3:
+		case eGOHMA4:
+			return false;
+			break;
 	}
 	return true;
 }
@@ -9868,24 +9868,98 @@ void setupscreen() {
 	}
 
 	switch (tmpscr[t].room) {
-	case rSP_ITEM:                                          // special item
-		additem(120, 89, tmpscr[t].catchall, ipONETIME + ipHOLDUP + ipCHECK);
-		break;
+		case rSP_ITEM:                                          // special item
+			additem(120, 89, tmpscr[t].catchall, ipONETIME + ipHOLDUP + ipCHECK);
+			break;
 
-	case rINFO: {                                           // pay for info
-		int count = 0;
-		int base  = 88;
-		int step  = 5;
+		case rINFO: {                                           // pay for info
+			int count = 0;
+			int base  = 88;
+			int step  = 5;
 
-		moneysign();
-		for (int i = 0; i < 3; i++) {
-			if (QMisc.info[tmpscr[t].catchall].str[i]) {
-				++count;
-			} else {
+			moneysign();
+			for (int i = 0; i < 3; i++) {
+				if (QMisc.info[tmpscr[t].catchall].str[i]) {
+					++count;
+				} else {
+					break;
+				}
+			}
+			if (count) {
+				if (count == 1) {
+					base = 88 + 32;
+				}
+				if (count == 2) {
+					step = 6;
+				}
+
+				for (int i = 0; i < count; i++) {
+					additem((i << step) + base, 89, iRupy, ipMONEY + ipDUMMY);
+					prices[i][0] = -(QMisc.info[tmpscr[t].catchall].price[i]);
+				}
+			}
+			break;
+		}
+
+		case rMONEY:                                            // secret money
+			additem(120, 89, iRupy, ipONETIME + ipDUMMY + ipMONEY);
+			break;
+
+		case rGAMBLE:                                           // gambling
+			prices[0][0] = prices[1][0] = prices[2][0] = -10;
+			moneysign();
+			additem(88, 89, iRupy, ipMONEY + ipDUMMY);
+			additem(120, 89, iRupy, ipMONEY + ipDUMMY);
+			additem(152, 89, iRupy, ipMONEY + ipDUMMY);
+			break;
+
+		case rREPAIR:                                           // door repair
+			//  if (!get_bit(quest_rules,qr_REPAIRFIX)) {
+			setmapflag();
+			//  }
+			repaircharge = true;
+			break;
+
+		case rMUPGRADE:                                         // upgrade magic
+			adjustmagic = true;
+			break;
+
+		case rLEARNSLASH:                                       // learn slash attack
+			learnslash = true;
+			break;
+
+		case rRP_HC:                                            // heart container or red potion
+			additem(88, 89, iRPotion, ipONETIME + ipHOLDUP + ipFADE);
+			additem(152, 89, iHeartC, ipONETIME + ipHOLDUP + ipFADE);
+			break;
+
+		case rP_SHOP:                                           // potion shop
+			if (!(game.items[itype_letter]&i_letter_used)) {
+				str = 0;
 				break;
 			}
-		}
-		if (count) {
+		// fall through
+
+		case rSHOP: {                                           // shop
+			int count = 0;
+			int base  = 88;
+			int step  = 5;
+
+			moneysign();
+			//count and align the stuff
+			for (int i = 0; i < 3; ++i) {
+				if (QMisc.shop[tmpscr[t].catchall].item[count]) {
+					prices[count][0] = QMisc.shop[tmpscr[t].catchall].price[count];
+					prices[count][1] = QMisc.shop[tmpscr[t].catchall].item[count];
+					++count;
+				} else {
+					QMisc.shop[tmpscr[t].catchall].item[count] = QMisc.shop[tmpscr[t].catchall].item[i + 1];
+					QMisc.shop[tmpscr[t].catchall].price[count] = QMisc.shop[tmpscr[t].catchall].price[i + 1];
+					QMisc.shop[tmpscr[t].catchall].item[i + 1] = 0;
+					QMisc.shop[tmpscr[t].catchall].price[i + 1] = 0;
+				}
+			}
+
 			if (count == 1) {
 				base = 88 + 32;
 			}
@@ -9894,96 +9968,22 @@ void setupscreen() {
 			}
 
 			for (int i = 0; i < count; i++) {
-				additem((i << step) + base, 89, iRupy, ipMONEY + ipDUMMY);
-				prices[i][0] = -(QMisc.info[tmpscr[t].catchall].price[i]);
+				additem((i << step) + base, 89 + (QMisc.shop[tmpscr[t].catchall].item[i] ? 0 : 0), QMisc.shop[tmpscr[t].catchall].item[i], ipHOLDUP + ipCHECK + ipFADE);
 			}
 		}
 		break;
-	}
 
-	case rMONEY:                                            // secret money
-		additem(120, 89, iRupy, ipONETIME + ipDUMMY + ipMONEY);
-		break;
-
-	case rGAMBLE:                                           // gambling
-		prices[0][0] = prices[1][0] = prices[2][0] = -10;
-		moneysign();
-		additem(88, 89, iRupy, ipMONEY + ipDUMMY);
-		additem(120, 89, iRupy, ipMONEY + ipDUMMY);
-		additem(152, 89, iRupy, ipMONEY + ipDUMMY);
-		break;
-
-	case rREPAIR:                                           // door repair
-		//  if (!get_bit(quest_rules,qr_REPAIRFIX)) {
-		setmapflag();
-		//  }
-		repaircharge = true;
-		break;
-
-	case rMUPGRADE:                                         // upgrade magic
-		adjustmagic = true;
-		break;
-
-	case rLEARNSLASH:                                       // learn slash attack
-		learnslash = true;
-		break;
-
-	case rRP_HC:                                            // heart container or red potion
-		additem(88, 89, iRPotion, ipONETIME + ipHOLDUP + ipFADE);
-		additem(152, 89, iHeartC, ipONETIME + ipHOLDUP + ipFADE);
-		break;
-
-	case rP_SHOP:                                           // potion shop
-		if (!(game.items[itype_letter]&i_letter_used)) {
-			str = 0;
+		case rBOMBS:                                            // more bombs
+			additem(120, 89, iRupy, ipDUMMY + ipMONEY);
+			prices[0][0] = -tmpscr[t].catchall;
 			break;
-		}
-	// fall through
 
-	case rSHOP: {                                           // shop
-		int count = 0;
-		int base  = 88;
-		int step  = 5;
-
-		moneysign();
-		//count and align the stuff
-		for (int i = 0; i < 3; ++i) {
-			if (QMisc.shop[tmpscr[t].catchall].item[count]) {
-				prices[count][0] = QMisc.shop[tmpscr[t].catchall].price[count];
-				prices[count][1] = QMisc.shop[tmpscr[t].catchall].item[count];
-				++count;
-			} else {
-				QMisc.shop[tmpscr[t].catchall].item[count] = QMisc.shop[tmpscr[t].catchall].item[i + 1];
-				QMisc.shop[tmpscr[t].catchall].price[count] = QMisc.shop[tmpscr[t].catchall].price[i + 1];
-				QMisc.shop[tmpscr[t].catchall].item[i + 1] = 0;
-				QMisc.shop[tmpscr[t].catchall].price[i + 1] = 0;
-			}
-		}
-
-		if (count == 1) {
-			base = 88 + 32;
-		}
-		if (count == 2) {
-			step = 6;
-		}
-
-		for (int i = 0; i < count; i++) {
-			additem((i << step) + base, 89 + (QMisc.shop[tmpscr[t].catchall].item[i] ? 0 : 0), QMisc.shop[tmpscr[t].catchall].item[i], ipHOLDUP + ipCHECK + ipFADE);
-		}
-	}
-	break;
-
-	case rBOMBS:                                            // more bombs
-		additem(120, 89, iRupy, ipDUMMY + ipMONEY);
-		prices[0][0] = -tmpscr[t].catchall;
-		break;
-
-	case rSWINDLE:                                          // leave heart container or money
-		additem(88, 89, iHeartC, ipDUMMY + ipMONEY);
-		additem(152, 89, iRupy, ipDUMMY + ipMONEY);
-		prices[0][0] = -1;
-		prices[1][0] = -tmpscr[t].catchall;
-		break;
+		case rSWINDLE:                                          // leave heart container or money
+			additem(88, 89, iHeartC, ipDUMMY + ipMONEY);
+			additem(152, 89, iRupy, ipDUMMY + ipMONEY);
+			prices[0][0] = -1;
+			prices[1][0] = -tmpscr[t].catchall;
+			break;
 	}
 
 	putprices(false);

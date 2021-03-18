@@ -82,7 +82,7 @@ short Bpos, lensclk, lenscnt;
 byte screengrid[22];
 bool halt = false;
 bool screenscrolling = false;
-bool anymsg = false; 
+bool anymsg = false;
 bool anyprice = false;
 
 int readsize, writesize;
@@ -365,8 +365,7 @@ void add_grenade(int wx, int wy, int size) {
 	Lwpns.spr(Lwpns.Count() - 1)->clk = 41;
 }
 
-fix distance(int x1, int y1, int x2, int y2)
-{
+fix distance(int x1, int y1, int x2, int y2) {
 	return (fix)sqrt(pow(abs(x1 - x2), 2) + pow(abs(y1 - y2), 2));
 }
 
@@ -388,17 +387,17 @@ void CatchBrang() {
 
 void load_game(gamedata* g) {
 	//int ret = 0;
-	
+
 	// Load the qst file and confirm it is valid.
 	packfile_password(datapwd);
 	int ret = loadquest(qstpath, &QHeader, &QMisc, tunes + MUSIC_COUNT);
 	packfile_password(NULL);
-	
+
 	if (ret) {
 		printf("Error loading: %s, %s\n", get_filename(qstpath), qst_error[ret]);
 		exit(-1);
-	}	
-	
+	}
+
 	if (!g->title[0] || !g->hasplayed) {
 		strcpy(g->version, QHeader.version);
 		strcpy(g->title, QHeader.title);
@@ -909,134 +908,134 @@ void do_magic_casting() {
 	int ltile = 0;
 	int lflip = 0;
 	switch (magictype) {
-	case mgc_none:
-		magiccastclk = 0;
-		break;
-	case mgc_dinsfire: {
-		int flamemax = 32;
-		if (magiccastclk == 0) {
-			Lwpns.add(new weapon(LinkX(), LinkY(), wPhantom, pDINSFIREROCKET, 0, up));
-			weapon* w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
-			w1->step = 4;
-			//          Link.tile=(BSZ)?32:29;
-			linktile(&Link.tile, &Link.flip, ls_hold2, Link.getDir(), zinit.linkwalkstyle);
-			casty = Link.getY();
-		}
-		if (magiccastclk == 64) {
-			Lwpns.add(new weapon((fix)LinkX(), (fix)(-32), wPhantom, pDINSFIREROCKETRETURN, 0, down));
-			weapon* w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
-			w1->step = 4;
-			//          Link.tile=29;
-			linktile(&Link.tile, &Link.flip, ls_hold2, Link.getDir(), zinit.linkwalkstyle);
-			castnext = false;
-		}
-		if (castnext) {
-			//          Link.tile=4;
-			linktile(&Link.tile, &Link.flip, ls_cast, Link.getDir(), zinit.linkwalkstyle);
-			for (int flamecounter = ((-1) * (flamemax / 2)) + 1; flamecounter < ((flamemax / 2) + 1); flamecounter++) {
-				Lwpns.add(new weapon((fix)LinkX(), (fix)LinkY(), wFire, 3, 8 * DAMAGE_MULTIPLIER, 0));
-				weapon* w = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
-				w->step = 2;
-				w->angular = true;
-				w->angle = (flamecounter * PI / (flamemax / 2));
+		case mgc_none:
+			magiccastclk = 0;
+			break;
+		case mgc_dinsfire: {
+			int flamemax = 32;
+			if (magiccastclk == 0) {
+				Lwpns.add(new weapon(LinkX(), LinkY(), wPhantom, pDINSFIREROCKET, 0, up));
+				weapon* w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
+				w1->step = 4;
+				//          Link.tile=(BSZ)?32:29;
+				linktile(&Link.tile, &Link.flip, ls_hold2, Link.getDir(), zinit.linkwalkstyle);
+				casty = Link.getY();
 			}
-			castnext = false;
-			magiccastclk = 128;
-		}
+			if (magiccastclk == 64) {
+				Lwpns.add(new weapon((fix)LinkX(), (fix)(-32), wPhantom, pDINSFIREROCKETRETURN, 0, down));
+				weapon* w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
+				w1->step = 4;
+				//          Link.tile=29;
+				linktile(&Link.tile, &Link.flip, ls_hold2, Link.getDir(), zinit.linkwalkstyle);
+				castnext = false;
+			}
+			if (castnext) {
+				//          Link.tile=4;
+				linktile(&Link.tile, &Link.flip, ls_cast, Link.getDir(), zinit.linkwalkstyle);
+				for (int flamecounter = ((-1) * (flamemax / 2)) + 1; flamecounter < ((flamemax / 2) + 1); flamecounter++) {
+					Lwpns.add(new weapon((fix)LinkX(), (fix)LinkY(), wFire, 3, 8 * DAMAGE_MULTIPLIER, 0));
+					weapon* w = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
+					w->step = 2;
+					w->angular = true;
+					w->angle = (flamecounter * PI / (flamemax / 2));
+				}
+				castnext = false;
+				magiccastclk = 128;
+			}
 
-		/*
-		 */
-		if ((magiccastclk++) == 226) {
-			magictype = mgc_none;
+			/*
+			 */
+			if ((magiccastclk++) == 226) {
+				magictype = mgc_none;
+			}
 		}
-	}
-	break;
-	case mgc_faroreswind: {
-		if (magiccastclk == 0) {
-			linktile(&ltile, &lflip, ls_stab, down, zinit.linkwalkstyle);
-			unpack_tile(ltile, lflip, true);
-			memcpy(linktilebuf, unpackbuf, 256);
-			tempx = Link.getX();
-			tempy = Link.getY();
-			linktile(&Link.tile, &Link.flip, ls_pound, down, zinit.linkwalkstyle);
-		}
-		if (magiccastclk >= 0 && magiccastclk < 64) {
-			Link.setX(tempx + ((rand() % 3) - 1));
-			Link.setY(tempy + ((rand() % 3) - 1));
-		}
-		if (magiccastclk == 64) {
-			Link.setX(tempx);
-			Link.setY(tempy);
-			linktile(&Link.tile, &Link.flip, ls_stab, down, zinit.linkwalkstyle);
-		}
-		if (magiccastclk == 96) {
-			Link.setDontDraw(true);
-			for (int i = 0; i < 16; ++i) {
-				for (int j = 0; j < 16; ++j) {
-					if (linktilebuf[i * 16 + j]) {
-						particles.add(new pFaroresWindDust(Link.getX() + j, Link.getY() + i, 5, 6, linktilebuf[i * 16 + j], rand() % 96));
-						int k = particles.Count() - 1;
-						particle* p = (particle*)(particles.spr(k));
-						p->angular = true;
-						p->angle = rand();
-						p->step = (((double)j) / 8);
-						p->yofs = Link.getYOfs();
+		break;
+		case mgc_faroreswind: {
+			if (magiccastclk == 0) {
+				linktile(&ltile, &lflip, ls_stab, down, zinit.linkwalkstyle);
+				unpack_tile(ltile, lflip, true);
+				memcpy(linktilebuf, unpackbuf, 256);
+				tempx = Link.getX();
+				tempy = Link.getY();
+				linktile(&Link.tile, &Link.flip, ls_pound, down, zinit.linkwalkstyle);
+			}
+			if (magiccastclk >= 0 && magiccastclk < 64) {
+				Link.setX(tempx + ((rand() % 3) - 1));
+				Link.setY(tempy + ((rand() % 3) - 1));
+			}
+			if (magiccastclk == 64) {
+				Link.setX(tempx);
+				Link.setY(tempy);
+				linktile(&Link.tile, &Link.flip, ls_stab, down, zinit.linkwalkstyle);
+			}
+			if (magiccastclk == 96) {
+				Link.setDontDraw(true);
+				for (int i = 0; i < 16; ++i) {
+					for (int j = 0; j < 16; ++j) {
+						if (linktilebuf[i * 16 + j]) {
+							particles.add(new pFaroresWindDust(Link.getX() + j, Link.getY() + i, 5, 6, linktilebuf[i * 16 + j], rand() % 96));
+							int k = particles.Count() - 1;
+							particle* p = (particle*)(particles.spr(k));
+							p->angular = true;
+							p->angle = rand();
+							p->step = (((double)j) / 8);
+							p->yofs = Link.getYOfs();
+						}
 					}
 				}
 			}
+			if ((magiccastclk++) == 226) {
+				//attackclk=0;
+				restart_level();
+				//xofs=0;
+				//action=none;
+				magictype = mgc_none;
+				Link.setDontDraw(false);
+			}
 		}
-		if ((magiccastclk++) == 226) {
-			//attackclk=0;
-			restart_level();
-			//xofs=0;
-			//action=none;
-			magictype = mgc_none;
-			Link.setDontDraw(false);
-		}
-	}
-	break;
-	case mgc_nayruslove: {
-		if (magiccastclk == 0) {
-			Lwpns.add(new weapon(LinkX(), LinkY(), wPhantom, pNAYRUSLOVEROCKET1, 0, left));
-			weapon* w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
-			w1->step = 4;
-			Lwpns.add(new weapon(LinkX(), LinkY(), wPhantom, pNAYRUSLOVEROCKET2, 0, right));
-			w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
-			w1->step = 4;
-			//          Link.tile=(BSZ)?32:29;
-			linktile(&Link.tile, &Link.flip, ls_cast, Link.getDir(), zinit.linkwalkstyle);
-			castx = Link.getX();
-		}
-		if (magiccastclk == 64) {
-			int d = max(LinkX(), 256 - LinkX()) + 32;
-			Lwpns.add(new weapon((fix)(LinkX() - d), (fix)LinkY(), wPhantom, pNAYRUSLOVEROCKETRETURN1, 0, right));
-			weapon* w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
-			w1->step = 4;
-			Lwpns.add(new weapon((fix)(LinkX() + d), (fix)LinkY(), wPhantom, pNAYRUSLOVEROCKETRETURN2, 0, left));
-			w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
-			w1->step = 4;
-			//          Link.tile=29;
-			linktile(&Link.tile, &Link.flip, ls_cast, Link.getDir(), zinit.linkwalkstyle);
-			castnext = false;
-		}
-		if (castnext) {
-			//          Link.tile=4;
-			linktile(&Link.tile, &Link.flip, ls_hold2, Link.getDir(), zinit.linkwalkstyle);
-			Link.setNayrusLoveShieldClk(512);
-			castnext = false;
-			magiccastclk = 128;
-		}
-
-		/*
-		 */
-		if ((magiccastclk++) == 160) {
-			magictype = mgc_none;
-		}
-	}
-	break;
-	default:
-		magiccastclk = 0;
 		break;
+		case mgc_nayruslove: {
+			if (magiccastclk == 0) {
+				Lwpns.add(new weapon(LinkX(), LinkY(), wPhantom, pNAYRUSLOVEROCKET1, 0, left));
+				weapon* w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
+				w1->step = 4;
+				Lwpns.add(new weapon(LinkX(), LinkY(), wPhantom, pNAYRUSLOVEROCKET2, 0, right));
+				w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
+				w1->step = 4;
+				//          Link.tile=(BSZ)?32:29;
+				linktile(&Link.tile, &Link.flip, ls_cast, Link.getDir(), zinit.linkwalkstyle);
+				castx = Link.getX();
+			}
+			if (magiccastclk == 64) {
+				int d = max(LinkX(), 256 - LinkX()) + 32;
+				Lwpns.add(new weapon((fix)(LinkX() - d), (fix)LinkY(), wPhantom, pNAYRUSLOVEROCKETRETURN1, 0, right));
+				weapon* w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
+				w1->step = 4;
+				Lwpns.add(new weapon((fix)(LinkX() + d), (fix)LinkY(), wPhantom, pNAYRUSLOVEROCKETRETURN2, 0, left));
+				w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
+				w1->step = 4;
+				//          Link.tile=29;
+				linktile(&Link.tile, &Link.flip, ls_cast, Link.getDir(), zinit.linkwalkstyle);
+				castnext = false;
+			}
+			if (castnext) {
+				//          Link.tile=4;
+				linktile(&Link.tile, &Link.flip, ls_hold2, Link.getDir(), zinit.linkwalkstyle);
+				Link.setNayrusLoveShieldClk(512);
+				castnext = false;
+				magiccastclk = 128;
+			}
+
+			/*
+			 */
+			if ((magiccastclk++) == 160) {
+				magictype = mgc_none;
+			}
+		}
+		break;
+		default:
+			magiccastclk = 0;
+			break;
 	}
 }
 
@@ -1212,7 +1211,7 @@ void game_loop() {
 	if (!dmapmsgclk) {
 		putmsg();
 	}
-	
+
 	domoney();
 	domagic();
 
@@ -1260,7 +1259,7 @@ int main(int argc, char* argv[]) {
 	// Allocate buffers needed to load the qst file data.
 	get_qst_buffers();
 
-	resolve_password(datapwd);	
+	resolve_password(datapwd);
 
 	three_finger_flag = false;
 	zcmusic_init();

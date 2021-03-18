@@ -304,18 +304,18 @@ void delete_fireball_shooter(mapscr* s, int i) {
 	}
 
 	switch (ct) {
-	case cL_STATUE:
-		cx = ((i & 15) << 4) + 4;
-		cy = (i & 0xF0) + 7;
-		break;
-	case cR_STATUE:
-		cx = ((i & 15) << 4) - 8;
-		cy = (i & 0xF0) - 1;
-		break;
-	case cC_STATUE:
-		cx = ((i & 15) << 4);
-		cy = (i & 0xF0);
-		break;
+		case cL_STATUE:
+			cx = ((i & 15) << 4) + 4;
+			cy = (i & 0xF0) + 7;
+			break;
+		case cR_STATUE:
+			cx = ((i & 15) << 4) - 8;
+			cy = (i & 0xF0) - 1;
+			break;
+		case cC_STATUE:
+			cx = ((i & 15) << 4);
+			cy = (i & 0xF0);
+			break;
 	}
 	for (int j = 0; j < guys.Count(); j++) {
 		if ((int(guys.spr(j)->x) == cx) && (int(guys.spr(j)->y) == cy)) {
@@ -333,102 +333,6 @@ void hidden_entrance(int tmp, bool refresh, bool high16only) {
 
 		if (!high16only) {
 			switch (s->sflag[i]) {
-			case mfBCANDLE:
-				ft = sBCANDLE;
-				break;
-			case mfRCANDLE:
-				ft = sRCANDLE;
-				break;
-			case mfWANDFIRE:
-				ft = sWANDFIRE;
-				break;
-			case mfDINSFIRE:
-				ft = sDINSFIRE;
-				break;
-			case mfARROW:
-				ft = sARROW;
-				break;
-			case mfSARROW:
-				ft = sSARROW;
-				break;
-			case mfGARROW:
-				ft = sGARROW;
-				break;
-			case mfSBOMB:
-				ft = sSBOMB;
-				break;
-			case mfBOMB:
-				ft = sBOMB;
-				break;
-			case mfBRANG:
-				ft = sBRANG;
-				break;
-			case mfMBRANG:
-				ft = sMBRANG;
-				break;
-			case mfFBRANG:
-				ft = sFBRANG;
-				break;
-			case mfWANDMAGIC:
-				ft = sWANDMAGIC;
-				break;
-			case mfREFMAGIC:
-				ft = sREFMAGIC;
-				break;
-			case mfREFFIREBALL:
-				ft = sREFFIREBALL;
-				break;
-			case mfSWORD:
-				ft = sSWORD;
-				break;
-			case mfWSWORD:
-				ft = sWSWORD;
-				break;
-			case mfMSWORD:
-				ft = sMSWORD;
-				break;
-			case mfXSWORD:
-				ft = sXSWORD;
-				break;
-			case mfSWORDBEAM:
-				ft = sSWORDBEAM;
-				break;
-			case mfWSWORDBEAM:
-				ft = sWSWORDBEAM;
-				break;
-			case mfMSWORDBEAM:
-				ft = sMSWORDBEAM;
-				break;
-			case mfXSWORDBEAM:
-				ft = sXSWORDBEAM;
-				break;
-			case mfHOOKSHOT:
-				ft = sHOOKSHOT;
-				break;
-			case mfWAND:
-				ft = sWAND;
-				break;
-			case mfHAMMER:
-
-				ft = sHAMMER;
-				break;
-			case mfSTRIKE:
-				ft = sSTRIKE;
-				break;
-			default:
-				putit = false;
-				break;
-			}
-			if (putit) {
-				delete_fireball_shooter(s, i);
-				s->data[i] = s->secretcombo[ft];
-				s->cset[i] = s->secretcset[ft];
-				s->sflag[i] = s->secretflag[ft];
-			}
-
-			for (int j = 0; j < 6; j++) {
-				putit = true;
-				switch (t[j].sflag[i]) {
 				case mfBCANDLE:
 					ft = sBCANDLE;
 					break;
@@ -505,6 +409,7 @@ void hidden_entrance(int tmp, bool refresh, bool high16only) {
 					ft = sWAND;
 					break;
 				case mfHAMMER:
+
 					ft = sHAMMER;
 					break;
 				case mfSTRIKE:
@@ -513,6 +418,101 @@ void hidden_entrance(int tmp, bool refresh, bool high16only) {
 				default:
 					putit = false;
 					break;
+			}
+			if (putit) {
+				delete_fireball_shooter(s, i);
+				s->data[i] = s->secretcombo[ft];
+				s->cset[i] = s->secretcset[ft];
+				s->sflag[i] = s->secretflag[ft];
+			}
+
+			for (int j = 0; j < 6; j++) {
+				putit = true;
+				switch (t[j].sflag[i]) {
+					case mfBCANDLE:
+						ft = sBCANDLE;
+						break;
+					case mfRCANDLE:
+						ft = sRCANDLE;
+						break;
+					case mfWANDFIRE:
+						ft = sWANDFIRE;
+						break;
+					case mfDINSFIRE:
+						ft = sDINSFIRE;
+						break;
+					case mfARROW:
+						ft = sARROW;
+						break;
+					case mfSARROW:
+						ft = sSARROW;
+						break;
+					case mfGARROW:
+						ft = sGARROW;
+						break;
+					case mfSBOMB:
+						ft = sSBOMB;
+						break;
+					case mfBOMB:
+						ft = sBOMB;
+						break;
+					case mfBRANG:
+						ft = sBRANG;
+						break;
+					case mfMBRANG:
+						ft = sMBRANG;
+						break;
+					case mfFBRANG:
+						ft = sFBRANG;
+						break;
+					case mfWANDMAGIC:
+						ft = sWANDMAGIC;
+						break;
+					case mfREFMAGIC:
+						ft = sREFMAGIC;
+						break;
+					case mfREFFIREBALL:
+						ft = sREFFIREBALL;
+						break;
+					case mfSWORD:
+						ft = sSWORD;
+						break;
+					case mfWSWORD:
+						ft = sWSWORD;
+						break;
+					case mfMSWORD:
+						ft = sMSWORD;
+						break;
+					case mfXSWORD:
+						ft = sXSWORD;
+						break;
+					case mfSWORDBEAM:
+						ft = sSWORDBEAM;
+						break;
+					case mfWSWORDBEAM:
+						ft = sWSWORDBEAM;
+						break;
+					case mfMSWORDBEAM:
+						ft = sMSWORDBEAM;
+						break;
+					case mfXSWORDBEAM:
+						ft = sXSWORDBEAM;
+						break;
+					case mfHOOKSHOT:
+						ft = sHOOKSHOT;
+						break;
+					case mfWAND:
+						ft = sWAND;
+						break;
+					case mfHAMMER:
+						ft = sHAMMER;
+						break;
+					case mfSTRIKE:
+						ft = sSTRIKE;
+						break;
+					default:
+						putit = false;
+						break;
 				}
 				if (putit) {
 
@@ -589,44 +589,44 @@ int nextscr(int dir) {
 	int s = currscr;
 
 	switch (dir) {
-	case up:
-		s -= 16;
-		break;
-	case down:
-		s += 16;
-		break;
-	case left:
-		s -= 1;
-		break;
-	case right:
-		s += 1;
-		break;
+		case up:
+			s -= 16;
+			break;
+		case down:
+			s += 16;
+			break;
+		case left:
+			s -= 1;
+			break;
+		case right:
+			s += 1;
+			break;
 	}
 
 	// need to check for screens on other maps, 's' not valid, etc.
 
 	if (tmpscr->sidewarptype == 3) {                             // scrolling warp
 		switch (dir) {
-		case up:
-			if (!(tmpscr->flags2 & wfUP)) {
-				goto skip;
-			}
-			break;
-		case down:
-			if (!(tmpscr->flags2 & wfDOWN)) {
-				goto skip;
-			}
-			break;
-		case left:
-			if (!(tmpscr->flags2 & wfLEFT)) {
-				goto skip;
-			}
-			break;
-		case right:
-			if (!(tmpscr->flags2 & wfRIGHT)) {
-				goto skip;
-			}
-			break;
+			case up:
+				if (!(tmpscr->flags2 & wfUP)) {
+					goto skip;
+				}
+				break;
+			case down:
+				if (!(tmpscr->flags2 & wfDOWN)) {
+					goto skip;
+				}
+				break;
+			case left:
+				if (!(tmpscr->flags2 & wfLEFT)) {
+					goto skip;
+				}
+				break;
+			case right:
+				if (!(tmpscr->flags2 & wfRIGHT)) {
+					goto skip;
+				}
+				break;
 		}
 		m = DMaps[tmpscr->sidewarpdmap].map;
 		s = tmpscr->sidewarpscr + DMaps[tmpscr->sidewarpdmap].xoff;
@@ -676,59 +676,59 @@ void do_scrolling_layer(BITMAP* bmp, int type, mapscr* layer, int x, int y, bool
 	static int mf;
 	mapscr* tscr;
 	switch (type) {
-	case -2:                                                //push blocks
-		for (i = 0; i < 176; i++) {
-			mf = layer->sflag[i];
-			if (mf == mfPUSHUD || mf == mfPUSH4 || mf == mfPUSHED ||
-			        ((mf >= mfPUSHLR) && (mf <= mfPUSHRINS))) {
-				overcombo(bmp, ((i & 15) << 4) - x, (i & 0xF0) + 56 - y, layer->data[i], layer->cset[i]);
+		case -2:                                                //push blocks
+			for (i = 0; i < 176; i++) {
+				mf = layer->sflag[i];
+				if (mf == mfPUSHUD || mf == mfPUSH4 || mf == mfPUSHED ||
+				        ((mf >= mfPUSHLR) && (mf <= mfPUSHRINS))) {
+					overcombo(bmp, ((i & 15) << 4) - x, (i & 0xF0) + 56 - y, layer->data[i], layer->cset[i]);
+				}
 			}
-		}
-		break;
-	case -1:                                                //over combo
-		for (i = 0; i < 176; i++) {
-			if (combobuf[layer->data[i]].type == cOVERHEAD) {
-				overcombo(bmp, ((i & 15) << 4) - x, (i & 0xF0) + 56 - y, layer->data[i], layer->cset[i]);
+			break;
+		case -1:                                                //over combo
+			for (i = 0; i < 176; i++) {
+				if (combobuf[layer->data[i]].type == cOVERHEAD) {
+					overcombo(bmp, ((i & 15) << 4) - x, (i & 0xF0) + 56 - y, layer->data[i], layer->cset[i]);
+				}
 			}
-		}
-		break;
-	case 0:
-	case 1:
-	case 2:
-	case 3:
-	case 4:
-	case 5:
-		if (tempscreen == 2) {
-			tscr = tmpscr2 + type;
-		} else {
-			tscr = tmpscr3 + type;
-		}
-		if (TransLayers || layer->layeropacity[type] == 255) {
-			if (layer->layermap[type] > 0) {
-				if (scrolling) {
-					if (layer->layeropacity[type] == 255) {
-						for (i = 0; i < 176; i++) {
-							overcombo(bmp, ((i & 15) << 4) - x, (i & 0xF0) + 56 - y, tscr->data[i], tscr->cset[i]);
+			break;
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+			if (tempscreen == 2) {
+				tscr = tmpscr2 + type;
+			} else {
+				tscr = tmpscr3 + type;
+			}
+			if (TransLayers || layer->layeropacity[type] == 255) {
+				if (layer->layermap[type] > 0) {
+					if (scrolling) {
+						if (layer->layeropacity[type] == 255) {
+							for (i = 0; i < 176; i++) {
+								overcombo(bmp, ((i & 15) << 4) - x, (i & 0xF0) + 56 - y, tscr->data[i], tscr->cset[i]);
+							}
+						} else {
+							for (int i = 0; i < 176; i++) {
+								overcombotranslucent(bmp, ((i & 15) << 4) - x, (i & 0xF0) + 56 - y, tscr->data[i], tscr->cset[i], layer->layeropacity[type]);
+							}
 						}
 					} else {
-						for (int i = 0; i < 176; i++) {
-							overcombotranslucent(bmp, ((i & 15) << 4) - x, (i & 0xF0) + 56 - y, tscr->data[i], tscr->cset[i], layer->layeropacity[type]);
-						}
-					}
-				} else {
-					if (layer->layeropacity[type] == 255) {
-						for (i = 0; i < 176; i++) {
-							overcombo(bmp, ((i & 15) << 4) - x, (i & 0xF0) + 56 - y, tscr->data[i], tscr->cset[i]);
-						}
-					} else {
-						for (i = 0; i < 176; i++) {
-							overcombotranslucent(bmp, ((i & 15) << 4) - x, (i & 0xF0) + 56 - y, tscr->data[i], tscr->cset[i], layer->layeropacity[type]);
+						if (layer->layeropacity[type] == 255) {
+							for (i = 0; i < 176; i++) {
+								overcombo(bmp, ((i & 15) << 4) - x, (i & 0xF0) + 56 - y, tscr->data[i], tscr->cset[i]);
+							}
+						} else {
+							for (i = 0; i < 176; i++) {
+								overcombotranslucent(bmp, ((i & 15) << 4) - x, (i & 0xF0) + 56 - y, tscr->data[i], tscr->cset[i], layer->layeropacity[type]);
+							}
 						}
 					}
 				}
 			}
-		}
-		break;
+			break;
 	}
 }
 
@@ -1028,127 +1028,127 @@ void draw_screen(mapscr* layer1, mapscr* layer2, int x1, int y1, int x2, int y2)
 void put_door(int t, int pos, int side, int type, bool redraw) {
 	int d = tmpscr[t].door_combo_set;
 	switch (type) {
-	case dt_pass:
-	case dt_lock:
-	case dt_shut:
-	case dt_boss:
-	case dt_olck:
-	case dt_osht:
-	case dt_obos:
-	case dt_bomb:
-		switch (side) {
-		case up:
-			tmpscr[t].data[pos]   = DoorComboSets[d].doorcombo_u[type][0];
-			tmpscr[t].cset[pos]   = DoorComboSets[d].doorcset_u[type][0];
-			tmpscr[t].sflag[pos]  = 0;
-			tmpscr[t].data[pos + 1]   = DoorComboSets[d].doorcombo_u[type][1];
-			tmpscr[t].cset[pos + 1]   = DoorComboSets[d].doorcset_u[type][1];
-			tmpscr[t].sflag[pos + 1]  = 0;
-			tmpscr[t].data[pos + 16]   = DoorComboSets[d].doorcombo_u[type][2];
-			tmpscr[t].cset[pos + 16]   = DoorComboSets[d].doorcset_u[type][2];
-			tmpscr[t].sflag[pos + 16]  = 0;
-			tmpscr[t].data[pos + 16 + 1]   = DoorComboSets[d].doorcombo_u[type][3];
-			tmpscr[t].cset[pos + 16 + 1]   = DoorComboSets[d].doorcset_u[type][3];
-			tmpscr[t].sflag[pos + 16 + 1]  = 0;
-			if (redraw) {
-				putcombo(scrollbuf, (pos & 15) << 4, pos & 0xF0,
-				         DoorComboSets[d].doorcombo_u[type][0],
-				         DoorComboSets[d].doorcset_u[type][0]);
-				putcombo(scrollbuf, ((pos & 15) << 4) + 16, pos & 0xF0,
-				         DoorComboSets[d].doorcombo_u[type][1],
-				         DoorComboSets[d].doorcset_u[type][1]);
+		case dt_pass:
+		case dt_lock:
+		case dt_shut:
+		case dt_boss:
+		case dt_olck:
+		case dt_osht:
+		case dt_obos:
+		case dt_bomb:
+			switch (side) {
+				case up:
+					tmpscr[t].data[pos]   = DoorComboSets[d].doorcombo_u[type][0];
+					tmpscr[t].cset[pos]   = DoorComboSets[d].doorcset_u[type][0];
+					tmpscr[t].sflag[pos]  = 0;
+					tmpscr[t].data[pos + 1]   = DoorComboSets[d].doorcombo_u[type][1];
+					tmpscr[t].cset[pos + 1]   = DoorComboSets[d].doorcset_u[type][1];
+					tmpscr[t].sflag[pos + 1]  = 0;
+					tmpscr[t].data[pos + 16]   = DoorComboSets[d].doorcombo_u[type][2];
+					tmpscr[t].cset[pos + 16]   = DoorComboSets[d].doorcset_u[type][2];
+					tmpscr[t].sflag[pos + 16]  = 0;
+					tmpscr[t].data[pos + 16 + 1]   = DoorComboSets[d].doorcombo_u[type][3];
+					tmpscr[t].cset[pos + 16 + 1]   = DoorComboSets[d].doorcset_u[type][3];
+					tmpscr[t].sflag[pos + 16 + 1]  = 0;
+					if (redraw) {
+						putcombo(scrollbuf, (pos & 15) << 4, pos & 0xF0,
+						         DoorComboSets[d].doorcombo_u[type][0],
+						         DoorComboSets[d].doorcset_u[type][0]);
+						putcombo(scrollbuf, ((pos & 15) << 4) + 16, pos & 0xF0,
+						         DoorComboSets[d].doorcombo_u[type][1],
+						         DoorComboSets[d].doorcset_u[type][1]);
+					}
+					break;
+				case down:
+					tmpscr[t].data[pos]   = DoorComboSets[d].doorcombo_d[type][0];
+					tmpscr[t].cset[pos]   = DoorComboSets[d].doorcset_d[type][0];
+					tmpscr[t].sflag[pos]  = 0;
+					tmpscr[t].data[pos + 1]   = DoorComboSets[d].doorcombo_d[type][1];
+					tmpscr[t].cset[pos + 1]   = DoorComboSets[d].doorcset_d[type][1];
+					tmpscr[t].sflag[pos + 1]  = 0;
+					tmpscr[t].data[pos + 16]   = DoorComboSets[d].doorcombo_d[type][2];
+					tmpscr[t].cset[pos + 16]   = DoorComboSets[d].doorcset_d[type][2];
+					tmpscr[t].sflag[pos + 16]  = 0;
+					tmpscr[t].data[pos + 16 + 1]   = DoorComboSets[d].doorcombo_d[type][3];
+					tmpscr[t].cset[pos + 16 + 1]   = DoorComboSets[d].doorcset_d[type][3];
+					tmpscr[t].sflag[pos + 16 + 1]  = 0;
+					if (redraw) {
+						putcombo(scrollbuf, (pos & 15) << 4, (pos & 0xF0) + 16,
+						         DoorComboSets[d].doorcombo_d[type][2],
+						         DoorComboSets[d].doorcset_d[type][2]);
+						putcombo(scrollbuf, ((pos & 15) << 4) + 16, (pos & 0xF0) + 16,
+						         DoorComboSets[d].doorcombo_d[type][3],
+						         DoorComboSets[d].doorcset_d[type][3]);
+					}
+					break;
+				case left:
+					tmpscr[t].data[pos]   = DoorComboSets[d].doorcombo_l[type][0];
+					tmpscr[t].cset[pos]   = DoorComboSets[d].doorcset_l[type][0];
+					tmpscr[t].sflag[pos]  = 0;
+					tmpscr[t].data[pos + 1]   = DoorComboSets[d].doorcombo_l[type][1];
+					tmpscr[t].cset[pos + 1]   = DoorComboSets[d].doorcset_l[type][1];
+					tmpscr[t].sflag[pos + 1]  = 0;
+					tmpscr[t].data[pos + 16]   = DoorComboSets[d].doorcombo_l[type][2];
+					tmpscr[t].cset[pos + 16]   = DoorComboSets[d].doorcset_l[type][2];
+					tmpscr[t].sflag[pos + 16]  = 0;
+					tmpscr[t].data[pos + 16 + 1]   = DoorComboSets[d].doorcombo_l[type][3];
+					tmpscr[t].cset[pos + 16 + 1]   = DoorComboSets[d].doorcset_l[type][3];
+					tmpscr[t].sflag[pos + 16 + 1]  = 0;
+					tmpscr[t].data[pos + 32]   = DoorComboSets[d].doorcombo_l[type][4];
+					tmpscr[t].cset[pos + 32]   = DoorComboSets[d].doorcset_l[type][4];
+					tmpscr[t].sflag[pos + 32]  = 0;
+					tmpscr[t].data[pos + 32 + 1]   = DoorComboSets[d].doorcombo_l[type][5];
+					tmpscr[t].cset[pos + 32 + 1]   = DoorComboSets[d].doorcset_l[type][5];
+					tmpscr[t].sflag[pos + 32 + 1]  = 0;
+					if (redraw) {
+						putcombo(scrollbuf, (pos & 15) << 4, pos & 0xF0,
+						         DoorComboSets[d].doorcombo_l[type][0],
+						         DoorComboSets[d].doorcset_l[type][0]);
+						putcombo(scrollbuf, (pos & 15) << 4, (pos & 0xF0) + 16,
+						         DoorComboSets[d].doorcombo_l[type][2],
+						         DoorComboSets[d].doorcset_l[type][2]);
+						putcombo(scrollbuf, (pos & 15) << 4, (pos & 0xF0) + 32,
+						         DoorComboSets[d].doorcombo_l[type][4],
+						         DoorComboSets[d].doorcset_l[type][4]);
+					}
+					break;
+				case right:
+					tmpscr[t].data[pos]   = DoorComboSets[d].doorcombo_r[type][0];
+					tmpscr[t].cset[pos]   = DoorComboSets[d].doorcset_r[type][0];
+					tmpscr[t].sflag[pos]  = 0;
+					tmpscr[t].data[pos + 1]   = DoorComboSets[d].doorcombo_r[type][1];
+					tmpscr[t].cset[pos + 1]   = DoorComboSets[d].doorcset_r[type][1];
+					tmpscr[t].sflag[pos + 1]  = 0;
+					tmpscr[t].data[pos + 16]   = DoorComboSets[d].doorcombo_r[type][2];
+					tmpscr[t].cset[pos + 16]   = DoorComboSets[d].doorcset_r[type][2];
+					tmpscr[t].sflag[pos + 16]  = 0;
+					tmpscr[t].data[pos + 16 + 1]   = DoorComboSets[d].doorcombo_r[type][3];
+					tmpscr[t].cset[pos + 16 + 1]   = DoorComboSets[d].doorcset_r[type][3];
+					tmpscr[t].sflag[pos + 16 + 1]  = 0;
+					tmpscr[t].data[pos + 32]   = DoorComboSets[d].doorcombo_r[type][4];
+					tmpscr[t].cset[pos + 32]   = DoorComboSets[d].doorcset_r[type][4];
+					tmpscr[t].sflag[pos + 32]  = 0;
+					tmpscr[t].data[pos + 32 + 1]   = DoorComboSets[d].doorcombo_r[type][5];
+					tmpscr[t].cset[pos + 32 + 1]   = DoorComboSets[d].doorcset_r[type][5];
+					tmpscr[t].sflag[pos + 32 + 1]  = 0;
+					if (redraw) {
+						putcombo(scrollbuf, (pos & 15) << 4, pos & 0xF0,
+						         DoorComboSets[d].doorcombo_r[type][0],
+						         DoorComboSets[d].doorcset_r[type][0]);
+						putcombo(scrollbuf, (pos & 15) << 4, (pos & 0xF0) + 16,
+						         DoorComboSets[d].doorcombo_r[type][2],
+						         DoorComboSets[d].doorcset_r[type][2]);
+						putcombo(scrollbuf, (pos & 15) << 4, (pos & 0xF0) + 32,
+						         DoorComboSets[d].doorcombo_r[type][4],
+						         DoorComboSets[d].doorcset_r[type][4]);
+					}
+					break;
 			}
 			break;
-		case down:
-			tmpscr[t].data[pos]   = DoorComboSets[d].doorcombo_d[type][0];
-			tmpscr[t].cset[pos]   = DoorComboSets[d].doorcset_d[type][0];
-			tmpscr[t].sflag[pos]  = 0;
-			tmpscr[t].data[pos + 1]   = DoorComboSets[d].doorcombo_d[type][1];
-			tmpscr[t].cset[pos + 1]   = DoorComboSets[d].doorcset_d[type][1];
-			tmpscr[t].sflag[pos + 1]  = 0;
-			tmpscr[t].data[pos + 16]   = DoorComboSets[d].doorcombo_d[type][2];
-			tmpscr[t].cset[pos + 16]   = DoorComboSets[d].doorcset_d[type][2];
-			tmpscr[t].sflag[pos + 16]  = 0;
-			tmpscr[t].data[pos + 16 + 1]   = DoorComboSets[d].doorcombo_d[type][3];
-			tmpscr[t].cset[pos + 16 + 1]   = DoorComboSets[d].doorcset_d[type][3];
-			tmpscr[t].sflag[pos + 16 + 1]  = 0;
-			if (redraw) {
-				putcombo(scrollbuf, (pos & 15) << 4, (pos & 0xF0) + 16,
-				         DoorComboSets[d].doorcombo_d[type][2],
-				         DoorComboSets[d].doorcset_d[type][2]);
-				putcombo(scrollbuf, ((pos & 15) << 4) + 16, (pos & 0xF0) + 16,
-				         DoorComboSets[d].doorcombo_d[type][3],
-				         DoorComboSets[d].doorcset_d[type][3]);
-			}
+		case dt_wall:
+		case dt_walk:
+		default:
 			break;
-		case left:
-			tmpscr[t].data[pos]   = DoorComboSets[d].doorcombo_l[type][0];
-			tmpscr[t].cset[pos]   = DoorComboSets[d].doorcset_l[type][0];
-			tmpscr[t].sflag[pos]  = 0;
-			tmpscr[t].data[pos + 1]   = DoorComboSets[d].doorcombo_l[type][1];
-			tmpscr[t].cset[pos + 1]   = DoorComboSets[d].doorcset_l[type][1];
-			tmpscr[t].sflag[pos + 1]  = 0;
-			tmpscr[t].data[pos + 16]   = DoorComboSets[d].doorcombo_l[type][2];
-			tmpscr[t].cset[pos + 16]   = DoorComboSets[d].doorcset_l[type][2];
-			tmpscr[t].sflag[pos + 16]  = 0;
-			tmpscr[t].data[pos + 16 + 1]   = DoorComboSets[d].doorcombo_l[type][3];
-			tmpscr[t].cset[pos + 16 + 1]   = DoorComboSets[d].doorcset_l[type][3];
-			tmpscr[t].sflag[pos + 16 + 1]  = 0;
-			tmpscr[t].data[pos + 32]   = DoorComboSets[d].doorcombo_l[type][4];
-			tmpscr[t].cset[pos + 32]   = DoorComboSets[d].doorcset_l[type][4];
-			tmpscr[t].sflag[pos + 32]  = 0;
-			tmpscr[t].data[pos + 32 + 1]   = DoorComboSets[d].doorcombo_l[type][5];
-			tmpscr[t].cset[pos + 32 + 1]   = DoorComboSets[d].doorcset_l[type][5];
-			tmpscr[t].sflag[pos + 32 + 1]  = 0;
-			if (redraw) {
-				putcombo(scrollbuf, (pos & 15) << 4, pos & 0xF0,
-				         DoorComboSets[d].doorcombo_l[type][0],
-				         DoorComboSets[d].doorcset_l[type][0]);
-				putcombo(scrollbuf, (pos & 15) << 4, (pos & 0xF0) + 16,
-				         DoorComboSets[d].doorcombo_l[type][2],
-				         DoorComboSets[d].doorcset_l[type][2]);
-				putcombo(scrollbuf, (pos & 15) << 4, (pos & 0xF0) + 32,
-				         DoorComboSets[d].doorcombo_l[type][4],
-				         DoorComboSets[d].doorcset_l[type][4]);
-			}
-			break;
-		case right:
-			tmpscr[t].data[pos]   = DoorComboSets[d].doorcombo_r[type][0];
-			tmpscr[t].cset[pos]   = DoorComboSets[d].doorcset_r[type][0];
-			tmpscr[t].sflag[pos]  = 0;
-			tmpscr[t].data[pos + 1]   = DoorComboSets[d].doorcombo_r[type][1];
-			tmpscr[t].cset[pos + 1]   = DoorComboSets[d].doorcset_r[type][1];
-			tmpscr[t].sflag[pos + 1]  = 0;
-			tmpscr[t].data[pos + 16]   = DoorComboSets[d].doorcombo_r[type][2];
-			tmpscr[t].cset[pos + 16]   = DoorComboSets[d].doorcset_r[type][2];
-			tmpscr[t].sflag[pos + 16]  = 0;
-			tmpscr[t].data[pos + 16 + 1]   = DoorComboSets[d].doorcombo_r[type][3];
-			tmpscr[t].cset[pos + 16 + 1]   = DoorComboSets[d].doorcset_r[type][3];
-			tmpscr[t].sflag[pos + 16 + 1]  = 0;
-			tmpscr[t].data[pos + 32]   = DoorComboSets[d].doorcombo_r[type][4];
-			tmpscr[t].cset[pos + 32]   = DoorComboSets[d].doorcset_r[type][4];
-			tmpscr[t].sflag[pos + 32]  = 0;
-			tmpscr[t].data[pos + 32 + 1]   = DoorComboSets[d].doorcombo_r[type][5];
-			tmpscr[t].cset[pos + 32 + 1]   = DoorComboSets[d].doorcset_r[type][5];
-			tmpscr[t].sflag[pos + 32 + 1]  = 0;
-			if (redraw) {
-				putcombo(scrollbuf, (pos & 15) << 4, pos & 0xF0,
-				         DoorComboSets[d].doorcombo_r[type][0],
-				         DoorComboSets[d].doorcset_r[type][0]);
-				putcombo(scrollbuf, (pos & 15) << 4, (pos & 0xF0) + 16,
-				         DoorComboSets[d].doorcombo_r[type][2],
-				         DoorComboSets[d].doorcset_r[type][2]);
-				putcombo(scrollbuf, (pos & 15) << 4, (pos & 0xF0) + 32,
-				         DoorComboSets[d].doorcombo_r[type][4],
-				         DoorComboSets[d].doorcset_r[type][4]);
-			}
-			break;
-		}
-		break;
-	case dt_wall:
-	case dt_walk:
-	default:
-		break;
 	}
 }
 
@@ -1157,44 +1157,44 @@ void over_door(int t, int pos, int side) {
 	int x = (pos & 15) << 4;
 	int y = (pos & 0xF0);
 	switch (side) {
-	case up:
-		overcombo2(scrollbuf, x, y,
-		           DoorComboSets[d].bombdoorcombo_u[0],
-		           DoorComboSets[d].bombdoorcset_u[0]);
-		overcombo2(scrollbuf, x + 16, y,
-		           DoorComboSets[d].bombdoorcombo_u[1],
-		           DoorComboSets[d].bombdoorcset_u[1]);
-		break;
-	case down:
-		overcombo2(scrollbuf, x, y,
-		           DoorComboSets[d].bombdoorcombo_d[0],
-		           DoorComboSets[d].bombdoorcset_d[0]);
-		overcombo2(scrollbuf, x + 16, y,
-		           DoorComboSets[d].bombdoorcombo_d[1],
-		           DoorComboSets[d].bombdoorcset_d[1]);
-		break;
-	case left:
-		overcombo2(scrollbuf, x, y,
-		           DoorComboSets[d].bombdoorcombo_l[0],
-		           DoorComboSets[d].bombdoorcset_l[0]);
-		overcombo2(scrollbuf, x, y + 16,
-		           DoorComboSets[d].bombdoorcombo_l[1],
-		           DoorComboSets[d].bombdoorcset_l[1]);
-		overcombo2(scrollbuf, x, y + 16,
-		           DoorComboSets[d].bombdoorcombo_l[2],
-		           DoorComboSets[d].bombdoorcset_l[2]);
-		break;
-	case right:
-		overcombo2(scrollbuf, x, y,
-		           DoorComboSets[d].bombdoorcombo_r[0],
-		           DoorComboSets[d].bombdoorcset_r[0]);
-		overcombo2(scrollbuf, x, y + 16,
-		           DoorComboSets[d].bombdoorcombo_r[1],
-		           DoorComboSets[d].bombdoorcset_r[1]);
-		overcombo2(scrollbuf, x, y + 16,
-		           DoorComboSets[d].bombdoorcombo_r[2],
-		           DoorComboSets[d].bombdoorcset_r[2]);
-		break;
+		case up:
+			overcombo2(scrollbuf, x, y,
+			           DoorComboSets[d].bombdoorcombo_u[0],
+			           DoorComboSets[d].bombdoorcset_u[0]);
+			overcombo2(scrollbuf, x + 16, y,
+			           DoorComboSets[d].bombdoorcombo_u[1],
+			           DoorComboSets[d].bombdoorcset_u[1]);
+			break;
+		case down:
+			overcombo2(scrollbuf, x, y,
+			           DoorComboSets[d].bombdoorcombo_d[0],
+			           DoorComboSets[d].bombdoorcset_d[0]);
+			overcombo2(scrollbuf, x + 16, y,
+			           DoorComboSets[d].bombdoorcombo_d[1],
+			           DoorComboSets[d].bombdoorcset_d[1]);
+			break;
+		case left:
+			overcombo2(scrollbuf, x, y,
+			           DoorComboSets[d].bombdoorcombo_l[0],
+			           DoorComboSets[d].bombdoorcset_l[0]);
+			overcombo2(scrollbuf, x, y + 16,
+			           DoorComboSets[d].bombdoorcombo_l[1],
+			           DoorComboSets[d].bombdoorcset_l[1]);
+			overcombo2(scrollbuf, x, y + 16,
+			           DoorComboSets[d].bombdoorcombo_l[2],
+			           DoorComboSets[d].bombdoorcset_l[2]);
+			break;
+		case right:
+			overcombo2(scrollbuf, x, y,
+			           DoorComboSets[d].bombdoorcombo_r[0],
+			           DoorComboSets[d].bombdoorcset_r[0]);
+			overcombo2(scrollbuf, x, y + 16,
+			           DoorComboSets[d].bombdoorcombo_r[1],
+			           DoorComboSets[d].bombdoorcset_r[1]);
+			overcombo2(scrollbuf, x, y + 16,
+			           DoorComboSets[d].bombdoorcombo_r[2],
+			           DoorComboSets[d].bombdoorcset_r[2]);
+			break;
 	}
 }
 
@@ -1208,184 +1208,184 @@ void putdoor(int t, int side, int door, bool redraw) {
 
 	int doortype;
 	switch (door) {
-	case dOPEN:
-		doortype = dt_pass;
-		break;
-	case dLOCKED:
-		doortype = dt_lock;
-		break;
-	case dUNLOCKED:
-		doortype = dt_olck;
-		break;
-	case d1WAYSHUTTER:
-	case dSHUTTER:
-		doortype = dt_shut;
-		break;
-	case dOPENSHUTTER:
-		doortype = dt_osht;
-		break;
-	case dBOSS:
-		doortype = dt_boss;
-		break;
-	case dOPENBOSS:
-		doortype = dt_obos;
-		break;
-	case dBOMBED:
-		doortype = dt_bomb;
-		break;
-	default:
-		return;
+		case dOPEN:
+			doortype = dt_pass;
+			break;
+		case dLOCKED:
+			doortype = dt_lock;
+			break;
+		case dUNLOCKED:
+			doortype = dt_olck;
+			break;
+		case d1WAYSHUTTER:
+		case dSHUTTER:
+			doortype = dt_shut;
+			break;
+		case dOPENSHUTTER:
+			doortype = dt_osht;
+			break;
+		case dBOSS:
+			doortype = dt_boss;
+			break;
+		case dOPENBOSS:
+			doortype = dt_obos;
+			break;
+		case dBOMBED:
+			doortype = dt_bomb;
+			break;
+		default:
+			return;
 	}
 
 	switch (side) {
-	case up:
-		switch (door) {
-		case dBOMBED:
-			if (redraw) {
-				over_door(t, 39, side);
+		case up:
+			switch (door) {
+				case dBOMBED:
+					if (redraw) {
+						over_door(t, 39, side);
+					}
+				default:
+					put_door(t, 7, side, doortype, redraw);
+					break;
 			}
-		default:
-			put_door(t, 7, side, doortype, redraw);
 			break;
-		}
-		break;
-	case down:
-		switch (door) {
-		case dBOMBED:
-			if (redraw) {
-				over_door(t, 135, side);
+		case down:
+			switch (door) {
+				case dBOMBED:
+					if (redraw) {
+						over_door(t, 135, side);
+					}
+				default:
+					put_door(t, 151, side, doortype, redraw);
+					break;
 			}
-		default:
-			put_door(t, 151, side, doortype, redraw);
 			break;
-		}
-		break;
-	case left:
-		switch (door) {
-		case dBOMBED:
-			if (redraw) {
-				over_door(t, 66, side);
+		case left:
+			switch (door) {
+				case dBOMBED:
+					if (redraw) {
+						over_door(t, 66, side);
+					}
+				default:
+					put_door(t, 64, side, doortype, redraw);
+					break;
 			}
-		default:
-			put_door(t, 64, side, doortype, redraw);
 			break;
-		}
-		break;
-	case right:
-		switch (door) {
-		case dBOMBED:
-			if (redraw) {
-				over_door(t, 77, side);
+		case right:
+			switch (door) {
+				case dBOMBED:
+					if (redraw) {
+						over_door(t, 77, side);
+					}
+				default:
+					put_door(t, 78, side, doortype, redraw);
+					break;
 			}
-		default:
-			put_door(t, 78, side, doortype, redraw);
 			break;
-		}
-		break;
 	}
 }
 
 void showbombeddoor(int side) {
 	int d = tmpscr->door_combo_set;
 	switch (side) {
-	case up:
-		putcombo(framebuf, (7 & 15) << 4, (7 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_u[dt_bomb][0],
-		         DoorComboSets[d].doorcset_u[dt_bomb][0]);
-		putcombo(framebuf, (8 & 15) << 4, (8 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_u[dt_bomb][1],
-		         DoorComboSets[d].doorcset_u[dt_bomb][1]);
-		putcombo(framebuf, (23 & 15) << 4, (23 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_u[dt_bomb][2],
-		         DoorComboSets[d].doorcset_u[dt_bomb][2]);
-		putcombo(framebuf, (24 & 15) << 4, (24 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_u[dt_bomb][3],
-		         DoorComboSets[d].doorcset_u[dt_bomb][3]);
-		overcombo(framebuf, (39 & 15) << 4, (39 & 0xF0) + 56,
-		          DoorComboSets[d].bombdoorcombo_u[0],
-		          DoorComboSets[d].bombdoorcset_u[0]);
-		overcombo(framebuf, (40 & 15) << 4, (40 & 0xF0) + 56,
-		          DoorComboSets[d].bombdoorcombo_u[1],
-		          DoorComboSets[d].bombdoorcset_u[1]);
-		break;
-	case down:
-		putcombo(framebuf, (151 & 15) << 4, (151 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_d[dt_bomb][0],
-		         DoorComboSets[d].doorcset_d[dt_bomb][0]);
-		putcombo(framebuf, (152 & 15) << 4, (152 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_d[dt_bomb][1],
-		         DoorComboSets[d].doorcset_d[dt_bomb][1]);
-		putcombo(framebuf, (167 & 15) << 4, (167 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_d[dt_bomb][2],
-		         DoorComboSets[d].doorcset_d[dt_bomb][2]);
-		putcombo(framebuf, (168 & 15) << 4, (168 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_d[dt_bomb][3],
-		         DoorComboSets[d].doorcset_d[dt_bomb][3]);
-		overcombo(framebuf, (135 & 15) << 4, (135 & 0xF0) + 56,
-		          DoorComboSets[d].bombdoorcombo_d[0],
-		          DoorComboSets[d].bombdoorcset_d[0]);
-		overcombo(framebuf, (136 & 15) << 4, (136 & 0xF0) + 56,
-		          DoorComboSets[d].bombdoorcombo_d[1],
-		          DoorComboSets[d].bombdoorcset_d[1]);
-		break;
-	case left:
-		putcombo(framebuf, (64 & 15) << 4, (64 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_l[dt_bomb][0],
-		         DoorComboSets[d].doorcset_l[dt_bomb][0]);
-		putcombo(framebuf, (65 & 15) << 4, (65 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_l[dt_bomb][1],
-		         DoorComboSets[d].doorcset_l[dt_bomb][1]);
-		putcombo(framebuf, (80 & 15) << 4, (80 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_l[dt_bomb][2],
-		         DoorComboSets[d].doorcset_l[dt_bomb][2]);
-		putcombo(framebuf, (81 & 15) << 4, (81 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_l[dt_bomb][3],
-		         DoorComboSets[d].doorcset_l[dt_bomb][3]);
-		putcombo(framebuf, (96 & 15) << 4, (96 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_l[dt_bomb][4],
-		         DoorComboSets[d].doorcset_l[dt_bomb][4]);
-		putcombo(framebuf, (97 & 15) << 4, (97 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_l[dt_bomb][5],
-		         DoorComboSets[d].doorcset_l[dt_bomb][5]);
-		overcombo(framebuf, (66 & 15) << 4, (66 & 0xF0) + 56,
-		          DoorComboSets[d].bombdoorcombo_l[0],
-		          DoorComboSets[d].bombdoorcset_l[0]);
-		overcombo(framebuf, (82 & 15) << 4, (82 & 0xF0) + 56,
-		          DoorComboSets[d].bombdoorcombo_l[1],
-		          DoorComboSets[d].bombdoorcset_l[1]);
-		overcombo(framebuf, (98 & 15) << 4, (98 & 0xF0) + 56,
-		          DoorComboSets[d].bombdoorcombo_l[2],
-		          DoorComboSets[d].bombdoorcset_l[2]);
-		break;
-	case right:
-		putcombo(framebuf, (78 & 15) << 4, (78 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_r[dt_bomb][0],
-		         DoorComboSets[d].doorcset_r[dt_bomb][0]);
-		putcombo(framebuf, (79 & 15) << 4, (79 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_r[dt_bomb][1],
-		         DoorComboSets[d].doorcset_r[dt_bomb][1]);
-		putcombo(framebuf, (94 & 15) << 4, (94 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_r[dt_bomb][2],
-		         DoorComboSets[d].doorcset_r[dt_bomb][2]);
-		putcombo(framebuf, (95 & 15) << 4, (95 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_r[dt_bomb][3],
-		         DoorComboSets[d].doorcset_r[dt_bomb][3]);
-		putcombo(framebuf, (110 & 15) << 4, (110 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_r[dt_bomb][4],
-		         DoorComboSets[d].doorcset_r[dt_bomb][4]);
-		putcombo(framebuf, (111 & 15) << 4, (111 & 0xF0) + 56,
-		         DoorComboSets[d].doorcombo_r[dt_bomb][5],
-		         DoorComboSets[d].doorcset_r[dt_bomb][5]);
-		overcombo(framebuf, (77 & 15) << 4, (77 & 0xF0) + 56,
-		          DoorComboSets[d].bombdoorcombo_r[0],
-		          DoorComboSets[d].bombdoorcset_r[0]);
-		overcombo(framebuf, (93 & 15) << 4, (93 & 0xF0) + 56,
-		          DoorComboSets[d].bombdoorcombo_r[1],
-		          DoorComboSets[d].bombdoorcset_r[1]);
-		overcombo(framebuf, (109 & 15) << 4, (109 & 0xF0) + 56,
-		          DoorComboSets[d].bombdoorcombo_r[2],
-		          DoorComboSets[d].bombdoorcset_r[2]);
-		break;
+		case up:
+			putcombo(framebuf, (7 & 15) << 4, (7 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_u[dt_bomb][0],
+			         DoorComboSets[d].doorcset_u[dt_bomb][0]);
+			putcombo(framebuf, (8 & 15) << 4, (8 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_u[dt_bomb][1],
+			         DoorComboSets[d].doorcset_u[dt_bomb][1]);
+			putcombo(framebuf, (23 & 15) << 4, (23 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_u[dt_bomb][2],
+			         DoorComboSets[d].doorcset_u[dt_bomb][2]);
+			putcombo(framebuf, (24 & 15) << 4, (24 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_u[dt_bomb][3],
+			         DoorComboSets[d].doorcset_u[dt_bomb][3]);
+			overcombo(framebuf, (39 & 15) << 4, (39 & 0xF0) + 56,
+			          DoorComboSets[d].bombdoorcombo_u[0],
+			          DoorComboSets[d].bombdoorcset_u[0]);
+			overcombo(framebuf, (40 & 15) << 4, (40 & 0xF0) + 56,
+			          DoorComboSets[d].bombdoorcombo_u[1],
+			          DoorComboSets[d].bombdoorcset_u[1]);
+			break;
+		case down:
+			putcombo(framebuf, (151 & 15) << 4, (151 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_d[dt_bomb][0],
+			         DoorComboSets[d].doorcset_d[dt_bomb][0]);
+			putcombo(framebuf, (152 & 15) << 4, (152 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_d[dt_bomb][1],
+			         DoorComboSets[d].doorcset_d[dt_bomb][1]);
+			putcombo(framebuf, (167 & 15) << 4, (167 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_d[dt_bomb][2],
+			         DoorComboSets[d].doorcset_d[dt_bomb][2]);
+			putcombo(framebuf, (168 & 15) << 4, (168 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_d[dt_bomb][3],
+			         DoorComboSets[d].doorcset_d[dt_bomb][3]);
+			overcombo(framebuf, (135 & 15) << 4, (135 & 0xF0) + 56,
+			          DoorComboSets[d].bombdoorcombo_d[0],
+			          DoorComboSets[d].bombdoorcset_d[0]);
+			overcombo(framebuf, (136 & 15) << 4, (136 & 0xF0) + 56,
+			          DoorComboSets[d].bombdoorcombo_d[1],
+			          DoorComboSets[d].bombdoorcset_d[1]);
+			break;
+		case left:
+			putcombo(framebuf, (64 & 15) << 4, (64 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_l[dt_bomb][0],
+			         DoorComboSets[d].doorcset_l[dt_bomb][0]);
+			putcombo(framebuf, (65 & 15) << 4, (65 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_l[dt_bomb][1],
+			         DoorComboSets[d].doorcset_l[dt_bomb][1]);
+			putcombo(framebuf, (80 & 15) << 4, (80 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_l[dt_bomb][2],
+			         DoorComboSets[d].doorcset_l[dt_bomb][2]);
+			putcombo(framebuf, (81 & 15) << 4, (81 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_l[dt_bomb][3],
+			         DoorComboSets[d].doorcset_l[dt_bomb][3]);
+			putcombo(framebuf, (96 & 15) << 4, (96 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_l[dt_bomb][4],
+			         DoorComboSets[d].doorcset_l[dt_bomb][4]);
+			putcombo(framebuf, (97 & 15) << 4, (97 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_l[dt_bomb][5],
+			         DoorComboSets[d].doorcset_l[dt_bomb][5]);
+			overcombo(framebuf, (66 & 15) << 4, (66 & 0xF0) + 56,
+			          DoorComboSets[d].bombdoorcombo_l[0],
+			          DoorComboSets[d].bombdoorcset_l[0]);
+			overcombo(framebuf, (82 & 15) << 4, (82 & 0xF0) + 56,
+			          DoorComboSets[d].bombdoorcombo_l[1],
+			          DoorComboSets[d].bombdoorcset_l[1]);
+			overcombo(framebuf, (98 & 15) << 4, (98 & 0xF0) + 56,
+			          DoorComboSets[d].bombdoorcombo_l[2],
+			          DoorComboSets[d].bombdoorcset_l[2]);
+			break;
+		case right:
+			putcombo(framebuf, (78 & 15) << 4, (78 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_r[dt_bomb][0],
+			         DoorComboSets[d].doorcset_r[dt_bomb][0]);
+			putcombo(framebuf, (79 & 15) << 4, (79 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_r[dt_bomb][1],
+			         DoorComboSets[d].doorcset_r[dt_bomb][1]);
+			putcombo(framebuf, (94 & 15) << 4, (94 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_r[dt_bomb][2],
+			         DoorComboSets[d].doorcset_r[dt_bomb][2]);
+			putcombo(framebuf, (95 & 15) << 4, (95 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_r[dt_bomb][3],
+			         DoorComboSets[d].doorcset_r[dt_bomb][3]);
+			putcombo(framebuf, (110 & 15) << 4, (110 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_r[dt_bomb][4],
+			         DoorComboSets[d].doorcset_r[dt_bomb][4]);
+			putcombo(framebuf, (111 & 15) << 4, (111 & 0xF0) + 56,
+			         DoorComboSets[d].doorcombo_r[dt_bomb][5],
+			         DoorComboSets[d].doorcset_r[dt_bomb][5]);
+			overcombo(framebuf, (77 & 15) << 4, (77 & 0xF0) + 56,
+			          DoorComboSets[d].bombdoorcombo_r[0],
+			          DoorComboSets[d].bombdoorcset_r[0]);
+			overcombo(framebuf, (93 & 15) << 4, (93 & 0xF0) + 56,
+			          DoorComboSets[d].bombdoorcombo_r[1],
+			          DoorComboSets[d].bombdoorcset_r[1]);
+			overcombo(framebuf, (109 & 15) << 4, (109 & 0xF0) + 56,
+			          DoorComboSets[d].bombdoorcombo_r[2],
+			          DoorComboSets[d].bombdoorcset_r[2]);
+			break;
 	}
 }
 
@@ -1436,33 +1436,33 @@ void loadscr(int tmp, int scr, int ldir) {
 			bool putit = true;
 
 			switch (door) {
-			case d1WAYSHUTTER:
-			case dSHUTTER:
-				if ((ldir ^ 1) == i) {
-					tmpscr[tmp].door[i] = dOPENSHUTTER;
-					//          putit=false;
-				}
-				break;
+				case d1WAYSHUTTER:
+				case dSHUTTER:
+					if ((ldir ^ 1) == i) {
+						tmpscr[tmp].door[i] = dOPENSHUTTER;
+						//          putit=false;
+					}
+					break;
 
-			case dLOCKED:
-				if (game.maps[(currmap << 7) + scr] & (1 << i)) {
-					tmpscr[tmp].door[i] = dUNLOCKED;
-					//          putit=false;
-				}
-				break;
+				case dLOCKED:
+					if (game.maps[(currmap << 7) + scr] & (1 << i)) {
+						tmpscr[tmp].door[i] = dUNLOCKED;
+						//          putit=false;
+					}
+					break;
 
-			case dBOSS:
-				if (game.maps[(currmap << 7) + scr] & (1 << i)) {
-					tmpscr[tmp].door[i] = dOPENBOSS;
-					//          putit=false;
-				}
-				break;
+				case dBOSS:
+					if (game.maps[(currmap << 7) + scr] & (1 << i)) {
+						tmpscr[tmp].door[i] = dOPENBOSS;
+						//          putit=false;
+					}
+					break;
 
-			case dBOMB:
-				if (game.maps[(currmap << 7) + scr] & (1 << i)) {
-					tmpscr[tmp].door[i] = dBOMBED;
-				}
-				break;
+				case dBOMB:
+					if (game.maps[(currmap << 7) + scr] & (1 << i)) {
+						tmpscr[tmp].door[i] = dBOMBED;
+					}
+					break;
 			}
 
 			if (putit) {
@@ -1533,36 +1533,36 @@ void loadscr2(int tmp, int scr, int ldir) {
 			bool putit = true;
 
 			switch (door) {
-			case d1WAYSHUTTER:
-			case dSHUTTER:
-				/*
-				        if((ldir^1)==i)
-				        {
-				          tmpscr[tmp].door[i]=dOPENSHUTTER;
-				          //          putit=false;
-				        }
-				*/
-				break;
+				case d1WAYSHUTTER:
+				case dSHUTTER:
+					/*
+					        if((ldir^1)==i)
+					        {
+					          tmpscr[tmp].door[i]=dOPENSHUTTER;
+					          //          putit=false;
+					        }
+					*/
+					break;
 
-			case dLOCKED:
-				if (game.maps[(currmap << 7) + scr] & (1 << i)) {
-					tmpscr[tmp].door[i] = dUNLOCKED;
-					//          putit=false;
-				}
-				break;
+				case dLOCKED:
+					if (game.maps[(currmap << 7) + scr] & (1 << i)) {
+						tmpscr[tmp].door[i] = dUNLOCKED;
+						//          putit=false;
+					}
+					break;
 
-			case dBOSS:
-				if (game.maps[(currmap << 7) + scr] & (1 << i)) {
-					tmpscr[tmp].door[i] = dOPENBOSS;
-					//          putit=false;
-				}
-				break;
+				case dBOSS:
+					if (game.maps[(currmap << 7) + scr] & (1 << i)) {
+						tmpscr[tmp].door[i] = dOPENBOSS;
+						//          putit=false;
+					}
+					break;
 
-			case dBOMB:
-				if (game.maps[(currmap << 7) + scr] & (1 << i)) {
-					tmpscr[tmp].door[i] = dBOMBED;
-				}
-				break;
+				case dBOMB:
+					if (game.maps[(currmap << 7) + scr] & (1 << i)) {
+						tmpscr[tmp].door[i] = dBOMBED;
+					}
+					break;
 			}
 
 			if (putit) {

@@ -116,31 +116,31 @@ extern "C"
 		std::vector<ZCMUSIC*>::iterator b = playlist.begin();
 		while (b != playlist.end()) {
 			switch ((*b)->playing) {
-			case ZCM_STOPPED:
-				// if it has stopped, remove it from playlist;
-				b = playlist.erase(b);
-				break;
-			case ZCM_PLAYING:
-				switch ((*b)->type & flags & libflags) {          // only poll those specified by 'flags'
-				case ZCMF_DUH:
-					if (((DUHFILE*)*b)->p) {
-						al_poll_duh(((DUHFILE*)*b)->p);
+				case ZCM_STOPPED:
+					// if it has stopped, remove it from playlist;
+					b = playlist.erase(b);
+					break;
+				case ZCM_PLAYING:
+					switch ((*b)->type & flags & libflags) {          // only poll those specified by 'flags'
+						case ZCMF_DUH:
+							if (((DUHFILE*)*b)->p) {
+								al_poll_duh(((DUHFILE*)*b)->p);
+							}
+							break;
+						case ZCMF_OGG:
+							poll_ogg_file((OGGFILE*)*b);
+							break;
+						case ZCMF_MP3:
+							poll_mp3_file((MP3FILE*)*b);
+							break;
+						case ZCMF_GME:
+							if (((GMEFILE*)*b)->emu) {
+								poll_gme_file((GMEFILE*)*b);
+							}
+							break;
 					}
-					break;
-				case ZCMF_OGG:
-					poll_ogg_file((OGGFILE*)*b);
-					break;
-				case ZCMF_MP3:
-					poll_mp3_file((MP3FILE*)*b);
-					break;
-				case ZCMF_GME:
-					if (((GMEFILE*)*b)->emu) {
-						poll_gme_file((GMEFILE*)*b);
-					}
-					break;
-				}
-			case ZCM_PAUSED:
-				b++;
+				case ZCM_PAUSED:
+					b++;
 			}
 		}
 		return true;
@@ -289,62 +289,62 @@ error:
 
 		if (zcm->playing != ZCM_STOPPED) {                      // adjust volume
 			switch (zcm->type & libflags) {
-			case ZCMF_DUH:
-				if (((DUHFILE*)zcm)->p != NULL) {
-					al_duh_set_volume(((DUHFILE*)zcm)->p, (float)vol / (float)255);
-				}
-				break;
-			case ZCMF_OGG:
-				if (((OGGFILE*)zcm)->s != NULL) {
-					/*pan*/
-					alogg_adjust_oggstream(((OGGFILE*)zcm)->s, vol, 128, 1000/*speed*/);
-					((OGGFILE*)zcm)->vol = vol;
-				}
-				break;
-			case ZCMF_MP3:
-				if (((MP3FILE*)zcm)->s != NULL) {
-					/*pan*/
-					almp3_adjust_mp3stream(((MP3FILE*)zcm)->s, vol, 128, 1000/*speed*/);
-					((MP3FILE*)zcm)->vol = vol;
-				}
-				break;
-			case ZCMF_GME:
-				// need to figure out volume switch
-				break;
+				case ZCMF_DUH:
+					if (((DUHFILE*)zcm)->p != NULL) {
+						al_duh_set_volume(((DUHFILE*)zcm)->p, (float)vol / (float)255);
+					}
+					break;
+				case ZCMF_OGG:
+					if (((OGGFILE*)zcm)->s != NULL) {
+						/*pan*/
+						alogg_adjust_oggstream(((OGGFILE*)zcm)->s, vol, 128, 1000/*speed*/);
+						((OGGFILE*)zcm)->vol = vol;
+					}
+					break;
+				case ZCMF_MP3:
+					if (((MP3FILE*)zcm)->s != NULL) {
+						/*pan*/
+						almp3_adjust_mp3stream(((MP3FILE*)zcm)->s, vol, 128, 1000/*speed*/);
+						((MP3FILE*)zcm)->vol = vol;
+					}
+					break;
+				case ZCMF_GME:
+					// need to figure out volume switch
+					break;
 			}
 		} else {
 			switch (zcm->type & libflags) {
-			case ZCMF_DUH:
-				if (((DUHFILE*)zcm)->s != NULL) {
-					((DUHFILE*)zcm)->p = al_start_duh(((DUHFILE*)zcm)->s, DUH_CHANNELS, 0/*pos*/, ((float)vol) / (float)255, (zcmusic_bufsz_private * 1024)/*bufsize*/, DUH_SAMPLES);
-					ret = (((DUHFILE*)zcm)->p != NULL) ? TRUE : FALSE;
-				}
-				break;
-			case ZCMF_OGG:
-				if (((OGGFILE*)zcm)->s != NULL) {
-					if (alogg_play_oggstream(((OGGFILE*)zcm)->s, (zcmusic_bufsz_private * 1024), vol, 128) != ALOGG_OK) {
+				case ZCMF_DUH:
+					if (((DUHFILE*)zcm)->s != NULL) {
+						((DUHFILE*)zcm)->p = al_start_duh(((DUHFILE*)zcm)->s, DUH_CHANNELS, 0/*pos*/, ((float)vol) / (float)255, (zcmusic_bufsz_private * 1024)/*bufsize*/, DUH_SAMPLES);
+						ret = (((DUHFILE*)zcm)->p != NULL) ? TRUE : FALSE;
+					}
+					break;
+				case ZCMF_OGG:
+					if (((OGGFILE*)zcm)->s != NULL) {
+						if (alogg_play_oggstream(((OGGFILE*)zcm)->s, (zcmusic_bufsz_private * 1024), vol, 128) != ALOGG_OK) {
+							ret = FALSE;
+						}
+						((OGGFILE*)zcm)->vol = vol;
+					} else {
 						ret = FALSE;
 					}
-					((OGGFILE*)zcm)->vol = vol;
-				} else {
-					ret = FALSE;
-				}
-				break;
-			case ZCMF_MP3:
-				if (((MP3FILE*)zcm)->s != NULL) {
-					if (almp3_play_mp3stream(((MP3FILE*)zcm)->s, (zcmusic_bufsz_private * 1024), vol, 128) != ALMP3_OK) {
+					break;
+				case ZCMF_MP3:
+					if (((MP3FILE*)zcm)->s != NULL) {
+						if (almp3_play_mp3stream(((MP3FILE*)zcm)->s, (zcmusic_bufsz_private * 1024), vol, 128) != ALMP3_OK) {
+							ret = FALSE;
+						}
+						((MP3FILE*)zcm)->vol = vol;
+					} else {
 						ret = FALSE;
 					}
-					((MP3FILE*)zcm)->vol = vol;
-				} else {
-					ret = FALSE;
-				}
-				break;
-			case ZCMF_GME:
-				if (((GMEFILE*)zcm)->emu != NULL) {
-					gme_play((GMEFILE*) zcm, vol);
-				}
-				break;
+					break;
+				case ZCMF_GME:
+					if (((GMEFILE*)zcm)->emu != NULL) {
+						gme_play((GMEFILE*) zcm, vol);
+					}
+					break;
 			}
 
 			if (ret != FALSE) {
@@ -367,51 +367,51 @@ error:
 		if (zcm->playing != ZCM_STOPPED) {
 			int p = ZCM_PLAYING;
 			switch (pause) {
-			case ZCM_TOGGLE:
-				p = (zcm->playing == ZCM_PAUSED) ? ZCM_PLAYING : ZCM_PAUSED;
-				break;
-			case ZCM_RESUME:
-				p = ZCM_PLAYING;
-				break;
-			case ZCM_PAUSE:
-				p = ZCM_PAUSED;
-				break;
+				case ZCM_TOGGLE:
+					p = (zcm->playing == ZCM_PAUSED) ? ZCM_PLAYING : ZCM_PAUSED;
+					break;
+				case ZCM_RESUME:
+					p = ZCM_PLAYING;
+					break;
+				case ZCM_PAUSE:
+					p = ZCM_PAUSED;
+					break;
 			}
 			if (p != zcm->playing) {                              // if the state has actually changed
 				zcm->playing = p;
 				switch (zcm->type & libflags) {
-				case ZCMF_DUH:
-					if (((DUHFILE*)zcm)->p != NULL) {
+					case ZCMF_DUH:
+						if (((DUHFILE*)zcm)->p != NULL) {
+							if (p == ZCM_PAUSED) {
+								al_pause_duh(((DUHFILE*)zcm)->p);
+							} else {
+								al_resume_duh(((DUHFILE*)zcm)->p);
+							}
+							break;
+						}
+					case ZCMF_OGG:
 						if (p == ZCM_PAUSED) {
-							al_pause_duh(((DUHFILE*)zcm)->p);
+							ogg_pause((OGGFILE*)zcm);
 						} else {
-							al_resume_duh(((DUHFILE*)zcm)->p);
+							ogg_resume((OGGFILE*)zcm);
 						}
 						break;
-					}
-				case ZCMF_OGG:
-					if (p == ZCM_PAUSED) {
-						ogg_pause((OGGFILE*)zcm);
-					} else {
-						ogg_resume((OGGFILE*)zcm);
-					}
-					break;
-				case ZCMF_MP3:
-					if (p == ZCM_PAUSED) {
-						mp3_pause((MP3FILE*)zcm);
-					} else {
-						mp3_resume((MP3FILE*)zcm);
-					}
-					break;
-				case ZCMF_GME:
-					if (((GMEFILE*)zcm)->emu != NULL) {
+					case ZCMF_MP3:
 						if (p == ZCM_PAUSED) {
-							voice_stop(((GMEFILE*)zcm)->stream->voice);
+							mp3_pause((MP3FILE*)zcm);
 						} else {
-							voice_start(((GMEFILE*)zcm)->stream->voice);
+							mp3_resume((MP3FILE*)zcm);
 						}
 						break;
-					}
+					case ZCMF_GME:
+						if (((GMEFILE*)zcm)->emu != NULL) {
+							if (p == ZCM_PAUSED) {
+								voice_stop(((GMEFILE*)zcm)->stream->voice);
+							} else {
+								voice_start(((GMEFILE*)zcm)->stream->voice);
+							}
+							break;
+						}
 
 				}
 			}
@@ -426,27 +426,27 @@ error:
 			return FALSE;
 		}
 		switch (zcm->type & libflags) {
-		case ZCMF_DUH:
-			if (((DUHFILE*)zcm)->p != NULL) {
-				al_stop_duh(((DUHFILE*)zcm)->p);
-				((DUHFILE*)zcm)->p = NULL;
-				zcm->playing = ZCM_STOPPED;
-			}
-			break;
-		case ZCMF_OGG:
-			ogg_reset((OGGFILE*)zcm);
-			break;
-		case ZCMF_MP3:
-			mp3_reset((MP3FILE*)zcm);
-			break;
-		case ZCMF_GME:
-			if (((GMEFILE*)zcm)->emu != NULL) {
-				if (zcm->playing != ZCM_STOPPED) {
-					stop_audio_stream(((GMEFILE*)zcm)->stream);
+			case ZCMF_DUH:
+				if (((DUHFILE*)zcm)->p != NULL) {
+					al_stop_duh(((DUHFILE*)zcm)->p);
+					((DUHFILE*)zcm)->p = NULL;
+					zcm->playing = ZCM_STOPPED;
 				}
-				zcm->playing = ZCM_STOPPED;
-			}
-			break;
+				break;
+			case ZCMF_OGG:
+				ogg_reset((OGGFILE*)zcm);
+				break;
+			case ZCMF_MP3:
+				mp3_reset((MP3FILE*)zcm);
+				break;
+			case ZCMF_GME:
+				if (((GMEFILE*)zcm)->emu != NULL) {
+					if (zcm->playing != ZCM_STOPPED) {
+						stop_audio_stream(((GMEFILE*)zcm)->stream);
+					}
+					zcm->playing = ZCM_STOPPED;
+				}
+				break;
 
 		}
 		return TRUE;
@@ -476,26 +476,26 @@ error:
 		}
 
 		switch (zcm->type & libflags) {
-		case ZCMF_DUH:
-			if (((DUHFILE*)zcm)->p != NULL) {
-				zcmusic_stop(zcm);
-				((DUHFILE*)zcm)->p = NULL;
-			}
-			if (((DUHFILE*)zcm)->s != NULL) {
-				unload_duh(((DUHFILE*)zcm)->s);
-				((DUHFILE*)zcm)->s = NULL;
-				free(zcm);
-			}
-			break;
-		case ZCMF_OGG:
-			unload_ogg_file((OGGFILE*)zcm);
-			break;
-		case ZCMF_MP3:
-			unload_mp3_file((MP3FILE*)zcm);
-			break;
-		case ZCMF_GME:
-			unload_gme_file((GMEFILE*)zcm);
-			break;
+			case ZCMF_DUH:
+				if (((DUHFILE*)zcm)->p != NULL) {
+					zcmusic_stop(zcm);
+					((DUHFILE*)zcm)->p = NULL;
+				}
+				if (((DUHFILE*)zcm)->s != NULL) {
+					unload_duh(((DUHFILE*)zcm)->s);
+					((DUHFILE*)zcm)->s = NULL;
+					free(zcm);
+				}
+				break;
+			case ZCMF_OGG:
+				unload_ogg_file((OGGFILE*)zcm);
+				break;
+			case ZCMF_MP3:
+				unload_mp3_file((MP3FILE*)zcm);
+				break;
+			case ZCMF_GME:
+				unload_gme_file((GMEFILE*)zcm);
+				break;
 		}
 		zcm = NULL;
 		return;
@@ -506,19 +506,19 @@ error:
 			return 0;
 		}
 		switch (zcm->type & libflags) {
-		case ZCMF_DUH:
-		case ZCMF_OGG:
-		case ZCMF_MP3:
-			return 0;
-			break;
-		case ZCMF_GME:
-			if (((GMEFILE*)zcm)->emu != NULL) {
-				int t = ((GMEFILE*)zcm)->emu->track_count();
-				return (t > 1) ? t : 0;
-			} else {
+			case ZCMF_DUH:
+			case ZCMF_OGG:
+			case ZCMF_MP3:
 				return 0;
-			}
-			break;
+				break;
+			case ZCMF_GME:
+				if (((GMEFILE*)zcm)->emu != NULL) {
+					int t = ((GMEFILE*)zcm)->emu->track_count();
+					return (t > 1) ? t : 0;
+				} else {
+					return 0;
+				}
+				break;
 		}
 		return 0;
 	}
@@ -528,23 +528,23 @@ error:
 			return -1;
 		}
 		switch (zcm->type & libflags) {
-		case ZCMF_DUH:
-		case ZCMF_OGG:
-		case ZCMF_MP3:
-			return -1;
-			break;
-		case ZCMF_GME:
-			if (((GMEFILE*)zcm)->emu != NULL) {
-				int t = ((GMEFILE*)zcm)->emu->track_count();
-				if (tracknum < 0 || tracknum >= t) {
-					tracknum = 0;
-				}
-				((GMEFILE*)zcm)->emu->start_track(tracknum);
-				return tracknum;
-			} else {
+			case ZCMF_DUH:
+			case ZCMF_OGG:
+			case ZCMF_MP3:
 				return -1;
-			}
-			break;
+				break;
+			case ZCMF_GME:
+				if (((GMEFILE*)zcm)->emu != NULL) {
+					int t = ((GMEFILE*)zcm)->emu->track_count();
+					if (tracknum < 0 || tracknum >= t) {
+						tracknum = 0;
+					}
+					((GMEFILE*)zcm)->emu->start_track(tracknum);
+					return tracknum;
+				} else {
+					return -1;
+				}
+				break;
 		}
 		return 0;
 	}

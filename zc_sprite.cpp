@@ -22,26 +22,26 @@ void sprite::check_conveyor() {
 		int ctype = (combobuf[MAPDATA(x + 8, y + 8)].type);
 		if ((ctype >= cCVUP) && (ctype <= cCVRIGHT)) {
 			switch (ctype - cCVUP) {
-			case up:
-				if (!_walkflag(x, y + 8 - 2, 2)) {
-					y = y - 2;
-				}
-				break;
-			case down:
-				if (!_walkflag(x, y + 15 + 2, 2)) {
-					y = y + 2;
-				}
-				break;
-			case left:
-				if (!_walkflag(x - 2, y + 8, 1)) {
-					x = x - 2;
-				}
-				break;
-			case right:
-				if (!_walkflag(x + 15 + 2, y + 8, 1)) {
-					x = x + 2;
-				}
-				break;
+				case up:
+					if (!_walkflag(x, y + 8 - 2, 2)) {
+						y = y - 2;
+					}
+					break;
+				case down:
+					if (!_walkflag(x, y + 15 + 2, 2)) {
+						y = y + 2;
+					}
+					break;
+				case left:
+					if (!_walkflag(x - 2, y + 8, 1)) {
+						x = x - 2;
+					}
+					break;
+				case right:
+					if (!_walkflag(x + 15 + 2, y + 8, 1)) {
+						x = x + 2;
+					}
+					break;
 			}
 		}
 	}

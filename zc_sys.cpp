@@ -195,54 +195,54 @@ bool game_vid_mode(int mode, int wait) {
 
 #ifdef ALLEGRO_DOS
 	switch (mode) {
-	case GFX_AUTODETECT:
-	case GFX_VESA3:
-		if (set_gfx_mode(GFX_VESA3, resx, resy, 0, 0) == 0) {
-			VidMode = GFX_VESA3;
+		case GFX_AUTODETECT:
+		case GFX_VESA3:
+			if (set_gfx_mode(GFX_VESA3, resx, resy, 0, 0) == 0) {
+				VidMode = GFX_VESA3;
+				break;
+			}
+		case GFX_VESA2L:
+			if (set_gfx_mode(GFX_VESA2L, resx, resy, 0, 0) == 0) {
+				VidMode = GFX_VESA2L;
+				break;
+			}
+		case GFX_VESA2B:
+			if (set_gfx_mode(GFX_VESA2B, resx, resy, 0, 0) == 0) {
+				VidMode = GFX_VESA2B;
+				break;
+			}
+		case GFX_VESA1:
+			if (set_gfx_mode(GFX_VESA1, resx, resy, 0, 0) == 0) {
+				VidMode = GFX_VESA1;
+				break;
+			}
+		case GFX_MODEX:
+			if (set_gfx_mode(GFX_MODEX, 320, 240, 0, 0) == 0) {
+				VidMode = GFX_MODEX;
+				resx = 320;
+				resy = 240;
+				sbig = false;
+				break;
+			}
+		default:
+			return false;
 			break;
-		}
-	case GFX_VESA2L:
-		if (set_gfx_mode(GFX_VESA2L, resx, resy, 0, 0) == 0) {
-			VidMode = GFX_VESA2L;
-			break;
-		}
-	case GFX_VESA2B:
-		if (set_gfx_mode(GFX_VESA2B, resx, resy, 0, 0) == 0) {
-			VidMode = GFX_VESA2B;
-			break;
-		}
-	case GFX_VESA1:
-		if (set_gfx_mode(GFX_VESA1, resx, resy, 0, 0) == 0) {
-			VidMode = GFX_VESA1;
-			break;
-		}
-	case GFX_MODEX:
-		if (set_gfx_mode(GFX_MODEX, 320, 240, 0, 0) == 0) {
-			VidMode = GFX_MODEX;
-			resx = 320;
-			resy = 240;
-			sbig = false;
-			break;
-		}
-	default:
-		return false;
-		break;
 	}
 #else
 	switch (mode) {
-	case GFX_AUTODETECT_FULLSCREEN:
-		if (set_gfx_mode(GFX_AUTODETECT_FULLSCREEN, resx, resy, 0, 0) == 0) {
-			VidMode = GFX_AUTODETECT_FULLSCREEN;
-		}
-		break;
-	case GFX_AUTODETECT_WINDOWED:
-		if (set_gfx_mode(GFX_AUTODETECT_WINDOWED, resx, resy, 0, 0) == 0) {
-			VidMode = GFX_AUTODETECT_WINDOWED;
-		}
-		break;
-	default:
-		return false;
-		break;
+		case GFX_AUTODETECT_FULLSCREEN:
+			if (set_gfx_mode(GFX_AUTODETECT_FULLSCREEN, resx, resy, 0, 0) == 0) {
+				VidMode = GFX_AUTODETECT_FULLSCREEN;
+			}
+			break;
+		case GFX_AUTODETECT_WINDOWED:
+			if (set_gfx_mode(GFX_AUTODETECT_WINDOWED, resx, resy, 0, 0) == 0) {
+				VidMode = GFX_AUTODETECT_WINDOWED;
+			}
+			break;
+		default:
+			return false;
+			break;
 	}
 #endif
 
@@ -1015,58 +1015,58 @@ void black_opening(BITMAP* dest, int x, int y, int a, int max_a) {
 	clear_to_color(tmp_scr, BLACK);
 	int w = 256, h = 224;
 	switch (black_opening_shape) {
-	case bosOVAL: {
-		double new_w = (w / 2) + abs(w / 2 - x);
-		double new_h = (h / 2) + abs(h / 2 - y);
-		double b = sqrt(((new_w * new_w) / 4) + (new_h * new_h));
-		ellipsefill(tmp_scr, x, y, int(2 * a * b / max_a), int(a * b / max_a), 0);
-		break;
-	}
-	case bosTRIANGLE: {
-		double new_w = (w / 2) + abs(w / 2 - x);
-		double new_h = (h / 2) + abs(h / 2 - y);
-		double r = a * (new_w * sqrt(3) + new_h) / max_a;
-		double P2 = (PI / 2);
-		double P23 = (2 * PI / 3);
-		double P43 = (4 * PI / 3);
-		double Pa = (-4 * PI * a / (3 * max_a));
-		double angle = P2 + Pa;
-		double a0 = angle;
-		double a2 = angle + P23;
-		double a4 = angle + P43;
-		triangle(tmp_scr, x + int(cos(a0)*r), y - int(sin(a0)*r),
-		         x + int(cos(a2)*r), y - int(sin(a2)*r),
-		         x + int(cos(a4)*r), y - int(sin(a4)*r),
-		         0);
-		break;
-	}
-	case bosSMAS: {
-		int distance = max(abs(w / 2 - x), abs(h / 2 - y)) / 8;
-		for (int blockrow = 0; blockrow < 28; ++blockrow) { //30
-			for (int linerow = 0; linerow < 8; ++linerow) {
-				qword* triangleline = (qword*)(tmp_scr->line[(blockrow * 8 + linerow)]);
-				for (int blockcolumn = 0; blockcolumn < 32; ++blockcolumn) { //40
-					//*triangleline=triangles[(screen_triangles[blockrow][blockcolumn]&0xC000)>>14][min(max((((max_a-a)/2)+(screen_triangles[blockrow][blockcolumn]&0x0FFF)-15),0),15)][linerow];
-					*triangleline = triangles[(screen_triangles[blockrow][blockcolumn] & 0xC000) >> 14]
-					                [min(max((((31 + distance) * (max_a - a) / max_a) + ((screen_triangles[blockrow][blockcolumn] & 0x0FFF) - 0x0100) - (15 + distance)), 0), 15)]
-					                [linerow];
-					++triangleline;
-					if (linerow == 0) {
+		case bosOVAL: {
+			double new_w = (w / 2) + abs(w / 2 - x);
+			double new_h = (h / 2) + abs(h / 2 - y);
+			double b = sqrt(((new_w * new_w) / 4) + (new_h * new_h));
+			ellipsefill(tmp_scr, x, y, int(2 * a * b / max_a), int(a * b / max_a), 0);
+			break;
+		}
+		case bosTRIANGLE: {
+			double new_w = (w / 2) + abs(w / 2 - x);
+			double new_h = (h / 2) + abs(h / 2 - y);
+			double r = a * (new_w * sqrt(3) + new_h) / max_a;
+			double P2 = (PI / 2);
+			double P23 = (2 * PI / 3);
+			double P43 = (4 * PI / 3);
+			double Pa = (-4 * PI * a / (3 * max_a));
+			double angle = P2 + Pa;
+			double a0 = angle;
+			double a2 = angle + P23;
+			double a4 = angle + P43;
+			triangle(tmp_scr, x + int(cos(a0)*r), y - int(sin(a0)*r),
+			         x + int(cos(a2)*r), y - int(sin(a2)*r),
+			         x + int(cos(a4)*r), y - int(sin(a4)*r),
+			         0);
+			break;
+		}
+		case bosSMAS: {
+			int distance = max(abs(w / 2 - x), abs(h / 2 - y)) / 8;
+			for (int blockrow = 0; blockrow < 28; ++blockrow) { //30
+				for (int linerow = 0; linerow < 8; ++linerow) {
+					qword* triangleline = (qword*)(tmp_scr->line[(blockrow * 8 + linerow)]);
+					for (int blockcolumn = 0; blockcolumn < 32; ++blockcolumn) { //40
+						//*triangleline=triangles[(screen_triangles[blockrow][blockcolumn]&0xC000)>>14][min(max((((max_a-a)/2)+(screen_triangles[blockrow][blockcolumn]&0x0FFF)-15),0),15)][linerow];
+						*triangleline = triangles[(screen_triangles[blockrow][blockcolumn] & 0xC000) >> 14]
+						                [min(max((((31 + distance) * (max_a - a) / max_a) + ((screen_triangles[blockrow][blockcolumn] & 0x0FFF) - 0x0100) - (15 + distance)), 0), 15)]
+						                [linerow];
+						++triangleline;
+						if (linerow == 0) {
+						}
 					}
 				}
 			}
+			break;
 		}
-		break;
-	}
-	case bosCIRCLE:
-	default: {
-		double new_w = (w / 2) + abs(w / 2 - x);
-		double new_h = (h / 2) + abs(h / 2 - y);
-		int r = int(sqrt((new_w * new_w) + (new_h * new_h)) * a / max_a);
-		//circlefill(tmp_scr,x,y,a<<3,0);
-		circlefill(tmp_scr, x, y, r, 0);
-		break;
-	}
+		case bosCIRCLE:
+		default: {
+			double new_w = (w / 2) + abs(w / 2 - x);
+			double new_h = (h / 2) + abs(h / 2 - y);
+			int r = int(sqrt((new_w * new_w) + (new_h * new_h)) * a / max_a);
+			//circlefill(tmp_scr,x,y,a<<3,0);
+			circlefill(tmp_scr, x, y, r, 0);
+			break;
+		}
 	}
 	masked_blit(tmp_scr, dest, 0, 0, 0, 0, 320, 240);
 }
@@ -1086,116 +1086,116 @@ bool can_use_item(int item_type, int item) {                //can Link use this 
 
 bool has_item(int item_type, int it) {                      //does Link possess this item?
 	switch (item_type) {
-	case itype_bomb:
-	case itype_sbomb:
-		return (game.items[item_type] > 0);
-		break;
-	case itype_clock:
-		return Link.getClock() ? 1 : 0;
-	case itype_key:
-		return (game.keys > 0);
-	case itype_magiccontainer:
-		return (game.maxmagic >= MAGICPERBLOCK);
-	case itype_triforcepiece: {                             //it: -2=any, -1=current level, other=that level
-		switch (it) {
-		case -2: {
-			for (int i = 0; i < MAXLEVELS; i++) {
-				if (game.lvlitems[i] | liTRIFORCE)
+		case itype_bomb:
+		case itype_sbomb:
+			return (game.items[item_type] > 0);
+			break;
+		case itype_clock:
+			return Link.getClock() ? 1 : 0;
+		case itype_key:
+			return (game.keys > 0);
+		case itype_magiccontainer:
+			return (game.maxmagic >= MAGICPERBLOCK);
+		case itype_triforcepiece: {                             //it: -2=any, -1=current level, other=that level
+			switch (it) {
+				case -2: {
+					for (int i = 0; i < MAXLEVELS; i++) {
+						if (game.lvlitems[i] | liTRIFORCE)
 
-				{
-					return true;
+						{
+							return true;
+						}
+					}
+					return false;
+					break;
 				}
+				case -1:
+					return (game.lvlitems[dlevel] | liTRIFORCE);
+					break;
+				default:
+					if (it >= 0 && it < MAXLEVELS) {
+						return (game.lvlitems[it] | liTRIFORCE);
+					}
+					break;
 			}
-			return false;
-			break;
+			return 0;
 		}
-		case -1:
-			return (game.lvlitems[dlevel] | liTRIFORCE);
-			break;
-		default:
-			if (it >= 0 && it < MAXLEVELS) {
-				return (game.lvlitems[it] | liTRIFORCE);
-			}
-			break;
-		}
-		return 0;
-	}
-	case itype_map: {                                       //it: -2=any, -1=current level, other=that level
-		switch (it) {
-		case -2: {
-			for (int i = 0; i < MAXLEVELS; i++) {
-				if (game.lvlitems[i] | liMAP) {
-					return true;
+		case itype_map: {                                       //it: -2=any, -1=current level, other=that level
+			switch (it) {
+				case -2: {
+					for (int i = 0; i < MAXLEVELS; i++) {
+						if (game.lvlitems[i] | liMAP) {
+							return true;
+						}
+					}
+					return false;
 				}
+				break;
+				case -1:
+					return (game.lvlitems[dlevel] | liMAP);
+					break;
+				default:
+					if (it >= 0 && it < MAXLEVELS) {
+						return (game.lvlitems[it] | liMAP);
+					}
+					break;
 			}
-			return false;
+			return 0;
 		}
-		break;
-		case -1:
-			return (game.lvlitems[dlevel] | liMAP);
-			break;
-		default:
-			if (it >= 0 && it < MAXLEVELS) {
-				return (game.lvlitems[it] | liMAP);
-			}
-			break;
-		}
-		return 0;
-	}
-	case itype_compass: {                                   //it: -2=any, -1=current level, other=that level
-		switch (it) {
-		case -2: {
-			for (int i = 0; i < MAXLEVELS; i++) {
-				if (game.lvlitems[i] | liCOMPASS) {
-					return true;
+		case itype_compass: {                                   //it: -2=any, -1=current level, other=that level
+			switch (it) {
+				case -2: {
+					for (int i = 0; i < MAXLEVELS; i++) {
+						if (game.lvlitems[i] | liCOMPASS) {
+							return true;
+						}
+					}
+					return false;
+					break;
 				}
+				case -1:
+					return (game.lvlitems[dlevel] | liCOMPASS);
+					break;
+				default:
+					if (it >= 0 && it < MAXLEVELS) {
+						return (game.lvlitems[it] | liCOMPASS);
+					}
+					break;
 			}
-			return false;
-			break;
+			return 0;
 		}
-		case -1:
-			return (game.lvlitems[dlevel] | liCOMPASS);
-			break;
-		default:
-			if (it >= 0 && it < MAXLEVELS) {
-				return (game.lvlitems[it] | liCOMPASS);
-			}
-			break;
-		}
-		return 0;
-	}
-	case itype_bosskey: {                                   //it: -2=any, -1=current level, other=that level
-		switch (it) {
-		case -2: {
-			for (int i = 0; i < MAXLEVELS; i++) {
-				if (game.lvlitems[i] | liBOSSKEY) {
-					return true;
+		case itype_bosskey: {                                   //it: -2=any, -1=current level, other=that level
+			switch (it) {
+				case -2: {
+					for (int i = 0; i < MAXLEVELS; i++) {
+						if (game.lvlitems[i] | liBOSSKEY) {
+							return true;
+						}
+					}
+					return false;
+					break;
 				}
+				case -1:
+					return (game.lvlitems[dlevel] | liBOSSKEY) ? 1 : 0;
+					break;
+				default:
+					if (it >= 0 && it < MAXLEVELS) {
+						return (game.lvlitems[it] | liBOSSKEY) ? 1 : 0;
+					}
+					break;
 			}
-			return false;
-			break;
+			return 0;
 		}
-		case -1:
-			return (game.lvlitems[dlevel] | liBOSSKEY) ? 1 : 0;
-			break;
 		default:
-			if (it >= 0 && it < MAXLEVELS) {
-				return (game.lvlitems[it] | liBOSSKEY) ? 1 : 0;
+			it = (1 << (it - 1));
+			if (item_type >= itype_max) {
+				Z_message("Error - has_item() exception.");
+				return false;
+			}
+			if (game.items[item_type]&it) {
+				return true;
 			}
 			break;
-		}
-		return 0;
-	}
-	default:
-		it = (1 << (it - 1));
-		if (item_type >= itype_max) {
-			Z_message("Error - has_item() exception.");
-			return false;
-		}
-		if (game.items[item_type]&it) {
-			return true;
-		}
-		break;
 	}
 	return false;
 }
@@ -1224,133 +1224,133 @@ int high_item(int jmax, int item_type, bool consecutive, int itemcluster, bool u
 int current_item(int item_type, bool consecutive) {         //item currently being used
 	int jmax = 0;
 	switch (item_type) {
-	case itype_sword:
-		jmax = imax_sword;
-		break;
-	case itype_brang:
-		jmax = imax_brang;
-		break;
-	case itype_arrow:
-		jmax = imax_arrow;
-		break;
-	case itype_candle:
-		jmax = imax_candle;
-		break;
-	case itype_whistle:
-		jmax = imax_whistle;
-		break;
-	case itype_bait:
-		jmax = imax_bait;
-		break;
-	case itype_letter:
-		jmax = imax_letter;
-		break;
-	case itype_potion:
-		jmax = imax_potion;
-		break;
-	case itype_wand:
-		jmax = imax_wand;
-		break;
-	case itype_ring:
-		jmax = imax_ring;
-		break;
-	case itype_wallet:
-		jmax = imax_wallet;
-		break;
-	case itype_amulet:
-		jmax = imax_amulet;
-		break;
-	case itype_shield:
-		jmax = imax_shield;
-		break;
-	case itype_bow:
-		jmax = imax_bow;
-		break;
-	case itype_raft:
-		jmax = imax_raft;
-		break;
-	case itype_ladder:
-		jmax = imax_ladder;
-		break;
-	case itype_book:
-		jmax = imax_book;
-		break;
-	case itype_magickey:
-		jmax = imax_magickey;
-		break;
-	case itype_bracelet:
-		jmax = imax_bracelet;
-		break;
-	case itype_flippers:
-		jmax = imax_flippers;
-		break;
-	case itype_boots:
-		jmax = imax_boots;
-		break;
-	case itype_hookshot:
-		jmax = imax_hookshot;
-		break;
-	case itype_lens:
-		jmax = imax_lens;
-		break;
-	case itype_hammer:
-		jmax = imax_hammer;
-		break;
-	case itype_dinsfire:
-		jmax = imax_dinsfire;
-		break;
-	case itype_faroreswind:
-		jmax = imax_faroreswind;
-		break;
-	case itype_nayruslove:
-		jmax = imax_nayruslove;
-		break;
-	case itype_bomb:
-	case itype_sbomb:
-		return can_use_item(item_type, 1) ? game.items[item_type] : 0;
-		break;
-	case itype_clock:
-		return has_item(itype_clock, 1) ? 1 : 0;
-		break;
-	case itype_key:
-		return game.keys;
-	case itype_magiccontainer:
-		return game.maxmagic / MAGICPERBLOCK;
-	case itype_triforcepiece: {
-		int count = 0;
-		for (int i = 0; i < MAXLEVELS; i++) {
-			count += (game.lvlitems[i] | liTRIFORCE) ? 1 : 0;
+		case itype_sword:
+			jmax = imax_sword;
+			break;
+		case itype_brang:
+			jmax = imax_brang;
+			break;
+		case itype_arrow:
+			jmax = imax_arrow;
+			break;
+		case itype_candle:
+			jmax = imax_candle;
+			break;
+		case itype_whistle:
+			jmax = imax_whistle;
+			break;
+		case itype_bait:
+			jmax = imax_bait;
+			break;
+		case itype_letter:
+			jmax = imax_letter;
+			break;
+		case itype_potion:
+			jmax = imax_potion;
+			break;
+		case itype_wand:
+			jmax = imax_wand;
+			break;
+		case itype_ring:
+			jmax = imax_ring;
+			break;
+		case itype_wallet:
+			jmax = imax_wallet;
+			break;
+		case itype_amulet:
+			jmax = imax_amulet;
+			break;
+		case itype_shield:
+			jmax = imax_shield;
+			break;
+		case itype_bow:
+			jmax = imax_bow;
+			break;
+		case itype_raft:
+			jmax = imax_raft;
+			break;
+		case itype_ladder:
+			jmax = imax_ladder;
+			break;
+		case itype_book:
+			jmax = imax_book;
+			break;
+		case itype_magickey:
+			jmax = imax_magickey;
+			break;
+		case itype_bracelet:
+			jmax = imax_bracelet;
+			break;
+		case itype_flippers:
+			jmax = imax_flippers;
+			break;
+		case itype_boots:
+			jmax = imax_boots;
+			break;
+		case itype_hookshot:
+			jmax = imax_hookshot;
+			break;
+		case itype_lens:
+			jmax = imax_lens;
+			break;
+		case itype_hammer:
+			jmax = imax_hammer;
+			break;
+		case itype_dinsfire:
+			jmax = imax_dinsfire;
+			break;
+		case itype_faroreswind:
+			jmax = imax_faroreswind;
+			break;
+		case itype_nayruslove:
+			jmax = imax_nayruslove;
+			break;
+		case itype_bomb:
+		case itype_sbomb:
+			return can_use_item(item_type, 1) ? game.items[item_type] : 0;
+			break;
+		case itype_clock:
+			return has_item(itype_clock, 1) ? 1 : 0;
+			break;
+		case itype_key:
+			return game.keys;
+		case itype_magiccontainer:
+			return game.maxmagic / MAGICPERBLOCK;
+		case itype_triforcepiece: {
+			int count = 0;
+			for (int i = 0; i < MAXLEVELS; i++) {
+				count += (game.lvlitems[i] | liTRIFORCE) ? 1 : 0;
+			}
+			return 0;
+			break;
 		}
-		return 0;
-		break;
-	}
-	case itype_map: {
-		int count = 0;
-		for (int i = 0; i < MAXLEVELS; i++) {
-			count += (game.lvlitems[i] | liMAP) ? 1 : 0;
+		case itype_map: {
+			int count = 0;
+			for (int i = 0; i < MAXLEVELS; i++) {
+				count += (game.lvlitems[i] | liMAP) ? 1 : 0;
+			}
+			return count;
+			break;
 		}
-		return count;
-		break;
-	}
-	case itype_compass: {
-		int count = 0;
-		for (int i = 0; i < MAXLEVELS; i++) {
-			count += (game.lvlitems[i] | liCOMPASS) ? 1 : 0;
+		case itype_compass: {
+			int count = 0;
+			for (int i = 0; i < MAXLEVELS; i++) {
+				count += (game.lvlitems[i] | liCOMPASS) ? 1 : 0;
+			}
+			return count;
+			break;
 		}
-		return count;
-		break;
-	}
-	case itype_bosskey: {
-		int count = 0;
-		for (int i = 0; i < MAXLEVELS; i++) {
-			count += (game.lvlitems[i] | liBOSSKEY) ? 1 : 0;
+		case itype_bosskey: {
+			int count = 0;
+			for (int i = 0; i < MAXLEVELS; i++) {
+				count += (game.lvlitems[i] | liBOSSKEY) ? 1 : 0;
+			}
+			return count;
+			break;
 		}
-		return count;
-		break;
-	}
-	default:
-		return 0;
-		break;
+		default:
+			return 0;
+			break;
 	}
 	return high_item(jmax, item_type, consecutive, 0, false);
 }
@@ -1360,446 +1360,446 @@ int item_tile_mod() {
 	int ret = 0;
 	ret = current_item(itype_sword, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iSword].ltm;
-		break;
-	case 2:
-		ret = itemsbuf[iWSword].ltm;
-		break;
-	case 3:
-		ret = itemsbuf[iMSword].ltm;
-		break;
-	case 4:
-		ret = itemsbuf[iXSword].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iSword].ltm;
+			break;
+		case 2:
+			ret = itemsbuf[iWSword].ltm;
+			break;
+		case 3:
+			ret = itemsbuf[iMSword].ltm;
+			break;
+		case 4:
+			ret = itemsbuf[iXSword].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_brang, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iBrang].ltm;
-		break;
-	case 2:
-		ret = itemsbuf[iMBrang].ltm;
-		break;
-	case 3:
-		ret = itemsbuf[iFBrang].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iBrang].ltm;
+			break;
+		case 2:
+			ret = itemsbuf[iMBrang].ltm;
+			break;
+		case 3:
+			ret = itemsbuf[iFBrang].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_arrow, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iArrow].ltm;
-		break;
-	case 2:
-		ret = itemsbuf[iSArrow].ltm;
-		break;
-	case 3:
-		ret = itemsbuf[iGArrow].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iArrow].ltm;
+			break;
+		case 2:
+			ret = itemsbuf[iSArrow].ltm;
+			break;
+		case 3:
+			ret = itemsbuf[iGArrow].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_candle, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iBCandle].ltm;
-		break;
-	case 2:
-		ret = itemsbuf[iRCandle].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iBCandle].ltm;
+			break;
+		case 2:
+			ret = itemsbuf[iRCandle].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_whistle, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iWhistle].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iWhistle].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 	ret = current_item(itype_bait, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iBait].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iBait].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_letter, true);
 	switch (ret) {
-	case 1:
-	case 2:
-		ret = itemsbuf[iLetter].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+		case 2:
+			ret = itemsbuf[iLetter].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_potion, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iBPotion].ltm;
-		break;
-	case 2:
-		ret = itemsbuf[iRPotion].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iBPotion].ltm;
+			break;
+		case 2:
+			ret = itemsbuf[iRPotion].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_wand, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iWand].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iWand].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_ring, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iBRing].ltm;
-		break;
-	case 2:
-		ret = itemsbuf[iRRing].ltm;
-		break;
-	case 3:
-		ret = itemsbuf[iGRing].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iBRing].ltm;
+			break;
+		case 2:
+			ret = itemsbuf[iRRing].ltm;
+			break;
+		case 3:
+			ret = itemsbuf[iGRing].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_wallet, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iWallet500].ltm;
-		break;
-	case 2:
-		ret = itemsbuf[iWallet999].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iWallet500].ltm;
+			break;
+		case 2:
+			ret = itemsbuf[iWallet999].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 	ret = current_item(itype_amulet, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iAmulet].ltm;
-		break;
-	case 2:
-		ret = itemsbuf[iL2Amulet].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iAmulet].ltm;
+			break;
+		case 2:
+			ret = itemsbuf[iL2Amulet].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_shield, true);
 	switch (ret) {
-	case 1:
-		ret = 0;
-		break;
-	case 2:
-		ret = itemsbuf[iShield].ltm;
-		break;
-	case 3:
-		ret = itemsbuf[iMShield].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = 0;
+			break;
+		case 2:
+			ret = itemsbuf[iShield].ltm;
+			break;
+		case 3:
+			ret = itemsbuf[iMShield].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_bow, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iBow].ltm;
-		break;
-	case 2:
-		ret = itemsbuf[iBow2].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iBow].ltm;
+			break;
+		case 2:
+			ret = itemsbuf[iBow2].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 
 	}
 	tile += ret;
 
 	ret = current_item(itype_raft, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iRaft].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iRaft].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_ladder, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iLadder].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iLadder].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_book, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iBook].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iBook].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 	ret = current_item(itype_magickey, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iMKey].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iMKey].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_bracelet, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iBracelet].ltm;
-		break;
-	case 2:
-		ret = itemsbuf[iL2Bracelet].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iBracelet].ltm;
+			break;
+		case 2:
+			ret = itemsbuf[iL2Bracelet].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_flippers, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iFlippers].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iFlippers].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_boots, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iBoots].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iBoots].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_hookshot, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iHookshot].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iHookshot].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_lens, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iLens].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iLens].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 	ret = current_item(itype_hammer, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iHammer].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iHammer].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_dinsfire, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iDinsFire].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iDinsFire].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_faroreswind, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iFaroresWind].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iFaroresWind].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_nayruslove, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iNayrusLove].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iNayrusLove].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_bomb, true);
 	switch (ret) {
-	case 0:
-		ret = 0;
-		break;
-	default:
-		ret = itemsbuf[iBombs].ltm;
-		break;
+		case 0:
+			ret = 0;
+			break;
+		default:
+			ret = itemsbuf[iBombs].ltm;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_sbomb, true);
 	switch (ret) {
-	case 0:
-		ret = 0;
-		break;
-	default:
-		ret = itemsbuf[iSBomb].ltm;
-		break;
+		case 0:
+			ret = 0;
+			break;
+		default:
+			ret = itemsbuf[iSBomb].ltm;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_clock, true);
 	switch (ret) {
-	case 1:
-		ret = itemsbuf[iClock].ltm;
-		break;
-	default:
-		ret = 0;
-		break;
+		case 1:
+			ret = itemsbuf[iClock].ltm;
+			break;
+		default:
+			ret = 0;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_key, true);
 	switch (ret) {
-	case 0:
-		ret = 0;
-		break;
-	default:
-		ret = itemsbuf[iKey].ltm;
-		break;
+		case 0:
+			ret = 0;
+			break;
+		default:
+			ret = itemsbuf[iKey].ltm;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_map, true);
 	switch (ret) {
-	case 0:
-		ret = 0;
-		break;
-	default:
-		ret = itemsbuf[iMap].ltm;
-		break;
+		case 0:
+			ret = 0;
+			break;
+		default:
+			ret = itemsbuf[iMap].ltm;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_compass, true);
 	switch (ret) {
-	case 0:
-		ret = 0;
-		break;
-	default:
-		ret = itemsbuf[iCompass].ltm;
-		break;
+		case 0:
+			ret = 0;
+			break;
+		default:
+			ret = itemsbuf[iCompass].ltm;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_bosskey, true);
 	switch (ret) {
-	case 0:
-		ret = 0;
-		break;
-	default:
-		ret = itemsbuf[iBossKey].ltm;
-		break;
+		case 0:
+			ret = 0;
+			break;
+		default:
+			ret = itemsbuf[iBossKey].ltm;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_magiccontainer, true);
 	switch (ret) {
-	case 0:
-		ret = 0;
-		break;
-	default:
-		ret = itemsbuf[iMagicC].ltm;
-		break;
+		case 0:
+			ret = 0;
+			break;
+		default:
+			ret = itemsbuf[iMagicC].ltm;
+			break;
 	}
 	tile += ret;
 
 	ret = current_item(itype_triforcepiece, true);
 	switch (ret) {
-	case 0:
-		ret = 0;
-		break;
-	default:
-		ret = itemsbuf[iTriforce].ltm;
-		break;
+		case 0:
+			ret = 0;
+			break;
+		default:
+			ret = itemsbuf[iTriforce].ltm;
+			break;
 	}
 	tile += ret;
 	return tile;
@@ -1835,480 +1835,247 @@ void draw_lens_under() {
 			int tempweaponx = -16, tempweapony = -16;
 
 			switch (tmpscr->sflag[i]) {
-			case 0:
-			case mfZELDA:
-			case mfPUSHED:
-			case mfENEMY0:
-			case mfENEMY1:
-			case mfENEMY2:
-			case mfENEMY3:
-			case mfENEMY4:
-			case mfENEMY5:
-			case mfENEMY6:
+				case 0:
+				case mfZELDA:
+				case mfPUSHED:
+				case mfENEMY0:
+				case mfENEMY1:
+				case mfENEMY2:
+				case mfENEMY3:
+				case mfENEMY4:
+				case mfENEMY5:
+				case mfENEMY6:
 
-			case mfENEMY7:
-			case mfENEMY8:
-			case mfENEMY9:
-				break;
+				case mfENEMY7:
+				case mfENEMY8:
+				case mfENEMY9:
+					break;
 
-			case mfPUSHUD:
-			case mfPUSHLR:
-			case mfPUSH4:
-			case mfPUSHU:
-			case mfPUSHD:
-			case mfPUSHL:
-			case mfPUSHR:
-			case mfPUSHUDNS:
-			case mfPUSHLRNS:
-			case mfPUSH4NS:
-			case mfPUSHUNS:
-			case mfPUSHDNS:
-			case mfPUSHLNS:
-			case mfPUSHRNS:
-			case mfPUSHUDINS:
-			case mfPUSHLRINS:
-			case mfPUSH4INS:
+				case mfPUSHUD:
+				case mfPUSHLR:
+				case mfPUSH4:
+				case mfPUSHU:
+				case mfPUSHD:
+				case mfPUSHL:
+				case mfPUSHR:
+				case mfPUSHUDNS:
+				case mfPUSHLRNS:
+				case mfPUSH4NS:
+				case mfPUSHUNS:
+				case mfPUSHDNS:
+				case mfPUSHLNS:
+				case mfPUSHRNS:
+				case mfPUSHUDINS:
+				case mfPUSHLRINS:
+				case mfPUSH4INS:
 
-			case mfPUSHUINS:
-			case mfPUSHDINS:
-			case mfPUSHLINS:
-			case mfPUSHRINS:
-				if (lensclk & 16) {
-					putcombo(framebuf, x, y, tmpscr->undercombo, tmpscr->undercset);
-				}
-				if (lensclk & blink_rate) {
+				case mfPUSHUINS:
+				case mfPUSHDINS:
+				case mfPUSHLINS:
+				case mfPUSHRINS:
+					if (lensclk & 16) {
+						putcombo(framebuf, x, y, tmpscr->undercombo, tmpscr->undercset);
+					}
+					if (lensclk & blink_rate) {
+						if (get_bit(quest_rules, qr_LENSHINTS)) {
+							switch (combobuf[tmpscr->data[i]].type) {
+								case cPUSH_HEAVY:
+								case cPUSH_HW:
+									tempitem = iBracelet;
+									tempitemx = x, tempitemy = y;
+									putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+									break;
+								case cPUSH_HEAVY2:
+								case cPUSH_HW2:
+									tempitem = iL2Bracelet;
+									tempitemx = x, tempitemy = y;
+									putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+									break;
+							}
+						}
+					}
+					break;
+
+				case mfWHISTLE:
 					if (get_bit(quest_rules, qr_LENSHINTS)) {
-						switch (combobuf[tmpscr->data[i]].type) {
-						case cPUSH_HEAVY:
-						case cPUSH_HW:
-							tempitem = iBracelet;
-							tempitemx = x, tempitemy = y;
-							putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-							break;
-						case cPUSH_HEAVY2:
-						case cPUSH_HW2:
-							tempitem = iL2Bracelet;
-							tempitemx = x, tempitemy = y;
-							putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-							break;
+						tempitem = iWhistle;
+						if (lensclk & blink_rate) {
+							tempitemx = x;
+							tempitemy = y;
 						}
+						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
 					}
-				}
-				break;
+					break;
 
-			case mfWHISTLE:
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iWhistle;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfFAIRY:
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iFairyMoving;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfBCANDLE:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sBCANDLE], tmpscr->secretcset[sBCANDLE]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iBCandle;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfRCANDLE:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sRCANDLE], tmpscr->secretcset[sRCANDLE]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iRCandle;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfWANDFIRE:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sWANDFIRE], tmpscr->secretcset[sWANDFIRE]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iWand;
-					tempweapon = wFire;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					} else {
-						tempweaponx = x;
-						tempweapony = y;
-					}
-					putweapon(framebuf, tempweaponx, tempweapony, tempweapon, 0, up, lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfDINSFIRE:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sDINSFIRE], tmpscr->secretcset[sDINSFIRE]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iDinsFire;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfARROW:
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					putcombo(framebuf, x, y, tmpscr->secretcombo[sARROW], tmpscr->secretcset[sARROW]);
-					tempitem = iArrow;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfSARROW:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sSARROW], tmpscr->secretcset[sSARROW]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iSArrow;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfGARROW:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sGARROW], tmpscr->secretcset[sGARROW]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iGArrow;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfBOMB:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sBOMB], tmpscr->secretcset[sBOMB]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempweapon = wBomb;
-					if (lensclk & blink_rate) {
-						tempweaponx = x;
-						tempweapony = y;
-					}
-					putweapon(framebuf, tempweaponx, tempweapony + lens_hint_weapon[tempweapon][4], tempweapon, 0, up, lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
-				}
-				break;
-
-			case mfSBOMB:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sSBOMB], tmpscr->secretcset[sSBOMB]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempweapon = wSBomb;
-					if (lensclk & blink_rate) {
-						tempweaponx = x;
-						tempweapony = y;
-					}
-					putweapon(framebuf, tempweaponx, tempweapony + lens_hint_weapon[tempweapon][4], tempweapon, 0, up, lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
-				}
-				break;
-
-			case mfARMOS_SECRET:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sSTAIRS], tmpscr->secretcset[sSTAIRS]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-				}
-				break;
-
-			case mfBRANG:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sBRANG], tmpscr->secretcset[sBRANG]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iBrang;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfMBRANG:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sMBRANG], tmpscr->secretcset[sMBRANG]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iMBrang;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfFBRANG:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sFBRANG], tmpscr->secretcset[sFBRANG]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iFBrang;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfWANDMAGIC:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sWANDMAGIC], tmpscr->secretcset[sWANDMAGIC]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iWand;
-					tempweapon = wMagic;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					} else {
-						tempweaponx = x;
-						tempweapony = y;
-						--lens_hint_weapon[wMagic][4];
-						if (lens_hint_weapon[wMagic][4] < -8) {
-							lens_hint_weapon[wMagic][4] = 8;
+				case mfFAIRY:
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						tempitem = iFairyMoving;
+						if (lensclk & blink_rate) {
+							tempitemx = x;
+							tempitemy = y;
 						}
+						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
 					}
-					putweapon(framebuf, tempweaponx, tempweapony + lens_hint_weapon[tempweapon][4], tempweapon, 0, up, lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
+					break;
 
-			case mfREFMAGIC:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sREFMAGIC], tmpscr->secretcset[sREFMAGIC]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iMShield;
-					tempweapon = ewMagic;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					} else {
-						tempweaponx = x;
-						tempweapony = y;
-						if (lens_hint_weapon[ewMagic][2] == up) {
-							--lens_hint_weapon[ewMagic][4];
+				case mfBCANDLE:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sBCANDLE], tmpscr->secretcset[sBCANDLE]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						tempitem = iBCandle;
+						if (lensclk & blink_rate) {
+							tempitemx = x;
+							tempitemy = y;
+						}
+						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+					}
+					break;
+
+				case mfRCANDLE:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sRCANDLE], tmpscr->secretcset[sRCANDLE]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						tempitem = iRCandle;
+						if (lensclk & blink_rate) {
+							tempitemx = x;
+							tempitemy = y;
+						}
+						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+					}
+					break;
+
+				case mfWANDFIRE:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sWANDFIRE], tmpscr->secretcset[sWANDFIRE]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						tempitem = iWand;
+						tempweapon = wFire;
+						if (lensclk & blink_rate) {
+							tempitemx = x;
+							tempitemy = y;
 						} else {
-							++lens_hint_weapon[ewMagic][4];
+							tempweaponx = x;
+							tempweapony = y;
 						}
-						if (lens_hint_weapon[ewMagic][4] > 8) {
-							lens_hint_weapon[ewMagic][2] = up;
+						putweapon(framebuf, tempweaponx, tempweapony, tempweapon, 0, up, lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
+						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+					}
+					break;
+
+				case mfDINSFIRE:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sDINSFIRE], tmpscr->secretcset[sDINSFIRE]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						tempitem = iDinsFire;
+						if (lensclk & blink_rate) {
+							tempitemx = x;
+							tempitemy = y;
 						}
-						if (lens_hint_weapon[ewMagic][4] <= 0) {
-							lens_hint_weapon[ewMagic][2] = down;
-						}
+						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
 					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-					putweapon(framebuf, tempweaponx, tempweapony + lens_hint_weapon[tempweapon][4], tempweapon, 0, lens_hint_weapon[ewMagic][2], lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
-				}
-				break;
+					break;
 
-			case mfREFFIREBALL:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sREFFIREBALL], tmpscr->secretcset[sREFFIREBALL]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iMShield;
-					tempweapon = ewFireball;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-						tempweaponx = x;
-						tempweapony = y;
-						++lens_hint_weapon[ewFireball][3];
-						if (lens_hint_weapon[ewFireball][3] > 8) {
-							lens_hint_weapon[ewFireball][3] = -8;
-							lens_hint_weapon[ewFireball][4] = 8;
-						}
-						if (lens_hint_weapon[ewFireball][3] > 0) {
-							++lens_hint_weapon[ewFireball][4];
-						} else {
-							--lens_hint_weapon[ewFireball][4];
-						}
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-					putweapon(framebuf, tempweaponx + lens_hint_weapon[tempweapon][3], tempweapony + lens_hint_weapon[ewFireball][4], tempweapon, 0, up, lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
-				}
-				break;
-
-			case mfSWORD:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sSWORD], tmpscr->secretcset[sSWORD]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iSword;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfWSWORD:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sWSWORD], tmpscr->secretcset[sWSWORD]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iWSword;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfMSWORD:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sMSWORD], tmpscr->secretcset[sMSWORD]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iMSword;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfXSWORD:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sXSWORD], tmpscr->secretcset[sXSWORD]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iXSword;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfSWORDBEAM:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sSWORDBEAM], tmpscr->secretcset[sSWORDBEAM]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iSword;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 1);
-				}
-				break;
-
-			case mfWSWORDBEAM:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sWSWORDBEAM], tmpscr->secretcset[sWSWORDBEAM]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iWSword;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 2);
-				}
-				break;
-
-			case mfMSWORDBEAM:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sMSWORDBEAM], tmpscr->secretcset[sMSWORDBEAM]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iMSword;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 3);
-				}
-				break;
-
-			case mfXSWORDBEAM:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sXSWORDBEAM], tmpscr->secretcset[sXSWORDBEAM]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iXSword;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 4);
-				}
-				break;
-
-			case mfHOOKSHOT:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sHOOKSHOT], tmpscr->secretcset[sHOOKSHOT]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iHookshot;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfWAND:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sWAND], tmpscr->secretcset[sWAND]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iWand;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfHAMMER:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sHAMMER], tmpscr->secretcset[sHAMMER]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					tempitem = iHammer;
-					if (lensclk & blink_rate) {
-						tempitemx = x;
-						tempitemy = y;
-					}
-					putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-				}
-				break;
-
-			case mfSTRIKE:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[sSTRIKE], tmpscr->secretcset[sSTRIKE]);
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-					switch (strike_hint) {
-					case mfARROW:
+				case mfARROW:
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						putcombo(framebuf, x, y, tmpscr->secretcombo[sARROW], tmpscr->secretcset[sARROW]);
 						tempitem = iArrow;
 						if (lensclk & blink_rate) {
 							tempitemx = x;
 							tempitemy = y;
 						}
 						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-						break;
-					case mfBOMB:
+					}
+					break;
+
+				case mfSARROW:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sSARROW], tmpscr->secretcset[sSARROW]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						tempitem = iSArrow;
+						if (lensclk & blink_rate) {
+							tempitemx = x;
+							tempitemy = y;
+						}
+						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+					}
+					break;
+
+				case mfGARROW:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sGARROW], tmpscr->secretcset[sGARROW]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						tempitem = iGArrow;
+						if (lensclk & blink_rate) {
+							tempitemx = x;
+							tempitemy = y;
+						}
+						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+					}
+					break;
+
+				case mfBOMB:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sBOMB], tmpscr->secretcset[sBOMB]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
 						tempweapon = wBomb;
 						if (lensclk & blink_rate) {
 							tempweaponx = x;
 							tempweapony = y;
 						}
 						putweapon(framebuf, tempweaponx, tempweapony + lens_hint_weapon[tempweapon][4], tempweapon, 0, up, lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
-						break;
-					case mfBRANG:
+					}
+					break;
+
+				case mfSBOMB:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sSBOMB], tmpscr->secretcset[sSBOMB]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						tempweapon = wSBomb;
+						if (lensclk & blink_rate) {
+							tempweaponx = x;
+							tempweapony = y;
+						}
+						putweapon(framebuf, tempweaponx, tempweapony + lens_hint_weapon[tempweapon][4], tempweapon, 0, up, lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
+					}
+					break;
+
+				case mfARMOS_SECRET:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sSTAIRS], tmpscr->secretcset[sSTAIRS]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+					}
+					break;
+
+				case mfBRANG:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sBRANG], tmpscr->secretcset[sBRANG]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
 						tempitem = iBrang;
 						if (lensclk & blink_rate) {
 							tempitemx = x;
 							tempitemy = y;
 						}
 						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-						break;
-					case mfWANDMAGIC:
+					}
+					break;
+
+				case mfMBRANG:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sMBRANG], tmpscr->secretcset[sMBRANG]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						tempitem = iMBrang;
+						if (lensclk & blink_rate) {
+							tempitemx = x;
+							tempitemy = y;
+						}
+						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+					}
+					break;
+
+				case mfFBRANG:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sFBRANG], tmpscr->secretcset[sFBRANG]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						tempitem = iFBrang;
+						if (lensclk & blink_rate) {
+							tempitemx = x;
+							tempitemy = y;
+						}
+						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+					}
+					break;
+
+				case mfWANDMAGIC:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sWANDMAGIC], tmpscr->secretcset[sWANDMAGIC]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
 						tempitem = iWand;
 						tempweapon = wMagic;
 						if (lensclk & blink_rate) {
@@ -2322,10 +2089,14 @@ void draw_lens_under() {
 								lens_hint_weapon[wMagic][4] = 8;
 							}
 						}
-						putweapon(framebuf, tempweaponx, tempweapony + lens_hint_weapon[wMagic][4], tempweapon, 0, up, lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
+						putweapon(framebuf, tempweaponx, tempweapony + lens_hint_weapon[tempweapon][4], tempweapon, 0, up, lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
 						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-						break;
-					case mfREFMAGIC:
+					}
+					break;
+
+				case mfREFMAGIC:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sREFMAGIC], tmpscr->secretcset[sREFMAGIC]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
 						tempitem = iMShield;
 						tempweapon = ewMagic;
 						if (lensclk & blink_rate) {
@@ -2347,9 +2118,13 @@ void draw_lens_under() {
 							}
 						}
 						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-						putweapon(framebuf, tempweaponx, tempweapony + lens_hint_weapon[ewMagic][4], tempweapon, 0, lens_hint_weapon[ewMagic][2], lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
-						break;
-					case mfREFFIREBALL:
+						putweapon(framebuf, tempweaponx, tempweapony + lens_hint_weapon[tempweapon][4], tempweapon, 0, lens_hint_weapon[ewMagic][2], lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
+					}
+					break;
+
+				case mfREFFIREBALL:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sREFFIREBALL], tmpscr->secretcset[sREFFIREBALL]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
 						tempitem = iMShield;
 						tempweapon = ewFireball;
 						if (lensclk & blink_rate) {
@@ -2369,87 +2144,312 @@ void draw_lens_under() {
 							}
 						}
 						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-						putweapon(framebuf, tempweaponx + lens_hint_weapon[ewFireball][3], tempweapony + lens_hint_weapon[ewFireball][4], tempweapon, 0, up, lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
-						break;
-					case mfSWORD:
+						putweapon(framebuf, tempweaponx + lens_hint_weapon[tempweapon][3], tempweapony + lens_hint_weapon[ewFireball][4], tempweapon, 0, up, lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
+					}
+					break;
+
+				case mfSWORD:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sSWORD], tmpscr->secretcset[sSWORD]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
 						tempitem = iSword;
 						if (lensclk & blink_rate) {
 							tempitemx = x;
 							tempitemy = y;
 						}
 						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-						break;
-					case mfSWORDBEAM:
+					}
+					break;
+
+				case mfWSWORD:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sWSWORD], tmpscr->secretcset[sWSWORD]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						tempitem = iWSword;
+						if (lensclk & blink_rate) {
+							tempitemx = x;
+							tempitemy = y;
+						}
+						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+					}
+					break;
+
+				case mfMSWORD:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sMSWORD], tmpscr->secretcset[sMSWORD]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						tempitem = iMSword;
+						if (lensclk & blink_rate) {
+							tempitemx = x;
+							tempitemy = y;
+						}
+						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+					}
+					break;
+
+				case mfXSWORD:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sXSWORD], tmpscr->secretcset[sXSWORD]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						tempitem = iXSword;
+						if (lensclk & blink_rate) {
+							tempitemx = x;
+							tempitemy = y;
+						}
+						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+					}
+					break;
+
+				case mfSWORDBEAM:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sSWORDBEAM], tmpscr->secretcset[sSWORDBEAM]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
 						tempitem = iSword;
 						if (lensclk & blink_rate) {
 							tempitemx = x;
 							tempitemy = y;
 						}
 						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 1);
-						break;
-					case mfHOOKSHOT:
+					}
+					break;
+
+				case mfWSWORDBEAM:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sWSWORDBEAM], tmpscr->secretcset[sWSWORDBEAM]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						tempitem = iWSword;
+						if (lensclk & blink_rate) {
+							tempitemx = x;
+							tempitemy = y;
+						}
+						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 2);
+					}
+					break;
+
+				case mfMSWORDBEAM:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sMSWORDBEAM], tmpscr->secretcset[sMSWORDBEAM]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						tempitem = iMSword;
+						if (lensclk & blink_rate) {
+							tempitemx = x;
+							tempitemy = y;
+						}
+						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 3);
+					}
+					break;
+
+				case mfXSWORDBEAM:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sXSWORDBEAM], tmpscr->secretcset[sXSWORDBEAM]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						tempitem = iXSword;
+						if (lensclk & blink_rate) {
+							tempitemx = x;
+							tempitemy = y;
+						}
+						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 4);
+					}
+					break;
+
+				case mfHOOKSHOT:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sHOOKSHOT], tmpscr->secretcset[sHOOKSHOT]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
 						tempitem = iHookshot;
 						if (lensclk & blink_rate) {
 							tempitemx = x;
 							tempitemy = y;
 						}
 						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-						break;
-					case mfWAND:
+					}
+					break;
+
+				case mfWAND:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sWAND], tmpscr->secretcset[sWAND]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
 						tempitem = iWand;
 						if (lensclk & blink_rate) {
 							tempitemx = x;
 							tempitemy = y;
 						}
 						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-						break;
-					case mfHAMMER:
+					}
+					break;
+
+				case mfHAMMER:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sHAMMER], tmpscr->secretcset[sHAMMER]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
 						tempitem = iHammer;
 						if (lensclk & blink_rate) {
 							tempitemx = x;
 							tempitemy = y;
 						}
 						putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
-						break;
 					}
-				}
-				break;
-			case mfARMOS_ITEM:
-			case mfDIVE_ITEM:
-				if (get_bit(quest_rules, qr_LENSHINTS)) {
-				}
-				if (!getmapflag())
-					//          putitem2(framebuf,x,y,tmpscr->catchall);
-				{
-					putitem2(framebuf, x, y, tmpscr->catchall, lens_hint_item[tmpscr->catchall][0], lens_hint_item[tmpscr->catchall][1], 0);
-				}
-				break;
+					break;
 
-			case 16:
-			case 17:
-			case 18:
-			case 19:
-			case 20:
-			case 21:
-			case 22:
-			case 23:
-			case 24:
-			case 25:
-			case 26:
-			case 27:
-			case 28:
-			case 29:
-			case 30:
-			case 31:
-				putcombo(framebuf, x, y, tmpscr->secretcombo[(tmpscr->sflag[i]) - 16 + 4],
-				         tmpscr->secretcset[(tmpscr->sflag[i]) - 16 + 4]);
-				break;
+				case mfSTRIKE:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[sSTRIKE], tmpscr->secretcset[sSTRIKE]);
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+						switch (strike_hint) {
+							case mfARROW:
+								tempitem = iArrow;
+								if (lensclk & blink_rate) {
+									tempitemx = x;
+									tempitemy = y;
+								}
+								putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+								break;
+							case mfBOMB:
+								tempweapon = wBomb;
+								if (lensclk & blink_rate) {
+									tempweaponx = x;
+									tempweapony = y;
+								}
+								putweapon(framebuf, tempweaponx, tempweapony + lens_hint_weapon[tempweapon][4], tempweapon, 0, up, lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
+								break;
+							case mfBRANG:
+								tempitem = iBrang;
+								if (lensclk & blink_rate) {
+									tempitemx = x;
+									tempitemy = y;
+								}
+								putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+								break;
+							case mfWANDMAGIC:
+								tempitem = iWand;
+								tempweapon = wMagic;
+								if (lensclk & blink_rate) {
+									tempitemx = x;
+									tempitemy = y;
+								} else {
+									tempweaponx = x;
+									tempweapony = y;
+									--lens_hint_weapon[wMagic][4];
+									if (lens_hint_weapon[wMagic][4] < -8) {
+										lens_hint_weapon[wMagic][4] = 8;
+									}
+								}
+								putweapon(framebuf, tempweaponx, tempweapony + lens_hint_weapon[wMagic][4], tempweapon, 0, up, lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
+								putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+								break;
+							case mfREFMAGIC:
+								tempitem = iMShield;
+								tempweapon = ewMagic;
+								if (lensclk & blink_rate) {
+									tempitemx = x;
+									tempitemy = y;
+								} else {
+									tempweaponx = x;
+									tempweapony = y;
+									if (lens_hint_weapon[ewMagic][2] == up) {
+										--lens_hint_weapon[ewMagic][4];
+									} else {
+										++lens_hint_weapon[ewMagic][4];
+									}
+									if (lens_hint_weapon[ewMagic][4] > 8) {
+										lens_hint_weapon[ewMagic][2] = up;
+									}
+									if (lens_hint_weapon[ewMagic][4] <= 0) {
+										lens_hint_weapon[ewMagic][2] = down;
+									}
+								}
+								putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+								putweapon(framebuf, tempweaponx, tempweapony + lens_hint_weapon[ewMagic][4], tempweapon, 0, lens_hint_weapon[ewMagic][2], lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
+								break;
+							case mfREFFIREBALL:
+								tempitem = iMShield;
+								tempweapon = ewFireball;
+								if (lensclk & blink_rate) {
+									tempitemx = x;
+									tempitemy = y;
+									tempweaponx = x;
+									tempweapony = y;
+									++lens_hint_weapon[ewFireball][3];
+									if (lens_hint_weapon[ewFireball][3] > 8) {
+										lens_hint_weapon[ewFireball][3] = -8;
+										lens_hint_weapon[ewFireball][4] = 8;
+									}
+									if (lens_hint_weapon[ewFireball][3] > 0) {
+										++lens_hint_weapon[ewFireball][4];
+									} else {
+										--lens_hint_weapon[ewFireball][4];
+									}
+								}
+								putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+								putweapon(framebuf, tempweaponx + lens_hint_weapon[ewFireball][3], tempweapony + lens_hint_weapon[ewFireball][4], tempweapon, 0, up, lens_hint_weapon[tempweapon][0], lens_hint_weapon[tempweapon][1]);
+								break;
+							case mfSWORD:
+								tempitem = iSword;
+								if (lensclk & blink_rate) {
+									tempitemx = x;
+									tempitemy = y;
+								}
+								putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+								break;
+							case mfSWORDBEAM:
+								tempitem = iSword;
+								if (lensclk & blink_rate) {
+									tempitemx = x;
+									tempitemy = y;
+								}
+								putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 1);
+								break;
+							case mfHOOKSHOT:
+								tempitem = iHookshot;
+								if (lensclk & blink_rate) {
+									tempitemx = x;
+									tempitemy = y;
+								}
+								putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+								break;
+							case mfWAND:
+								tempitem = iWand;
+								if (lensclk & blink_rate) {
+									tempitemx = x;
+									tempitemy = y;
+								}
+								putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+								break;
+							case mfHAMMER:
+								tempitem = iHammer;
+								if (lensclk & blink_rate) {
+									tempitemx = x;
+									tempitemy = y;
+								}
+								putitem2(framebuf, tempitemx, tempitemy, tempitem, lens_hint_item[tempitem][0], lens_hint_item[tempitem][1], 0);
+								break;
+						}
+					}
+					break;
+				case mfARMOS_ITEM:
+				case mfDIVE_ITEM:
+					if (get_bit(quest_rules, qr_LENSHINTS)) {
+					}
+					if (!getmapflag())
+						//          putitem2(framebuf,x,y,tmpscr->catchall);
+					{
+						putitem2(framebuf, x, y, tmpscr->catchall, lens_hint_item[tmpscr->catchall][0], lens_hint_item[tmpscr->catchall][1], 0);
+					}
+					break;
 
-			default:
-				if (lensclk & 1) {
-					rectfill(framebuf, x, y, x + 15, y + 15, WHITE);
-				}
-				break;
+				case 16:
+				case 17:
+				case 18:
+				case 19:
+				case 20:
+				case 21:
+				case 22:
+				case 23:
+				case 24:
+				case 25:
+				case 26:
+				case 27:
+				case 28:
+				case 29:
+				case 30:
+				case 31:
+					putcombo(framebuf, x, y, tmpscr->secretcombo[(tmpscr->sflag[i]) - 16 + 4],
+					         tmpscr->secretcset[(tmpscr->sflag[i]) - 16 + 4]);
+					break;
+
+				default:
+					if (lensclk & 1) {
+						rectfill(framebuf, x, y, x + 15, y + 15, WHITE);
+					}
+					break;
 			}
 		}
 
@@ -2723,7 +2723,7 @@ void f_Quit(int type) {
 
 	music_pause();
 	pause_all_sfx();
-	
+
 	Quit = type;
 
 	eat_buttons();
@@ -3055,36 +3055,36 @@ void LogVidMode() {
 	char str_a[44], str_b[44];
 #ifdef ALLEGRO_DOS
 	switch (VidMode) {
-	case GFX_MODEX:
-		sprintf(str_a, "VGA Mode X");
-		break;
-	case GFX_VESA1:
-		sprintf(str_a, "VESA 1.x");
-		break;
-	case GFX_VESA2B:
-		sprintf(str_a, "VESA2 Banked");
-		break;
-	case GFX_VESA2L:
-		sprintf(str_a, "VESA2 Linear");
-		break;
-	case GFX_VESA3:
-		sprintf(str_a, "VESA3");
-		break;
-	default:
-		sprintf(str_a, "Unknown...");
-		break;
+		case GFX_MODEX:
+			sprintf(str_a, "VGA Mode X");
+			break;
+		case GFX_VESA1:
+			sprintf(str_a, "VESA 1.x");
+			break;
+		case GFX_VESA2B:
+			sprintf(str_a, "VESA2 Banked");
+			break;
+		case GFX_VESA2L:
+			sprintf(str_a, "VESA2 Linear");
+			break;
+		case GFX_VESA3:
+			sprintf(str_a, "VESA3");
+			break;
+		default:
+			sprintf(str_a, "Unknown...");
+			break;
 	}
 #else
 	switch (VidMode) {
-	case GFX_AUTODETECT_FULLSCREEN:
-		sprintf(str_a, "Autodetect Fullscreen");
-		break;
-	case GFX_AUTODETECT_WINDOWED:
-		sprintf(str_a, "Autodetect Windowed");
-		break;
-	default:
-		sprintf(str_a, "Unknown...");
-		break;
+		case GFX_AUTODETECT_FULLSCREEN:
+			sprintf(str_a, "Autodetect Fullscreen");
+			break;
+		case GFX_AUTODETECT_WINDOWED:
+			sprintf(str_a, "Autodetect Windowed");
+			break;
+		default:
+			sprintf(str_a, "Unknown...");
+			break;
 	}
 #endif
 
@@ -3201,21 +3201,21 @@ void play_DmapMusic() {
 	if (domidi) {
 		int m = DMaps[currdmap].midi;
 		switch (m) {
-		case 1:
-			jukebox(MUSIC_OVERWORLD);
-			break;
-		case 2:
-			jukebox(MUSIC_DUNGEON);
-			break;
-		case 3:
-			jukebox(MUSIC_LEVEL9);
-			break;
-		default:
-			if (m >= 4 && m < 4 + MAXMIDIS) {
-				jukebox(m - 4 + MUSIC_COUNT);
-			} else {
-				music_stop();
-			}
+			case 1:
+				jukebox(MUSIC_OVERWORLD);
+				break;
+			case 2:
+				jukebox(MUSIC_DUNGEON);
+				break;
+			case 3:
+				jukebox(MUSIC_LEVEL9);
+				break;
+			default:
+				if (m >= 4 && m < 4 + MAXMIDIS) {
+					jukebox(m - 4 + MUSIC_COUNT);
+				} else {
+					music_stop();
+				}
 		}
 	}
 }
@@ -3379,12 +3379,12 @@ void kill_sfx() {
 
 int pan(int x) {
 	switch (pan_style) {
-	case 0:
-		return 128;
-	case 1:
-		return vbound((x >> 1) + 68, 0, 255);
-	case 2:
-		return vbound(((x * 3) >> 2) + 36, 0, 255);
+		case 0:
+			return 128;
+		case 1:
+			return vbound((x >> 1) + 68, 0, 255);
+		case 2:
+			return vbound(((x * 3) >> 2) + 36, 0, 255);
 	}
 	return vbound(x, 0, 255);
 }

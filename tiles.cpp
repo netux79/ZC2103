@@ -164,48 +164,48 @@ void unpack_tile(int tile, int flip, bool force) {
 	oldflip = flip;
 	oldtilebuf = tilebuf;
 	switch (flip & 5) {
-	case 1:  //horizontal
-		si = tilebuf + ((tile + 1) << 7);
-		for (i = 15; i >= 0; --i) {
-			di = unpackbuf + (i << 4) - 1;
-			for (j = 7; j >= 0; --j) {
-				(*(++di)) = (*(--si)) >> 4;
-				(*(++di)) = (*si) & 15;
+		case 1:  //horizontal
+			si = tilebuf + ((tile + 1) << 7);
+			for (i = 15; i >= 0; --i) {
+				di = unpackbuf + (i << 4) - 1;
+				for (j = 7; j >= 0; --j) {
+					(*(++di)) = (*(--si)) >> 4;
+					(*(++di)) = (*si) & 15;
+				}
 			}
-		}
-		break;
-	case 4:  //rotated
-		si = tilebuf + ((tile + 1) << 7);
-		for (i = 15; i >= 0; --i) {
-			di = unpackbuf + 271 - i; //256 + 15 - i
-			for (j = 7; j >= 0; --j) {
-				di -= 16;
-				*di = (*(--si)) >> 4;
-				di -= 16;
-				*di = (*si) & 15;
+			break;
+		case 4:  //rotated
+			si = tilebuf + ((tile + 1) << 7);
+			for (i = 15; i >= 0; --i) {
+				di = unpackbuf + 271 - i; //256 + 15 - i
+				for (j = 7; j >= 0; --j) {
+					di -= 16;
+					*di = (*(--si)) >> 4;
+					di -= 16;
+					*di = (*si) & 15;
+				}
 			}
-		}
-		break;
-	case 5:  //rotated and horizontal
-		si = tilebuf + ((tile + 1) << 7);
-		for (i = 15; i >= 0; --i) {
-			di = unpackbuf + 256 + i;
-			for (j = 7; j >= 0; --j) {
-				di -= 16;
-				*di = (*(--si)) >> 4;
-				di -= 16;
-				*di = (*si) & 15;
+			break;
+		case 5:  //rotated and horizontal
+			si = tilebuf + ((tile + 1) << 7);
+			for (i = 15; i >= 0; --i) {
+				di = unpackbuf + 256 + i;
+				for (j = 7; j >= 0; --j) {
+					di -= 16;
+					*di = (*(--si)) >> 4;
+					di -= 16;
+					*di = (*si) & 15;
+				}
 			}
-		}
-		break;
-	default: //none or invalid
-		si = tilebuf + ((tile + 1) << 7);
-		di = unpackbuf + 256;
-		for (i = 127; i >= 0; --i) {
-			(*(--di)) = (*(--si)) >> 4;
-			(*(--di)) = (*si) & 15;
-		}
-		break;
+			break;
+		default: //none or invalid
+			si = tilebuf + ((tile + 1) << 7);
+			di = unpackbuf + 256;
+			for (i = 127; i >= 0; --i) {
+				(*(--di)) = (*(--si)) >> 4;
+				(*(--di)) = (*si) & 15;
+			}
+			break;
 	}
 }
 
@@ -649,40 +649,40 @@ void putblocktranslucent8(BITMAP* dest, int tile, int x, int y, int csets[], int
 	}
 
 	switch (mask) {
-	case 1:
-		puttiletranslucent8(dest, tile, x, y, csets[0], flip, opacity);
-		break;
+		case 1:
+			puttiletranslucent8(dest, tile, x, y, csets[0], flip, opacity);
+			break;
 
-	case 3:
-		if (flip & 2) {
-			swap(t[0], t[1]);
-		}
-		puttiletranslucent8(dest, t[0], x, y,  csets[0], flip, opacity);
-		puttiletranslucent8(dest, t[1], x, y + 8, csets[1], flip, opacity);
-		break;
+		case 3:
+			if (flip & 2) {
+				swap(t[0], t[1]);
+			}
+			puttiletranslucent8(dest, t[0], x, y,  csets[0], flip, opacity);
+			puttiletranslucent8(dest, t[1], x, y + 8, csets[1], flip, opacity);
+			break;
 
-	case 5:
-		if (flip & 1) {
-			swap(t[0], t[1]);
-		}
-		puttiletranslucent8(dest, t[0], x,  y, csets[0], flip, opacity);
-		puttiletranslucent8(dest, t[1], x + 8, y, csets[1], flip, opacity);
-		break;
+		case 5:
+			if (flip & 1) {
+				swap(t[0], t[1]);
+			}
+			puttiletranslucent8(dest, t[0], x,  y, csets[0], flip, opacity);
+			puttiletranslucent8(dest, t[1], x + 8, y, csets[1], flip, opacity);
+			break;
 
-	case 15:
-		if (flip & 1) {
-			swap(t[0], t[1]);
-			swap(t[2], t[3]);
-		}
-		if (flip & 2) {
-			swap(t[0], t[2]);
-			swap(t[1], t[3]);
-		}
-		puttiletranslucent8(dest, t[0], x,  y,  csets[0], flip, opacity);
-		puttiletranslucent8(dest, t[1], x + 8, y,  csets[1], flip, opacity);
-		puttiletranslucent8(dest, t[2], x,  y + 8, csets[2], flip, opacity);
-		puttiletranslucent8(dest, t[3], x + 8, y + 8, csets[3], flip, opacity);
-		break;
+		case 15:
+			if (flip & 1) {
+				swap(t[0], t[1]);
+				swap(t[2], t[3]);
+			}
+			if (flip & 2) {
+				swap(t[0], t[2]);
+				swap(t[1], t[3]);
+			}
+			puttiletranslucent8(dest, t[0], x,  y,  csets[0], flip, opacity);
+			puttiletranslucent8(dest, t[1], x + 8, y,  csets[1], flip, opacity);
+			puttiletranslucent8(dest, t[2], x,  y + 8, csets[2], flip, opacity);
+			puttiletranslucent8(dest, t[3], x + 8, y + 8, csets[3], flip, opacity);
+			break;
 	}
 }
 
@@ -693,41 +693,41 @@ void overblocktranslucent8(BITMAP* dest, int tile, int x, int y, int csets[], in
 	}
 
 	switch (mask) {
-	case 1:
-		overtiletranslucent8(dest, tile, x, y, csets[0], flip, opacity);
-		break;
+		case 1:
+			overtiletranslucent8(dest, tile, x, y, csets[0], flip, opacity);
+			break;
 
-	case 3:
-		if (flip & 2) {
-			swap(t[0], t[1]);
-			swap(csets[0], csets[1]);
-		}
-		overtiletranslucent8(dest, t[0], x, y,  csets[0], flip, opacity);
-		overtiletranslucent8(dest, t[1], x, y + 8, csets[1], flip, opacity);
-		break;
+		case 3:
+			if (flip & 2) {
+				swap(t[0], t[1]);
+				swap(csets[0], csets[1]);
+			}
+			overtiletranslucent8(dest, t[0], x, y,  csets[0], flip, opacity);
+			overtiletranslucent8(dest, t[1], x, y + 8, csets[1], flip, opacity);
+			break;
 
-	case 5:
-		if (flip & 1) {
-			swap(t[0], t[1]);
-		}
-		overtiletranslucent8(dest, t[0], x,  y, csets[0], flip, opacity);
-		overtiletranslucent8(dest, t[1], x + 8, y, csets[1], flip, opacity);
-		break;
+		case 5:
+			if (flip & 1) {
+				swap(t[0], t[1]);
+			}
+			overtiletranslucent8(dest, t[0], x,  y, csets[0], flip, opacity);
+			overtiletranslucent8(dest, t[1], x + 8, y, csets[1], flip, opacity);
+			break;
 
-	case 15:
-		if (flip & 1) {
-			swap(t[0], t[1]);
-			swap(t[2], t[3]);
-		}
-		if (flip & 2) {
-			swap(t[0], t[2]);
-			swap(t[1], t[3]);
-		}
-		overtiletranslucent8(dest, t[0], x,  y,  csets[0], flip, opacity);
-		overtiletranslucent8(dest, t[1], x + 8, y,  csets[1], flip, opacity);
-		overtiletranslucent8(dest, t[2], x,  y + 8, csets[2], flip, opacity);
-		overtiletranslucent8(dest, t[3], x + 8, y + 8, csets[3], flip, opacity);
-		break;
+		case 15:
+			if (flip & 1) {
+				swap(t[0], t[1]);
+				swap(t[2], t[3]);
+			}
+			if (flip & 2) {
+				swap(t[0], t[2]);
+				swap(t[1], t[3]);
+			}
+			overtiletranslucent8(dest, t[0], x,  y,  csets[0], flip, opacity);
+			overtiletranslucent8(dest, t[1], x + 8, y,  csets[1], flip, opacity);
+			overtiletranslucent8(dest, t[2], x,  y + 8, csets[2], flip, opacity);
+			overtiletranslucent8(dest, t[3], x + 8, y + 8, csets[3], flip, opacity);
+			break;
 	}
 }
 
@@ -737,44 +737,44 @@ void putcombotranslucent(BITMAP* dest, int x, int y, int cmbdat, int cset, int o
 	int tframes = max(1, combobuf[cmbdat].frames);
 	double ddir = atan2(double(y - LinkModifiedY()), double(LinkModifiedX() - x));
 	switch (combobuf[cmbdat].type) {
-	case cEYEBALL_A:
-		if ((ddir <= (((-5)*PI) / 8)) && (ddir > (((-7)*PI) / 8))) {
-			drawtile += tframes * 5;                            //dl
-		} else if ((ddir <= (((-3)*PI) / 8)) && (ddir > (((-5)*PI) / 8))) {
-			drawtile += tframes * 4;                            //d
-		} else if ((ddir <= (((-1)*PI) / 8)) && (ddir > (((-3)*PI) / 8))) {
-			drawtile += tframes * 3;                            //dr
-		} else if ((ddir <= (((1)*PI) / 8)) && (ddir > (((-1)*PI) / 8))) {
-			drawtile += tframes * 2;                            //r
-		} else if ((ddir <= (((3)*PI) / 8)) && (ddir > (((1)*PI) / 8))) {
-			drawtile += tframes * 1;                            //ur
-		} else if ((ddir <= (((5)*PI) / 8)) && (ddir > (((3)*PI) / 8))) {
-			drawtile += tframes * 0;                            //u
-		} else if ((ddir <= (((7)*PI) / 8)) && (ddir > (((5)*PI) / 8))) {
-			drawtile += tframes * 7;                            //ul
-		} else {
-			drawtile += tframes * 6;                            //l
-		}
-		break;
-	case cEYEBALL_B:
-		if ((ddir <= (((-6)*PI) / 8)) && (ddir > (((-8)*PI) / 8))) {
-			drawtile += tframes * 5;                            //dl
-		} else if ((ddir <= (((-4)*PI) / 8)) && (ddir > (((-6)*PI) / 8))) {
-			drawtile += tframes * 4;                            //d
-		} else if ((ddir <= (((-2)*PI) / 8)) && (ddir > (((-4)*PI) / 8))) {
-			drawtile += tframes * 3;                            //dr
-		} else if ((ddir <= (((0)*PI) / 8)) && (ddir > (((-2)*PI) / 8))) {
-			drawtile += tframes * 2;                            //r
-		} else if ((ddir <= (((2)*PI) / 8)) && (ddir > (((0)*PI) / 8))) {
-			drawtile += tframes * 1;                            //ur
-		} else if ((ddir <= (((4)*PI) / 8)) && (ddir > (((2)*PI) / 8))) {
-			drawtile += tframes * 0;                            //u
-		} else if ((ddir <= (((6)*PI) / 8)) && (ddir > (((4)*PI) / 8))) {
-			drawtile += tframes * 7;                            //ul
-		} else {
-			drawtile += tframes * 6;                            //l
-		}
-		break;
+		case cEYEBALL_A:
+			if ((ddir <= (((-5)*PI) / 8)) && (ddir > (((-7)*PI) / 8))) {
+				drawtile += tframes * 5;                            //dl
+			} else if ((ddir <= (((-3)*PI) / 8)) && (ddir > (((-5)*PI) / 8))) {
+				drawtile += tframes * 4;                            //d
+			} else if ((ddir <= (((-1)*PI) / 8)) && (ddir > (((-3)*PI) / 8))) {
+				drawtile += tframes * 3;                            //dr
+			} else if ((ddir <= (((1)*PI) / 8)) && (ddir > (((-1)*PI) / 8))) {
+				drawtile += tframes * 2;                            //r
+			} else if ((ddir <= (((3)*PI) / 8)) && (ddir > (((1)*PI) / 8))) {
+				drawtile += tframes * 1;                            //ur
+			} else if ((ddir <= (((5)*PI) / 8)) && (ddir > (((3)*PI) / 8))) {
+				drawtile += tframes * 0;                            //u
+			} else if ((ddir <= (((7)*PI) / 8)) && (ddir > (((5)*PI) / 8))) {
+				drawtile += tframes * 7;                            //ul
+			} else {
+				drawtile += tframes * 6;                            //l
+			}
+			break;
+		case cEYEBALL_B:
+			if ((ddir <= (((-6)*PI) / 8)) && (ddir > (((-8)*PI) / 8))) {
+				drawtile += tframes * 5;                            //dl
+			} else if ((ddir <= (((-4)*PI) / 8)) && (ddir > (((-6)*PI) / 8))) {
+				drawtile += tframes * 4;                            //d
+			} else if ((ddir <= (((-2)*PI) / 8)) && (ddir > (((-4)*PI) / 8))) {
+				drawtile += tframes * 3;                            //dr
+			} else if ((ddir <= (((0)*PI) / 8)) && (ddir > (((-2)*PI) / 8))) {
+				drawtile += tframes * 2;                            //r
+			} else if ((ddir <= (((2)*PI) / 8)) && (ddir > (((0)*PI) / 8))) {
+				drawtile += tframes * 1;                            //ur
+			} else if ((ddir <= (((4)*PI) / 8)) && (ddir > (((2)*PI) / 8))) {
+				drawtile += tframes * 0;                            //u
+			} else if ((ddir <= (((6)*PI) / 8)) && (ddir > (((4)*PI) / 8))) {
+				drawtile += tframes * 7;                            //ul
+			} else {
+				drawtile += tframes * 6;                            //l
+			}
+			break;
 	}
 	if (!(c.csets & 0xF0) || !(c.csets & 0x0F)) {
 		puttiletranslucent16(dest, drawtile, x, y, cset, c.flip, opacity);
@@ -799,47 +799,47 @@ void overcombotranslucent(BITMAP* dest, int x, int y, int cmbdat, int cset, int 
 	int tframes = max(1, combobuf[cmbdat].frames);
 	double ddir = atan2(double(y - LinkModifiedY()), double(LinkModifiedX() - x));
 	switch (combobuf[cmbdat].type) {
-	case cEYEBALL_A:
-		if ((ddir <= (((-5)*PI) / 8)) && (ddir > (((-7)*PI) / 8))) {
-			drawtile += tframes * 5;                            //dl
-		} else if ((ddir <= (((-3)*PI) / 8)) && (ddir > (((-5)*PI) / 8))) {
-			drawtile += tframes * 4;                            //d
-		} else if ((ddir <= (((-1)*PI) / 8)) && (ddir > (((-3)*PI) / 8))) {
-			drawtile += tframes * 3;                            //dr
-		} else if ((ddir <= (((1)*PI) / 8)) && (ddir > (((-1)*PI) / 8))) {
-			drawtile += tframes * 2;                            //r
-		} else if ((ddir <= (((3)*PI) / 8)) && (ddir > (((1)*PI) / 8))) {
-			drawtile += tframes * 1;                            //ur
-		} else if ((ddir <= (((5)*PI) / 8)) && (ddir > (((3)*PI) / 8))) {
-			drawtile += tframes * 0;                            //u
-		} else if ((ddir <= (((7)*PI) / 8)) && (ddir > (((5)*PI) / 8))) {
-			drawtile += tframes * 7;                            //ul
-		} else {
-			drawtile += tframes * 6;                            //l
-		}
-		break;
-	case cEYEBALL_B:
-		if ((ddir <= (((-6)*PI) / 8)) && (ddir > (((-8)*PI) / 8))) {
-			drawtile += tframes * 5;                            //dl
-		} else if ((ddir <= (((-4)*PI) / 8)) && (ddir > (((-6)*PI) / 8))) {
-			drawtile += tframes * 4;                            //d
-		} else if ((ddir <= (((-2)*PI) / 8)) && (ddir > (((-4)*PI) / 8))) {
-			drawtile += tframes * 3;                            //dr
-		} else if ((ddir <= (((0)*PI) / 8)) && (ddir > (((-2)*PI) / 8))) {
-			drawtile += tframes * 2;                            //r
-		} else if ((ddir <= (((2)*PI) / 8)) && (ddir > (((0)*PI) / 8))) {
-			drawtile += tframes * 1;                            //ur
-		} else if ((ddir <= (((4)*PI) / 8)) && (ddir > (((2)*PI) / 8))) {
-			drawtile += tframes * 0;                            //u
-		} else if ((ddir <= (((6)*PI) / 8)) && (ddir > (((4)*PI) / 8)))
+		case cEYEBALL_A:
+			if ((ddir <= (((-5)*PI) / 8)) && (ddir > (((-7)*PI) / 8))) {
+				drawtile += tframes * 5;                            //dl
+			} else if ((ddir <= (((-3)*PI) / 8)) && (ddir > (((-5)*PI) / 8))) {
+				drawtile += tframes * 4;                            //d
+			} else if ((ddir <= (((-1)*PI) / 8)) && (ddir > (((-3)*PI) / 8))) {
+				drawtile += tframes * 3;                            //dr
+			} else if ((ddir <= (((1)*PI) / 8)) && (ddir > (((-1)*PI) / 8))) {
+				drawtile += tframes * 2;                            //r
+			} else if ((ddir <= (((3)*PI) / 8)) && (ddir > (((1)*PI) / 8))) {
+				drawtile += tframes * 1;                            //ur
+			} else if ((ddir <= (((5)*PI) / 8)) && (ddir > (((3)*PI) / 8))) {
+				drawtile += tframes * 0;                            //u
+			} else if ((ddir <= (((7)*PI) / 8)) && (ddir > (((5)*PI) / 8))) {
+				drawtile += tframes * 7;                            //ul
+			} else {
+				drawtile += tframes * 6;                            //l
+			}
+			break;
+		case cEYEBALL_B:
+			if ((ddir <= (((-6)*PI) / 8)) && (ddir > (((-8)*PI) / 8))) {
+				drawtile += tframes * 5;                            //dl
+			} else if ((ddir <= (((-4)*PI) / 8)) && (ddir > (((-6)*PI) / 8))) {
+				drawtile += tframes * 4;                            //d
+			} else if ((ddir <= (((-2)*PI) / 8)) && (ddir > (((-4)*PI) / 8))) {
+				drawtile += tframes * 3;                            //dr
+			} else if ((ddir <= (((0)*PI) / 8)) && (ddir > (((-2)*PI) / 8))) {
+				drawtile += tframes * 2;                            //r
+			} else if ((ddir <= (((2)*PI) / 8)) && (ddir > (((0)*PI) / 8))) {
+				drawtile += tframes * 1;                            //ur
+			} else if ((ddir <= (((4)*PI) / 8)) && (ddir > (((2)*PI) / 8))) {
+				drawtile += tframes * 0;                            //u
+			} else if ((ddir <= (((6)*PI) / 8)) && (ddir > (((4)*PI) / 8)))
 
 
-		{
-			drawtile += tframes * 7;                            //ul
-		} else {
-			drawtile += tframes * 6;                            //l
-		}
-		break;
+			{
+				drawtile += tframes * 7;                            //ul
+			} else {
+				drawtile += tframes * 6;                            //l
+			}
+			break;
 	}
 	if (!(c.csets & 0xF0) || !(c.csets & 0x0F)) {
 		overtiletranslucent16(dest, drawtile, x, y, cset, c.flip, opacity);
@@ -877,52 +877,52 @@ void puttile8(BITMAP* dest, int tile, int x, int y, int cset, int flip) {
 	unpack_tile(tile >> 2, 0, false);
 
 	switch (flip & 3) {
-	case 1: {                                               // 1 byte at a time
-		byte* si = unpackbuf + ((tile & 2) << 6) + ((tile & 1) << 3);
-		for (int dy = 0; dy < 8; ++dy) {
-			byte* di = &(dest->line[y + dy][x + 7]);
-			for (int i = 0; i < 8; ++i) {
-				*(di--) = *(si++) + cset;
+		case 1: {                                               // 1 byte at a time
+			byte* si = unpackbuf + ((tile & 2) << 6) + ((tile & 1) << 3);
+			for (int dy = 0; dy < 8; ++dy) {
+				byte* di = &(dest->line[y + dy][x + 7]);
+				for (int i = 0; i < 8; ++i) {
+					*(di--) = *(si++) + cset;
+				}
+				si += 8;
 			}
-			si += 8;
 		}
-	}
-	break;
+		break;
 
-	case 2: {                                               // 4 bytes at a time
-		dword* si = ((dword*)unpackbuf) + ((tile & 2) << 4) + ((tile & 1) << 1);
+		case 2: {                                               // 4 bytes at a time
+			dword* si = ((dword*)unpackbuf) + ((tile & 2) << 4) + ((tile & 1) << 1);
 
-		for (int dy = 7; dy >= 0; --dy) {
-			dword* di = &((dword*)dest->line[y + dy])[x >> 2];
-			*(di++) = *(si++) + lcset;
-			*(di++) = *(si++) + lcset;
-			si += 2;
-		}
-	}
-	break;
-
-	case 3: {                                               // 1 byte at a time
-		byte* si = unpackbuf + ((tile & 2) << 6) + ((tile & 1) << 3);
-		for (int dy = 7; dy >= 0; --dy) {
-			byte* di = &(dest->line[y + dy][x + 7]);
-			for (int i = 0; i < 8; ++i) {
-				*(di--) = *(si++) + cset;
+			for (int dy = 7; dy >= 0; --dy) {
+				dword* di = &((dword*)dest->line[y + dy])[x >> 2];
+				*(di++) = *(si++) + lcset;
+				*(di++) = *(si++) + lcset;
+				si += 2;
 			}
-			si += 8;
 		}
-	}
-	break;
+		break;
 
-	default: {                                              // 4 bytes at a time
-		dword* si = ((dword*)unpackbuf) + ((tile & 2) << 4) + ((tile & 1) << 1);
-		for (int dy = 0; dy < 8; ++dy) {
-			dword* di = &((dword*)dest->line[y + dy])[x >> 2];
-			*(di++) = *(si++) + lcset;
-			*(di++) = *(si++) + lcset;
-			si += 2;
+		case 3: {                                               // 1 byte at a time
+			byte* si = unpackbuf + ((tile & 2) << 6) + ((tile & 1) << 3);
+			for (int dy = 7; dy >= 0; --dy) {
+				byte* di = &(dest->line[y + dy][x + 7]);
+				for (int i = 0; i < 8; ++i) {
+					*(di--) = *(si++) + cset;
+				}
+				si += 8;
+			}
 		}
-	}
-	break;
+		break;
+
+		default: {                                              // 4 bytes at a time
+			dword* si = ((dword*)unpackbuf) + ((tile & 2) << 4) + ((tile & 1) << 1);
+			for (int dy = 0; dy < 8; ++dy) {
+				dword* di = &((dword*)dest->line[y + dy])[x >> 2];
+				*(di++) = *(si++) + lcset;
+				*(di++) = *(si++) + lcset;
+				si += 2;
+			}
+		}
+		break;
 	}
 }
 
@@ -1015,30 +1015,30 @@ void puttile16(BITMAP* dest, int tile, int x, int y, int cset, int flip) { //fix
 	unpack_tile(tile, flip & 5, false);
 
 	switch (flip & 2) {
-	case 2: { //vertical
-		qword llcset = (((qword)cset) << 56) + (((qword)cset) << 48) + (((qword)cset) << 40) + (((qword)cset) << 32) + (((qword)cset) << 24) + (cset << 16) + (cset << 8) + cset;
-		qword* si = (qword*)unpackbuf;
-		for (int dy = 15; dy >= 0; --dy) {
-			// 4 bytes at a time
-			qword* di = (qword*)(dest->line[y + dy] + x);
-			for (int i = 0; i < 16; i += 8) {
-				*(di++) = *(si++) + llcset;
+		case 2: { //vertical
+			qword llcset = (((qword)cset) << 56) + (((qword)cset) << 48) + (((qword)cset) << 40) + (((qword)cset) << 32) + (((qword)cset) << 24) + (cset << 16) + (cset << 8) + cset;
+			qword* si = (qword*)unpackbuf;
+			for (int dy = 15; dy >= 0; --dy) {
+				// 4 bytes at a time
+				qword* di = (qword*)(dest->line[y + dy] + x);
+				for (int i = 0; i < 16; i += 8) {
+					*(di++) = *(si++) + llcset;
+				}
 			}
 		}
-	}
-	break;
-	default: { //none or invalid
-		qword llcset = (((qword)cset) << 56) + (((qword)cset) << 48) + (((qword)cset) << 40) + (((qword)cset) << 32) + (((qword)cset) << 24) + (cset << 16) + (cset << 8) + cset;
-		qword* si = (qword*)unpackbuf;
-		for (int dy = 0; dy < 16; ++dy) {
-			// 4 bytes at a time
-			qword* di = (qword*)(dest->line[y + dy] + x);
-			for (int i = 0; i < 16; i += 8) {
-				*(di++) = *(si++) + llcset;
+		break;
+		default: { //none or invalid
+			qword llcset = (((qword)cset) << 56) + (((qword)cset) << 48) + (((qword)cset) << 40) + (((qword)cset) << 32) + (((qword)cset) << 24) + (cset << 16) + (cset << 8) + cset;
+			qword* si = (qword*)unpackbuf;
+			for (int dy = 0; dy < 16; ++dy) {
+				// 4 bytes at a time
+				qword* di = (qword*)(dest->line[y + dy] + x);
+				for (int i = 0; i < 16; i += 8) {
+					*(di++) = *(si++) + llcset;
+				}
 			}
 		}
-	}
-	break;
+		break;
 	}
 }
 
@@ -1136,41 +1136,41 @@ void putblock8(BITMAP* dest, int tile, int x, int y, int csets[], int flip, int 
 	}
 
 	switch (mask) {
-	case 1: //top-left quarter
-		puttile8(dest, tile, x, y, csets[0], flip);
-		break;
+		case 1: //top-left quarter
+			puttile8(dest, tile, x, y, csets[0], flip);
+			break;
 
-	case 3: //vertical
-		if (flip & 2) {
-			swap(t[0], t[1]);
-		}
-		puttile8(dest, t[0], x, y,  csets[0], flip);
-		puttile8(dest, t[1], x, y + 8, csets[1], flip);
-		break;
+		case 3: //vertical
+			if (flip & 2) {
+				swap(t[0], t[1]);
+			}
+			puttile8(dest, t[0], x, y,  csets[0], flip);
+			puttile8(dest, t[1], x, y + 8, csets[1], flip);
+			break;
 
-	case 5: //horizontal
-		if (flip & 1) {
-			swap(t[0], t[1]);
-		}
-		puttile8(dest, t[0], x,  y, csets[0], flip);
-		puttile8(dest, t[1], x + 8, y, csets[1], flip);
-		break;
+		case 5: //horizontal
+			if (flip & 1) {
+				swap(t[0], t[1]);
+			}
+			puttile8(dest, t[0], x,  y, csets[0], flip);
+			puttile8(dest, t[1], x + 8, y, csets[1], flip);
+			break;
 
-	case 15: //all 4 quarters
-		if (flip & 1) {
-			swap(t[0], t[1]);
-			swap(t[2], t[3]);
-		}
-		if (flip & 2) {
+		case 15: //all 4 quarters
+			if (flip & 1) {
+				swap(t[0], t[1]);
+				swap(t[2], t[3]);
+			}
+			if (flip & 2) {
 
-			swap(t[0], t[2]);
-			swap(t[1], t[3]);
-		}
-		puttile8(dest, t[0], x,  y,  csets[0], flip);
-		puttile8(dest, t[1], x + 8, y,  csets[1], flip);
-		puttile8(dest, t[2], x,  y + 8, csets[2], flip);
-		puttile8(dest, t[3], x + 8, y + 8, csets[3], flip);
-		break;
+				swap(t[0], t[2]);
+				swap(t[1], t[3]);
+			}
+			puttile8(dest, t[0], x,  y,  csets[0], flip);
+			puttile8(dest, t[1], x + 8, y,  csets[1], flip);
+			puttile8(dest, t[2], x,  y + 8, csets[2], flip);
+			puttile8(dest, t[3], x + 8, y + 8, csets[3], flip);
+			break;
 	}
 }
 
@@ -1181,40 +1181,40 @@ void overblock8(BITMAP* dest, int tile, int x, int y, int csets[], int flip, int
 	}
 
 	switch (mask) {
-	case 1:
-		overtile8(dest, tile, x, y, csets[0], flip);
-		break;
+		case 1:
+			overtile8(dest, tile, x, y, csets[0], flip);
+			break;
 
-	case 3:
-		if (flip & 2) {
-			swap(t[0], t[1]);
-		}
-		overtile8(dest, t[0], x, y,  csets[0], flip);
-		overtile8(dest, t[1], x, y + 8, csets[1], flip);
-		break;
+		case 3:
+			if (flip & 2) {
+				swap(t[0], t[1]);
+			}
+			overtile8(dest, t[0], x, y,  csets[0], flip);
+			overtile8(dest, t[1], x, y + 8, csets[1], flip);
+			break;
 
-	case 5:
-		if (flip & 1) {
-			swap(t[0], t[1]);
-		}
-		overtile8(dest, t[0], x,  y, csets[0], flip);
-		overtile8(dest, t[1], x + 8, y, csets[1], flip);
-		break;
+		case 5:
+			if (flip & 1) {
+				swap(t[0], t[1]);
+			}
+			overtile8(dest, t[0], x,  y, csets[0], flip);
+			overtile8(dest, t[1], x + 8, y, csets[1], flip);
+			break;
 
-	case 15:
-		if (flip & 1) {
-			swap(t[0], t[1]);
-			swap(t[2], t[3]);
-		}
-		if (flip & 2) {
-			swap(t[0], t[2]);
-			swap(t[1], t[3]);
-		}
-		overtile8(dest, t[0], x,  y,  csets[0], flip);
-		overtile8(dest, t[1], x + 8, y,  csets[1], flip);
-		overtile8(dest, t[2], x,  y + 8, csets[2], flip);
-		overtile8(dest, t[3], x + 8, y + 8, csets[3], flip);
-		break;
+		case 15:
+			if (flip & 1) {
+				swap(t[0], t[1]);
+				swap(t[2], t[3]);
+			}
+			if (flip & 2) {
+				swap(t[0], t[2]);
+				swap(t[1], t[3]);
+			}
+			overtile8(dest, t[0], x,  y,  csets[0], flip);
+			overtile8(dest, t[1], x + 8, y,  csets[1], flip);
+			overtile8(dest, t[2], x,  y + 8, csets[2], flip);
+			overtile8(dest, t[3], x + 8, y + 8, csets[3], flip);
+			break;
 	}
 }
 
@@ -1227,49 +1227,48 @@ void putcombo(BITMAP* dest, int x, int y, int cmbdat, int cset) {
 	int tframes = max(1, combobuf[cmbdat].frames);
 	double ddir = atan2(double(y - LinkModifiedY()), double(LinkModifiedX() - x));
 	switch (combobuf[cmbdat].type) {
-	case cEYEBALL_A:
-		if ((ddir <= (((-5)*PI) / 8)) && (ddir > (((-7)*PI) / 8))) {
-			drawtile += tframes * 5;                            //dl
-		} else if ((ddir <= (((-3)*PI) / 8)) && (ddir > (((-5)*PI) / 8))) {
-			drawtile += tframes * 4;                            //d
-		} else if ((ddir <= (((-1)*PI) / 8)) && (ddir > (((-3)*PI) / 8))) {
-			drawtile += tframes * 3;                            //dr
-		} else if ((ddir <= (((1)*PI) / 8)) && (ddir > (((-1)*PI) / 8))) {
-			drawtile += tframes * 2;                            //r
-		} else if ((ddir <= (((3)*PI) / 8)) && (ddir > (((1)*PI) / 8))) {
-			drawtile += tframes * 1;                            //ur
-		} else if ((ddir <= (((5)*PI) / 8)) && (ddir > (((3)*PI) / 8))) {
-			drawtile += tframes * 0;                            //u
-		} else if ((ddir <= (((7)*PI) / 8)) && (ddir > (((5)*PI) / 8))) {
-			drawtile += tframes * 7;                            //ul
-		} else {
-			drawtile += tframes * 6;                            //l
-		}
-		break;
-	case cEYEBALL_B:
-		if ((ddir <= (((-6)*PI) / 8)) && (ddir > (((-8)*PI) / 8))) {
-			drawtile += tframes * 5;                            //dl
-		} else if ((ddir <= (((-4)*PI) / 8)) && (ddir > (((-6)*PI) / 8))) {
-			drawtile += tframes * 4;                            //d
-		} else if ((ddir <= (((-2)*PI) / 8)) && (ddir > (((-4)*PI) / 8))) {
-			drawtile += tframes * 3;                            //dr
-		} else if ((ddir <= (((0)*PI) / 8)) && (ddir > (((-2)*PI) / 8))) {
-			drawtile += tframes * 2;                            //r
-		} else if ((ddir <= (((2)*PI) / 8)) && (ddir > (((0)*PI) / 8))) {
-			drawtile += tframes * 1;                            //ur
-		} else if ((ddir <= (((4)*PI) / 8)) && (ddir > (((2)*PI) / 8))) {
-			drawtile += tframes * 0;                            //u
-		} else if ((ddir <= (((6)*PI) / 8)) && (ddir > (((4)*PI) / 8))) {
-			drawtile += tframes * 7;                            //ul
-		} else {
-			drawtile += tframes * 6;                            //l
-		}
-		break;
+		case cEYEBALL_A:
+			if ((ddir <= (((-5)*PI) / 8)) && (ddir > (((-7)*PI) / 8))) {
+				drawtile += tframes * 5;                            //dl
+			} else if ((ddir <= (((-3)*PI) / 8)) && (ddir > (((-5)*PI) / 8))) {
+				drawtile += tframes * 4;                            //d
+			} else if ((ddir <= (((-1)*PI) / 8)) && (ddir > (((-3)*PI) / 8))) {
+				drawtile += tframes * 3;                            //dr
+			} else if ((ddir <= (((1)*PI) / 8)) && (ddir > (((-1)*PI) / 8))) {
+				drawtile += tframes * 2;                            //r
+			} else if ((ddir <= (((3)*PI) / 8)) && (ddir > (((1)*PI) / 8))) {
+				drawtile += tframes * 1;                            //ur
+			} else if ((ddir <= (((5)*PI) / 8)) && (ddir > (((3)*PI) / 8))) {
+				drawtile += tframes * 0;                            //u
+			} else if ((ddir <= (((7)*PI) / 8)) && (ddir > (((5)*PI) / 8))) {
+				drawtile += tframes * 7;                            //ul
+			} else {
+				drawtile += tframes * 6;                            //l
+			}
+			break;
+		case cEYEBALL_B:
+			if ((ddir <= (((-6)*PI) / 8)) && (ddir > (((-8)*PI) / 8))) {
+				drawtile += tframes * 5;                            //dl
+			} else if ((ddir <= (((-4)*PI) / 8)) && (ddir > (((-6)*PI) / 8))) {
+				drawtile += tframes * 4;                            //d
+			} else if ((ddir <= (((-2)*PI) / 8)) && (ddir > (((-4)*PI) / 8))) {
+				drawtile += tframes * 3;                            //dr
+			} else if ((ddir <= (((0)*PI) / 8)) && (ddir > (((-2)*PI) / 8))) {
+				drawtile += tframes * 2;                            //r
+			} else if ((ddir <= (((2)*PI) / 8)) && (ddir > (((0)*PI) / 8))) {
+				drawtile += tframes * 1;                            //ur
+			} else if ((ddir <= (((4)*PI) / 8)) && (ddir > (((2)*PI) / 8))) {
+				drawtile += tframes * 0;                            //u
+			} else if ((ddir <= (((6)*PI) / 8)) && (ddir > (((4)*PI) / 8))) {
+				drawtile += tframes * 7;                            //ul
+			} else {
+				drawtile += tframes * 6;                            //l
+			}
+			break;
 	}
 	if (!(c.csets & 0xF0) || !(c.csets & 0x0F)) {
 		puttile16(dest, drawtile, x, y, cset, c.flip);
-	}
-	else {
+	} else {
 		int csets[4];
 		int cofs = c.csets & 15;
 		if (cofs & 8) {
@@ -1290,44 +1289,44 @@ void overcombo(BITMAP* dest, int x, int y, int cmbdat, int cset) {
 	int tframes = max(1, combobuf[cmbdat].frames);
 	double ddir = atan2(double(y - LinkModifiedY()), double(LinkModifiedX() - x));
 	switch (combobuf[cmbdat].type) {
-	case cEYEBALL_A:
-		if ((ddir <= (((-5)*PI) / 8)) && (ddir > (((-7)*PI) / 8))) {
-			drawtile += tframes * 5;                            //dl
-		} else if ((ddir <= (((-3)*PI) / 8)) && (ddir > (((-5)*PI) / 8))) {
-			drawtile += tframes * 4;                            //d
-		} else if ((ddir <= (((-1)*PI) / 8)) && (ddir > (((-3)*PI) / 8))) {
-			drawtile += tframes * 3;                            //dr
-		} else if ((ddir <= (((1)*PI) / 8)) && (ddir > (((-1)*PI) / 8))) {
-			drawtile += tframes * 2;                            //r
-		} else if ((ddir <= (((3)*PI) / 8)) && (ddir > (((1)*PI) / 8))) {
-			drawtile += tframes * 1;                            //ur
-		} else if ((ddir <= (((5)*PI) / 8)) && (ddir > (((3)*PI) / 8))) {
-			drawtile += tframes * 0;                            //u
-		} else if ((ddir <= (((7)*PI) / 8)) && (ddir > (((5)*PI) / 8))) {
-			drawtile += tframes * 7;                            //ul
-		} else {
-			drawtile += tframes * 6;                            //l
-		}
-		break;
-	case cEYEBALL_B:
-		if ((ddir <= (((-6)*PI) / 8)) && (ddir > (((-8)*PI) / 8))) {
-			drawtile += tframes * 5;                            //dl
-		} else if ((ddir <= (((-4)*PI) / 8)) && (ddir > (((-6)*PI) / 8))) {
-			drawtile += tframes * 4;                            //d
-		} else if ((ddir <= (((-2)*PI) / 8)) && (ddir > (((-4)*PI) / 8))) {
-			drawtile += tframes * 3;                            //dr
-		} else if ((ddir <= (((0)*PI) / 8)) && (ddir > (((-2)*PI) / 8))) {
-			drawtile += tframes * 2;                            //r
-		} else if ((ddir <= (((2)*PI) / 8)) && (ddir > (((0)*PI) / 8))) {
-			drawtile += tframes * 1;                            //ur
-		} else if ((ddir <= (((4)*PI) / 8)) && (ddir > (((2)*PI) / 8))) {
-			drawtile += tframes * 0;                            //u
-		} else if ((ddir <= (((6)*PI) / 8)) && (ddir > (((4)*PI) / 8))) {
-			drawtile += tframes * 7;                            //ul
-		} else {
-			drawtile += tframes * 6;                            //l
-		}
-		break;
+		case cEYEBALL_A:
+			if ((ddir <= (((-5)*PI) / 8)) && (ddir > (((-7)*PI) / 8))) {
+				drawtile += tframes * 5;                            //dl
+			} else if ((ddir <= (((-3)*PI) / 8)) && (ddir > (((-5)*PI) / 8))) {
+				drawtile += tframes * 4;                            //d
+			} else if ((ddir <= (((-1)*PI) / 8)) && (ddir > (((-3)*PI) / 8))) {
+				drawtile += tframes * 3;                            //dr
+			} else if ((ddir <= (((1)*PI) / 8)) && (ddir > (((-1)*PI) / 8))) {
+				drawtile += tframes * 2;                            //r
+			} else if ((ddir <= (((3)*PI) / 8)) && (ddir > (((1)*PI) / 8))) {
+				drawtile += tframes * 1;                            //ur
+			} else if ((ddir <= (((5)*PI) / 8)) && (ddir > (((3)*PI) / 8))) {
+				drawtile += tframes * 0;                            //u
+			} else if ((ddir <= (((7)*PI) / 8)) && (ddir > (((5)*PI) / 8))) {
+				drawtile += tframes * 7;                            //ul
+			} else {
+				drawtile += tframes * 6;                            //l
+			}
+			break;
+		case cEYEBALL_B:
+			if ((ddir <= (((-6)*PI) / 8)) && (ddir > (((-8)*PI) / 8))) {
+				drawtile += tframes * 5;                            //dl
+			} else if ((ddir <= (((-4)*PI) / 8)) && (ddir > (((-6)*PI) / 8))) {
+				drawtile += tframes * 4;                            //d
+			} else if ((ddir <= (((-2)*PI) / 8)) && (ddir > (((-4)*PI) / 8))) {
+				drawtile += tframes * 3;                            //dr
+			} else if ((ddir <= (((0)*PI) / 8)) && (ddir > (((-2)*PI) / 8))) {
+				drawtile += tframes * 2;                            //r
+			} else if ((ddir <= (((2)*PI) / 8)) && (ddir > (((0)*PI) / 8))) {
+				drawtile += tframes * 1;                            //ur
+			} else if ((ddir <= (((4)*PI) / 8)) && (ddir > (((2)*PI) / 8))) {
+				drawtile += tframes * 0;                            //u
+			} else if ((ddir <= (((6)*PI) / 8)) && (ddir > (((4)*PI) / 8))) {
+				drawtile += tframes * 7;                            //ul
+			} else {
+				drawtile += tframes * 6;                            //l
+			}
+			break;
 	}
 	if (!(c.csets & 0xF0) || !(c.csets & 0x0F)) {
 		overtile16(dest, drawtile, x, y, cset, c.flip);

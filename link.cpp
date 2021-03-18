@@ -288,110 +288,110 @@ void LinkClass::draw(BITMAP* dest) {
 				}
 
 				switch (dir) {
-				case up:
-					wx = -1;
-					wy = -12;
-					if (!game.canslash || attack != wSword) {
-						if (attackclk == 13) {
-							wy += 4;
+					case up:
+						wx = -1;
+						wy = -12;
+						if (!game.canslash || attack != wSword) {
+							if (attackclk == 13) {
+								wy += 4;
+							}
+							if (attackclk == 14) {
+								wy += 8;
+							}
 						}
-						if (attackclk == 14) {
-							wy += 8;
+						break;
+					case down:
+						f = get_bit(quest_rules, qr_SWORDWANDFLIPFIX) ? 3 : 2;
+						wy = 11;
+						if (!game.canslash || attack != wSword) {
+							if (attackclk == 13) {
+								wy -= 4;
+							}
+							if (attackclk == 14) {
+								wy -= 8;
+							}
 						}
-					}
-					break;
-				case down:
-					f = get_bit(quest_rules, qr_SWORDWANDFLIPFIX) ? 3 : 2;
-					wy = 11;
-					if (!game.canslash || attack != wSword) {
-						if (attackclk == 13) {
-							wy -= 4;
+						break;
+					case left:
+						f = 1;
+						wx = -11;
+						++t;
+						if (!game.canslash || attack != wSword) {
+							if (attackclk == 13) {
+								wx += 4;
+							}
+							if (attackclk == 14) {
+								wx += 8;
+							}
 						}
-						if (attackclk == 14) {
-							wy -= 8;
+						break;
+					case right:
+						wx = 11;
+						++t;
+						if (!game.canslash || attack != wSword) {
+							if (attackclk == 13) {
+								wx -= 4;
+							}
+							if (attackclk == 14) {
+								wx -= 8;
+							}
 						}
-					}
-					break;
-				case left:
-					f = 1;
-					wx = -11;
-					++t;
-					if (!game.canslash || attack != wSword) {
-						if (attackclk == 13) {
-							wx += 4;
-						}
-						if (attackclk == 14) {
-							wx += 8;
-						}
-					}
-					break;
-				case right:
-					wx = 11;
-					++t;
-					if (!game.canslash || attack != wSword) {
-						if (attackclk == 13) {
-							wx -= 4;
-						}
-						if (attackclk == 14) {
-							wx -= 8;
-						}
-					}
-					break;
+						break;
 				}
 
 				if (game.canslash && attack == wSword && attackclk < 11) {
 					switch (dir) {
-					case up:
-						wx = 8;
-						wy = 0;
-						++t;
-						f = 0;                                   //starts pointing right
-						if (attackclk >= 8) {
-							wy -= 8;
-							t = wpnsbuf[wSWORDSLASH + current_item(itype_sword, true) - 1].tile;
-							cs = wpnsbuf[wSWORDSLASH + current_item(itype_sword, true) - 1].csets & 15;
-							f = 0;
-						}
-						break;
-					case down:
-						wx = -8;
-						wy = 0;
-						++t;
-						f = 1;                                   //starts pointing left
-						if (attackclk >= 8) {
-							wy += 8;
-							t = wpnsbuf[wSWORDSLASH + current_item(itype_sword, true) - 1].tile;
-							cs = wpnsbuf[wSWORDSLASH + current_item(itype_sword, true) - 1].csets & 15;
+						case up:
+							wx = 8;
+							wy = 0;
 							++t;
-							f = 0;
-						}
-						break;
-					case left:
-						wx = 0;
-						wy = -8;
-						--t;
-						f = 0;                                   //starts pointing up
-						if (attackclk >= 8) {
-							wx -= 8;
-							t = wpnsbuf[wSWORDSLASH + current_item(itype_sword, true) - 1].tile;
-							cs = wpnsbuf[wSWORDSLASH + current_item(itype_sword, true) - 1].csets & 15;
-							t += 2;
-							f = 0;
-						}
-						break;
-					case right:
-						wx = 0;
-						wy = -8;
-						--t;
-						f = 1;                                   //starts pointing up
-						if (attackclk >= 8) {
-							wx += 8;
-							t = wpnsbuf[wSWORDSLASH + current_item(itype_sword, true) - 1].tile;
-							cs = wpnsbuf[wSWORDSLASH + current_item(itype_sword, true) - 1].csets & 15;
-							t += 3;
-							f = 0;
-						}
-						break;
+							f = 0;                                   //starts pointing right
+							if (attackclk >= 8) {
+								wy -= 8;
+								t = wpnsbuf[wSWORDSLASH + current_item(itype_sword, true) - 1].tile;
+								cs = wpnsbuf[wSWORDSLASH + current_item(itype_sword, true) - 1].csets & 15;
+								f = 0;
+							}
+							break;
+						case down:
+							wx = -8;
+							wy = 0;
+							++t;
+							f = 1;                                   //starts pointing left
+							if (attackclk >= 8) {
+								wy += 8;
+								t = wpnsbuf[wSWORDSLASH + current_item(itype_sword, true) - 1].tile;
+								cs = wpnsbuf[wSWORDSLASH + current_item(itype_sword, true) - 1].csets & 15;
+								++t;
+								f = 0;
+							}
+							break;
+						case left:
+							wx = 0;
+							wy = -8;
+							--t;
+							f = 0;                                   //starts pointing up
+							if (attackclk >= 8) {
+								wx -= 8;
+								t = wpnsbuf[wSWORDSLASH + current_item(itype_sword, true) - 1].tile;
+								cs = wpnsbuf[wSWORDSLASH + current_item(itype_sword, true) - 1].csets & 15;
+								t += 2;
+								f = 0;
+							}
+							break;
+						case right:
+							wx = 0;
+							wy = -8;
+							--t;
+							f = 1;                                   //starts pointing up
+							if (attackclk >= 8) {
+								wx += 8;
+								t = wpnsbuf[wSWORDSLASH + current_item(itype_sword, true) - 1].tile;
+								cs = wpnsbuf[wSWORDSLASH + current_item(itype_sword, true) - 1].csets & 15;
+								t += 3;
+								f = 0;
+							}
+							break;
 					}
 				}
 
@@ -431,63 +431,63 @@ void LinkClass::draw(BITMAP* dest) {
 			cs = wpnsbuf[wHammer].csets & 15;
 
 			switch (dir) {
-			case up:
-				wx = -1;
-				wy = -15;
-				if (attackclk >= 13) {
-					wx -= 1;
-					wy += 1;
-					++t;
-				}
-				if (attackclk >= 15) {
-					++t;
-				}
-				break;
-			case down:
-				wx = 3;
-				wy = -14;
-				t += 3;
-				if (attackclk >= 13) {
-					wy += 16;
-					++t;
-				}
-				if (attackclk >= 15) {
-					wx -= 1;
-					wy += 12;
-					++t;
-				}
-				break;
-			case left:
-				wx = 0;
-				wy = -14;
-				t += 6;
-				f = 1;
-				if (attackclk >= 13) {
-					wx -= 7;
-					wy += 8;
-					++t;
-				}
-				if (attackclk >= 15) {
-					wx -= 8;
-					wy += 8;
-					++t;
-				}
-				break;
-			case right:
-				wx = 0;
-				wy = -14;
-				t += 6;
-				if (attackclk >= 13) {
-					wx += 7;
-					wy += 8;
-					++t;
-				}
-				if (attackclk >= 15) {
-					wx += 8;
-					wy += 8;
-					++t;
-				}
-				break;
+				case up:
+					wx = -1;
+					wy = -15;
+					if (attackclk >= 13) {
+						wx -= 1;
+						wy += 1;
+						++t;
+					}
+					if (attackclk >= 15) {
+						++t;
+					}
+					break;
+				case down:
+					wx = 3;
+					wy = -14;
+					t += 3;
+					if (attackclk >= 13) {
+						wy += 16;
+						++t;
+					}
+					if (attackclk >= 15) {
+						wx -= 1;
+						wy += 12;
+						++t;
+					}
+					break;
+				case left:
+					wx = 0;
+					wy = -14;
+					t += 6;
+					f = 1;
+					if (attackclk >= 13) {
+						wx -= 7;
+						wy += 8;
+						++t;
+					}
+					if (attackclk >= 15) {
+						wx -= 8;
+						wy += 8;
+						++t;
+					}
+					break;
+				case right:
+					wx = 0;
+					wy = -14;
+					t += 6;
+					if (attackclk >= 13) {
+						wx += 7;
+						wy += 8;
+						++t;
+					}
+					if (attackclk >= 15) {
+						wx += 8;
+						wy += 8;
+						++t;
+					}
+					break;
 			}
 
 			if (BSZ || ((isdungeon() && currscr < 128) &&
@@ -511,50 +511,50 @@ void LinkClass::draw(BITMAP* dest) {
 
 	if (action != casting) {
 		switch (zinit.linkwalkstyle) {
-		case 0:                                               //normal
-			if (action == swimming || action == swimhit || hopclk == 0xFF) {
-				linktile(&tile, &flip, ls_swim, dir, zinit.linkwalkstyle);
-				if (lstep >= 6) {
-					++tile;
-				}
-				if (diveclk > 30) {
-					linktile(&tile, &flip, ls_dive, dir, zinit.linkwalkstyle);
-					tile += ((frame >> 3) & 1);
-				}
-			} else {
-				linktile(&tile, &flip, ls_walk, dir, zinit.linkwalkstyle);
-				if (dir > up) {
-					useltm = true;
-				}
-				if (lstep >= 6) {
-					if (dir == up) {
-						++flip;
-					} else {
+			case 0:                                               //normal
+				if (action == swimming || action == swimhit || hopclk == 0xFF) {
+					linktile(&tile, &flip, ls_swim, dir, zinit.linkwalkstyle);
+					if (lstep >= 6) {
 						++tile;
 					}
+					if (diveclk > 30) {
+						linktile(&tile, &flip, ls_dive, dir, zinit.linkwalkstyle);
+						tile += ((frame >> 3) & 1);
+					}
+				} else {
+					linktile(&tile, &flip, ls_walk, dir, zinit.linkwalkstyle);
+					if (dir > up) {
+						useltm = true;
+					}
+					if (lstep >= 6) {
+						if (dir == up) {
+							++flip;
+						} else {
+							++tile;
+						}
+					}
 				}
-			}
-			break;
-		case 1:                                               //BS
-			if (action == swimming || action == swimhit || hopclk == 0xFF) {
-				linktile(&tile, &flip, ls_swim, dir, zinit.linkwalkstyle);
-				tile += anim_3_4(lstep, 7);
-				if (diveclk > 30) {
-					linktile(&tile, &flip, ls_dive, dir, zinit.linkwalkstyle);
+				break;
+			case 1:                                               //BS
+				if (action == swimming || action == swimhit || hopclk == 0xFF) {
+					linktile(&tile, &flip, ls_swim, dir, zinit.linkwalkstyle);
+					tile += anim_3_4(lstep, 7);
+					if (diveclk > 30) {
+						linktile(&tile, &flip, ls_dive, dir, zinit.linkwalkstyle);
+						tile += anim_3_4(lstep, 7);
+					}
+				} else {
+					linktile(&tile, &flip, ls_walk, dir, zinit.linkwalkstyle);
+					if (dir > up) {
+						useltm = true;
+					}
 					tile += anim_3_4(lstep, 7);
 				}
-			} else {
-				linktile(&tile, &flip, ls_walk, dir, zinit.linkwalkstyle);
-				if (dir > up) {
-					useltm = true;
-				}
-				tile += anim_3_4(lstep, 7);
-			}
-			break;
-		case 2:                                               //4-frame
-			break;
-		default:
-			break;
+				break;
+			case 2:                                               //4-frame
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -642,51 +642,51 @@ void LinkClass::checkstab() {
 
 	int wx = 0, wy = 0, wxsz = 0, wysz = 0;
 	switch (dir) {
-	case up:
-		wx = x + 1;
-		wy = y - 13;
-		wxsz = 14;
-		wysz = 20;
-		break;
-	case down:
-		wx = x + 1;
-		wy = y + 5;
-		wxsz = 14;
-		wysz = 20;
-		break;
-	case left:
-		wx = x - 12;
-		wy = y + 2;
-		wxsz = 20;
-		wysz = 14;
-		break;
-	case right:
-		wx = x + 8;
-		wy = y + 2;
-		wxsz = 20;
-		wysz = 14;
-		break;
+		case up:
+			wx = x + 1;
+			wy = y - 13;
+			wxsz = 14;
+			wysz = 20;
+			break;
+		case down:
+			wx = x + 1;
+			wy = y + 5;
+			wxsz = 14;
+			wysz = 20;
+			break;
+		case left:
+			wx = x - 12;
+			wy = y + 2;
+			wxsz = 20;
+			wysz = 14;
+			break;
+		case right:
+			wx = x + 8;
+			wy = y + 2;
+			wxsz = 20;
+			wysz = 14;
+			break;
 	}
 
 	if ((attack == wHammer) && (attackclk < 15)) {
 
 		switch (dir) {
-		case up:
-			wx = x - 1;
-			wy = y - 4;
-			break;
-		case down:
-			wx = x + 8;
-			wy = y + 28;
-			break;
-		case left:
-			wx = x - 13;
-			wy = y + 14;
-			break;
-		case right:
-			wx = x + 21;
-			wy = y + 14;
-			break;
+			case up:
+				wx = x - 1;
+				wy = y - 4;
+				break;
+			case down:
+				wx = x + 8;
+				wy = y + 28;
+				break;
+			case left:
+				wx = x - 13;
+				wy = y + 14;
+				break;
+			case right:
+				wx = x + 21;
+				wy = y + 14;
+				break;
 		}
 		if (attackclk == 12) {
 			decorations.add(new dHammerSmack((fix)wx, (fix)wy, dHAMMERSMACK, 0));
@@ -696,34 +696,34 @@ void LinkClass::checkstab() {
 
 	if (game.canslash && attack == wSword && attackclk < 11) {
 		switch (dir) {
-		case up:
-			wx = x + 8;
-			wy = y;
-			if (attackclk >= 8) {
-				wy -= 8;
-			}
-			break;
-		case down:
-			wx = x - 8;
-			wy = y;
-			if (attackclk >= 8) {
-				wy += 8;
-			}
-			break;
-		case left:
-			wx = x;
-			wy = y - 7;
-			if (attackclk >= 8) {
-				wx -= 8;
-			}
-			break;
-		case right:
-			wx = x;
-			wy = y - 8;
-			if (attackclk >= 8) {
-				wx += 8;
-			}
-			break;
+			case up:
+				wx = x + 8;
+				wy = y;
+				if (attackclk >= 8) {
+					wy -= 8;
+				}
+				break;
+			case down:
+				wx = x - 8;
+				wy = y;
+				if (attackclk >= 8) {
+					wy += 8;
+				}
+				break;
+			case left:
+				wx = x;
+				wy = y - 7;
+				if (attackclk >= 8) {
+					wx -= 8;
+				}
+				break;
+			case right:
+				wx = x;
+				wy = y - 8;
+				if (attackclk >= 8) {
+					wx += 8;
+				}
+				break;
 		}
 		wxsz = 16;
 		wysz = 16;
@@ -950,15 +950,15 @@ void LinkClass::check_slash_block(int bx, int by) {
 
 	putcombo(scrollbuf, (i & 15) << 4, i & 0xF0, s->data[i], s->cset[i]);
 	switch (type) {
-	case cBUSH:
-		decorations.add(new dBushLeaves((fix)bx, (fix)by, dBUSHLEAVES, 0));
-		break;
-	case cFLOWERS:
-		decorations.add(new dFlowerClippings((fix)bx, (fix)by, dFLOWERCLIPPINGS, 0));
-		break;
-	case cTALLGRASS:
-		decorations.add(new dGrassClippings((fix)bx, (fix)by, dGRASSCLIPPINGS, 0));
-		break;
+		case cBUSH:
+			decorations.add(new dBushLeaves((fix)bx, (fix)by, dBUSHLEAVES, 0));
+			break;
+		case cFLOWERS:
+			decorations.add(new dFlowerClippings((fix)bx, (fix)by, dFLOWERCLIPPINGS, 0));
+			break;
+		case cTALLGRASS:
+			decorations.add(new dGrassClippings((fix)bx, (fix)by, dGRASSCLIPPINGS, 0));
+			break;
 	}
 }
 
@@ -1053,44 +1053,44 @@ int LinkClass::EwpnHit() {
 			}
 
 			switch (dir) {
-			case up:
-				if (ew->dir == down || ew->dir == l_down || ew->dir == r_down) {
-					hitshield = true;
-				}
-				break;
-			case down:
-				if (ew->dir == up || ew->dir == l_up || ew->dir == r_up) {
-					hitshield = true;
-				}
-				break;
-			case left:
-				if (ew->dir == right || ew->dir == r_up || ew->dir == r_down) {
-					hitshield = true;
-				}
-				break;
-			case right:
-				if (ew->dir == left || ew->dir == l_up || ew->dir == l_down) {
-					hitshield = true;
-				}
-				break;
+				case up:
+					if (ew->dir == down || ew->dir == l_down || ew->dir == r_down) {
+						hitshield = true;
+					}
+					break;
+				case down:
+					if (ew->dir == up || ew->dir == l_up || ew->dir == r_up) {
+						hitshield = true;
+					}
+					break;
+				case left:
+					if (ew->dir == right || ew->dir == r_up || ew->dir == r_down) {
+						hitshield = true;
+					}
+					break;
+				case right:
+					if (ew->dir == left || ew->dir == l_up || ew->dir == l_down) {
+						hitshield = true;
+					}
+					break;
 			}
 			if (!hitshield || action == attacking || action == swimming || hopclk == 0xFF) {
 				return i;
 			}
 
 			switch (ew->id) {
-			case ewFireball:
-			case ewMagic:
-			case ewSword:
-				if ((current_item(itype_shield, true) < i_largeshield) || ew->type) {
-					return i;
-				}
-				break;
-			case ewFlame:
-				if (current_item(itype_shield, true) < i_mirrorshield) {
-					return i;
-				}
-				break;
+				case ewFireball:
+				case ewMagic:
+				case ewSword:
+					if ((current_item(itype_shield, true) < i_largeshield) || ew->type) {
+						return i;
+					}
+					break;
+				case ewFlame:
+					if (current_item(itype_shield, true) < i_mirrorshield) {
+						return i;
+					}
+					break;
 			}
 
 			int oldid = ew->id;
@@ -1120,38 +1120,38 @@ int LinkClass::LwpnHit() {                                  //only here to check
 			}
 
 			switch (dir) {
-			case up:
-				if (lw->dir == down || lw->dir == l_down || lw->dir == r_down) {
-					hitshield = true;
-				}
-				break;
-			case down:
-				if (lw->dir == up || lw->dir == l_up || lw->dir == r_up) {
-					hitshield = true;
-				}
-				break;
-			case left:
-				if (lw->dir == right || lw->dir == r_up || lw->dir == r_down) {
-					hitshield = true;
-				}
-				break;
-			case right:
-				if (lw->dir == left || lw->dir == l_up || lw->dir == l_down) {
-					hitshield = true;
-				}
-				break;
+				case up:
+					if (lw->dir == down || lw->dir == l_down || lw->dir == r_down) {
+						hitshield = true;
+					}
+					break;
+				case down:
+					if (lw->dir == up || lw->dir == l_up || lw->dir == r_up) {
+						hitshield = true;
+					}
+					break;
+				case left:
+					if (lw->dir == right || lw->dir == r_up || lw->dir == r_down) {
+						hitshield = true;
+					}
+					break;
+				case right:
+					if (lw->dir == left || lw->dir == l_up || lw->dir == l_down) {
+						hitshield = true;
+					}
+					break;
 			}
 
 			switch (lw->id) {
-			case wMagic:
-			case wRefMagic:
-				if ((current_item(itype_shield, true) < i_largeshield) || lw->type) {
-					return i;
-				}
-				break;
-			default:
-				return -1;
-				break;
+				case wMagic:
+				case wRefMagic:
+					if ((current_item(itype_shield, true) < i_largeshield) || lw->type) {
+						return i;
+					}
+					break;
+				default:
+					return -1;
+					break;
 			}
 
 			if (!hitshield || action == attacking || action == swimming || hopclk == 0xFF) {
@@ -1190,34 +1190,34 @@ void LinkClass::checkhit() {
 		if (((ladderx + laddery) && ((hitdir & 2) == ladderdir)) || (!(ladderx + laddery))) {
 			for (int i = 0; i < 4; i++) {
 				switch (hitdir) {
-				case up:
-					if (hit_walkflag(x, y + 7, 2)) {
-						action = none;
-					} else {
-						--y;
-					}
-					break;
-				case down:
-					if (hit_walkflag(x, y + 16, 2)) {
-						action = none;
-					} else {
-						++y;
-					}
-					break;
-				case left:
-					if (hit_walkflag(x - 1, y + 8, 1)) {
-						action = none;
-					} else {
-						--x;
-					}
-					break;
-				case right:
-					if (hit_walkflag(x + 16, y + 8, 1)) {
-						action = none;
-					} else {
-						++x;
-					}
-					break;
+					case up:
+						if (hit_walkflag(x, y + 7, 2)) {
+							action = none;
+						} else {
+							--y;
+						}
+						break;
+					case down:
+						if (hit_walkflag(x, y + 16, 2)) {
+							action = none;
+						} else {
+							++y;
+						}
+						break;
+					case left:
+						if (hit_walkflag(x - 1, y + 8, 1)) {
+							action = none;
+						} else {
+							--x;
+						}
+						break;
+					case right:
+						if (hit_walkflag(x + 16, y + 8, 1)) {
+							action = none;
+						} else {
+							++x;
+						}
+						break;
 				}
 			}
 		}
@@ -1258,79 +1258,79 @@ void LinkClass::checkhit() {
 					sprite* t = Ewpns.spr(j);
 					if (s->hit(t->x + 7, t->y + 7, 2, 2)) {
 						switch (w) {
-						case 0:                                       //hookshot
-							switch (t->id) {
-							case ewFireball:
-							case ewSword:
-							case ewBrang:
-							case ewArrow:
-							case ewRock:
-								((weapon*)s)->dead = 1;
-								((weapon*)t)->onhit(true, 1, -1);
-								break;
-							case ewMagic:
-								break;
-							}
-							break;
-						case 1:                                       //wooden boomerang
-							switch (t->id) {
-							case ewBrang:
-							case ewArrow:
-							case ewRock:
-								((weapon*)s)->dead = 1;
-								((weapon*)t)->onhit(true, 1, -1);
-								break;
-							case ewFireball:
-							case ewSword:
-							case ewMagic:
-								break;
-							}
-							break;
-						case 2:                                       //magic boomerang
-							switch (t->id) {
-							case ewBrang:
-							case ewArrow:
-							case ewRock:
-							case ewFireball:
-							case ewSword:
-							case ewMagic:
-								((weapon*)s)->dead = 1;
-								((weapon*)t)->onhit(true, 1, -1);
-								if (s->dummy_bool[0]) {
-									add_grenade(s->x, s->y, 0);
-									s->dummy_bool[0] = false;
+							case 0:                                       //hookshot
+								switch (t->id) {
+									case ewFireball:
+									case ewSword:
+									case ewBrang:
+									case ewArrow:
+									case ewRock:
+										((weapon*)s)->dead = 1;
+										((weapon*)t)->onhit(true, 1, -1);
+										break;
+									case ewMagic:
+										break;
 								}
 								break;
-							}
-							break;
-						case 3:                                       //fire boomerang
-							switch (t->id) {
-							case ewBrang:
-							case ewArrow:
-							case ewRock:
-							case ewFireball:
-							case ewSword:
-							case ewMagic:
-								weapon* ew = ((weapon*)t);
-								int oldid = ew->id;
-								((weapon*)s)->dead = 1;
-								ew->onhit(true, 2, ew->dir);
-								if (s->dummy_bool[0]) {
-									add_grenade(s->x, s->y, 1);
-									s->dummy_bool[0] = false;
+							case 1:                                       //wooden boomerang
+								switch (t->id) {
+									case ewBrang:
+									case ewArrow:
+									case ewRock:
+										((weapon*)s)->dead = 1;
+										((weapon*)t)->onhit(true, 1, -1);
+										break;
+									case ewFireball:
+									case ewSword:
+									case ewMagic:
+										break;
 								}
-								if (ew->id != oldid) {                  // changed type from ewX to wX
-									Lwpns.add(ew);
-									Ewpns.remove(ew);
+								break;
+							case 2:                                       //magic boomerang
+								switch (t->id) {
+									case ewBrang:
+									case ewArrow:
+									case ewRock:
+									case ewFireball:
+									case ewSword:
+									case ewMagic:
+										((weapon*)s)->dead = 1;
+										((weapon*)t)->onhit(true, 1, -1);
+										if (s->dummy_bool[0]) {
+											add_grenade(s->x, s->y, 0);
+											s->dummy_bool[0] = false;
+										}
+										break;
 								}
-								if (ew->id == wRefMagic) {
-									ew->ignoreLink = true;
-									ew->ignorecombo = -1;
-								}
+								break;
+							case 3:                                       //fire boomerang
+								switch (t->id) {
+									case ewBrang:
+									case ewArrow:
+									case ewRock:
+									case ewFireball:
+									case ewSword:
+									case ewMagic:
+										weapon* ew = ((weapon*)t);
+										int oldid = ew->id;
+										((weapon*)s)->dead = 1;
+										ew->onhit(true, 2, ew->dir);
+										if (s->dummy_bool[0]) {
+											add_grenade(s->x, s->y, 1);
+											s->dummy_bool[0] = false;
+										}
+										if (ew->id != oldid) {                  // changed type from ewX to wX
+											Lwpns.add(ew);
+											Ewpns.remove(ew);
+										}
+										if (ew->id == wRefMagic) {
+											ew->ignoreLink = true;
+											ew->ignorecombo = -1;
+										}
 
+										break;
+								}
 								break;
-							}
-							break;
 						}
 					}
 				}
@@ -1460,45 +1460,45 @@ void LinkClass::hitlink(int hit) {
 	sfx(WAV_OUCH, pan(int(x)));
 	enemy_scored(hit);
 	switch (guys.spr(hit)->id) {
-	case eLIKE:
-		EatLink(hit);
-		inlikelike = true;
-		action = none;
-		break;
+		case eLIKE:
+			EatLink(hit);
+			inlikelike = true;
+			action = none;
+			break;
 
-	case eWALLM:
-		GrabLink(hit);
-		inwallm = true;
-		action = none;
-		break;
+		case eWALLM:
+			GrabLink(hit);
+			inwallm = true;
+			action = none;
+			break;
 
-	case eBUBBLE:
-		if (swordclk >= 0) {
-			swordclk = 150;
-		}
-		break;
+		case eBUBBLE:
+			if (swordclk >= 0) {
+				swordclk = 150;
+			}
+			break;
 
-	case eRBUBBLE:
-		swordclk = -1;
-		break;
+		case eRBUBBLE:
+			swordclk = -1;
+			break;
 
-	case eBBUBBLE:
-		swordclk = 0;
-		break;
+		case eBBUBBLE:
+			swordclk = 0;
+			break;
 
-	case eIBUBBLE:
-		if (itemclk >= 0) {
-			itemclk = 150;
-		}
-		break;
+		case eIBUBBLE:
+			if (itemclk >= 0) {
+				itemclk = 150;
+			}
+			break;
 
-	case eRIBUBBLE:
-		itemclk = -1;
-		break;
+		case eRIBUBBLE:
+			itemclk = -1;
+			break;
 
-	case eBIBUBBLE:
-		itemclk = 0;
-		break;
+		case eBIBUBBLE:
+			itemclk = 0;
+			break;
 	}
 }
 
@@ -1525,14 +1525,14 @@ bool LinkClass::animate(int index) {
 	}
 	if (!is_on_conveyor) {
 		switch (dir) {
-		case up:
-		case down:
-			x = (int(x) + 4) & 0xFFF8;
-			break;
-		case left:
-		case right:
-			y = (int(y) + 4) & 0xFFF8;
-			break;
+			case up:
+			case down:
+				x = (int(x) + 4) & 0xFFF8;
+				break;
+			case left:
+			case right:
+				y = (int(y) + 4) & 0xFFF8;
+				break;
 		}
 	}
 	if ((watch == true) && (get_bit(quest_rules, qr_TEMPCLOCKS))) {
@@ -1714,73 +1714,73 @@ bool LinkClass::animate(int index) {
 	// get user input or do other animation
 	freeze_guys = false;                                      // reset this flag, set it again if holding
 	switch (action) {
-	case gothit:
-		if (attackclk)
-			if (!doattack()) {
-				attackclk = 0;
-			}
+		case gothit:
+			if (attackclk)
+				if (!doattack()) {
+					attackclk = 0;
+				}
 
-	case swimhit:
-	case freeze:
-	case scrolling:
-		break;
+		case swimhit:
+		case freeze:
+		case scrolling:
+			break;
 
-	case casting:
-		if (magictype == mgc_none) {
-			action = none;
-		}
-		break;
-
-	case holding1:
-	case holding2:
-		if (--holdclk == 0) {
-			action = none;
-		} else {
-			freeze_guys = true;
-		}
-		break;
-
-	case swimhold1:
-	case swimhold2:
-		diveclk = 0;
-		if (--holdclk == 0) {
-			action = swimming;
-		} else {
-			freeze_guys = true;
-		}
-		break;
-
-	case hopping:
-		do_hopping();
-		break;
-
-	case inwind: {
-		int i = Lwpns.idFirst(wWind);
-		if (i < 0) {
-			if (whirlwind == 255) {
+		case casting:
+			if (magictype == mgc_none) {
 				action = none;
-				xofs = 0;
-				whirlwind = 0;
-				dir = right;
-				lstep = 0;
-			} else {
-				x = 241;
 			}
-		} else {
-			x = Lwpns.spr(i)->x;
-			y = Lwpns.spr(i)->y;
-		}
-	}
-	break;
+			break;
 
-	case swimming:
-		if (frame & 1) {
-			linkstep();
-		}
-	// fall through
+		case holding1:
+		case holding2:
+			if (--holdclk == 0) {
+				action = none;
+			} else {
+				freeze_guys = true;
+			}
+			break;
 
-	default:
-		movelink();                                           // call the main movement routine
+		case swimhold1:
+		case swimhold2:
+			diveclk = 0;
+			if (--holdclk == 0) {
+				action = swimming;
+			} else {
+				freeze_guys = true;
+			}
+			break;
+
+		case hopping:
+			do_hopping();
+			break;
+
+		case inwind: {
+			int i = Lwpns.idFirst(wWind);
+			if (i < 0) {
+				if (whirlwind == 255) {
+					action = none;
+					xofs = 0;
+					whirlwind = 0;
+					dir = right;
+					lstep = 0;
+				} else {
+					x = 241;
+				}
+			} else {
+				x = Lwpns.spr(i)->x;
+				y = Lwpns.spr(i)->y;
+			}
+		}
+		break;
+
+		case swimming:
+			if (frame & 1) {
+				linkstep();
+			}
+		// fall through
+
+		default:
+			movelink();                                           // call the main movement routine
 	}
 	// check for ladder removal
 	if ((abs(laddery - int(y)) >= 16) || (abs(ladderx - int(x)) >= 16)) {
@@ -1910,361 +1910,361 @@ bool LinkClass::startwpn(int wpn) {                         // an item index
 	int wx = x;
 	int wy = y;
 	switch (dir) {
-	case up:
-		wy -= 16;
-		break;
-	case down:
-		wy += 16;
-		break;
-	case left:
-		wx -= 16;
-		break;
-	case right:
-		wx += 16;
-		break;
+		case up:
+			wy -= 16;
+			break;
+		case down:
+			wy += 16;
+			break;
+		case left:
+			wx -= 16;
+			break;
+		case right:
+			wx += 16;
+			break;
 	}
 	bool use_hookshot = true;
 
 	switch (wpn) {
 
-	case iRPotion:
-	case iBPotion:
-		//  --game.potion;
-		game.items[itype_potion] = game.items[itype_potion] >> 1;
-		Bwpn = 0;
+		case iRPotion:
+		case iBPotion:
+			//  --game.potion;
+			game.items[itype_potion] = game.items[itype_potion] >> 1;
+			Bwpn = 0;
 
-		refill_what = REFILL_ALL;
-		StartRefill(REFILL_POTION);
-		while (refill()) {
-			putsubscr(framebuf, 0, 0);
-			advanceframe();
-		}
+			refill_what = REFILL_ALL;
+			StartRefill(REFILL_POTION);
+			while (refill()) {
+				putsubscr(framebuf, 0, 0);
+				advanceframe();
+			}
 
-		selectBwpn(0, 0);
-		return false;
+			selectBwpn(0, 0);
+			return false;
 
-	case iLetter:
-		//  if(game.letter==1 && currscr==128 && tmpscr[1].room==rP_SHOP) {
-		if (current_item(itype_letter, true) == i_letter &&
-		        tmpscr[currscr < 128 ? 0 : 1].room == rP_SHOP &&
-		        tmpscr[currscr < 128 ? 0 : 1].guy &&
-		        //        ((currscr<128&&isdungeon())||(currscr>=128&&!isdungeon()))
-		        ((currscr < 128 && dlevel) || (currscr >= 128 && !isdungeon()))
-		   ) {
-			game.items[itype_letter] |= i_letter_used;
-			setupscreen();
-			action = none;
-		}
-		return false;
+		case iLetter:
+			//  if(game.letter==1 && currscr==128 && tmpscr[1].room==rP_SHOP) {
+			if (current_item(itype_letter, true) == i_letter &&
+			        tmpscr[currscr < 128 ? 0 : 1].room == rP_SHOP &&
+			        tmpscr[currscr < 128 ? 0 : 1].guy &&
+			        //        ((currscr<128&&isdungeon())||(currscr>=128&&!isdungeon()))
+			        ((currscr < 128 && dlevel) || (currscr >= 128 && !isdungeon()))
+			   ) {
+				game.items[itype_letter] |= i_letter_used;
+				setupscreen();
+				action = none;
+			}
+			return false;
 
-	case iWhistle:
-		sfx(WAV_WHISTLE);
-		if (dir == up || dir == right) {
-			++blowcnt;
-		} else {
-			--blowcnt;
-		}
+		case iWhistle:
+			sfx(WAV_WHISTLE);
+			if (dir == up || dir == right) {
+				++blowcnt;
+			} else {
+				--blowcnt;
+			}
 
-		for (int i = 0; i < 150; i++) {
-			advanceframe();
-			if (Quit) {
+			for (int i = 0; i < 150; i++) {
+				advanceframe();
+				if (Quit) {
+					return false;
+				}
+			}
+			Lwpns.add(new weapon(x, y, wWhistle, 0, 0, dir));
+
+			if (findentrance(x, y, mfWHISTLE, false)) {
+				didstuff |= did_whistle;
+			}
+
+			if ((didstuff & did_whistle) || currscr >= 128) {
 				return false;
 			}
-		}
-		Lwpns.add(new weapon(x, y, wWhistle, 0, 0, dir));
 
-		if (findentrance(x, y, mfWHISTLE, false)) {
 			didstuff |= did_whistle;
-		}
-
-		if ((didstuff & did_whistle) || currscr >= 128) {
-			return false;
-		}
-
-		didstuff |= did_whistle;
-		if (tmpscr->flags & fWHISTLE) {
-			whistleclk = 0;    // signal to start drying lake or doing other stuff
-		} else if (dlevel == 0 && TriforceCount()) {
-			Lwpns.add(new weapon((fix)0, (fix)y, wWind, 0, 0, right));
-		}
-		return false;
-
-	case iBombs: {
-		/*
-		  //remote detonation
-		  if(Lwpns.idCount(wLitBomb)) {
-		    weapon *ew = (weapon*)(Lwpns.spr(Lwpns.idFirst(wLitBomb)));
-		    ew->clk=41;
-		    ew->id=wBomb;
-		    return false;
-		  }
-		*/
-		if (Lwpns.idCount(wLitBomb)) {
-			return false;
-		}
-		--game.items[itype_bomb];
-		selectBwpn(8, 8);
-		if (isdungeon()) {
-			wy = max(wy, 16);
-		}
-		Lwpns.add(new weapon((fix)wx, (fix)wy, wBomb, 0, 4 * DAMAGE_MULTIPLIER, dir));
-		sfx(WAV_PLACE, pan(wx));
-	}
-	break;
-
-	case iSBomb: {
-		if (Lwpns.idCount(wLitSBomb)) {
-			return false;
-		}
-		--game.items[itype_sbomb];
-		selectBwpn(8, 8);
-		Lwpns.add(new weapon((fix)wx, (fix)wy, wSBomb, 0, 16 * DAMAGE_MULTIPLIER, dir));
-		sfx(WAV_PLACE, pan(wx));
-	}
-	break;
-
-	case iWand:
-		if (Lwpns.idCount(wMagic)) {
-			return false;
-		}
-		if ((get_bit(quest_rules, qr_ENABLEMAGIC)) &&
-		        ((game.magic + game.dmagic) < WANDDRAINAMOUNT * game.magicdrainrate) &&
-		        ((get_bit(quest_rules, qr_MAGICWAND)))) {
-			return false;
-		}
-		if (Lwpns.idCount(wBeam)) {
-			Lwpns.del(Lwpns.idFirst(wBeam));
-		}
-		Lwpns.add(new weapon((fix)wx, (fix)wy, wMagic, 0, 2 * DAMAGE_MULTIPLIER, dir));
-		if (get_bit(quest_rules, qr_MAGICWAND)) {
-			game.magic -= (WANDDRAINAMOUNT * game.magicdrainrate);
-		}
-		sfx(WAV_WAND, pan(wx));
-
-		/* Fireball Wand
-		  Lwpns.add(new weapon((fix)wx,(fix)wy,ewFireball,0,2*DAMAGE_MULTIPLIER,dir));
-		  switch (dir) {
-		    case up:
-		      Lwpns.spr(Lwpns.Count()-1)->angle=-PI/2;
-		      Lwpns.spr(Lwpns.Count()-1)->dir=up;
-		      break;
-		    case down:
-		      Lwpns.spr(Lwpns.Count()-1)->angle=PI/2;
-		      Lwpns.spr(Lwpns.Count()-1)->dir=down;
-		      break;
-		case left:
-		Lwpns.spr(Lwpns.Count()-1)->angle=PI;
-		Lwpns.spr(Lwpns.Count()-1)->dir=left;
-		break;
-		case right:
-		Lwpns.spr(Lwpns.Count()-1)->angle=0;
-		Lwpns.spr(Lwpns.Count()-1)->dir=right;
-		break;
-		}
-		Lwpns.spr(Lwpns.Count()-1)->id=wRefFireball;
-		Lwpns.spr(Lwpns.Count()-1)->clk=16;
-		((weapon*)Lwpns.spr(Lwpns.Count()-1))->step=3.5;
-		Lwpns.spr(Lwpns.Count()-1)->dummy_bool[0]=true; //homing
-		if (get_bit(quest_rules,qr_MAGICWAND))
-		game.magic-=(WANDDRAINAMOUNT*game.magicdrainrate);
-		sfx(WAV_WAND,pan(wx));
-		*/
-		break;
-
-	case iSword:
-		if (Lwpns.idCount(wBeam) || Lwpns.idCount(wMagic)) {
-			return false;
-		}
-		//  Lwpns.add(new weapon(wx,wy,wBeam,0,((get_bit(quest_rules,qr_BEAMHALFPWR))?1:2)<<(game.sword-1),dir));
-		//  ((x<<z)>>y)
-		//  ((DAMAGE_MULTIPLIER<<(game.sword-1))>>(get_bit(quest_rules,qr_BEAMHALFPWR)))
-		//  x=DAMAGE_MULTIPLIER
-		//  y=(game.sword-1)
-		//  z=(get_bit(quest_rules,qr_BEAMHALFPWR))
-
-
-		//  Lwpns.add(new weapon(wx,wy,wBeam,0,((DAMAGE_MULTIPLIER<<(game.sword-1))>>(get_bit(quest_rules,qr_BEAMHALFPWR))),dir));
-		float temppower;
-		temppower = DAMAGE_MULTIPLIER << (current_item(itype_sword, true) - 1);
-		temppower = temppower * zinit.beam_power[current_item(itype_sword, true) - 1];
-		temppower = temppower / 100;
-		Lwpns.add(new weapon((fix)wx, (fix)wy, wBeam, 0, int(temppower), dir));
-		sfx(WAV_BEAM, pan(wx));
-		break;
-
-	case iBCandle:
-		if (didstuff & did_candle) {
-			return false;
-		}
-	case iRCandle:
-		if (Lwpns.idCount(wFire) >= 2) {
-			return false;
-		}
-		if ((get_bit(quest_rules, qr_ENABLEMAGIC)) &&
-		        ((game.magic + game.dmagic) < CANDLEDRAINAMOUNT * game.magicdrainrate) &&
-		        ((get_bit(quest_rules, qr_MAGICCANDLE)))) {
-			return false;
-		}
-		didstuff |= did_candle;
-		Lwpns.add(new weapon((fix)wx, (fix)wy, wFire, (wpn == iBCandle) ? 0 : 1, 1 * DAMAGE_MULTIPLIER, dir));
-		if (get_bit(quest_rules, qr_MAGICCANDLE)) {
-			game.magic -= (CANDLEDRAINAMOUNT * game.magicdrainrate);
-		}
-		sfx(WAV_FIRE, pan(wx));
-		attack = wFire;
-		break;
-
-	case iGArrow:
-	case iSArrow:
-	case iArrow:
-		if (Lwpns.idCount(wArrow)) {
-			return false;
-		}
-		if (game.drupy + game.rupies <= 0) {
-			return false;
-		}
-		--game.drupy;
-		Lwpns.add(new weapon((fix)wx, (fix)wy, wArrow, current_item(itype_arrow, true), (1 * DAMAGE_MULTIPLIER) << current_item(itype_arrow, true), dir));
-		((weapon*)Lwpns.spr(Lwpns.Count() - 1))->step *= current_item(itype_bow, true);
-		sfx(WAV_ARROW, pan(wx));
-		break;
-
-	case iBait:
-		if (Lwpns.idCount(wBait)) {
-			return false;
-		}
-		if (tmpscr->room == rGRUMBLE && !getmapflag()) {
-			items.add(new item((fix)wx, (fix)wy, iBait, ipDUMMY + ipFADE, 0));
-			fadeclk = 66;
-			msgstr = 0;
-			clear_bitmap(msgdisplaybuf);
-			anymsg = false;
-			clear_bitmap(pricesdisplaybuf);
-			anyprice = false;
-			setmapflag();
-			game.items[itype_bait] = 0;
-			selectBwpn(0, 0);
-			if (!nosecretsounds) {
-				sfx(WAV_SECRET);
+			if (tmpscr->flags & fWHISTLE) {
+				whistleclk = 0;    // signal to start drying lake or doing other stuff
+			} else if (dlevel == 0 && TriforceCount()) {
+				Lwpns.add(new weapon((fix)0, (fix)y, wWind, 0, 0, right));
 			}
 			return false;
-		}
-		Lwpns.add(new weapon((fix)wx, (fix)wy, wBait, 0, 0, dir));
-		break;
 
-	case iBrang:
-	case iMBrang:
-	case iFBrang:
-		if (Lwpns.idCount(wBrang)) {
-			return false;
-		}
-		Lwpns.add(new weapon((fix)wx, (fix)wy, wBrang, current_item(itype_brang, true), (current_item(itype_brang, true)*DAMAGE_MULTIPLIER), dir));
-		break;
-
-	case iHookshot:
-		if (Lwpns.idCount(wHookshot)) {
-			return false;
-		}
-		if (dir == up) {
-			if ((combobuf[MAPDATA(x, y - 7)].type == cHSGRAB) ||
-			        (_walkflag(x + 2, y + 4, 1) && !isstepable(MAPDATA(int(x), int(y + 4))))) {
-				use_hookshot = false;
+		case iBombs: {
+			/*
+			  //remote detonation
+			  if(Lwpns.idCount(wLitBomb)) {
+			    weapon *ew = (weapon*)(Lwpns.spr(Lwpns.idFirst(wLitBomb)));
+			    ew->clk=41;
+			    ew->id=wBomb;
+			    return false;
+			  }
+			*/
+			if (Lwpns.idCount(wLitBomb)) {
+				return false;
 			}
+			--game.items[itype_bomb];
+			selectBwpn(8, 8);
+			if (isdungeon()) {
+				wy = max(wy, 16);
+			}
+			Lwpns.add(new weapon((fix)wx, (fix)wy, wBomb, 0, 4 * DAMAGE_MULTIPLIER, dir));
+			sfx(WAV_PLACE, pan(wx));
 		}
+		break;
 
-		if (dir == down) {
-			if (int(x) & 8) {
-				if ((combobuf[MAPDATA(x + 16, y + 23)].type == cHSGRAB)) {
-					use_hookshot = false;
+		case iSBomb: {
+			if (Lwpns.idCount(wLitSBomb)) {
+				return false;
+			}
+			--game.items[itype_sbomb];
+			selectBwpn(8, 8);
+			Lwpns.add(new weapon((fix)wx, (fix)wy, wSBomb, 0, 16 * DAMAGE_MULTIPLIER, dir));
+			sfx(WAV_PLACE, pan(wx));
+		}
+		break;
+
+		case iWand:
+			if (Lwpns.idCount(wMagic)) {
+				return false;
+			}
+			if ((get_bit(quest_rules, qr_ENABLEMAGIC)) &&
+			        ((game.magic + game.dmagic) < WANDDRAINAMOUNT * game.magicdrainrate) &&
+			        ((get_bit(quest_rules, qr_MAGICWAND)))) {
+				return false;
+			}
+			if (Lwpns.idCount(wBeam)) {
+				Lwpns.del(Lwpns.idFirst(wBeam));
+			}
+			Lwpns.add(new weapon((fix)wx, (fix)wy, wMagic, 0, 2 * DAMAGE_MULTIPLIER, dir));
+			if (get_bit(quest_rules, qr_MAGICWAND)) {
+				game.magic -= (WANDDRAINAMOUNT * game.magicdrainrate);
+			}
+			sfx(WAV_WAND, pan(wx));
+
+			/* Fireball Wand
+			  Lwpns.add(new weapon((fix)wx,(fix)wy,ewFireball,0,2*DAMAGE_MULTIPLIER,dir));
+			  switch (dir) {
+			    case up:
+			      Lwpns.spr(Lwpns.Count()-1)->angle=-PI/2;
+			      Lwpns.spr(Lwpns.Count()-1)->dir=up;
+			      break;
+			    case down:
+			      Lwpns.spr(Lwpns.Count()-1)->angle=PI/2;
+			      Lwpns.spr(Lwpns.Count()-1)->dir=down;
+			      break;
+			case left:
+			Lwpns.spr(Lwpns.Count()-1)->angle=PI;
+			Lwpns.spr(Lwpns.Count()-1)->dir=left;
+			break;
+			case right:
+			Lwpns.spr(Lwpns.Count()-1)->angle=0;
+			Lwpns.spr(Lwpns.Count()-1)->dir=right;
+			break;
+			}
+			Lwpns.spr(Lwpns.Count()-1)->id=wRefFireball;
+			Lwpns.spr(Lwpns.Count()-1)->clk=16;
+			((weapon*)Lwpns.spr(Lwpns.Count()-1))->step=3.5;
+			Lwpns.spr(Lwpns.Count()-1)->dummy_bool[0]=true; //homing
+			if (get_bit(quest_rules,qr_MAGICWAND))
+			game.magic-=(WANDDRAINAMOUNT*game.magicdrainrate);
+			sfx(WAV_WAND,pan(wx));
+			*/
+			break;
+
+		case iSword:
+			if (Lwpns.idCount(wBeam) || Lwpns.idCount(wMagic)) {
+				return false;
+			}
+			//  Lwpns.add(new weapon(wx,wy,wBeam,0,((get_bit(quest_rules,qr_BEAMHALFPWR))?1:2)<<(game.sword-1),dir));
+			//  ((x<<z)>>y)
+			//  ((DAMAGE_MULTIPLIER<<(game.sword-1))>>(get_bit(quest_rules,qr_BEAMHALFPWR)))
+			//  x=DAMAGE_MULTIPLIER
+			//  y=(game.sword-1)
+			//  z=(get_bit(quest_rules,qr_BEAMHALFPWR))
+
+
+			//  Lwpns.add(new weapon(wx,wy,wBeam,0,((DAMAGE_MULTIPLIER<<(game.sword-1))>>(get_bit(quest_rules,qr_BEAMHALFPWR))),dir));
+			float temppower;
+			temppower = DAMAGE_MULTIPLIER << (current_item(itype_sword, true) - 1);
+			temppower = temppower * zinit.beam_power[current_item(itype_sword, true) - 1];
+			temppower = temppower / 100;
+			Lwpns.add(new weapon((fix)wx, (fix)wy, wBeam, 0, int(temppower), dir));
+			sfx(WAV_BEAM, pan(wx));
+			break;
+
+		case iBCandle:
+			if (didstuff & did_candle) {
+				return false;
+			}
+		case iRCandle:
+			if (Lwpns.idCount(wFire) >= 2) {
+				return false;
+			}
+			if ((get_bit(quest_rules, qr_ENABLEMAGIC)) &&
+			        ((game.magic + game.dmagic) < CANDLEDRAINAMOUNT * game.magicdrainrate) &&
+			        ((get_bit(quest_rules, qr_MAGICCANDLE)))) {
+				return false;
+			}
+			didstuff |= did_candle;
+			Lwpns.add(new weapon((fix)wx, (fix)wy, wFire, (wpn == iBCandle) ? 0 : 1, 1 * DAMAGE_MULTIPLIER, dir));
+			if (get_bit(quest_rules, qr_MAGICCANDLE)) {
+				game.magic -= (CANDLEDRAINAMOUNT * game.magicdrainrate);
+			}
+			sfx(WAV_FIRE, pan(wx));
+			attack = wFire;
+			break;
+
+		case iGArrow:
+		case iSArrow:
+		case iArrow:
+			if (Lwpns.idCount(wArrow)) {
+				return false;
+			}
+			if (game.drupy + game.rupies <= 0) {
+				return false;
+			}
+			--game.drupy;
+			Lwpns.add(new weapon((fix)wx, (fix)wy, wArrow, current_item(itype_arrow, true), (1 * DAMAGE_MULTIPLIER) << current_item(itype_arrow, true), dir));
+			((weapon*)Lwpns.spr(Lwpns.Count() - 1))->step *= current_item(itype_bow, true);
+			sfx(WAV_ARROW, pan(wx));
+			break;
+
+		case iBait:
+			if (Lwpns.idCount(wBait)) {
+				return false;
+			}
+			if (tmpscr->room == rGRUMBLE && !getmapflag()) {
+				items.add(new item((fix)wx, (fix)wy, iBait, ipDUMMY + ipFADE, 0));
+				fadeclk = 66;
+				msgstr = 0;
+				clear_bitmap(msgdisplaybuf);
+				anymsg = false;
+				clear_bitmap(pricesdisplaybuf);
+				anyprice = false;
+				setmapflag();
+				game.items[itype_bait] = 0;
+				selectBwpn(0, 0);
+				if (!nosecretsounds) {
+					sfx(WAV_SECRET);
 				}
-			} else if ((combobuf[MAPDATA(x, y + 23)].type == cHSGRAB)) {
-				use_hookshot = false;
+				return false;
 			}
-		}
+			Lwpns.add(new weapon((fix)wx, (fix)wy, wBait, 0, 0, dir));
+			break;
 
-		if (dir == left) {
-			if (int(y) & 8) {
-				if ((combobuf[MAPDATA(x - 7, y + 16)].type == cHSGRAB)) {
-					use_hookshot = false;
-				}
-			} else if ((combobuf[MAPDATA(x - 7, y)].type == cHSGRAB)) {
-				use_hookshot = false;
+		case iBrang:
+		case iMBrang:
+		case iFBrang:
+			if (Lwpns.idCount(wBrang)) {
+				return false;
 			}
-		}
+			Lwpns.add(new weapon((fix)wx, (fix)wy, wBrang, current_item(itype_brang, true), (current_item(itype_brang, true)*DAMAGE_MULTIPLIER), dir));
+			break;
 
-		if (dir == right) {
-			if (int(y) & 8) {
-				if ((combobuf[MAPDATA(x + 23, y + 16)].type == cHSGRAB)) {
-					use_hookshot = false;
-				}
-			} else if ((combobuf[MAPDATA(x + 23, y)].type == cHSGRAB)) {
-				use_hookshot = false;
+		case iHookshot:
+			if (Lwpns.idCount(wHookshot)) {
+				return false;
 			}
-		}
-
-		if (use_hookshot) {
 			if (dir == up) {
-				hookshot_used = true;
-				Lwpns.add(new weapon((fix)wx, (fix)wy, wHSHandle, 0, DAMAGE_MULTIPLIER, dir));
-				Lwpns.add(new weapon((fix)wx, (fix)wy - 4, wHookshot, 0, DAMAGE_MULTIPLIER, dir));
-				hs_startx = wx;
-				hs_starty = wy - 4;
+				if ((combobuf[MAPDATA(x, y - 7)].type == cHSGRAB) ||
+				        (_walkflag(x + 2, y + 4, 1) && !isstepable(MAPDATA(int(x), int(y + 4))))) {
+					use_hookshot = false;
+				}
 			}
+
 			if (dir == down) {
-				hookshot_used = true;
-				Lwpns.add(new weapon((fix)wx, (fix)wy, wHSHandle, 0, DAMAGE_MULTIPLIER, dir));
-				Lwpns.add(new weapon((fix)wx, (fix)wy + 4, wHookshot, 0, DAMAGE_MULTIPLIER, dir));
-				hs_startx = wx;
-				hs_starty = wy + 4;
+				if (int(x) & 8) {
+					if ((combobuf[MAPDATA(x + 16, y + 23)].type == cHSGRAB)) {
+						use_hookshot = false;
+					}
+				} else if ((combobuf[MAPDATA(x, y + 23)].type == cHSGRAB)) {
+					use_hookshot = false;
+				}
 			}
+
 			if (dir == left) {
-				hookshot_used = true;
-				Lwpns.add(new weapon((fix)wx, (fix)wy, wHSHandle, 0, DAMAGE_MULTIPLIER, dir));
-				Lwpns.add(new weapon((fix)(wx - 4), (fix)wy, wHookshot, 0, DAMAGE_MULTIPLIER, dir));
-				hs_startx = wx - 4;
-				hs_starty = wy;
+				if (int(y) & 8) {
+					if ((combobuf[MAPDATA(x - 7, y + 16)].type == cHSGRAB)) {
+						use_hookshot = false;
+					}
+				} else if ((combobuf[MAPDATA(x - 7, y)].type == cHSGRAB)) {
+					use_hookshot = false;
+				}
 			}
+
 			if (dir == right) {
-				hookshot_used = true;
-				Lwpns.add(new weapon((fix)wx, (fix)wy, wHSHandle, 0, DAMAGE_MULTIPLIER, dir));
-				Lwpns.add(new weapon((fix)(wx + 4), (fix)wy, wHookshot, 0, DAMAGE_MULTIPLIER, dir));
-				hs_startx = wx + 4;
-				hs_starty = wy;
+				if (int(y) & 8) {
+					if ((combobuf[MAPDATA(x + 23, y + 16)].type == cHSGRAB)) {
+						use_hookshot = false;
+					}
+				} else if ((combobuf[MAPDATA(x + 23, y)].type == cHSGRAB)) {
+					use_hookshot = false;
+				}
 			}
 
-			hookshot_frozen = true;
-		}
-		break;
-	case iDinsFire:
-		if ((get_bit(quest_rules, qr_ENABLEMAGIC)) &&
-		        ((game.magic + game.dmagic) < DINSFIREDRAINAMOUNT * game.magicdrainrate)) {
-			return false;
-		}
-		game.magic -= (DINSFIREDRAINAMOUNT * game.magicdrainrate);
-		action = casting;
-		magictype = mgc_dinsfire;
-		break;
-	case iFaroresWind:
-		if ((get_bit(quest_rules, qr_ENABLEMAGIC)) &&
-		        ((game.magic + game.dmagic) < FARORESWINDDRAINAMOUNT * game.magicdrainrate)) {
-			return false;
-		}
-		game.magic -= (FARORESWINDDRAINAMOUNT * game.magicdrainrate);
-		action = casting;
-		magictype = mgc_faroreswind;
-		break;
-	case iNayrusLove:
-		if ((get_bit(quest_rules, qr_ENABLEMAGIC)) &&
-		        ((game.magic + game.dmagic) < NAYRUSLOVEDRAINAMOUNT * game.magicdrainrate)) {
-			return false;
-		}
-		game.magic -= (NAYRUSLOVEDRAINAMOUNT * game.magicdrainrate);
-		action = casting;
-		magictype = mgc_nayruslove;
-		break;
+			if (use_hookshot) {
+				if (dir == up) {
+					hookshot_used = true;
+					Lwpns.add(new weapon((fix)wx, (fix)wy, wHSHandle, 0, DAMAGE_MULTIPLIER, dir));
+					Lwpns.add(new weapon((fix)wx, (fix)wy - 4, wHookshot, 0, DAMAGE_MULTIPLIER, dir));
+					hs_startx = wx;
+					hs_starty = wy - 4;
+				}
+				if (dir == down) {
+					hookshot_used = true;
+					Lwpns.add(new weapon((fix)wx, (fix)wy, wHSHandle, 0, DAMAGE_MULTIPLIER, dir));
+					Lwpns.add(new weapon((fix)wx, (fix)wy + 4, wHookshot, 0, DAMAGE_MULTIPLIER, dir));
+					hs_startx = wx;
+					hs_starty = wy + 4;
+				}
+				if (dir == left) {
+					hookshot_used = true;
+					Lwpns.add(new weapon((fix)wx, (fix)wy, wHSHandle, 0, DAMAGE_MULTIPLIER, dir));
+					Lwpns.add(new weapon((fix)(wx - 4), (fix)wy, wHookshot, 0, DAMAGE_MULTIPLIER, dir));
+					hs_startx = wx - 4;
+					hs_starty = wy;
+				}
+				if (dir == right) {
+					hookshot_used = true;
+					Lwpns.add(new weapon((fix)wx, (fix)wy, wHSHandle, 0, DAMAGE_MULTIPLIER, dir));
+					Lwpns.add(new weapon((fix)(wx + 4), (fix)wy, wHookshot, 0, DAMAGE_MULTIPLIER, dir));
+					hs_startx = wx + 4;
+					hs_starty = wy;
+				}
 
-	default:
-		return false;
+				hookshot_frozen = true;
+			}
+			break;
+		case iDinsFire:
+			if ((get_bit(quest_rules, qr_ENABLEMAGIC)) &&
+			        ((game.magic + game.dmagic) < DINSFIREDRAINAMOUNT * game.magicdrainrate)) {
+				return false;
+			}
+			game.magic -= (DINSFIREDRAINAMOUNT * game.magicdrainrate);
+			action = casting;
+			magictype = mgc_dinsfire;
+			break;
+		case iFaroresWind:
+			if ((get_bit(quest_rules, qr_ENABLEMAGIC)) &&
+			        ((game.magic + game.dmagic) < FARORESWINDDRAINAMOUNT * game.magicdrainrate)) {
+				return false;
+			}
+			game.magic -= (FARORESWINDDRAINAMOUNT * game.magicdrainrate);
+			action = casting;
+			magictype = mgc_faroreswind;
+			break;
+		case iNayrusLove:
+			if ((get_bit(quest_rules, qr_ENABLEMAGIC)) &&
+			        ((game.magic + game.dmagic) < NAYRUSLOVEDRAINAMOUNT * game.magicdrainrate)) {
+				return false;
+			}
+			game.magic -= (NAYRUSLOVEDRAINAMOUNT * game.magicdrainrate);
+			action = casting;
+			magictype = mgc_nayruslove;
+			break;
+
+		default:
+			return false;
 	}
 
 	return true;
@@ -2339,12 +2339,12 @@ bool LinkClass::can_attack() {
 	}
 	int r = (isdungeon()) ? 16 : 0;
 	switch (dir) {
-	case up:
-	case down:
-		return !(y < (8 + r) || y > (152 - r));
-	case left:
-	case right:
-		return !(x < (8 + r) || x > (232 - r));
+		case up:
+		case down:
+			return !(y < (8 + r) || y > (152 - r));
+		case left:
+		case right:
+			return !(x < (8 + r) || x > (232 - r));
 	}
 	return true;
 }
@@ -2395,18 +2395,18 @@ void LinkClass::do_hopping() {
 			linkstep();
 			if (diveclk <= 30 || (frame & 1)) {
 				switch (dir) {
-				case up:
-					y -= 1;
-					break;
-				case down:
-					y += 1;
-					break;
-				case left:
-					x -= 1;
-					break;
-				case right:
-					x += 1;
-					break;
+					case up:
+						y -= 1;
+						break;
+					case down:
+						y += 1;
+						break;
+					case left:
+						x -= 1;
+						break;
+					case right:
+						x += 1;
+						break;
 				}
 			}
 		}
@@ -2426,34 +2426,34 @@ void LinkClass::do_hopping() {
 			int yofs = int(y) & 15;
 			int s = 1 + (frame & 1);
 			switch (dir) {
-			case up:
-				if (yofs < 3 || yofs > 13) {
-					--y;
-				} else {
-					y -= s;
-				}
-				break;
-			case down:
-				if (yofs < 3 || yofs > 13) {
-					++y;
-				} else {
-					y += s;
-				}
-				break;
-			case left:
-				if (xofs < 3 || xofs > 13) {
-					--x;
-				} else {
-					x -= s;
-				}
-				break;
-			case right:
-				if (xofs < 3 || xofs > 13) {
-					++x;
-				} else {
-					x += s;
-				}
-				break;
+				case up:
+					if (yofs < 3 || yofs > 13) {
+						--y;
+					} else {
+						y -= s;
+					}
+					break;
+				case down:
+					if (yofs < 3 || yofs > 13) {
+						++y;
+					} else {
+						y += s;
+					}
+					break;
+				case left:
+					if (xofs < 3 || xofs > 13) {
+						--x;
+					} else {
+						x -= s;
+					}
+					break;
+				case right:
+					if (xofs < 3 || xofs > 13) {
+						++x;
+					} else {
+						x += s;
+					}
+					break;
 			}
 		}
 	}
@@ -2510,18 +2510,18 @@ void LinkClass::do_rafting() {
 skip:
 
 	switch (dir) {
-	case up:
-		--y;
-		break;
-	case down:
-		++y;
-		break;
-	case left:
-		--x;
-		break;
-	case right:
-		++x;
-		break;
+		case up:
+			--y;
+			break;
+		case down:
+			++y;
+			break;
+		case left:
+			--x;
+			break;
+		case right:
+			++x;
+			break;
 	}
 }
 
@@ -2556,18 +2556,18 @@ void LinkClass::movelink() {
 	int wy = y;
 
 	switch (dir) {
-	case up:
-		wy -= 16;
-		break;
-	case down:
-		wy += 16;
-		break;
-	case left:
-		wx -= 16;
-		break;
-	case right:
-		wx += 16;
-		break;
+		case up:
+			wy -= 16;
+			break;
+		case down:
+			wy += 16;
+			break;
+		case left:
+			wx -= 16;
+			break;
+		case right:
+			wx += 16;
+			break;
 	}
 
 	if (Bwpn == iLens && itemclk == 0) {
@@ -2991,18 +2991,18 @@ void LinkClass::move(int d) {
 		}
 	}
 	switch (d) {
-	case up:
-		dy -= ystep;
-		break;
-	case down:
-		dy += ystep;
-		break;
-	case left:
-		dx -= xstep;
-		break;
-	case right:
-		dx += xstep;
-		break;
+		case up:
+			dy -= ystep;
+			break;
+		case down:
+			dy += ystep;
+			break;
+		case left:
+			dx -= xstep;
+			break;
+		case right:
+			dx += xstep;
+			break;
 	}
 	dir = d;
 	linkstep();
@@ -3045,23 +3045,23 @@ bool LinkClass::walkflag(int wx, int wy, int cnt, byte d) {
 	} else if (ladderx + laddery) {                           // ladder is being used
 		if ((d & 2) == ladderdir) {                             // same direction
 			switch (d) {
-			case up:
-				if (int(y) <= laddery) {
-					return _walkflag(ladderx, laddery - 8, 1) ||
-					       _walkflag(ladderx + 8, laddery - 8, 1);
+				case up:
+					if (int(y) <= laddery) {
+						return _walkflag(ladderx, laddery - 8, 1) ||
+						       _walkflag(ladderx + 8, laddery - 8, 1);
 
-				}
-			// no break
-			case down:
-				if ((wy & 0xF0) == laddery) {
-					return false;
-				}
-				break;
+					}
+				// no break
+				case down:
+					if ((wy & 0xF0) == laddery) {
+						return false;
+					}
+					break;
 
-			default:
-				if ((wx & 0xF0) == ladderx) {
-					return false;
-				}
+				default:
+					if ((wx & 0xF0) == ladderx) {
+						return false;
+					}
 			}
 
 			if (d <= down) {
@@ -3124,38 +3124,38 @@ void LinkClass::checkpushblock() {
 	int bx = int(x) & 0xF0;
 	int by = (int(y) & 0xF0);
 	switch (dir) {
-	case up:
-		if (y < 16) {
-			return;
-		}
-		break;
-	case down:
-		if (y > 128) {
-			return;
-		} else {
-			by += 16;
-		}
-		break;
-	case left:
-		if (x < 32) {
-			return;
-		} else {
-			bx -= 16;
-			if (int(y) & 8) {
+		case up:
+			if (y < 16) {
+				return;
+			}
+			break;
+		case down:
+			if (y > 128) {
+				return;
+			} else {
 				by += 16;
 			}
-		}
-		break;
-	case right:
-		if (x > 208) {
-			return;
-		} else {
-			bx += 16;
-			if (int(y) & 8) {
-				by += 16;
+			break;
+		case left:
+			if (x < 32) {
+				return;
+			} else {
+				bx -= 16;
+				if (int(y) & 8) {
+					by += 16;
+				}
 			}
-		}
-		break;
+			break;
+		case right:
+			if (x > 208) {
+				return;
+			} else {
+				bx += 16;
+				if (int(y) & 8) {
+					by += 16;
+				}
+			}
+			break;
 	}
 
 	int f = MAPFLAG(bx, by);
@@ -3189,50 +3189,50 @@ void LinkClass::checkpushblock() {
 
 	if (get_bit(quest_rules, qr_SOLIDBLK)) {
 		switch (dir) {
-		case up:
-			if (_walkflag(bx, by - 8, 2)) {
-				doit = false;
-			}
-			break;
-		case down:
-			if (_walkflag(bx, by + 24, 2)) {
-				doit = false;
-			}
-			break;
-		case left:
-			if (_walkflag(bx - 16, by + 8, 2)) {
-				doit = false;
-			}
-			break;
-		case right:
-			if (_walkflag(bx + 16, by + 8, 2)) {
-				doit = false;
-			}
-			break;
+			case up:
+				if (_walkflag(bx, by - 8, 2)) {
+					doit = false;
+				}
+				break;
+			case down:
+				if (_walkflag(bx, by + 24, 2)) {
+					doit = false;
+				}
+				break;
+			case left:
+				if (_walkflag(bx - 16, by + 8, 2)) {
+					doit = false;
+				}
+				break;
+			case right:
+				if (_walkflag(bx + 16, by + 8, 2)) {
+					doit = false;
+				}
+				break;
 		}
 	}
 
 	switch (dir) {
-	case up:
-		if (MAPFLAG(bx, by - 8) == mfNOBLOCKS) {
-			doit = false;
-		}
-		break;
-	case down:
-		if (MAPFLAG(bx, by + 24) == mfNOBLOCKS) {
-			doit = false;
-		}
-		break;
-	case left:
-		if (MAPFLAG(bx - 16, by + 8) == mfNOBLOCKS) {
-			doit = false;
-		}
-		break;
-	case right:
-		if (MAPFLAG(bx + 16, by + 8) == mfNOBLOCKS) {
-			doit = false;
-		}
-		break;
+		case up:
+			if (MAPFLAG(bx, by - 8) == mfNOBLOCKS) {
+				doit = false;
+			}
+			break;
+		case down:
+			if (MAPFLAG(bx, by + 24) == mfNOBLOCKS) {
+				doit = false;
+			}
+			break;
+		case left:
+			if (MAPFLAG(bx - 16, by + 8) == mfNOBLOCKS) {
+				doit = false;
+			}
+			break;
+		case right:
+			if (MAPFLAG(bx + 16, by + 8) == mfNOBLOCKS) {
+				doit = false;
+			}
+			break;
 	}
 
 	if (doit) {
@@ -3263,25 +3263,25 @@ void LinkClass::checklockblock() {
 	int by = int(y) & 0xF0;
 
 	switch (dir) {
-	case up:
-		break;
-	case down:
-		by += 16;
-		break;
-	case left:
-		bx -= 16;
-		if (int(y) & 8) {
+		case up:
+			break;
+		case down:
 			by += 16;
-		}
-		bx2 = bx;
-		break;
-	case right:
-		bx += 16;
-		if (int(y) & 8) {
-			by += 16;
-		}
-		bx2 = bx;
-		break;
+			break;
+		case left:
+			bx -= 16;
+			if (int(y) & 8) {
+				by += 16;
+			}
+			bx2 = bx;
+			break;
+		case right:
+			bx += 16;
+			if (int(y) & 8) {
+				by += 16;
+			}
+			bx2 = bx;
+			break;
 	}
 
 	bool found = false;
@@ -3316,25 +3316,25 @@ void LinkClass::checkbosslockblock() {
 	int by = int(y) & 0xF0;
 
 	switch (dir) {
-	case up:
-		break;
-	case down:
-		by += 16;
-		break;
-	case left:
-		bx -= 16;
-		if (int(y) & 8) {
+		case up:
+			break;
+		case down:
 			by += 16;
-		}
-		bx2 = bx;
-		break;
-	case right:
-		bx += 16;
-		if (int(y) & 8) {
-			by += 16;
-		}
-		bx2 = bx;
-		break;
+			break;
+		case left:
+			bx -= 16;
+			if (int(y) & 8) {
+				by += 16;
+			}
+			bx2 = bx;
+			break;
+		case right:
+			bx += 16;
+			if (int(y) & 8) {
+				by += 16;
+			}
+			bx2 = bx;
+			break;
 	}
 
 	bool found = false;
@@ -3378,102 +3378,102 @@ void LinkClass::checklocked() {
 	int di = nextscr(dir);
 
 	switch (dir) {
-	case up:
-		if (y > 32 || x != 120) {
-			return;
-		}
-		if (tmpscr->door[dir] == dLOCKED) {
-			if (usekey()) {
-				putdoor(0, up, dUNLOCKED);
-				tmpscr->door[0] = dUNLOCKED;
-				game.maps[si] |= 1;
-				game.maps[di] |= 2;
-			} else {
+		case up:
+			if (y > 32 || x != 120) {
 				return;
 			}
-		} else if (tmpscr->door[dir] == dBOSS) {
-			if (game.lvlitems[dlevel]&liBOSSKEY) {
-				putdoor(0, up, dOPENBOSS);
-				tmpscr->door[0] = dOPENBOSS;
-				game.maps[si] |= 1;
-				game.maps[di] |= 2;
-			} else {
+			if (tmpscr->door[dir] == dLOCKED) {
+				if (usekey()) {
+					putdoor(0, up, dUNLOCKED);
+					tmpscr->door[0] = dUNLOCKED;
+					game.maps[si] |= 1;
+					game.maps[di] |= 2;
+				} else {
+					return;
+				}
+			} else if (tmpscr->door[dir] == dBOSS) {
+				if (game.lvlitems[dlevel]&liBOSSKEY) {
+					putdoor(0, up, dOPENBOSS);
+					tmpscr->door[0] = dOPENBOSS;
+					game.maps[si] |= 1;
+					game.maps[di] |= 2;
+				} else {
+					return;
+				}
+			}
+			break;
+		case down:
+			if (y != 128 || x != 120) {
 				return;
 			}
-		}
-		break;
-	case down:
-		if (y != 128 || x != 120) {
-			return;
-		}
-		if (tmpscr->door[dir] == dLOCKED) {
-			if (usekey()) {
-				putdoor(0, down, dUNLOCKED);
-				tmpscr->door[1] = dUNLOCKED;
-				game.maps[si] |= 2;
-				game.maps[di] |= 1;
-			} else {
+			if (tmpscr->door[dir] == dLOCKED) {
+				if (usekey()) {
+					putdoor(0, down, dUNLOCKED);
+					tmpscr->door[1] = dUNLOCKED;
+					game.maps[si] |= 2;
+					game.maps[di] |= 1;
+				} else {
+					return;
+				}
+			} else if (tmpscr->door[dir] == dBOSS) {
+				if (game.lvlitems[dlevel]&liBOSSKEY) {
+					putdoor(0, down, dOPENBOSS);
+					tmpscr->door[1] = dOPENBOSS;
+					game.maps[si] |= 2;
+					game.maps[di] |= 1;
+				} else {
+					return;
+				}
+			}
+			break;
+		case left:
+			if (y != 80 || x != 32) {
 				return;
 			}
-		} else if (tmpscr->door[dir] == dBOSS) {
-			if (game.lvlitems[dlevel]&liBOSSKEY) {
-				putdoor(0, down, dOPENBOSS);
-				tmpscr->door[1] = dOPENBOSS;
-				game.maps[si] |= 2;
-				game.maps[di] |= 1;
-			} else {
-				return;
-			}
-		}
-		break;
-	case left:
-		if (y != 80 || x != 32) {
-			return;
-		}
 
-		if (tmpscr->door[dir] == dLOCKED) {
-			if (usekey()) {
-				putdoor(0, left, dUNLOCKED);
-				tmpscr->door[2] = dUNLOCKED;
-				game.maps[si] |= 4;
-				game.maps[di] |= 8;
-			} else {
+			if (tmpscr->door[dir] == dLOCKED) {
+				if (usekey()) {
+					putdoor(0, left, dUNLOCKED);
+					tmpscr->door[2] = dUNLOCKED;
+					game.maps[si] |= 4;
+					game.maps[di] |= 8;
+				} else {
+					return;
+				}
+			} else if (tmpscr->door[dir] == dBOSS) {
+				if (game.lvlitems[dlevel]&liBOSSKEY) {
+					putdoor(0, left, dOPENBOSS);
+					tmpscr->door[2] = dOPENBOSS;
+					game.maps[si] |= 4;
+					game.maps[di] |= 8;
+				} else {
+					return;
+				}
+			}
+			break;
+		case right:
+			if (y != 80 || x != 208) {
 				return;
 			}
-		} else if (tmpscr->door[dir] == dBOSS) {
-			if (game.lvlitems[dlevel]&liBOSSKEY) {
-				putdoor(0, left, dOPENBOSS);
-				tmpscr->door[2] = dOPENBOSS;
-				game.maps[si] |= 4;
-				game.maps[di] |= 8;
-			} else {
-				return;
+			if (tmpscr->door[dir] == dLOCKED) {
+				if (usekey()) {
+					putdoor(0, right, dUNLOCKED);
+					tmpscr->door[3] = dUNLOCKED;
+					game.maps[si] |= 8;
+					game.maps[di] |= 4;
+				} else {
+					return;
+				}
+			} else if (tmpscr->door[dir] == dBOSS) {
+				if (game.lvlitems[dlevel]&liBOSSKEY) {
+					putdoor(0, right, dOPENBOSS);
+					tmpscr->door[3] = dOPENBOSS;
+					game.maps[si] |= 8;
+					game.maps[di] |= 4;
+				} else {
+					return;
+				}
 			}
-		}
-		break;
-	case right:
-		if (y != 80 || x != 208) {
-			return;
-		}
-		if (tmpscr->door[dir] == dLOCKED) {
-			if (usekey()) {
-				putdoor(0, right, dUNLOCKED);
-				tmpscr->door[3] = dUNLOCKED;
-				game.maps[si] |= 8;
-				game.maps[di] |= 4;
-			} else {
-				return;
-			}
-		} else if (tmpscr->door[dir] == dBOSS) {
-			if (game.lvlitems[dlevel]&liBOSSKEY) {
-				putdoor(0, right, dOPENBOSS);
-				tmpscr->door[3] = dOPENBOSS;
-				game.maps[si] |= 8;
-				game.maps[di] |= 4;
-			} else {
-				return;
-			}
-		}
 	}
 	sfx(WAV_DOOR);
 	markBmap(-1);
@@ -3502,15 +3502,15 @@ void LinkClass::fairycircle() {
 
 int touchcombo(int x, int y) {
 	switch (combobuf[MAPDATA(x, y)].type) {
-	case cBSGRAVE:
-	case cGRAVE:
-		if (MAPFLAG(x, y)) {
-			break;
+		case cBSGRAVE:
+		case cGRAVE:
+			if (MAPFLAG(x, y)) {
+				break;
+			}
+		// fall through
+		case cARMOS: {
+			return combobuf[MAPDATA(x, y)].type;
 		}
-	// fall through
-	case cARMOS: {
-		return combobuf[MAPDATA(x, y)].type;
-	}
 	}
 	return 0;
 }
@@ -3522,36 +3522,36 @@ void LinkClass::checktouchblk() {
 
 	int tx = 0, ty = -1;
 	switch (dir) {
-	case up:
-		if (touchcombo(x, y + 7)) {
-			tx = x;
-			ty = y + 7;
-		} else if (touchcombo(x + 8, y + 7)) {
-			tx = x + 8;
-			ty = y + 7;
-		}
-		break;
-	case down:
-		if (touchcombo(x, y + 16)) {
-			tx = x;
-			ty = y + 16;
-		} else if (touchcombo(x + 8, y + 16)) {
-			tx = x + 8;
-			ty = y + 16;
-		}
-		break;
-	case left:
-		if (touchcombo(x - 1, y + 15)) {
-			tx = x - 1;
-			ty = y + 15;
-		}
-		break;
-	case right:
-		if (touchcombo(x + 16, y + 15)) {
-			tx = x + 16;
-			ty = y + 15;
-		}
-		break;
+		case up:
+			if (touchcombo(x, y + 7)) {
+				tx = x;
+				ty = y + 7;
+			} else if (touchcombo(x + 8, y + 7)) {
+				tx = x + 8;
+				ty = y + 7;
+			}
+			break;
+		case down:
+			if (touchcombo(x, y + 16)) {
+				tx = x;
+				ty = y + 16;
+			} else if (touchcombo(x + 8, y + 16)) {
+				tx = x + 8;
+				ty = y + 16;
+			}
+			break;
+		case left:
+			if (touchcombo(x - 1, y + 15)) {
+				tx = x - 1;
+				ty = y + 15;
+			}
+			break;
+		case right:
+			if (touchcombo(x + 16, y + 15)) {
+				tx = x + 16;
+				ty = y + 15;
+			}
+			break;
 	}
 	if (ty >= 0) {
 		ty &= 0xF0;
@@ -3567,15 +3567,15 @@ void LinkClass::checktouchblk() {
 			guygrid[di] = 1;
 			int id = 0;
 			switch (combobuf[MAPDATA(tx, ty)].type) {
-			case cARMOS:
-				id = eARMOS;
-				break;
-			case cBSGRAVE:
-				tmpscr->data[di]++;
-			//fall through
-			case cGRAVE:
-				id = eGHINI2;
-				break;
+				case cARMOS:
+					id = eARMOS;
+					break;
+				case cBSGRAVE:
+					tmpscr->data[di]++;
+				//fall through
+				case cGRAVE:
+					id = eGHINI2;
+					break;
 			}
 			addenemy(tx, ty + 3, id, 0);
 		}
@@ -3584,18 +3584,18 @@ void LinkClass::checktouchblk() {
 
 int LinkClass::nextcombo(int cx, int cy, int cdir) {
 	switch (cdir) {
-	case up:
-		cy -= 16;
-		break;
-	case down:
-		cy += 16;
-		break;
-	case left:
-		cx -= 16;
-		break;
-	case right:
-		cx += 16;
-		break;
+		case up:
+			cy -= 16;
+			break;
+		case down:
+			cy += 16;
+			break;
+		case left:
+			cx -= 16;
+			break;
+		case right:
+			cx += 16;
+			break;
 	}
 
 	// off the screen
@@ -3606,18 +3606,18 @@ int LinkClass::nextcombo(int cx, int cy, int cdir) {
 		ns = (ns & 127) + (ns >> 7) * MAPSCRS;
 
 		switch (cdir) {
-		case up:
-			cy = 160;
-			break;
-		case down:
-			cy = 0;
-			break;
-		case left:
-			cx = 240;
-			break;
-		case right:
-			cx = 0;
-			break;
+			case up:
+				cy = 160;
+				break;
+			case down:
+				cy = 0;
+				break;
+			case left:
+				cx = 240;
+				break;
+			case right:
+				cx = 0;
+				break;
 		}
 
 		// from MAPDATA()
@@ -3633,18 +3633,18 @@ int LinkClass::nextcombo(int cx, int cy, int cdir) {
 
 int LinkClass::nextflag(int cx, int cy, int cdir) {
 	switch (cdir) {
-	case up:
-		cy -= 16;
-		break;
-	case down:
-		cy += 16;
-		break;
-	case left:
-		cx -= 16;
-		break;
-	case right:
-		cx += 16;
-		break;
+		case up:
+			cy -= 16;
+			break;
+		case down:
+			cy += 16;
+			break;
+		case left:
+			cx -= 16;
+			break;
+		case right:
+			cx += 16;
+			break;
 	}
 
 	// off the screen
@@ -3655,18 +3655,18 @@ int LinkClass::nextflag(int cx, int cy, int cdir) {
 		ns = (ns & 127) + (ns >> 7) * MAPSCRS;
 
 		switch (cdir) {
-		case up:
-			cy = 160;
-			break;
-		case down:
-			cy = 0;
-			break;
-		case left:
-			cx = 240;
-			break;
-		case right:
-			cx = 0;
-			break;
+			case up:
+				cy = 160;
+				break;
+			case down:
+				cy = 0;
+				break;
+			case left:
+				cx = 240;
+				break;
+			case right:
+				cx = 0;
+				break;
 		}
 
 		// from MAPDATA()
@@ -3810,31 +3810,31 @@ void LinkClass::checkspecial() {
 	if (type != cCAVE && type != cCAVE2 && type != cSTAIR &&
 	        type != cPIT && type != cSWIMWARP && !(type == cDIVEWARP && diveclk > 30)) {
 		switch (flag) {
-		case mfDIVE_ITEM:
-			if (diveclk > 30 && !getmapflag()) {
-				additem(x, y, tmpscr->catchall,
-				        ipONETIME + ipBIGRANGE + ipHOLDUP + ipNODRAW);
-				if (!nosecretsounds) {
-					sfx(WAV_SECRET);
-				}
-			}
-			return;
-
-		case mfRAFT:
-		case mfRAFT_BRANCH:
-			if ((current_item(itype_raft, true) >= i_raft) && action != rafting && action != swimhit
-			        && action != gothit && type == cDOCK) {
-				if (isRaftFlag(nextflag(x, y, dir))) {
-					action = rafting;
+			case mfDIVE_ITEM:
+				if (diveclk > 30 && !getmapflag()) {
+					additem(x, y, tmpscr->catchall,
+					        ipONETIME + ipBIGRANGE + ipHOLDUP + ipNODRAW);
 					if (!nosecretsounds) {
 						sfx(WAV_SECRET);
 					}
 				}
-			}
-			return;
+				return;
 
-		default:
-			return;
+			case mfRAFT:
+			case mfRAFT_BRANCH:
+				if ((current_item(itype_raft, true) >= i_raft) && action != rafting && action != swimhit
+				        && action != gothit && type == cDOCK) {
+					if (isRaftFlag(nextflag(x, y, dir))) {
+						action = rafting;
+						if (!nosecretsounds) {
+							sfx(WAV_SECRET);
+						}
+					}
+				}
+				return;
+
+			default:
+				return;
 		}
 	}
 
@@ -3900,62 +3900,93 @@ bool LinkClass::dowarp(int type) {
 	byte wdmap = 0, wscr = 0, wtype = 0, t = 0;
 	t = (currscr < 128) ? 0 : 1;
 	switch (type) {
-	case 0:                                                 // tile warp
-		wtype = tmpscr[t].tilewarptype;
-		wdmap = tmpscr[t].tilewarpdmap;
-		wscr = tmpscr[t].tilewarpscr;
-		break;
-	case 1:                                                 // side warp
-		wtype = tmpscr[t].sidewarptype;
-		wdmap = tmpscr[t].sidewarpdmap;
-		wscr = tmpscr[t].sidewarpscr;
-		break;
-	case 2: {                                               // whistle warp
-		wtype = wtWHISTLE;
-		int level = 0;
-		if (blowcnt == 0) {
-			level = selectWlevel(0);
-		} else {
-			for (int i = 0; i < abs(blowcnt); i++) {
-				level = selectWlevel(blowcnt);
+		case 0:                                                 // tile warp
+			wtype = tmpscr[t].tilewarptype;
+			wdmap = tmpscr[t].tilewarpdmap;
+			wscr = tmpscr[t].tilewarpscr;
+			break;
+		case 1:                                                 // side warp
+			wtype = tmpscr[t].sidewarptype;
+			wdmap = tmpscr[t].sidewarpdmap;
+			wscr = tmpscr[t].sidewarpscr;
+			break;
+		case 2: {                                               // whistle warp
+			wtype = wtWHISTLE;
+			int level = 0;
+			if (blowcnt == 0) {
+				level = selectWlevel(0);
+			} else {
+				for (int i = 0; i < abs(blowcnt); i++) {
+					level = selectWlevel(blowcnt);
+				}
 			}
+			wdmap = QMisc.wind[level].dmap;
+			wscr = QMisc.wind[level].scr;
 		}
-		wdmap = QMisc.wind[level].dmap;
-		wscr = QMisc.wind[level].scr;
-	}
-	break;
+		break;
 	}
 	bool intradmap = (wdmap == currdmap);
 	switch (wtype) {
-	case wtCAVE:                                            // cave/item room
-		ALLOFF();
-		homescr = currscr;
-		currscr = 0x80;
-		if (dlevel == 0) {                                    // cave
-			music_stop();
-			kill_sfx();
-			if (tmpscr->room == rWARP) {
-				currscr = 0x81;
+		case wtCAVE:                                            // cave/item room
+			ALLOFF();
+			homescr = currscr;
+			currscr = 0x80;
+			if (dlevel == 0) {                                    // cave
+				music_stop();
+				kill_sfx();
+				if (tmpscr->room == rWARP) {
+					currscr = 0x81;
+				}
+				loadlvlpal(10);
+				blackscr(30, (COOLSCROLL && ((combobuf[MAPDATA(x, y - 16)].type == cCAVE) || (combobuf[MAPDATA(x, y - 16)].type == cCAVE2))) ? false : true);
+				loadscr(0, currscr, up);
+				loadscr(1, homescr, up);
+				putscr(scrollbuf, 0, 0, tmpscr);
+				dir = up;
+				x = 112;
+				y = 160;
+				if (didpit) {
+					didpit = false;
+					x = pitx;
+					y = pity;
+				}
+				reset_hookshot();
+				stepforward(6);
+			} else {                                              // item room
+				stop_sfx(WAV_ROAR);
+				stop_sfx(WAV_VADER);
+				stop_sfx(WAV_DODONGO);
+				draw_screen(tmpscr, 0, 0);
+				fade(DMaps[currdmap].color, true, false, false);
+				blackscr(30, true);
+				loadscr(0, currscr, down);
+				loadscr(1, homescr, -1);
+				dontdraw = true;
+				draw_screen(tmpscr, 0, 0);
+				fade(11, true, true, false);
+				dir = down;
+				x = 48;
+				y = 0;
+				// is thid didpit check necessary?
+				if (didpit) {
+					didpit = false;
+					x = pitx;
+					y = pity;
+				}
+				reset_hookshot();
+				dontdraw = false;
+				stepforward(18);
 			}
-			loadlvlpal(10);
-			blackscr(30, (COOLSCROLL && ((combobuf[MAPDATA(x, y - 16)].type == cCAVE) || (combobuf[MAPDATA(x, y - 16)].type == cCAVE2))) ? false : true);
-			loadscr(0, currscr, up);
-			loadscr(1, homescr, up);
-			putscr(scrollbuf, 0, 0, tmpscr);
-			dir = up;
-			x = 112;
-			y = 160;
-			if (didpit) {
-				didpit = false;
-				x = pitx;
-				y = pity;
-			}
-			reset_hookshot();
-			stepforward(6);
-		} else {                                              // item room
+			break;
+
+		case wtPASS: {                                          // passageway
 			stop_sfx(WAV_ROAR);
 			stop_sfx(WAV_VADER);
 			stop_sfx(WAV_DODONGO);
+			ALLOFF();
+			homescr = currscr;
+			currscr = 0x81;
+			byte warpscr = wscr + DMaps[currdmap].xoff;
 			draw_screen(tmpscr, 0, 0);
 			fade(DMaps[currdmap].color, true, false, false);
 			blackscr(30, true);
@@ -3966,122 +3997,217 @@ bool LinkClass::dowarp(int type) {
 			fade(11, true, true, false);
 			dir = down;
 			x = 48;
-			y = 0;
+			if ((homescr & 15) > (warpscr & 15)) {
+				x = 192;
+			}
+			if ((homescr & 15) == (warpscr & 15)) {
+				if ((currscr >> 4) > (warpscr >> 4)) {
+					x = 192;
+				}
+			}
 			// is thid didpit check necessary?
 			if (didpit) {
 				didpit = false;
 				x = pitx;
 				y = pity;
 			}
+			warpx = x;
+			y = 0;
 			reset_hookshot();
 			dontdraw = false;
 			stepforward(18);
+			newscr_clk = frame;
+			activated_timed_warp = false;
 		}
 		break;
 
-	case wtPASS: {                                          // passageway
-		stop_sfx(WAV_ROAR);
-		stop_sfx(WAV_VADER);
-		stop_sfx(WAV_DODONGO);
-		ALLOFF();
-		homescr = currscr;
-		currscr = 0x81;
-		byte warpscr = wscr + DMaps[currdmap].xoff;
-		draw_screen(tmpscr, 0, 0);
-		fade(DMaps[currdmap].color, true, false, false);
-		blackscr(30, true);
-		loadscr(0, currscr, down);
-		loadscr(1, homescr, -1);
-		dontdraw = true;
-		draw_screen(tmpscr, 0, 0);
-		fade(11, true, true, false);
-		dir = down;
-		x = 48;
-		if ((homescr & 15) > (warpscr & 15)) {
-			x = 192;
-		}
-		if ((homescr & 15) == (warpscr & 15)) {
-			if ((currscr >> 4) > (warpscr >> 4)) {
-				x = 192;
+		case wtEXIT:                                            // entrance/exit
+			ALLOFF();
+			music_stop();
+			kill_sfx();
+			blackscr(30, false);
+			currdmap = wdmap;
+			dlevel = DMaps[currdmap].level;
+			currmap = DMaps[currdmap].map;
+			loadfullpal();
+			ringcolor();
+			loadlvlpal(DMaps[currdmap].color);
+			lastentrance_dmap = currdmap;
+			homescr = currscr = wscr + (((DMaps[currdmap].type & dmfTYPE) == dmOVERW) ? 0 : DMaps[currdmap].xoff);
+			if (dlevel) {
+				lastentrance = currscr;
+			} else {
+				lastentrance = DMaps[currdmap].cont + (((DMaps[currdmap].type & dmfTYPE) == dmOVERW) ? 0 : DMaps[currdmap].xoff);
 			}
-		}
-		// is thid didpit check necessary?
-		if (didpit) {
-			didpit = false;
-			x = pitx;
-			y = pity;
-		}
-		warpx = x;
-		y = 0;
-		reset_hookshot();
-		dontdraw = false;
-		stepforward(18);
-		newscr_clk = frame;
-		activated_timed_warp = false;
-	}
-	break;
+			loadscr(0, currscr, -1);
+			if (dlevel) {
+				x = tmpscr->warparrivalx;
+				y = tmpscr->warparrivaly;
+			} else {
+				x = tmpscr->warpreturnx;
+				y = tmpscr->warpreturny;
+			}
+			if (didpit) {
+				didpit = false;
+				x = pitx;
+				y = pity;
+			}
+			dir = down;
+			if (x == 0) {
+				dir = right;
+			}
+			if (x == 240) {
+				dir = left;
+			}
+			if (y == 0) {
+				dir = down;
+			}
+			if (y == 160) {
+				dir = up;
+			}
+			if (dlevel) {
+				// reset enemy kill counts
+				for (int i = 0; i < 128; i++) {
+					game.guys[(currmap << 7) + i] = 0;
+					game.maps[(currmap << 7) + i] &= ~mTMPNORET;
+				}
+			}
+			markBmap(dir ^ 1);
+			reset_hookshot();
+			if (isdungeon()) {
+				openscreen();
+				stepforward(12);
+			} else {
+				if (!COOLSCROLL) {
+					openscreen();
+				}
 
-	case wtEXIT:                                            // entrance/exit
-		ALLOFF();
-		music_stop();
-		kill_sfx();
-		blackscr(30, false);
-		currdmap = wdmap;
-		dlevel = DMaps[currdmap].level;
-		currmap = DMaps[currdmap].map;
-		loadfullpal();
-		ringcolor();
-		loadlvlpal(DMaps[currdmap].color);
-		lastentrance_dmap = currdmap;
-		homescr = currscr = wscr + (((DMaps[currdmap].type & dmfTYPE) == dmOVERW) ? 0 : DMaps[currdmap].xoff);
-		if (dlevel) {
-			lastentrance = currscr;
-		} else {
-			lastentrance = DMaps[currdmap].cont + (((DMaps[currdmap].type & dmfTYPE) == dmOVERW) ? 0 : DMaps[currdmap].xoff);
+				if (combobuf[MAPDATA(x, y - 16)].type == cCAVE) {
+					reset_pal_cycling();
+					putscr(scrollbuf, 0, 0, tmpscr);
+					walkup();
+				} else if (combobuf[MAPDATA(x, y + 16)].type == cCAVE2) {
+					reset_pal_cycling();
+					putscr(scrollbuf, 0, 0, tmpscr);
+					walkdown2();
+				} else if (COOLSCROLL) {
+					openscreen();
+				}
+			}
+			show_subscreen_life = true;
+			show_subscreen_numbers = true;
+			play_DmapMusic();
+			currcset = DMaps[currdmap].color;
+			dointro();
+			warpx = x;
+			warpy = y;
+			for (int i = 0; i < 6; i++) {
+				visited[i] = -1;
+			}
+			break;
+
+		case wtSCROLL: {                                        // scrolling warp
+			int c = DMaps[currdmap].color;
+			currmap = DMaps[wdmap].map;
+			lighting(4, dir);
+			scrollscr(dir, wscr + DMaps[wdmap].xoff, wdmap);
+			reset_hookshot();
+			currdmap = wdmap;
+			dlevel = DMaps[currdmap].level;
+			homescr = currscr = wscr + (((DMaps[wdmap].type & dmfTYPE) == dmOVERW) ? 0 : DMaps[wdmap].xoff);
+			if (!intradmap) {
+				if (!get_bit(quest_rules, qr_NOSCROLLCONTINUE)) {
+					if (dlevel) {
+						lastentrance = currscr;
+					} else {
+						lastentrance = DMaps[currdmap].cont + (((DMaps[currdmap].type & dmfTYPE) == dmOVERW) ? 0 : DMaps[currdmap].xoff);
+					}
+					lastentrance_dmap = wdmap;
+				}
+			}
+			if (DMaps[currdmap].color != c) {
+				loadlvlpal(DMaps[currdmap].color);
+			}
+			play_DmapMusic();
+			currcset = DMaps[currdmap].color;
+			dointro();
 		}
-		loadscr(0, currscr, -1);
-		if (dlevel) {
-			x = tmpscr->warparrivalx;
-			y = tmpscr->warparrivaly;
-		} else {
+		break;
+
+		case wtWHISTLE: {                                       // whistle warp
+			currmap = DMaps[wdmap].map;
+			scrollscr(right, wscr + DMaps[wdmap].xoff, wdmap);
+			reset_hookshot();
+			currdmap = wdmap;
+			dlevel = DMaps[currdmap].level;
+			loadlvlpal(DMaps[currdmap].color);
+			play_DmapMusic();
+			currcset = DMaps[currdmap].color;
+			dointro();
+			action = inwind;
+			Lwpns.add(new weapon((fix)0, (fix)(tmpscr->warparrivaly), wWind, 1, 0, right));
+			whirlwind = 255;
+		}
+		break;
+
+		case wtIWARP:
+		case wtIWARPBLK:
+		case wtIWARPOPEN:
+		case wtIWARPZAP:
+		case wtIWARPWAVE: {                                     // insta-warps
+			if (!(tmpscr->flags3 & fIWARPFULLSCREEN)) {
+				ALLOFF();
+				kill_sfx();
+			}
+			if (wtype == wtIWARPZAP) {
+				zapout();
+			} else if (wtype == wtIWARPWAVE) {
+				wavyout();
+			} else if (wtype != wtIWARP) {
+				blackscr(30, (COOLSCROLL && ((combobuf[MAPDATA(x, y - 16)].type == cCAVE) || (combobuf[MAPDATA(x, y - 16)].type == cCAVE2))) ? false : true);
+			}
+
+			int c = DMaps[currdmap].color;
+			currdmap = wdmap;
+			dlevel = DMaps[currdmap].level;
+			currmap = DMaps[currdmap].map;
+
+			ringcolor();
+			if (DMaps[currdmap].color != c) {
+				loadlvlpal(DMaps[currdmap].color);
+			}
+
+			homescr = currscr = wscr + DMaps[currdmap].xoff;
+
+			loadscr(0, currscr, -1);
+			putscr(scrollbuf, 0, 0, tmpscr);
+
 			x = tmpscr->warpreturnx;
 			y = tmpscr->warpreturny;
-		}
-		if (didpit) {
-			didpit = false;
-			x = pitx;
-			y = pity;
-		}
-		dir = down;
-		if (x == 0) {
-			dir = right;
-		}
-		if (x == 240) {
-			dir = left;
-		}
-		if (y == 0) {
-			dir = down;
-		}
-		if (y == 160) {
-			dir = up;
-		}
-		if (dlevel) {
-			// reset enemy kill counts
-			for (int i = 0; i < 128; i++) {
-				game.guys[(currmap << 7) + i] = 0;
-				game.maps[(currmap << 7) + i] &= ~mTMPNORET;
-			}
-		}
-		markBmap(dir ^ 1);
-		reset_hookshot();
-		if (isdungeon()) {
-			openscreen();
-			stepforward(12);
-		} else {
-			if (!COOLSCROLL) {
-				openscreen();
+			if (didpit) {
+				didpit = false;
+				x = pitx;
+				y = pity;
 			}
 
+			if (x == 0) {
+				dir = right;
+			}
+			if (x == 240) {
+				dir = left;
+			}
+			if (y == 0) {
+				dir = down;
+			}
+			if (y == 160) {
+				dir = up;
+			}
+			markBmap(dir ^ 1);
+			if (wtype == wtIWARPZAP) {
+				zapin();
+			} else if (wtype == wtIWARPWAVE) {
+				wavyin();
+			}
 			if (combobuf[MAPDATA(x, y - 16)].type == cCAVE) {
 				reset_pal_cycling();
 				putscr(scrollbuf, 0, 0, tmpscr);
@@ -4090,151 +4216,25 @@ bool LinkClass::dowarp(int type) {
 				reset_pal_cycling();
 				putscr(scrollbuf, 0, 0, tmpscr);
 				walkdown2();
-			} else if (COOLSCROLL) {
-				openscreen();
+			} else {
+				if (wtype == wtIWARPOPEN) {
+					openscreen();
+				}
 			}
-		}
-		show_subscreen_life = true;
-		show_subscreen_numbers = true;
-		play_DmapMusic();
-		currcset = DMaps[currdmap].color;
-		dointro();
-		warpx = x;
-		warpy = y;
-		for (int i = 0; i < 6; i++) {
-			visited[i] = -1;
+			show_subscreen_life = true;
+			show_subscreen_numbers = true;
+			play_DmapMusic();
+			currcset = DMaps[currdmap].color;
+			dointro();
+			warpx = x;
+			warpy = y;
 		}
 		break;
 
-	case wtSCROLL: {                                        // scrolling warp
-		int c = DMaps[currdmap].color;
-		currmap = DMaps[wdmap].map;
-		lighting(4, dir);
-		scrollscr(dir, wscr + DMaps[wdmap].xoff, wdmap);
-		reset_hookshot();
-		currdmap = wdmap;
-		dlevel = DMaps[currdmap].level;
-		homescr = currscr = wscr + (((DMaps[wdmap].type & dmfTYPE) == dmOVERW) ? 0 : DMaps[wdmap].xoff);
-		if (!intradmap) {
-			if (!get_bit(quest_rules, qr_NOSCROLLCONTINUE)) {
-				if (dlevel) {
-					lastentrance = currscr;
-				} else {
-					lastentrance = DMaps[currdmap].cont + (((DMaps[currdmap].type & dmfTYPE) == dmOVERW) ? 0 : DMaps[currdmap].xoff);
-				}
-				lastentrance_dmap = wdmap;
-			}
-		}
-		if (DMaps[currdmap].color != c) {
-			loadlvlpal(DMaps[currdmap].color);
-		}
-		play_DmapMusic();
-		currcset = DMaps[currdmap].color;
-		dointro();
-	}
-	break;
 
-	case wtWHISTLE: {                                       // whistle warp
-		currmap = DMaps[wdmap].map;
-		scrollscr(right, wscr + DMaps[wdmap].xoff, wdmap);
-		reset_hookshot();
-		currdmap = wdmap;
-		dlevel = DMaps[currdmap].level;
-		loadlvlpal(DMaps[currdmap].color);
-		play_DmapMusic();
-		currcset = DMaps[currdmap].color;
-		dointro();
-		action = inwind;
-		Lwpns.add(new weapon((fix)0, (fix)(tmpscr->warparrivaly), wWind, 1, 0, right));
-		whirlwind = 255;
-	}
-	break;
-
-	case wtIWARP:
-	case wtIWARPBLK:
-	case wtIWARPOPEN:
-	case wtIWARPZAP:
-	case wtIWARPWAVE: {                                     // insta-warps
-		if (!(tmpscr->flags3 & fIWARPFULLSCREEN)) {
-			ALLOFF();
-			kill_sfx();
-		}
-		if (wtype == wtIWARPZAP) {
-			zapout();
-		} else if (wtype == wtIWARPWAVE) {
-			wavyout();
-		} else if (wtype != wtIWARP) {
-			blackscr(30, (COOLSCROLL && ((combobuf[MAPDATA(x, y - 16)].type == cCAVE) || (combobuf[MAPDATA(x, y - 16)].type == cCAVE2))) ? false : true);
-		}
-
-		int c = DMaps[currdmap].color;
-		currdmap = wdmap;
-		dlevel = DMaps[currdmap].level;
-		currmap = DMaps[currdmap].map;
-
-		ringcolor();
-		if (DMaps[currdmap].color != c) {
-			loadlvlpal(DMaps[currdmap].color);
-		}
-
-		homescr = currscr = wscr + DMaps[currdmap].xoff;
-
-		loadscr(0, currscr, -1);
-		putscr(scrollbuf, 0, 0, tmpscr);
-
-		x = tmpscr->warpreturnx;
-		y = tmpscr->warpreturny;
-		if (didpit) {
-			didpit = false;
-			x = pitx;
-			y = pity;
-		}
-
-		if (x == 0) {
-			dir = right;
-		}
-		if (x == 240) {
-			dir = left;
-		}
-		if (y == 0) {
-			dir = down;
-		}
-		if (y == 160) {
-			dir = up;
-		}
-		markBmap(dir ^ 1);
-		if (wtype == wtIWARPZAP) {
-			zapin();
-		} else if (wtype == wtIWARPWAVE) {
-			wavyin();
-		}
-		if (combobuf[MAPDATA(x, y - 16)].type == cCAVE) {
-			reset_pal_cycling();
-			putscr(scrollbuf, 0, 0, tmpscr);
-			walkup();
-		} else if (combobuf[MAPDATA(x, y + 16)].type == cCAVE2) {
-			reset_pal_cycling();
-			putscr(scrollbuf, 0, 0, tmpscr);
-			walkdown2();
-		} else {
-			if (wtype == wtIWARPOPEN) {
-				openscreen();
-			}
-		}
-		show_subscreen_life = true;
-		show_subscreen_numbers = true;
-		play_DmapMusic();
-		currcset = DMaps[currdmap].color;
-		dointro();
-		warpx = x;
-		warpy = y;
-	}
-	break;
-
-
-	case wtNOWARP:
-	default:
-		return false;
+		case wtNOWARP:
+		default:
+			return false;
 	}
 
 	if (action != rafting && iswater(MAPDATA(x, y + 8))
@@ -4332,18 +4332,18 @@ void LinkClass::stepforward(int steps) {
 		tstep = lsteps[int((dir < left) ? ty : tx) & 7];
 
 		switch (dir) {
-		case up:
-			ty -= tstep;
-			break;
-		case down:
-			ty += tstep;
-			break;
-		case left:
-			tx -= tstep;
-			break;
-		case right:
-			tx += tstep;
-			break;
+			case up:
+				ty -= tstep;
+				break;
+			case down:
+				ty += tstep;
+				break;
+			case left:
+				tx -= tstep;
+				break;
+			case right:
+				tx += tstep;
+				break;
 		}
 		s += tstep;
 	}
@@ -4555,30 +4555,30 @@ bool edge_of_dmap(int side) {
 	// should check dmap style
 
 	switch (side) {
-	case up:
-		return currscr < 16;
-	case down:
-		return currscr >= 112;
-	case left:
-		if ((currscr & 15) == 0) {
-			return true;
-		}
-		if ((DMaps[currdmap].type & dmfTYPE) != dmOVERW)
-			//    if(dlevel)
-		{
-			return (((currscr & 15) - DMaps[currdmap].xoff) <= 0);
-		}
-		break;
-	case right:
-		if ((currscr & 15) == 15) {
-			return true;
-		}
-		if ((DMaps[currdmap].type & dmfTYPE) != dmOVERW)
-			//    if(dlevel)
-		{
-			return (((currscr & 15) - DMaps[currdmap].xoff) >= 7);
-		}
-		break;
+		case up:
+			return currscr < 16;
+		case down:
+			return currscr >= 112;
+		case left:
+			if ((currscr & 15) == 0) {
+				return true;
+			}
+			if ((DMaps[currdmap].type & dmfTYPE) != dmOVERW)
+				//    if(dlevel)
+			{
+				return (((currscr & 15) - DMaps[currdmap].xoff) <= 0);
+			}
+			break;
+		case right:
+			if ((currscr & 15) == 15) {
+				return true;
+			}
+			if ((DMaps[currdmap].type & dmfTYPE) != dmOVERW)
+				//    if(dlevel)
+			{
+				return (((currscr & 15) - DMaps[currdmap].xoff) >= 7);
+			}
+			break;
 	}
 	return false;
 }
@@ -4599,18 +4599,18 @@ bool LinkClass::nextcombo_wf() {
 	int cy = y;
 
 	switch (dir) {
-	case up:
-		cy = 160;
-		break;
-	case down:
-		cy = 0;
-		break;
-	case left:
-		cx = 240;
-		break;
-	case right:
-		cx = 0;
-		break;
+		case up:
+			cy = 160;
+			break;
+		case down:
+			cy = 0;
+			break;
+		case left:
+			cx = 240;
+			break;
+		case right:
+			cx = 0;
+			break;
 	}
 
 	// check lower half of combo
@@ -4735,22 +4735,22 @@ int LinkClass::lookahead(int destscr) {                     // Helper for scroll
 	int cy = y + 8;
 
 	switch (dir) {
-	case up:
-		s -= 16;
-		cy = 160;
-		break;
-	case down:
-		s += 16;
-		cy = 0;
-		break;
-	case left:
-		--s;
-		cx = 240;
-		break;
-	case right:
-		++s;
-		cx = 0;
-		break;
+		case up:
+			s -= 16;
+			cy = 160;
+			break;
+		case down:
+			s += 16;
+			cy = 0;
+			break;
+		case left:
+			--s;
+			cx = 240;
+			break;
+		case right:
+			++s;
+			cx = 0;
+			break;
 	}
 
 	if (destscr != -1) {
@@ -4774,22 +4774,22 @@ int LinkClass::lookaheadflag(int destscr) {
 	int cy = y + 8;
 
 	switch (dir) {
-	case up:
-		s -= 16;
-		cy = 160;
-		break;
-	case down:
-		s += 16;
-		cy = 0;
-		break;
-	case left:
-		--s;
-		cx = 240;
-		break;
-	case right:
-		++s;
-		cx = 0;
-		break;
+		case up:
+			s -= 16;
+			cy = 160;
+			break;
+		case down:
+			s += 16;
+			cy = 0;
+			break;
+		case left:
+			--s;
+			cx = 240;
+			break;
+		case right:
+			++s;
+			cx = 0;
+			break;
 	}
 
 	if (destscr != -1) {
@@ -4857,65 +4857,65 @@ void LinkClass::scrollscr(int dir, int destscr, int destdmap) {
 	}
 
 	switch (dir) {
-	case up:
-		if (fixed_door) {
-			unsetmapflag(mSECRET);
-		}
-		if (destscr != -1) {
-			currscr = destscr;
-		} else if (checkmaze(oldscr)) {
-			currscr -= 16;
-		}
-		loadscr(0, currscr, dir);
-		blit(scrollbuf, scrollbuf, 0, 0, 0, 176, 256, 176);
-		putscr(scrollbuf, 0, 0, newscr);
-		sy = 176;
-		cx = 176 / step;
-		break;
+		case up:
+			if (fixed_door) {
+				unsetmapflag(mSECRET);
+			}
+			if (destscr != -1) {
+				currscr = destscr;
+			} else if (checkmaze(oldscr)) {
+				currscr -= 16;
+			}
+			loadscr(0, currscr, dir);
+			blit(scrollbuf, scrollbuf, 0, 0, 0, 176, 256, 176);
+			putscr(scrollbuf, 0, 0, newscr);
+			sy = 176;
+			cx = 176 / step;
+			break;
 
-	case down:
-		if (fixed_door) {
-			unsetmapflag(mSECRET);
-		}
-		if (destscr != -1) {
-			currscr = destscr;
-		} else if (checkmaze(oldscr)) {
-			currscr += 16;
-		}
-		loadscr(0, currscr, dir);
-		putscr(scrollbuf, 0, 176, newscr);
-		cx = 176 / step;
-		break;
+		case down:
+			if (fixed_door) {
+				unsetmapflag(mSECRET);
+			}
+			if (destscr != -1) {
+				currscr = destscr;
+			} else if (checkmaze(oldscr)) {
+				currscr += 16;
+			}
+			loadscr(0, currscr, dir);
+			putscr(scrollbuf, 0, 176, newscr);
+			cx = 176 / step;
+			break;
 
-	case left:
-		if (fixed_door) {
-			unsetmapflag(mSECRET);
-		}
-		if (destscr != -1) {
-			currscr = destscr;
-		} else if (checkmaze(oldscr)) {
-			--currscr;
-		}
-		loadscr(0, currscr, dir);
-		blit(scrollbuf, scrollbuf, 0, 0, 256, 0, 256, 176);
-		putscr(scrollbuf, 0, 0, newscr);
-		sx = 256;
-		cx = 256 / step;
-		break;
+		case left:
+			if (fixed_door) {
+				unsetmapflag(mSECRET);
+			}
+			if (destscr != -1) {
+				currscr = destscr;
+			} else if (checkmaze(oldscr)) {
+				--currscr;
+			}
+			loadscr(0, currscr, dir);
+			blit(scrollbuf, scrollbuf, 0, 0, 256, 0, 256, 176);
+			putscr(scrollbuf, 0, 0, newscr);
+			sx = 256;
+			cx = 256 / step;
+			break;
 
-	case right:
-		if (fixed_door) {
-			unsetmapflag(mSECRET);
-		}
-		if (destscr != -1) {
-			currscr = destscr;
-		} else if (checkmaze(oldscr)) {
-			++currscr;
-		}
-		loadscr(0, currscr, dir);
-		putscr(scrollbuf, 256, 0, newscr);
-		cx = 256 / step;
-		break;
+		case right:
+			if (fixed_door) {
+				unsetmapflag(mSECRET);
+			}
+			if (destscr != -1) {
+				currscr = destscr;
+			} else if (checkmaze(oldscr)) {
+				++currscr;
+			}
+			loadscr(0, currscr, dir);
+			putscr(scrollbuf, 256, 0, newscr);
+			cx = 256 / step;
+			break;
 	}
 
 	fixed_door = false;
@@ -4931,18 +4931,18 @@ void LinkClass::scrollscr(int dir, int destscr, int destdmap) {
 
 	while (cx > 0) {
 		switch (dir) {
-		case up:
-			sy -= step;
-			break;
-		case down:
-			sy += step;
-			break;
-		case left:
-			sx -= step;
-			break;
-		case right:
-			sx += step;
-			break;
+			case up:
+				sy -= step;
+				break;
+			case down:
+				sy += step;
+				break;
+			case left:
+				sx -= step;
+				break;
+			case right:
+				sx += step;
+				break;
 		}
 		//    putsubscr(framebuf,0,0);
 		if (ladderx + laddery) {
@@ -4956,26 +4956,26 @@ void LinkClass::scrollscr(int dir, int destscr, int destdmap) {
 		}
 		blit(scrollbuf, framebuf, sx, sy, 0, 56, 256, 168);
 		switch (dir) {
-		case up:
-			if (y < 160) {
-				y += step;
-			}
-			break;
-		case down:
-			if (y > 0) {
-				y -= step;
-			}
-			break;
-		case left:
-			if (x < 240) {
-				x += step;
-			}
-			break;
-		case right:
-			if (x > 0) {
-				x -= step;
-			}
-			break;
+			case up:
+				if (y < 160) {
+					y += step;
+				}
+				break;
+			case down:
+				if (y > 0) {
+					y -= step;
+				}
+				break;
+			case left:
+				if (x < 240) {
+					x += step;
+				}
+				break;
+			case right:
+				if (x > 0) {
+					x -= step;
+				}
+				break;
 		}
 		tx = sx;
 		if (dir == right) {
@@ -5051,20 +5051,20 @@ void LinkClass::scrollscr(int dir, int destscr, int destdmap) {
 
 	if (isdungeon()) {
 		switch (tmpscr->door[dir ^ 1]) {
-		case dOPEN:
-		case dUNLOCKED:
-		case dOPENBOSS:
-			stepforward(12);
-			break;
-		case dSHUTTER:
-		case d1WAYSHUTTER:
-			stepforward(24);
-			putdoor(0, dir ^ 1, tmpscr->door[dir ^ 1]);
-			opendoors = -4;
-			sfx(WAV_DOOR);
-			break;
-		default:
-			stepforward(24);
+			case dOPEN:
+			case dUNLOCKED:
+			case dOPENBOSS:
+				stepforward(12);
+				break;
+			case dSHUTTER:
+			case d1WAYSHUTTER:
+				stepforward(24);
+				putdoor(0, dir ^ 1, tmpscr->door[dir ^ 1]);
+				opendoors = -4;
+				sfx(WAV_DOOR);
+				break;
+			default:
+				stepforward(24);
 		}
 	}
 
@@ -5090,180 +5090,180 @@ void LinkClass::scrollscr(int dir, int destscr, int destdmap) {
 int Bweapon(int pos) {
 
 	switch (zinit.subscreen) {
-	case 0:                                                 //original
-	case 1:                                                 //revision 1 ("New Subscreen")
-		switch (pos) {
-		case 0:
-			if (current_item(itype_brang, true) == 3) {
-				return iFBrang;
-			}
-			if (current_item(itype_brang, true)) {
-				return current_item(itype_brang, true) - 1 + iBrang;
-			}
-			break;
-		case 1:
-			if (current_item(itype_bomb, true)) {
-				return iBombs;
-			}
-			break;
-		case 2:
-			if (current_item(itype_bow, true) && current_item(itype_arrow, true)) {
-				if (current_item(itype_arrow, true) < 3) {
-					return current_item(itype_arrow, true) - 1 + iArrow;
-				} else {
-					return iGArrow;
-				}
-			}
-			break;
-		case 3:
-			if (current_item(itype_candle, true)) {
-				return current_item(itype_candle, true) - 1 + iBCandle;
-			}
-			break;
-		case 4:
-			if (current_item(itype_whistle, true)) {
-				return iWhistle;
-			}
-			break;
-		case 5:
-			if (current_item(itype_bait, true)) {
-				return iBait;
-			}
-			break;
-		case 6:
-			if (current_item(itype_potion, true)) {
-				return current_item(itype_potion, true) - 1 + iBPotion;
-			}
-			if (current_item(itype_letter, true)) {
-				return iLetter;
-			}
-			break;
-		case 7:
-			if (current_item(itype_wand, true)) {
-				return iWand;
-			}
-			break;
-		case 8:
-			if (current_item(itype_hookshot, true)) {
-				return iHookshot;
-			}
-			break;
-		case 9:
-			if (current_item(itype_sbomb, true)) {
-				return iSBomb;
-			}
-			break;
-		case 10:
-			if (current_item(itype_lens, true)) {
-				return iLens;
-			}
-			break;
-		case 11:
-			if (current_item(itype_hammer, true)) {
-				return iHammer;
-			}
-			break;
-		}
-		break;
-	case 2:                                                 //revision 2 (1.92 beta 168)
-		switch (pos) {
-		case 0:
-			if (current_item(itype_brang, true) == 3) {
-				return iFBrang;
-			}
-			if (current_item(itype_brang, true)) {
-				return current_item(itype_brang, true) - 1 + iBrang;
+		case 0:                                                 //original
+		case 1:                                                 //revision 1 ("New Subscreen")
+			switch (pos) {
+				case 0:
+					if (current_item(itype_brang, true) == 3) {
+						return iFBrang;
+					}
+					if (current_item(itype_brang, true)) {
+						return current_item(itype_brang, true) - 1 + iBrang;
+					}
+					break;
+				case 1:
+					if (current_item(itype_bomb, true)) {
+						return iBombs;
+					}
+					break;
+				case 2:
+					if (current_item(itype_bow, true) && current_item(itype_arrow, true)) {
+						if (current_item(itype_arrow, true) < 3) {
+							return current_item(itype_arrow, true) - 1 + iArrow;
+						} else {
+							return iGArrow;
+						}
+					}
+					break;
+				case 3:
+					if (current_item(itype_candle, true)) {
+						return current_item(itype_candle, true) - 1 + iBCandle;
+					}
+					break;
+				case 4:
+					if (current_item(itype_whistle, true)) {
+						return iWhistle;
+					}
+					break;
+				case 5:
+					if (current_item(itype_bait, true)) {
+						return iBait;
+					}
+					break;
+				case 6:
+					if (current_item(itype_potion, true)) {
+						return current_item(itype_potion, true) - 1 + iBPotion;
+					}
+					if (current_item(itype_letter, true)) {
+						return iLetter;
+					}
+					break;
+				case 7:
+					if (current_item(itype_wand, true)) {
+						return iWand;
+					}
+					break;
+				case 8:
+					if (current_item(itype_hookshot, true)) {
+						return iHookshot;
+					}
+					break;
+				case 9:
+					if (current_item(itype_sbomb, true)) {
+						return iSBomb;
+					}
+					break;
+				case 10:
+					if (current_item(itype_lens, true)) {
+						return iLens;
+					}
+					break;
+				case 11:
+					if (current_item(itype_hammer, true)) {
+						return iHammer;
+					}
+					break;
 			}
 			break;
-		case 1:
-			if (current_item(itype_bomb, true)) {
-				return iBombs;
+		case 2:                                                 //revision 2 (1.92 beta 168)
+			switch (pos) {
+				case 0:
+					if (current_item(itype_brang, true) == 3) {
+						return iFBrang;
+					}
+					if (current_item(itype_brang, true)) {
+						return current_item(itype_brang, true) - 1 + iBrang;
+					}
+					break;
+				case 1:
+					if (current_item(itype_bomb, true)) {
+						return iBombs;
+					}
+					break;
+				case 2:
+					if (current_item(itype_bow, true) && current_item(itype_arrow, true)) {
+						if (current_item(itype_arrow, true) < 3) {
+							return current_item(itype_arrow, true) - 1 + iArrow;
+						} else {
+							return iGArrow;
+						}
+					}
+					break;
+				case 3:
+					if (current_item(itype_candle, true)) {
+						return current_item(itype_candle, true) - 1 + iBCandle;
+					}
+					break;
+				case 4:
+					if (current_item(itype_dinsfire, true)) {
+						return iDinsFire;
+					}
+					break;
+				case 5:
+					if (current_item(itype_whistle, true)) {
+						return iWhistle;
+					}
+					break;
+				case 6:
+					if (current_item(itype_bait, true)) {
+						return iBait;
+					}
+					break;
+				case 7:
+					if (current_item(itype_potion, true)) {
+						return current_item(itype_potion, true) - 1 + iBPotion;
+					}
+					if (current_item(itype_letter, true)) {
+						return iLetter;
+					}
+					break;
+				case 8:
+					if (current_item(itype_wand, true)) {
+						return iWand;
+					}
+					break;
+				case 9:
+					if (current_item(itype_faroreswind, true)) {
+						return iFaroresWind;
+					}
+					break;
+				case 10:
+					if (current_item(itype_hookshot, true)) {
+						return iHookshot;
+					}
+					break;
+				case 11:
+					if (current_item(itype_sbomb, true)) {
+						return iSBomb;
+					}
+					break;
+				case 12:
+					if (current_item(itype_lens, true)) {
+						return iLens;
+					}
+					break;
+				case 13:
+					if (current_item(itype_hammer, true)) {
+						return iHammer;
+					}
+					break;
+				case 14:
+					if (current_item(itype_nayruslove, true)) {
+						return iNayrusLove;
+					}
+					break;
+				case 15:
+					break;
+				case 16:
+					break;
+				case 17:
+					break;
+				case 18:
+					break;
+				case 19:
+					break;
 			}
 			break;
-		case 2:
-			if (current_item(itype_bow, true) && current_item(itype_arrow, true)) {
-				if (current_item(itype_arrow, true) < 3) {
-					return current_item(itype_arrow, true) - 1 + iArrow;
-				} else {
-					return iGArrow;
-				}
-			}
-			break;
-		case 3:
-			if (current_item(itype_candle, true)) {
-				return current_item(itype_candle, true) - 1 + iBCandle;
-			}
-			break;
-		case 4:
-			if (current_item(itype_dinsfire, true)) {
-				return iDinsFire;
-			}
-			break;
-		case 5:
-			if (current_item(itype_whistle, true)) {
-				return iWhistle;
-			}
-			break;
-		case 6:
-			if (current_item(itype_bait, true)) {
-				return iBait;
-			}
-			break;
-		case 7:
-			if (current_item(itype_potion, true)) {
-				return current_item(itype_potion, true) - 1 + iBPotion;
-			}
-			if (current_item(itype_letter, true)) {
-				return iLetter;
-			}
-			break;
-		case 8:
-			if (current_item(itype_wand, true)) {
-				return iWand;
-			}
-			break;
-		case 9:
-			if (current_item(itype_faroreswind, true)) {
-				return iFaroresWind;
-			}
-			break;
-		case 10:
-			if (current_item(itype_hookshot, true)) {
-				return iHookshot;
-			}
-			break;
-		case 11:
-			if (current_item(itype_sbomb, true)) {
-				return iSBomb;
-			}
-			break;
-		case 12:
-			if (current_item(itype_lens, true)) {
-				return iLens;
-			}
-			break;
-		case 13:
-			if (current_item(itype_hammer, true)) {
-				return iHammer;
-			}
-			break;
-		case 14:
-			if (current_item(itype_nayruslove, true)) {
-				return iNayrusLove;
-			}
-			break;
-		case 15:
-			break;
-		case 16:
-			break;
-		case 17:
-			break;
-		case 18:
-			break;
-		case 19:
-			break;
-		}
-		break;
 	}
 
 	return 0;
@@ -5272,16 +5272,16 @@ int Bweapon(int pos) {
 void selectAwpn(int step) {
 	// change this for selectable Awpn
 	switch (current_item(itype_sword, true)) {
-	case 1:
-	case 2:
-	case 3:
-		Awpn = current_item(itype_sword, true) - 1 + iSword;
-		break;
-	case 4:
-		Awpn = iXSword;
-		break;
-	default:
-		Awpn = 0;
+		case 1:
+		case 2:
+		case 3:
+			Awpn = current_item(itype_sword, true) - 1 + iSword;
+			break;
+		case 4:
+			Awpn = iXSword;
+			break;
+		default:
+			Awpn = 0;
 	}
 }
 
@@ -5305,32 +5305,32 @@ void selectBwpn(int xstep, int ystep) {
 	int pos = Bpos;
 	int cnt = 0;
 	switch (zinit.subscreen) {
-	case 0:                                                 //original
-		cnt = 8;
-		break;
-	case 1:                                                 //revision 1 ("New Subscreen")
-		cnt = 12;
-		break;
-	case 2:                                                 //revision 2 (1.92 beta 168)
-		cnt = 20;
-		break;
+		case 0:                                                 //original
+			cnt = 8;
+			break;
+		case 1:                                                 //revision 1 ("New Subscreen")
+			cnt = 12;
+			break;
+		case 2:                                                 //revision 2 (1.92 beta 168)
+			cnt = 20;
+			break;
 	}
 	// int cnt = NEWSUBSCR ? 12 : 8;
 
 	do {
 		switch (zinit.subscreen) {
-		case 0:                                               //original
-			Bpos += xstep;
-			Bpos += (ystep * 4);
-			break;
-		case 1:                                               //revision 1 ("New Subscreen")
-			Bpos += xstep;
-			Bpos += (ystep * 4);
-			break;
-		case 2:                                               //revision 2 (1.92 beta 168)
-			Bpos += xstep;
-			Bpos += (ystep * 5);
-			break;
+			case 0:                                               //original
+				Bpos += xstep;
+				Bpos += (ystep * 4);
+				break;
+			case 1:                                               //revision 1 ("New Subscreen")
+				Bpos += xstep;
+				Bpos += (ystep * 4);
+				break;
+			case 2:                                               //revision 2 (1.92 beta 168)
+				Bpos += xstep;
+				Bpos += (ystep * 5);
+				break;
 		}
 
 		while (Bpos < 0) {
@@ -5370,553 +5370,553 @@ bool canget(int id) {
 void dospecialmoney(int index) {
 	int tmp = currscr >= 128 ? 1 : 0;
 	switch (tmpscr[tmp].room) {
-	case rINFO:                                             // pay for info
-		if (game.rupies < abs(prices[index - 1][0])) {
-			return;
-		}
-		game.drupy -= abs(prices[index - 1][0]);
-		msgstr = QMisc.info[tmpscr[tmp].catchall].str[index - 1];
-		msgclk = msgpos = 0;
-		rectfill(msgdisplaybuf, 0, 0, msgdisplaybuf->w, 80, 0);
-		for (int i = 1; i < 4; i++) {
-			((item*)items.spr(i))->pickup = ipDUMMY;
+		case rINFO:                                             // pay for info
+			if (game.rupies < abs(prices[index - 1][0])) {
+				return;
+			}
+			game.drupy -= abs(prices[index - 1][0]);
+			msgstr = QMisc.info[tmpscr[tmp].catchall].str[index - 1];
+			msgclk = msgpos = 0;
+			rectfill(msgdisplaybuf, 0, 0, msgdisplaybuf->w, 80, 0);
+			for (int i = 1; i < 4; i++) {
+				((item*)items.spr(i))->pickup = ipDUMMY;
+			}
+			break;
+
+		case rMONEY:                                            // secret money
+			((item*)items.spr(0))->pickup = ipDUMMY;
+			game.drupy += (prices[0][0] = tmpscr[tmp].catchall);
+			putprices(false);
+			setmapflag();
+			break;
+
+		case rGAMBLE: {                                         // gamble
+			if (game.rupies < 10) {
+				return;
+			}
+			unsigned si = (rand() % 24) * 3;
+			for (int i = 0; i < 3; i++) {
+				prices[i][0] = gambledat[si++];
+			}
+			game.drupy += prices[index - 1][0];
+			putprices(true);
+			for (int i = 1; i < 4; i++) {
+				((item*)items.spr(i))->pickup = ipDUMMY;
+			}
 		}
 		break;
 
-	case rMONEY:                                            // secret money
-		((item*)items.spr(0))->pickup = ipDUMMY;
-		game.drupy += (prices[0][0] = tmpscr[tmp].catchall);
-		putprices(false);
-		setmapflag();
-		break;
-
-	case rGAMBLE: {                                         // gamble
-		if (game.rupies < 10) {
-			return;
-		}
-		unsigned si = (rand() % 24) * 3;
-		for (int i = 0; i < 3; i++) {
-			prices[i][0] = gambledat[si++];
-		}
-		game.drupy += prices[index - 1][0];
-		putprices(true);
-		for (int i = 1; i < 4; i++) {
-			((item*)items.spr(i))->pickup = ipDUMMY;
-		}
-	}
-	break;
-
-	case rBOMBS:
-		if (game.rupies < abs(tmpscr[tmp].catchall)) {
-			return;
-		}
-		game.drupy -= abs(tmpscr[tmp].catchall);
-		setmapflag();
-		game.maxbombs += 4;
-		game.items[itype_bomb] = game.maxbombs;
-		((item*)items.spr(index))->pickup = ipDUMMY + ipFADE;
-		fadeclk = 66;
-		msgstr = 0;
-		clear_bitmap(msgdisplaybuf);
-		anymsg = false;
-		clear_bitmap(pricesdisplaybuf);
-		anyprice = false;
-		selectBwpn(0, 0);
-		break;
-
-	case rSWINDLE:
-		if (items.spr(index)->id == iRupy) {
+		case rBOMBS:
 			if (game.rupies < abs(tmpscr[tmp].catchall)) {
 				return;
 			}
 			game.drupy -= abs(tmpscr[tmp].catchall);
-		} else {
-			if (game.maxlife <= HP_PER_HEART) {
-				return;
+			setmapflag();
+			game.maxbombs += 4;
+			game.items[itype_bomb] = game.maxbombs;
+			((item*)items.spr(index))->pickup = ipDUMMY + ipFADE;
+			fadeclk = 66;
+			msgstr = 0;
+			clear_bitmap(msgdisplaybuf);
+			anymsg = false;
+			clear_bitmap(pricesdisplaybuf);
+			anyprice = false;
+			selectBwpn(0, 0);
+			break;
+
+		case rSWINDLE:
+			if (items.spr(index)->id == iRupy) {
+				if (game.rupies < abs(tmpscr[tmp].catchall)) {
+					return;
+				}
+				game.drupy -= abs(tmpscr[tmp].catchall);
+			} else {
+				if (game.maxlife <= HP_PER_HEART) {
+					return;
+				}
+				game.life = max(game.life - HP_PER_HEART, 0);
+				game.maxlife = max(game.maxlife - HP_PER_HEART, (HP_PER_HEART));
 			}
-			game.life = max(game.life - HP_PER_HEART, 0);
-			game.maxlife = max(game.maxlife - HP_PER_HEART, (HP_PER_HEART));
-		}
-		setmapflag();
-		((item*)items.spr(0))->pickup = ipDUMMY + ipFADE;
-		((item*)items.spr(1))->pickup = ipDUMMY + ipFADE;
-		fadeclk = 66;
-		msgstr = 0;
-		clear_bitmap(msgdisplaybuf);
-		anymsg = false;
-		clear_bitmap(pricesdisplaybuf);
-		anyprice = false;
-		break;
+			setmapflag();
+			((item*)items.spr(0))->pickup = ipDUMMY + ipFADE;
+			((item*)items.spr(1))->pickup = ipDUMMY + ipFADE;
+			fadeclk = 66;
+			msgstr = 0;
+			clear_bitmap(msgdisplaybuf);
+			anymsg = false;
+			clear_bitmap(pricesdisplaybuf);
+			anyprice = false;
+			break;
 	}
 }
 
 void getitem(int id) {
 	switch (id) {
-	case iRupy:
-		++game.drupy;
-		break;
-	case i5Rupies:
-		game.drupy += 5;
-		break;
-	case i20Rupies:
-		game.drupy += 20;
-		break;
-	case i50Rupies:
-		game.drupy += 50;
-		break;
-	case i200Rupies:
-		game.drupy += 200;
-		break;
-	case iWallet500:
-		game.items[itype_wallet] |= i_swallet;
-		break;
-	case iWallet999:
-		game.items[itype_wallet] |= i_lwallet;
-		break;
-	case iBombs:
-		game.items[itype_bomb] = min(game.items[itype_bomb] + 4, game.maxbombs);
-		break;
-	case iSBomb:
-		game.items[itype_sbomb] = min(game.items[itype_sbomb] + 1, game.maxbombs >> 2);
-		break;
-	case iClock: {
-		setClock(watch = true);
-		clock_zoras = 0;
-		if (get_bit(quest_rules, qr_TEMPCLOCKS)) {
-			clockclk = 0;
-		}
-	}
-	break;
-	case iSword:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_sword, true) < i_sword) {
-				game.items[itype_sword] = (1 << (i_sword - 1));
-			}
-		} else {
-			game.items[itype_sword] |= (1 << (i_sword - 1));
-		}
-		break;
-	case iWSword:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_sword, true) < i_wsword) {
-				game.items[itype_sword] = (1 << (i_wsword - 1));
-			}
-		} else {
-			game.items[itype_sword] |= (1 << (i_wsword - 1));
-		}
-		break;
-	case iMSword:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_sword, true) < i_msword) {
-				game.items[itype_sword] = (1 << (i_msword - 1));
-			}
-		} else {
-			game.items[itype_sword] |= (1 << (i_msword - 1));
-		}
-		break;
-	case iXSword:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_sword, true) < i_xsword) {
-				game.items[itype_sword] = (1 << (i_xsword - 1));
-			}
-		} else {
-			game.items[itype_sword] |= (1 << (i_xsword - 1));
-		}
-		break;
-	case iKey:
-		if (game.keys < 255) {
-			++game.keys;
-		}
-		break;
-	case iBCandle:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_candle, true) < i_bcandle) {
-				game.items[itype_candle] = (1 << (i_bcandle - 1));
-			}
-		} else {
-			game.items[itype_candle] |= (1 << (i_bcandle - 1));
-		}
-		break;
-	case iRCandle:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_candle, true) < i_rcandle) {
-				game.items[itype_candle] = (1 << (i_rcandle - 1));
-			}
-		} else {
-			game.items[itype_candle] |= (1 << (i_rcandle - 1));
-		}
-		break;
-	case iArrow:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_arrow, true) < i_warrow) {
-				game.items[itype_arrow] = (1 << (i_warrow - 1));
-			}
-		} else {
-			game.items[itype_arrow] |= (1 << (i_warrow - 1));
-		}
-		break;
-	case iSArrow:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_arrow, true) < i_sarrow) {
-				game.items[itype_arrow] = (1 << (i_sarrow - 1));
-			}
-		} else {
-			game.items[itype_arrow] |= (1 << (i_sarrow - 1));
-		}
-		break;
-	case iGArrow:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_arrow, true) < i_garrow) {
-				game.items[itype_arrow] = (1 << (i_garrow - 1));
-			}
-		} else {
-			game.items[itype_arrow] |= (1 << (i_garrow - 1));
-		}
-		break;
-	case iBRing:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_ring, true) < i_bring) {
-				game.items[itype_ring] = (1 << (i_bring - 1));
-			}
-		} else {
-			game.items[itype_ring] |= (1 << (i_bring - 1));
-		}
-		if (currscr < 128 || dlevel) {
-			ringcolor();
-		}
-		break;
-	case iRRing:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_ring, true) < i_rring) {
-				game.items[itype_ring] = (1 << (i_rring - 1));
-			}
-		} else {
-			game.items[itype_ring] |= (1 << (i_rring - 1));
-		}
-		if (currscr < 128 || dlevel) {
-			ringcolor();
-		}
-		break;
-	case iGRing:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_ring, true) < i_gring) {
-				game.items[itype_ring] = (1 << (i_gring - 1));
-			}
-		} else {
-			game.items[itype_ring] |= (1 << (i_gring - 1));
-		}
-		if (currscr < 128 || dlevel) {
-			ringcolor();
-		}
-		break;
-	case iBrang:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_brang, true) < i_wbrang) {
-				game.items[itype_brang] = (1 << (i_wbrang - 1));
-			}
-		} else {
-			game.items[itype_brang] |= (1 << (i_wbrang - 1));
-		}
-		break;
-	case iMBrang:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_brang, true) < i_mbrang) {
-				game.items[itype_brang] = (1 << (i_mbrang - 1));
-			}
-		} else {
-			game.items[itype_brang] |= (1 << (i_mbrang - 1));
-		}
-		break;
-	case iFBrang:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_brang, true) < i_fbrang) {
-				game.items[itype_brang] = (1 << (i_fbrang - 1));
-			}
-		} else {
-			game.items[itype_brang] |= (1 << (i_fbrang - 1));
-		}
-		break;
-	case iBPotion:
-		game.items[itype_potion] = min(current_item(itype_potion, true) + 1, 2);
-		break;
-	case iRPotion:
-		game.items[itype_potion] = 2;
-		break;
-	case iBracelet:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_bracelet, true) < i_bracelet1) {
-				game.items[itype_bracelet] = (1 << (i_bracelet1 - 1));
-			}
-		} else {
-			game.items[itype_bracelet] |= (1 << (i_bracelet1 - 1));
-		}
-		break;
-	case iRaft:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_raft, true) < i_raft) {
-				game.items[itype_raft] = (1 << (i_raft - 1));
-			}
-		} else {
-			game.items[itype_raft] |= (1 << (i_raft - 1));
-		}
-		break;
-	case iLadder:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_ladder, true) < i_ladder) {
-				game.items[itype_ladder] = (1 << (i_ladder - 1));
-			}
-		} else {
-			game.items[itype_ladder] |= (1 << (i_ladder - 1));
-		}
-		break;
-	case iBow:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_bow, true) < i_shortbow) {
-				game.items[itype_bow] = (1 << (i_shortbow - 1));
-			}
-		} else {
-			game.items[itype_bow] |= (1 << (i_shortbow - 1));
-		}
-		break;
-	case iBow2:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_bow, true) < i_longbow) {
-				game.items[itype_bow] = (1 << (i_longbow - 1));
-			}
-		} else {
-			game.items[itype_bow] |= (1 << (i_longbow - 1));
-		}
-		break;
-	case iBook:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_book, true) < i_book) {
-				game.items[itype_book] = (1 << (i_book - 1));
-			}
-		} else {
-			game.items[itype_book] |= (1 << (i_book - 1));
-		}
-		break;
-	case iShield:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_shield, true) < i_largeshield) {
-				game.items[itype_shield] = (1 << (i_largeshield - 1));
-			}
-		} else {
-			game.items[itype_shield] |= (1 << (i_largeshield - 1));
-		}
-		break;
-	case iMShield:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_shield, true) < i_mirrorshield) {
-				game.items[itype_shield] = (1 << (i_mirrorshield - 1));
-			}
-		} else {
-			game.items[itype_shield] |= (1 << (i_mirrorshield - 1));
-		}
-		break;
-	case iMKey:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_magickey, true) < i_magickey) {
-				game.items[itype_magickey] = (1 << (i_magickey - 1));
-			}
-		} else {
-			game.items[itype_magickey] |= (1 << (i_magickey - 1));
-		}
-		break;
-	case iMap:
-		game.lvlitems[dlevel] |= liMAP;
-		break;
-	case iCompass:
-		game.lvlitems[dlevel] |= liCOMPASS;
-		break;
-	case iBossKey:
-		game.lvlitems[dlevel] |= liBOSSKEY;
-		break;
-	case iLetter:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_letter, true) < i_letter) {
-				game.items[itype_letter] = (1 << (i_letter - 1));
-			}
-		} else {
-			game.items[itype_letter] |= (1 << (i_letter - 1));
-		}
-		break;
-	case iBait:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_bait, true) < i_bait) {
-				game.items[itype_bait] = (1 << (i_bait - 1));
-			}
-		} else {
-			game.items[itype_bait] |= (1 << (i_bait - 1));
-		}
-		break;
-	case iWand:
-		game.items[itype_wand] |= i_wand;
-		break;
-	case iWhistle:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_whistle, true) < i_recorder) {
-				game.items[itype_whistle] = (1 << (i_recorder - 1));
-			}
-		} else {
-			game.items[itype_whistle] |= (1 << (i_recorder - 1));
-		}
-		break;
-	case iFairyStill:
-	case iFairyMoving:
-		game.life = min(game.life + (3 * HP_PER_HEART), game.maxlife);
-		break;
-	//  case iCross:      game.misc2|=iCROSS; break;
-	case iAmulet:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_amulet, true) < i_amulet1) {
-				game.items[itype_amulet] = (1 << (i_amulet1 - 1));
-			}
-		} else {
-			game.items[itype_amulet] |= (1 << (i_amulet1 - 1));
-		}
-		break;
-	case iL2Amulet:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_amulet, true) < i_amulet2) {
-				game.items[itype_amulet] = (1 << (i_amulet2 - 1));
-			}
-		} else {
-			game.items[itype_amulet] |= (1 << (i_amulet2 - 1));
-		}
-		break;
-	case iFlippers:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_flippers, true) < i_flippers) {
-				game.items[itype_flippers] = (1 << (i_flippers - 1));
-			}
-		} else {
-			game.items[itype_flippers] |= (1 << (i_flippers - 1));
-		}
-		break;
-	case iBoots:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_boots, true) < i_boots) {
-				game.items[itype_boots] = (1 << (i_boots - 1));
-			}
-		} else {
-			game.items[itype_boots] |= (1 << (i_boots - 1));
-		}
-		break;
-	case iL2Bracelet:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_bracelet, true) < i_bracelet2) {
-				game.items[itype_bracelet] = (1 << (i_bracelet2 - 1));
-			}
-		} else
-
-		{
-			game.items[itype_bracelet] |= (1 << (i_bracelet2 - 1));
-		}
-		break;
-	case iHookshot:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_hookshot, true) < i_hookshot) {
-				game.items[itype_hookshot] = (1 << (i_hookshot - 1));
-			}
-		} else {
-			game.items[itype_hookshot] |= (1 << (i_hookshot - 1));
-		}
-		break;
-	case iLens:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_lens, true) < i_lens) {
-				game.items[itype_lens] = (1 << (i_lens - 1));
-			}
-		} else {
-			game.items[itype_lens] |= (1 << (i_lens - 1));
-		}
-		break;
-	case iHammer:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_hammer, true) < i_hammer) {
-				game.items[itype_hammer] = (1 << (i_hammer - 1));
-			}
-		} else {
-			game.items[itype_hammer] |= (1 << (i_hammer - 1));
-		}
-		break;
-
-	case iMagicC:
-		if (game.maxmagic < MAGICPERBLOCK * 8) {
-			game.maxmagic += MAGICPERBLOCK;
-		}
-
-	case iSMagic:
-		game.dmagic += MAGICPERBLOCK;
-		break;
-	case iLMagic:
-		game.dmagic = MAGICPERBLOCK * 8;
-		break;
-
-	case iHCPiece:
-		if (++game.HCpieces < 4) {
+		case iRupy:
+			++game.drupy;
 			break;
-		}
-		game.HCpieces = 0;
-	// fall through
-	case iHeartC:
-		if (game.maxlife < (get_bit(quest_rules, qr_24HC) ? 24 * HP_PER_HEART : 16 * HP_PER_HEART)) {
-			game.maxlife += HP_PER_HEART;
-		}
-	// fall through
-	case iHeart:
-		game.life = min(game.life + HP_PER_HEART, game.maxlife);
-		break;
-	case iKillAll:
-		kill_em_all();
-		break;
-	case iDinsFire:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_dinsfire, true) < i_dinsfire) {
-				game.items[itype_dinsfire] = (1 << (i_dinsfire - 1));
+		case i5Rupies:
+			game.drupy += 5;
+			break;
+		case i20Rupies:
+			game.drupy += 20;
+			break;
+		case i50Rupies:
+			game.drupy += 50;
+			break;
+		case i200Rupies:
+			game.drupy += 200;
+			break;
+		case iWallet500:
+			game.items[itype_wallet] |= i_swallet;
+			break;
+		case iWallet999:
+			game.items[itype_wallet] |= i_lwallet;
+			break;
+		case iBombs:
+			game.items[itype_bomb] = min(game.items[itype_bomb] + 4, game.maxbombs);
+			break;
+		case iSBomb:
+			game.items[itype_sbomb] = min(game.items[itype_sbomb] + 1, game.maxbombs >> 2);
+			break;
+		case iClock: {
+			setClock(watch = true);
+			clock_zoras = 0;
+			if (get_bit(quest_rules, qr_TEMPCLOCKS)) {
+				clockclk = 0;
 			}
-		} else {
-			game.items[itype_dinsfire] |= (1 << (i_dinsfire - 1));
 		}
 		break;
-	case iFaroresWind:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_faroreswind, true) < i_faroreswind) {
-				game.items[itype_faroreswind] = (1 << (i_faroreswind - 1));
+		case iSword:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_sword, true) < i_sword) {
+					game.items[itype_sword] = (1 << (i_sword - 1));
+				}
+			} else {
+				game.items[itype_sword] |= (1 << (i_sword - 1));
 			}
-		} else {
-			game.items[itype_faroreswind] |= (1 << (i_faroreswind - 1));
-		}
-		break;
-	case iNayrusLove:
-		if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
-			if (current_item(itype_nayruslove, true) < i_nayruslove) {
-				game.items[itype_nayruslove] = (1 << (i_nayruslove - 1));
+			break;
+		case iWSword:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_sword, true) < i_wsword) {
+					game.items[itype_sword] = (1 << (i_wsword - 1));
+				}
+			} else {
+				game.items[itype_sword] |= (1 << (i_wsword - 1));
 			}
-		} else {
-			game.items[itype_nayruslove] |= (1 << (i_nayruslove - 1));
-		}
-		break;
+			break;
+		case iMSword:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_sword, true) < i_msword) {
+					game.items[itype_sword] = (1 << (i_msword - 1));
+				}
+			} else {
+				game.items[itype_sword] |= (1 << (i_msword - 1));
+			}
+			break;
+		case iXSword:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_sword, true) < i_xsword) {
+					game.items[itype_sword] = (1 << (i_xsword - 1));
+				}
+			} else {
+				game.items[itype_sword] |= (1 << (i_xsword - 1));
+			}
+			break;
+		case iKey:
+			if (game.keys < 255) {
+				++game.keys;
+			}
+			break;
+		case iBCandle:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_candle, true) < i_bcandle) {
+					game.items[itype_candle] = (1 << (i_bcandle - 1));
+				}
+			} else {
+				game.items[itype_candle] |= (1 << (i_bcandle - 1));
+			}
+			break;
+		case iRCandle:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_candle, true) < i_rcandle) {
+					game.items[itype_candle] = (1 << (i_rcandle - 1));
+				}
+			} else {
+				game.items[itype_candle] |= (1 << (i_rcandle - 1));
+			}
+			break;
+		case iArrow:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_arrow, true) < i_warrow) {
+					game.items[itype_arrow] = (1 << (i_warrow - 1));
+				}
+			} else {
+				game.items[itype_arrow] |= (1 << (i_warrow - 1));
+			}
+			break;
+		case iSArrow:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_arrow, true) < i_sarrow) {
+					game.items[itype_arrow] = (1 << (i_sarrow - 1));
+				}
+			} else {
+				game.items[itype_arrow] |= (1 << (i_sarrow - 1));
+			}
+			break;
+		case iGArrow:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_arrow, true) < i_garrow) {
+					game.items[itype_arrow] = (1 << (i_garrow - 1));
+				}
+			} else {
+				game.items[itype_arrow] |= (1 << (i_garrow - 1));
+			}
+			break;
+		case iBRing:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_ring, true) < i_bring) {
+					game.items[itype_ring] = (1 << (i_bring - 1));
+				}
+			} else {
+				game.items[itype_ring] |= (1 << (i_bring - 1));
+			}
+			if (currscr < 128 || dlevel) {
+				ringcolor();
+			}
+			break;
+		case iRRing:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_ring, true) < i_rring) {
+					game.items[itype_ring] = (1 << (i_rring - 1));
+				}
+			} else {
+				game.items[itype_ring] |= (1 << (i_rring - 1));
+			}
+			if (currscr < 128 || dlevel) {
+				ringcolor();
+			}
+			break;
+		case iGRing:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_ring, true) < i_gring) {
+					game.items[itype_ring] = (1 << (i_gring - 1));
+				}
+			} else {
+				game.items[itype_ring] |= (1 << (i_gring - 1));
+			}
+			if (currscr < 128 || dlevel) {
+				ringcolor();
+			}
+			break;
+		case iBrang:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_brang, true) < i_wbrang) {
+					game.items[itype_brang] = (1 << (i_wbrang - 1));
+				}
+			} else {
+				game.items[itype_brang] |= (1 << (i_wbrang - 1));
+			}
+			break;
+		case iMBrang:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_brang, true) < i_mbrang) {
+					game.items[itype_brang] = (1 << (i_mbrang - 1));
+				}
+			} else {
+				game.items[itype_brang] |= (1 << (i_mbrang - 1));
+			}
+			break;
+		case iFBrang:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_brang, true) < i_fbrang) {
+					game.items[itype_brang] = (1 << (i_fbrang - 1));
+				}
+			} else {
+				game.items[itype_brang] |= (1 << (i_fbrang - 1));
+			}
+			break;
+		case iBPotion:
+			game.items[itype_potion] = min(current_item(itype_potion, true) + 1, 2);
+			break;
+		case iRPotion:
+			game.items[itype_potion] = 2;
+			break;
+		case iBracelet:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_bracelet, true) < i_bracelet1) {
+					game.items[itype_bracelet] = (1 << (i_bracelet1 - 1));
+				}
+			} else {
+				game.items[itype_bracelet] |= (1 << (i_bracelet1 - 1));
+			}
+			break;
+		case iRaft:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_raft, true) < i_raft) {
+					game.items[itype_raft] = (1 << (i_raft - 1));
+				}
+			} else {
+				game.items[itype_raft] |= (1 << (i_raft - 1));
+			}
+			break;
+		case iLadder:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_ladder, true) < i_ladder) {
+					game.items[itype_ladder] = (1 << (i_ladder - 1));
+				}
+			} else {
+				game.items[itype_ladder] |= (1 << (i_ladder - 1));
+			}
+			break;
+		case iBow:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_bow, true) < i_shortbow) {
+					game.items[itype_bow] = (1 << (i_shortbow - 1));
+				}
+			} else {
+				game.items[itype_bow] |= (1 << (i_shortbow - 1));
+			}
+			break;
+		case iBow2:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_bow, true) < i_longbow) {
+					game.items[itype_bow] = (1 << (i_longbow - 1));
+				}
+			} else {
+				game.items[itype_bow] |= (1 << (i_longbow - 1));
+			}
+			break;
+		case iBook:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_book, true) < i_book) {
+					game.items[itype_book] = (1 << (i_book - 1));
+				}
+			} else {
+				game.items[itype_book] |= (1 << (i_book - 1));
+			}
+			break;
+		case iShield:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_shield, true) < i_largeshield) {
+					game.items[itype_shield] = (1 << (i_largeshield - 1));
+				}
+			} else {
+				game.items[itype_shield] |= (1 << (i_largeshield - 1));
+			}
+			break;
+		case iMShield:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_shield, true) < i_mirrorshield) {
+					game.items[itype_shield] = (1 << (i_mirrorshield - 1));
+				}
+			} else {
+				game.items[itype_shield] |= (1 << (i_mirrorshield - 1));
+			}
+			break;
+		case iMKey:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_magickey, true) < i_magickey) {
+					game.items[itype_magickey] = (1 << (i_magickey - 1));
+				}
+			} else {
+				game.items[itype_magickey] |= (1 << (i_magickey - 1));
+			}
+			break;
+		case iMap:
+			game.lvlitems[dlevel] |= liMAP;
+			break;
+		case iCompass:
+			game.lvlitems[dlevel] |= liCOMPASS;
+			break;
+		case iBossKey:
+			game.lvlitems[dlevel] |= liBOSSKEY;
+			break;
+		case iLetter:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_letter, true) < i_letter) {
+					game.items[itype_letter] = (1 << (i_letter - 1));
+				}
+			} else {
+				game.items[itype_letter] |= (1 << (i_letter - 1));
+			}
+			break;
+		case iBait:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_bait, true) < i_bait) {
+					game.items[itype_bait] = (1 << (i_bait - 1));
+				}
+			} else {
+				game.items[itype_bait] |= (1 << (i_bait - 1));
+			}
+			break;
+		case iWand:
+			game.items[itype_wand] |= i_wand;
+			break;
+		case iWhistle:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_whistle, true) < i_recorder) {
+					game.items[itype_whistle] = (1 << (i_recorder - 1));
+				}
+			} else {
+				game.items[itype_whistle] |= (1 << (i_recorder - 1));
+			}
+			break;
+		case iFairyStill:
+		case iFairyMoving:
+			game.life = min(game.life + (3 * HP_PER_HEART), game.maxlife);
+			break;
+		//  case iCross:      game.misc2|=iCROSS; break;
+		case iAmulet:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_amulet, true) < i_amulet1) {
+					game.items[itype_amulet] = (1 << (i_amulet1 - 1));
+				}
+			} else {
+				game.items[itype_amulet] |= (1 << (i_amulet1 - 1));
+			}
+			break;
+		case iL2Amulet:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_amulet, true) < i_amulet2) {
+					game.items[itype_amulet] = (1 << (i_amulet2 - 1));
+				}
+			} else {
+				game.items[itype_amulet] |= (1 << (i_amulet2 - 1));
+			}
+			break;
+		case iFlippers:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_flippers, true) < i_flippers) {
+					game.items[itype_flippers] = (1 << (i_flippers - 1));
+				}
+			} else {
+				game.items[itype_flippers] |= (1 << (i_flippers - 1));
+			}
+			break;
+		case iBoots:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_boots, true) < i_boots) {
+					game.items[itype_boots] = (1 << (i_boots - 1));
+				}
+			} else {
+				game.items[itype_boots] |= (1 << (i_boots - 1));
+			}
+			break;
+		case iL2Bracelet:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_bracelet, true) < i_bracelet2) {
+					game.items[itype_bracelet] = (1 << (i_bracelet2 - 1));
+				}
+			} else
+
+			{
+				game.items[itype_bracelet] |= (1 << (i_bracelet2 - 1));
+			}
+			break;
+		case iHookshot:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_hookshot, true) < i_hookshot) {
+					game.items[itype_hookshot] = (1 << (i_hookshot - 1));
+				}
+			} else {
+				game.items[itype_hookshot] |= (1 << (i_hookshot - 1));
+			}
+			break;
+		case iLens:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_lens, true) < i_lens) {
+					game.items[itype_lens] = (1 << (i_lens - 1));
+				}
+			} else {
+				game.items[itype_lens] |= (1 << (i_lens - 1));
+			}
+			break;
+		case iHammer:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_hammer, true) < i_hammer) {
+					game.items[itype_hammer] = (1 << (i_hammer - 1));
+				}
+			} else {
+				game.items[itype_hammer] |= (1 << (i_hammer - 1));
+			}
+			break;
+
+		case iMagicC:
+			if (game.maxmagic < MAGICPERBLOCK * 8) {
+				game.maxmagic += MAGICPERBLOCK;
+			}
+
+		case iSMagic:
+			game.dmagic += MAGICPERBLOCK;
+			break;
+		case iLMagic:
+			game.dmagic = MAGICPERBLOCK * 8;
+			break;
+
+		case iHCPiece:
+			if (++game.HCpieces < 4) {
+				break;
+			}
+			game.HCpieces = 0;
+		// fall through
+		case iHeartC:
+			if (game.maxlife < (get_bit(quest_rules, qr_24HC) ? 24 * HP_PER_HEART : 16 * HP_PER_HEART)) {
+				game.maxlife += HP_PER_HEART;
+			}
+		// fall through
+		case iHeart:
+			game.life = min(game.life + HP_PER_HEART, game.maxlife);
+			break;
+		case iKillAll:
+			kill_em_all();
+			break;
+		case iDinsFire:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_dinsfire, true) < i_dinsfire) {
+					game.items[itype_dinsfire] = (1 << (i_dinsfire - 1));
+				}
+			} else {
+				game.items[itype_dinsfire] |= (1 << (i_dinsfire - 1));
+			}
+			break;
+		case iFaroresWind:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_faroreswind, true) < i_faroreswind) {
+					game.items[itype_faroreswind] = (1 << (i_faroreswind - 1));
+				}
+			} else {
+				game.items[itype_faroreswind] |= (1 << (i_faroreswind - 1));
+			}
+			break;
+		case iNayrusLove:
+			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
+				if (current_item(itype_nayruslove, true) < i_nayruslove) {
+					game.items[itype_nayruslove] = (1 << (i_nayruslove - 1));
+				}
+			} else {
+				game.items[itype_nayruslove] |= (1 << (i_nayruslove - 1));
+			}
+			break;
 	}
 
 	selectBwpn(0, 0);
 	selectAwpn(0);
 
 	switch (id) {
-	case iRupy:
-	case i5Rupies:
-		sfx(WAV_CHIME);
-		break;
-	case iHeart:
-	case iKey:
-		sfx(WAV_PLINK);
-		break;
-	case iTriforce:
-	case iBigTri:
-		break;
-	default:
-		sfx(WAV_SCALE);
+		case iRupy:
+		case i5Rupies:
+			sfx(WAV_CHIME);
+			break;
+		case iHeart:
+		case iKey:
+			sfx(WAV_PLINK);
+			break;
+		case iTriforce:
+		case iBigTri:
+			break;
+		default:
+			sfx(WAV_SCALE);
 	}
 }
 
@@ -5970,33 +5970,33 @@ void LinkClass::checkitems() {
 
 	if (pickup & ipCHECK)                                     // check restrictions
 		switch (tmpscr[tmp].room) {
-		case rSP_ITEM:                                        // special item
-			if (!canget(id)) {
-				return;
-			}
-			break;
-
-		case rP_SHOP:                                         // potion shop
-			if (msgpos < 72) {
-				return;
-			}
-		case rSHOP:                                           // shop
-			if (game.rupies < abs(prices[index - 1][0])) {
-				return;
-			}
-			game.drupy -= abs(prices[index - 1][0]);
-			//make the other shop items untouchable after
-			//you buy something
-			int count = 0;
-			for (int i = 0; i < 3; i++) {
-				if (QMisc.shop[tmpscr[tmp].catchall].item[i]) {
-					++count;
+			case rSP_ITEM:                                        // special item
+				if (!canget(id)) {
+					return;
 				}
-			}
-			for (int i = 1; i <= count; i++) {
-				((item*)items.spr(i))->pickup = ipDUMMY + ipFADE;
-			}
-			break;
+				break;
+
+			case rP_SHOP:                                         // potion shop
+				if (msgpos < 72) {
+					return;
+				}
+			case rSHOP:                                           // shop
+				if (game.rupies < abs(prices[index - 1][0])) {
+					return;
+				}
+				game.drupy -= abs(prices[index - 1][0]);
+				//make the other shop items untouchable after
+				//you buy something
+				int count = 0;
+				for (int i = 0; i < 3; i++) {
+					if (QMisc.shop[tmpscr[tmp].catchall].item[i]) {
+						++count;
+					}
+				}
+				for (int i = 1; i <= count; i++) {
+					((item*)items.spr(i))->pickup = ipDUMMY + ipFADE;
+				}
+				break;
 		}
 
 	if (pickup & ipONETIME) {                                 // set screen item flag for one-time-only items
@@ -6118,39 +6118,39 @@ bool LinkClass::refill() {
 	if (refillclk % speed == 0) {
 		//   game.life&=0xFFC;
 		switch (refill_what) {
-		case REFILL_LIFE:
-			game.life = min(game.maxlife, (game.life + HP_PER_HEART / 2));
-			if (game.life >= game.maxlife) {
-				game.life = game.maxlife;
-				kill_sfx();
-				sfx(WAV_MSG);
-				refilling = false;
-				return false;
-			}
-			break;
-		case REFILL_MAGIC:
-			game.magic = min(game.maxmagic, (game.magic + MAGICPERBLOCK / 4));
-			if (game.magic >= game.maxmagic) {
-				game.magic = game.maxmagic;
-				kill_sfx();
-				sfx(WAV_MSG);
-				refilling = false;
-				return false;
-			}
-			break;
-		case REFILL_ALL:
-			game.life = min(game.maxlife, (game.life + HP_PER_HEART / 2));
-			//        game.magic=min(game.maxmagic, (game.magic+MAGICPERBLOCK/4));
-			game.magic = min(game.maxmagic, (game.magic + MAGICPERBLOCK / 2));
-			if ((game.life >= game.maxlife) && (game.magic >= game.maxmagic)) {
-				game.life = game.maxlife;
-				game.magic = game.maxmagic;
-				kill_sfx();
-				sfx(WAV_MSG);
-				refilling = false;
-				return false;
-			}
-			break;
+			case REFILL_LIFE:
+				game.life = min(game.maxlife, (game.life + HP_PER_HEART / 2));
+				if (game.life >= game.maxlife) {
+					game.life = game.maxlife;
+					kill_sfx();
+					sfx(WAV_MSG);
+					refilling = false;
+					return false;
+				}
+				break;
+			case REFILL_MAGIC:
+				game.magic = min(game.maxmagic, (game.magic + MAGICPERBLOCK / 4));
+				if (game.magic >= game.maxmagic) {
+					game.magic = game.maxmagic;
+					kill_sfx();
+					sfx(WAV_MSG);
+					refilling = false;
+					return false;
+				}
+				break;
+			case REFILL_ALL:
+				game.life = min(game.maxlife, (game.life + HP_PER_HEART / 2));
+				//        game.magic=min(game.maxmagic, (game.magic+MAGICPERBLOCK/4));
+				game.magic = min(game.maxmagic, (game.magic + MAGICPERBLOCK / 2));
+				if ((game.life >= game.maxlife) && (game.magic >= game.maxmagic)) {
+					game.life = game.maxlife;
+					game.magic = game.maxmagic;
+					kill_sfx();
+					sfx(WAV_MSG);
+					refilling = false;
+					return false;
+				}
+				break;
 		}
 	}
 	return true;
@@ -6238,13 +6238,13 @@ void LinkClass::getTriforce(int id) {
 		if (f >= 208 && f < 288) {
 			++x;
 			switch (++c) {
-			case 5:
-				c = 0;
-			case 0:
-			case 2:
-			case 3:
-				++x;
-				break;
+				case 5:
+					c = 0;
+				case 0:
+				case 2:
+				case 3:
+					++x;
+					break;
 			}
 		}
 
@@ -6344,18 +6344,18 @@ void LinkClass::gameover() {
 
 			if (f >= 62 && f < 138) {
 				switch ((f - 62) % 20) {
-				case 0:
-					dir = right;
-					break;
-				case 5:
-					dir = up;
-					break;
-				case 10:
-					dir = left;
-					break;
-				case 15:
-					dir = down;
-					break;
+					case 0:
+						dir = right;
+						break;
+					case 5:
+						dir = up;
+						break;
+					case 10:
+						dir = left;
+						break;
+					case 15:
+						dir = down;
+						break;
 				}
 				linkstep();
 			}
@@ -6499,15 +6499,15 @@ void LinkClass::gameover() {
 
 		//SFX... put them all here
 		switch (f) {
-		case   0:
-			sfx(WAV_OUCH, pan(int(x)));
-			break;
-		case  60:
-			sfx(WAV_SPIRAL);
-			break;
-		case 194:
-			sfx(WAV_MSG);
-			break;
+			case   0:
+				sfx(WAV_OUCH, pan(int(x)));
+				break;
+			case  60:
+				sfx(WAV_SPIRAL);
+				break;
+			case 194:
+				sfx(WAV_MSG);
+				break;
 		}
 
 		advanceframe();
@@ -6643,30 +6643,30 @@ void LinkClass::check_conveyor() {
 		int ctype;
 		for (int i = 0; i < 4; i++) {
 			switch (i) {
-			case 0:
-				ctype = (combobuf[MAPDATA(x + 4, y + 12)].type);
-				if ((ctype >= cCVUP) && (ctype <= cCVRIGHT)) {
-					set_bit(&conveyor_flags, ctype - cCVUP, 1);
-				}
-				break;
-			case 1:
-				ctype = (combobuf[MAPDATA(x + 11, y + 12)].type);
-				if ((ctype >= cCVUP) && (ctype <= cCVRIGHT)) {
-					set_bit(&conveyor_flags, ctype - cCVUP, 1);
-				}
-				break;
-			case 2:
-				ctype = (combobuf[MAPDATA(x + 4, y + 15)].type);
-				if ((ctype >= cCVUP) && (ctype <= cCVRIGHT)) {
-					set_bit(&conveyor_flags, ctype - cCVUP, 1);
-				}
-				break;
-			case 3:
-				ctype = (combobuf[MAPDATA(x + 11, y + 15)].type);
-				if ((ctype >= cCVUP) && (ctype <= cCVRIGHT)) {
-					set_bit(&conveyor_flags, ctype - cCVUP, 1);
-				}
-				break;
+				case 0:
+					ctype = (combobuf[MAPDATA(x + 4, y + 12)].type);
+					if ((ctype >= cCVUP) && (ctype <= cCVRIGHT)) {
+						set_bit(&conveyor_flags, ctype - cCVUP, 1);
+					}
+					break;
+				case 1:
+					ctype = (combobuf[MAPDATA(x + 11, y + 12)].type);
+					if ((ctype >= cCVUP) && (ctype <= cCVRIGHT)) {
+						set_bit(&conveyor_flags, ctype - cCVUP, 1);
+					}
+					break;
+				case 2:
+					ctype = (combobuf[MAPDATA(x + 4, y + 15)].type);
+					if ((ctype >= cCVUP) && (ctype <= cCVRIGHT)) {
+						set_bit(&conveyor_flags, ctype - cCVUP, 1);
+					}
+					break;
+				case 3:
+					ctype = (combobuf[MAPDATA(x + 11, y + 15)].type);
+					if ((ctype >= cCVUP) && (ctype <= cCVRIGHT)) {
+						set_bit(&conveyor_flags, ctype - cCVUP, 1);
+					}
+					break;
 			}
 			if (conveyor_flags != 0) {
 				is_on_conveyor = true;
@@ -6674,66 +6674,66 @@ void LinkClass::check_conveyor() {
 		}
 		for (int i = 0; i < 4; i++) {
 			switch (i) {
-			case 0:
-				if (get_bit(&conveyor_flags, i) && !walkflag(x, y + 8 - 2, 2, up)) {
-					y = y - 2;
-					hs_starty -= 2;
-					for (int i = 0; i < chainlinks.Count(); i++) {
-						chainlinks.spr(i)->y -= 2;
+				case 0:
+					if (get_bit(&conveyor_flags, i) && !walkflag(x, y + 8 - 2, 2, up)) {
+						y = y - 2;
+						hs_starty -= 2;
+						for (int i = 0; i < chainlinks.Count(); i++) {
+							chainlinks.spr(i)->y -= 2;
+						}
+						if (Lwpns.idFirst(wHookshot) > -1) {
+							Lwpns.spr(Lwpns.idFirst(wHookshot))->y -= 2;
+						}
+						if (Lwpns.idFirst(wHSHandle) > -1) {
+							Lwpns.spr(Lwpns.idFirst(wHSHandle))->y -= 2;
+						}
 					}
-					if (Lwpns.idFirst(wHookshot) > -1) {
-						Lwpns.spr(Lwpns.idFirst(wHookshot))->y -= 2;
+					break;
+				case 1:
+					if (get_bit(&conveyor_flags, i) && !walkflag(x, y + 15 + 2, 2, down)) {
+						y = y + 2;
+						hs_starty += 2;
+						for (int i = 0; i < chainlinks.Count(); i++) {
+							chainlinks.spr(i)->y += 2;
+						}
+						if (Lwpns.idFirst(wHookshot) > -1) {
+							Lwpns.spr(Lwpns.idFirst(wHookshot))->y += 2;
+						}
+						if (Lwpns.idFirst(wHSHandle) > -1) {
+							Lwpns.spr(Lwpns.idFirst(wHSHandle))->y += 2;
+						}
 					}
-					if (Lwpns.idFirst(wHSHandle) > -1) {
-						Lwpns.spr(Lwpns.idFirst(wHSHandle))->y -= 2;
+					break;
+				case 2:
+					if (get_bit(&conveyor_flags, i) && !walkflag(x - (lsteps[int(x) & 7]), y + 8, 1, left)) {
+						x = x - 2;
+						hs_startx -= 2;
+						for (int i = 0; i < chainlinks.Count(); i++) {
+							chainlinks.spr(i)->x -= 2;
+						}
+						if (Lwpns.idFirst(wHookshot) > -1) {
+							Lwpns.spr(Lwpns.idFirst(wHookshot))->x -= 2;
+						}
+						if (Lwpns.idFirst(wHSHandle) > -1) {
+							Lwpns.spr(Lwpns.idFirst(wHSHandle))->x -= 2;
+						}
 					}
-				}
-				break;
-			case 1:
-				if (get_bit(&conveyor_flags, i) && !walkflag(x, y + 15 + 2, 2, down)) {
-					y = y + 2;
-					hs_starty += 2;
-					for (int i = 0; i < chainlinks.Count(); i++) {
-						chainlinks.spr(i)->y += 2;
+					break;
+				case 3:
+					if (get_bit(&conveyor_flags, i) && !walkflag(x + 15 + 2, y + 8, 1, right)) {
+						x = x + 2;
+						hs_startx += 2;
+						for (int i = 0; i < chainlinks.Count(); i++) {
+							chainlinks.spr(i)->x += 2;
+						}
+						if (Lwpns.idFirst(wHookshot) > -1) {
+							Lwpns.spr(Lwpns.idFirst(wHookshot))->x += 2;
+						}
+						if (Lwpns.idFirst(wHSHandle) > -1) {
+							Lwpns.spr(Lwpns.idFirst(wHSHandle))->x += 2;
+						}
 					}
-					if (Lwpns.idFirst(wHookshot) > -1) {
-						Lwpns.spr(Lwpns.idFirst(wHookshot))->y += 2;
-					}
-					if (Lwpns.idFirst(wHSHandle) > -1) {
-						Lwpns.spr(Lwpns.idFirst(wHSHandle))->y += 2;
-					}
-				}
-				break;
-			case 2:
-				if (get_bit(&conveyor_flags, i) && !walkflag(x - (lsteps[int(x) & 7]), y + 8, 1, left)) {
-					x = x - 2;
-					hs_startx -= 2;
-					for (int i = 0; i < chainlinks.Count(); i++) {
-						chainlinks.spr(i)->x -= 2;
-					}
-					if (Lwpns.idFirst(wHookshot) > -1) {
-						Lwpns.spr(Lwpns.idFirst(wHookshot))->x -= 2;
-					}
-					if (Lwpns.idFirst(wHSHandle) > -1) {
-						Lwpns.spr(Lwpns.idFirst(wHSHandle))->x -= 2;
-					}
-				}
-				break;
-			case 3:
-				if (get_bit(&conveyor_flags, i) && !walkflag(x + 15 + 2, y + 8, 1, right)) {
-					x = x + 2;
-					hs_startx += 2;
-					for (int i = 0; i < chainlinks.Count(); i++) {
-						chainlinks.spr(i)->x += 2;
-					}
-					if (Lwpns.idFirst(wHookshot) > -1) {
-						Lwpns.spr(Lwpns.idFirst(wHookshot))->x += 2;
-					}
-					if (Lwpns.idFirst(wHSHandle) > -1) {
-						Lwpns.spr(Lwpns.idFirst(wHSHandle))->x += 2;
-					}
-				}
-				break;
+					break;
 			}
 		}
 	}

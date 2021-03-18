@@ -870,58 +870,58 @@ static void select_game() {
 
 		if (rSbtn())
 			switch (pos) {
-			case 3:
-				if (!register_name()) {
-					pos = 3;
-				} else {
-					pos = (savecnt - 1) % 3;
-				}
-				refreshpal = true;
-				break;
-
-			case 4:
-				if (savecnt && savecnt < MAXSAVES) {
-					mode = 2;
-					pos = 0;
-					copy_mode();
-				}
-				refreshpal = true;
-				break;
-
-			case 5:
-				if (savecnt) {
-					mode = 3;
-					pos = 0;
-					delete_mode();
-				}
-				refreshpal = true;
-				break;
-
-			default:
-				switch (mode) {
-				case 0:
-					currgame = listpos + pos;
-					if (saves[currgame].quest) {
-						done = true;
-					}
-					break;
-
-				case 2:
-					if (copy_file(pos + listpos)) {
-						mode = 0;
-						pos = (savecnt - 1) % 3;
-						refreshpal = true;
-					}
-					break;
-
 				case 3:
-					if (delete_save(pos + listpos)) {
-						mode = 0;
+					if (!register_name()) {
 						pos = 3;
-						refreshpal = true;
+					} else {
+						pos = (savecnt - 1) % 3;
 					}
+					refreshpal = true;
 					break;
-				}
+
+				case 4:
+					if (savecnt && savecnt < MAXSAVES) {
+						mode = 2;
+						pos = 0;
+						copy_mode();
+					}
+					refreshpal = true;
+					break;
+
+				case 5:
+					if (savecnt) {
+						mode = 3;
+						pos = 0;
+						delete_mode();
+					}
+					refreshpal = true;
+					break;
+
+				default:
+					switch (mode) {
+						case 0:
+							currgame = listpos + pos;
+							if (saves[currgame].quest) {
+								done = true;
+							}
+							break;
+
+						case 2:
+							if (copy_file(pos + listpos)) {
+								mode = 0;
+								pos = (savecnt - 1) % 3;
+								refreshpal = true;
+							}
+							break;
+
+						case 3:
+							if (delete_save(pos + listpos)) {
+								mode = 0;
+								pos = 3;
+								refreshpal = true;
+							}
+							break;
+					}
 			}
 
 		if (rUp()) {
@@ -1041,15 +1041,15 @@ int selection_menu() {
 			if (!(f & 3)) {
 				int c = (f & 4) ? QMisc.colors.text : QMisc.colors.caption;
 				switch (pos) {
-				case 0:
-					textout_ex(framebuf, zfont, "CONTINUE", 88, 72, c, -1);
-					break;
-				case 1:
-					textout_ex(framebuf, zfont, "SAVE", 88, 96, c, -1);
-					break;
-				case 2:
-					textout_ex(framebuf, zfont, "RETRY", 88, 120, c, -1);
-					break;
+					case 0:
+						textout_ex(framebuf, zfont, "CONTINUE", 88, 72, c, -1);
+						break;
+					case 1:
+						textout_ex(framebuf, zfont, "SAVE", 88, 96, c, -1);
+						break;
+					case 2:
+						textout_ex(framebuf, zfont, "RETRY", 88, 120, c, -1);
+						break;
 				}
 			}
 		}

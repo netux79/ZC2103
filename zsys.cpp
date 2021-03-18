@@ -99,9 +99,9 @@ void Z_error(const char* format, ...) {
 	va_end(ap);
 
 #ifdef ALLEGRO_DOS
-	printf("%s",buf);
+	printf("%s", buf);
 #endif
-	al_trace("%s",buf);
+	al_trace("%s", buf);
 	exit(1);
 }
 
@@ -114,7 +114,7 @@ void Z_message(const char* format, ...) {
 	va_end(ap);
 
 #ifdef ALLEGRO_DOS
-	printf("%s",buf);
+	printf("%s", buf);
 #endif
 	al_trace("%s", buf);
 }
@@ -122,16 +122,16 @@ void Z_message(const char* format, ...) {
 int anim_3_4(int clk, int speed) {
 	clk /= speed;
 	switch (clk & 3) {
-	case 0:
-	case 2:
-		clk = 0;
-		break;
-	case 1:
-		clk = 1;
-		break;
-	case 3:
-		clk = 2;
-		break;
+		case 0:
+		case 2:
+			clk = 0;
+			break;
+		case 1:
+			clk = 1;
+			break;
+		case 3:
+			clk = 2;
+			break;
 	}
 	return clk;
 }

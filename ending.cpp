@@ -287,71 +287,70 @@ void ending() {
 				}
 			}
 			switch (y) {
-			// Credits
-			case 240:
-				textout_ex(scrollbuf, zfont, " STAFF ", 104, 224, white, 0);
-				break;
-			case 272:
-				textout_ex(scrollbuf, zfont, "EXECUTIVE", 40, 224, blue, 0);
-				break;
-			case 280:
-				textout_ex(scrollbuf, zfont, "PRODUCER... H.YAMAUCHI", 40, 224, blue, 0);
-				break;
-			case 320:
-				textout_ex(scrollbuf, zfont, "PRODUCER.... S.MIYAHON", 40, 224, green, 0);
-				break;
-			case 360:
-				textout_ex(scrollbuf, zfont, "DIRECTOR.... S.MIYAHON", 40, 224, red, 0);
-				break;
-			case 384:
-				textout_ex(scrollbuf, zfont, "        ...... TEN TEN", 40, 224, red, 0);
-				break;
-			case 424:
-				textout_ex(scrollbuf, zfont, "DESIGNER...... TEN TEN", 40, 224, blue, 0);
-				break;
-			case 464:
-				textout_ex(scrollbuf, zfont, "PROGRAMMER.. T.NAKAZOO", 40, 224, green, 0);
-				break;
-			case 488:
-				textout_ex(scrollbuf, zfont, "          ..... YACHAN", 40, 224, green, 0);
-				break;
-			case 512:
-				textout_ex(scrollbuf, zfont, "          ... MARUMARU", 40, 224, green, 0);
-				break;
-			case 552:
-				textout_ex(scrollbuf, zfont, "SOUND", 40, 224, red, 0);
-				break;
-			case 560:
-				textout_ex(scrollbuf, zfont, "COMPOSER...... KONCHAN", 40, 224, red, 0);
-				break;
-
-			// Final message for ALL the quests.
-			case 768:
-				textout_centre_ex(scrollbuf, zfont, "Congratulations!", 128, 224, white, 0);
-				break;
-			case 784:
-				textprintf_ex(scrollbuf, zfont, 72, 224, red, 0, "%-8s -%3d", game.name, game.deaths);
-				break;
-			case 800:
-				if (game.timevalid && !game.cheat) {
-					textout_centre_ex(scrollbuf, zfont, time_str(game.time), 128, 224, blue, 0);
-				}
-				break;
-			case 816:
-				textout_centre_ex(scrollbuf, zfont, "You beat a", 128, 224, white, 0);
-				break;
-			case 832:
-				textout_centre_ex(scrollbuf, zfont, "ZC Quest.", 128, 224, white, 0);
-				break;
-			case 880:
-				textout_centre_ex(scrollbuf, zfont, "ZELDA CLASSIC", 128, 224, white, 0);
-				break;
-			case 896:
-				textout_centre_ex(scrollbuf, zfont, "1999-2007", 128, 224, white, 0);
-				break;
-			case 912:
-				textout_centre_ex(scrollbuf, zfont, "Armageddon Games", 128, 224, blue, 0);
-				break;
+				// Credits
+				case 240:
+					textout_ex(scrollbuf, zfont, " STAFF ", 104, 224, white, 0);
+					break;
+				case 272:
+					textout_ex(scrollbuf, zfont, "EXECUTIVE", 40, 224, blue, 0);
+					break;
+				case 280:
+					textout_ex(scrollbuf, zfont, "PRODUCER... H.YAMAUCHI", 40, 224, blue, 0);
+					break;
+				case 320:
+					textout_ex(scrollbuf, zfont, "PRODUCER.... S.MIYAHON", 40, 224, green, 0);
+					break;
+				case 360:
+					textout_ex(scrollbuf, zfont, "DIRECTOR.... S.MIYAHON", 40, 224, red, 0);
+					break;
+				case 384:
+					textout_ex(scrollbuf, zfont, "        ...... TEN TEN", 40, 224, red, 0);
+					break;
+				case 424:
+					textout_ex(scrollbuf, zfont, "DESIGNER...... TEN TEN", 40, 224, blue, 0);
+					break;
+				case 464:
+					textout_ex(scrollbuf, zfont, "PROGRAMMER.. T.NAKAZOO", 40, 224, green, 0);
+					break;
+				case 488:
+					textout_ex(scrollbuf, zfont, "          ..... YACHAN", 40, 224, green, 0);
+					break;
+				case 512:
+					textout_ex(scrollbuf, zfont, "          ... MARUMARU", 40, 224, green, 0);
+					break;
+				case 552:
+					textout_ex(scrollbuf, zfont, "SOUND", 40, 224, red, 0);
+					break;
+				case 560:
+					textout_ex(scrollbuf, zfont, "COMPOSER...... KONCHAN", 40, 224, red, 0);
+					break;
+				// Final message for ALL the quests.
+				case 768:
+					textout_centre_ex(scrollbuf, zfont, "Congratulations!", 128, 224, white, 0);
+					break;
+				case 784:
+					textprintf_ex(scrollbuf, zfont, 72, 224, red, 0, "%-8s -%3d", game.name, game.deaths);
+					break;
+				case 800:
+					if (game.timevalid && !game.cheat) {
+						textout_centre_ex(scrollbuf, zfont, time_str(game.time), 128, 224, blue, 0);
+					}
+					break;
+				case 816:
+					textout_centre_ex(scrollbuf, zfont, "You beat a", 128, 224, white, 0);
+					break;
+				case 832:
+					textout_centre_ex(scrollbuf, zfont, "ZC Quest.", 128, 224, white, 0);
+					break;
+				case 880:
+					textout_centre_ex(scrollbuf, zfont, "ZELDA CLASSIC", 128, 224, white, 0);
+					break;
+				case 896:
+					textout_centre_ex(scrollbuf, zfont, "1999-2007", 128, 224, white, 0);
+					break;
+				case 912:
+					textout_centre_ex(scrollbuf, zfont, "Armageddon Games", 128, 224, blue, 0);
+					break;
 			}
 		}
 
