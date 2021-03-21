@@ -30,7 +30,7 @@ extern sprite_list  guys, items, Ewpns, Lwpns, Sitems, chainlinks, decorations;
 
 extern const byte lsteps[8];
 
-enum { did_fairy = 1, did_candle = 2, did_whistle = 4 };
+enum {did_fairy = 1, did_candle = 2, did_whistle = 4};
 
 enum actiontype {
 	none, walking, attacking, freeze, holding1, holding2,

@@ -127,14 +127,11 @@ void myvsync_callback() {
 END_OF_FUNCTION(myvsync_callback)
 
 void Z_init_timers() {
-	static bool didit = false;
-	const char* err_str = "Couldn't allocate timer";
+	const char* err_str = "Couldn't install timer";
 
-	if (didit) {
-		return;
+	if (install_timer() < 0) {
+		Z_error(err_str);
 	}
-
-	didit = true;
 
 	LOCK_VARIABLE(lastfps);
 	LOCK_VARIABLE(framecnt);
@@ -152,14 +149,7 @@ void Z_init_timers() {
 
 //----------------------------------------------------------------
 
-void dump_pal(BITMAP* dest) {
-	for (int i = 0; i < 256; i++) {
-		rectfill(dest, (i & 63) << 2, (i & 0xFC0)>>4, ((i & 63) << 2) + 3, ((i & 0xFC0) >> 4) + 3, i);
-	}
-}
-
 void show_paused() {
-	//  return;
 	char buf[7] = "PAUSED";
 	for (int i = 0; buf[i] != 0; i++) {
 		buf[i] += 0x60;
@@ -957,7 +947,6 @@ void close_black_opening(int x, int y, bool wait) {
 
 	if (wait) {
 		for (int i = 0; i < 66; i++) {
-			drawit = true;
 			draw_screen(tmpscr, 0, 0);
 			putsubscr(framebuf, 0, 0);
 			syskeys();
@@ -967,8 +956,6 @@ void close_black_opening(int x, int y, bool wait) {
 			}
 		}
 	}
-	logic_counter = 0;
-	drawit = true;
 }
 
 void open_black_opening(int x, int y, bool wait) {
@@ -987,7 +974,6 @@ void open_black_opening(int x, int y, bool wait) {
 
 	if (wait) {
 		for (int i = 0; i < 66; i++) {
-			drawit = true;
 			draw_screen(tmpscr, 0, 0);
 			putsubscr(framebuf, 0, 0);
 			syskeys();
@@ -997,8 +983,6 @@ void open_black_opening(int x, int y, bool wait) {
 			}
 		}
 	}
-	logic_counter = 0;
-	drawit = true;
 }
 
 void black_opening(BITMAP* dest, int x, int y, int a, int max_a) {
@@ -2576,36 +2560,16 @@ void draw_fuzzy(int fuzz)
 }
 
 void waitvsync() {
-	if (Capfps)
+	if (Capfps) {
 		while (!myvsync) {
 			rest(1);
 		}
+	}
 
 	myvsync = 0;
 }
 
 void updatescr() {
-	if (halt) {
-		char buf[20];
-		int num = 0;
-		do {
-			sprintf(buf, "zelda%03d.bmp", ++num);
-		} while (num < 999 && exists(buf));
-
-		PALETTE tpal;
-		get_palette(tpal);
-		dump_pal(framebuf);
-		if (tmpscr->flags3 & fNOSUBSCR) {
-			BITMAP* ssbuf = create_bitmap_ex(8, 256, 168);
-			clear_to_color(ssbuf, 0);
-			blit(framebuf, ssbuf, 0, 56, 0, 0, 256, 168);
-			save_bitmap(buf, ssbuf, tpal);
-			destroy_bitmap(ssbuf);
-		} else {
-			save_bitmap(buf, framebuf, tpal);
-		}
-	}
-
 	if (!Playing) {
 		black_opening_count = 0;
 	}
@@ -2622,9 +2586,7 @@ void updatescr() {
 		}
 	}
 
-	if (triplebuffer_not_available) {
-		waitvsync();
-	}
+	waitvsync();
 
 	if (refreshpal) {
 		refreshpal = false;
@@ -2646,13 +2608,6 @@ void updatescr() {
 		rectfill(panorama, 0, 168 + 56 / 2, 255, 168 + 56 - 1, 0);
 		blit(framebuf, panorama, 0, 56, 0, 56 / 2, 256, 224 - 56);
 	}
-	BITMAP* target;
-	bool dontusetb = triplebuffer_not_available || !Capfps;
-	if (dontusetb) {
-		target = screen;
-	} else {
-		target = tb_page[curr_tb_page];
-	}
 
 	if (scanlines && sbig) {
 		BITMAP* scanlinesbmp = create_bitmap_ex(8, 512, 448);
@@ -2660,26 +2615,17 @@ void updatescr() {
 		for (int i = 0; i < 224; ++i) {
 			hline(scanlinesbmp, 0, i * 2 + 1, 512, BLACK);
 		}
-		blit(scanlinesbmp, target, 0, 0, scrx + 32 - 128, scry + 8 - 112, 512, 448);
+		blit(scanlinesbmp, screen, 0, 0, scrx + 32 - 128, scry + 8 - 112, 512, 448);
 
 		destroy_bitmap(scanlinesbmp);
 	} else if (sbig) {
 		BITMAP* tempscreen = create_bitmap_ex(8, 512, 448);
 		clear_bitmap(tempscreen);
 		stretch_blit(nosubscr ? panorama : framebuf, tempscreen, 0, 0, 256, 224, 0, 0, 512, 448);
-		blit(tempscreen, target, 0, 0, scrx + 32 - 128, scry + 8 - 112, 512, 448);
+		blit(tempscreen, screen, 0, 0, scrx + 32 - 128, scry + 8 - 112, 512, 448);
 		destroy_bitmap(tempscreen);
 	} else {
-		blit(nosubscr ? panorama : framebuf, target, 0, 0, scrx + 32, scry + 8, 256, 224);
-	}
-
-	if (!dontusetb) {
-		if (!poll_scroll()) {
-			request_video_bitmap(tb_page[curr_tb_page]);
-			curr_tb_page = (curr_tb_page + 1) % 3;
-			clear_to_color(tb_page[curr_tb_page], BLACK);
-		}
-		waitvsync();
+		blit(nosubscr ? panorama : framebuf, screen, 0, 0, scrx + 32, scry + 8, 256, 224);
 	}
 
 	if (ShowFPS) {
@@ -2716,12 +2662,7 @@ void f_Quit(int type) {
 
 void syskeys() {
 	if (ReadKey(KEY_F1)) {
-		if (key[KEY_ZC_LCONTROL] || key[KEY_ZC_RCONTROL]) {
-			halt = !halt;
-		} else {
-			Capfps = !Capfps;
-			logic_counter = 0;
-		}
+		Capfps = !Capfps;
 	}
 
 	if (ReadKey(KEY_F2)) {
@@ -2759,13 +2700,6 @@ void syskeys() {
 #define MAXTIME  21405240
 
 void advanceframe() {
-	if (Capfps) {
-
-		while (!logic_counter) {
-			rest(1);
-		}
-		logic_counter = 0;
-	}
 	if (zcmusic != NULL) {
 		zcmusic_poll();
 	}

@@ -4363,8 +4363,6 @@ void LinkClass::stepforward(int steps) {
 	}
 	draw_screen(tmpscr, 0, 0);
 	eat_buttons();
-	logic_counter = 0;
-	drawit = true;
 }
 
 void LinkClass::walkdown() { //entering cave
@@ -4397,8 +4395,6 @@ void LinkClass::walkdown() { //entering cave
 			break;
 		}
 	}
-	logic_counter = 0;
-	drawit = true;
 	action = none;
 }
 
@@ -4432,8 +4428,6 @@ void LinkClass::walkdown2() { //exiting cave 2
 			break;
 		}
 	}
-	logic_counter = 0;
-	drawit = true;
 	action = none;
 }
 
@@ -4470,8 +4464,6 @@ void LinkClass::walkup() { //exiting cave
 	}
 	map_bkgsfx();
 	loadside = dir ^ 1;
-	logic_counter = 0;
-	drawit = true;
 	action = none;
 }
 
@@ -4508,8 +4500,6 @@ void LinkClass::walkup2() { //entering cave2
 	}
 	map_bkgsfx();
 	loadside = dir ^ 1;
-	logic_counter = 0;
-	drawit = true;
 	action = none;
 }
 
@@ -5080,7 +5070,6 @@ void LinkClass::scrollscr(int dir, int destscr, int destdmap) {
 	newscr_clk = frame;
 	activated_timed_warp = false;
 	loadside = dir ^ 1;
-	logic_counter = 0;
 }
 
 /************************************/

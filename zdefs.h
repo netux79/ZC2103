@@ -1,6 +1,3 @@
-//modified isdungeon() in maps.c
-//modified edge_of_dmap() in link.c
-
 //--------------------------------------------------------
 //  Zelda Classic
 //  by Jeremy Craner, 1999-2000
@@ -198,9 +195,6 @@ enum {ENC_METHOD_192B104 = 0, ENC_METHOD_192B105, ENC_METHOD_192B185, ENC_METHOD
 #define CV_MIDIS        1
 #define CV_CHEATS       1
 #define CV_SAVEGAME     1
-
-extern int curr_tb_page;
-extern bool triplebuffer_not_available;
 
 extern int CSET_SIZE;
 extern int CSET_SHFT;
@@ -465,11 +459,11 @@ enum {
 };
 
 // directions
-enum { up, down, left, right, l_up, r_up, l_down, r_down };
+enum {up, down, left, right, l_up, r_up, l_down, r_down};
 
 // refill stuff
-enum { REFILL_LIFE, REFILL_MAGIC, REFILL_ALL};
-enum { REFILL_POTION, REFILL_FAIRY, REFILL_TRIFORCE};
+enum {REFILL_LIFE, REFILL_MAGIC, REFILL_ALL};
+enum {REFILL_POTION, REFILL_FAIRY, REFILL_TRIFORCE};
 
 // magic rates
 #define LENSDRAINAMOUNT          2
@@ -599,7 +593,7 @@ enum {
 };
 
 // enemy patters
-enum { pRANDOM, pSIDES };
+enum {pRANDOM, pSIDES};
 
 typedef struct itemdata {
 	word tile;
@@ -886,7 +880,7 @@ typedef struct zquestheader {
 	//602
 } zquestheader;
 
-enum { msLINKED };
+enum {msLINKED};
 
 typedef struct MsgStr {
 	char s[73];
@@ -1131,7 +1125,6 @@ enum {i_hammer = 1, imax_hammer};
 enum {i_dinsfire = 1, imax_dinsfire};
 enum {i_faroreswind = 1, imax_faroreswind};
 enum {i_nayruslove = 1, imax_nayruslove};
-//enum {i_clock=1, imax_clock};
 
 typedef struct gamedata {
 	char  name[9];

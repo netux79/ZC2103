@@ -35,30 +35,14 @@ int strike_hint_counter = 0;
 int strike_hint_timer = 0;
 int strike_hint;
 
-#ifdef ALLEGRO_DOS
-extern int three_finger_flag;
-#endif
-
-int logic_counter = 0;
-bool drawit = false;
-bool trip = false;
-void update_logic_counter() {
-	++logic_counter;
-}
-
-END_OF_FUNCTION(update_logic_counter)
-
 /**********************************/
 /******** Global Variables ********/
 /**********************************/
 
-int curr_tb_page = 0;
-bool triplebuffer_not_available = false;
-
 RGB_MAP rgb_table;
 COLOR_MAP trans_table;
 
-BITMAP* framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf, *pricesdisplaybuf, *tb_page[3];
+BITMAP* framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf, *pricesdisplaybuf;
 DATAFILE* data, *sfxdata, *fontsdata, *mididata;
 FONT* zfont;
 PALETTE RAMpal;
@@ -80,7 +64,6 @@ word door_combo_set_count;
 word introclk, intropos, dmapmsgclk, linkedmsgclk;
 short Bpos, lensclk, lenscnt;
 byte screengrid[22];
-bool halt = false;
 bool screenscrolling = false;
 bool anymsg = false;
 bool anyprice = false;
@@ -106,7 +89,7 @@ int checkx, checky;
 
 bool nosecretsounds = false;
 
-bool Capfps, Paused = false, Advance = false, ShowFPS = false, HeartBeep = true;
+bool Capfps = false, Paused = false, Advance = false, ShowFPS = false, HeartBeep = true;
 bool Playing, TransLayers;
 bool refreshpal, blockpath, wand_dead, loaded_guys, freeze_guys,
      loaded_enemies, drawguys, watch;
@@ -131,9 +114,6 @@ mapscr tmpscr[2];
 mapscr tmpscr2[6];
 mapscr tmpscr3[6];
 gamedata game;
-
-//movingblock mblock2; //mblock[4]?
-//LinkClass   Link;
 
 int VidMode, resx, resy, scrx, scry;
 bool sbig;                                                  // big screen
@@ -1287,15 +1267,9 @@ int main(int argc, char* argv[]) {
 	Z_message("OK\n");
 
 	Z_message("Installing keyboard and timers...");
-	if (install_timer() < 0) {
-		Z_error(allegro_error);
-	}
 	if (install_keyboard() < 0) {
 		Z_error(allegro_error);
 	}
-	LOCK_VARIABLE(logic_counter);
-	LOCK_FUNCTION(update_logic_counter);
-	install_int_ex(update_logic_counter, BPS_TO_TIMER(60));
 	Z_init_timers();
 	Z_message("OK\n");
 
@@ -1349,35 +1323,6 @@ int main(int argc, char* argv[]) {
 	// log trace the video mode used.
 	LogVidMode();
 
-	/* if triple buffering isn't available, try to enable it */
-	if (!(gfx_capabilities & GFX_CAN_TRIPLE_BUFFER)) {
-		enable_triple_buffer();
-	}
-
-	/* if that didn't work, give up */
-	if (!(gfx_capabilities & GFX_CAN_TRIPLE_BUFFER)) {
-		triplebuffer_not_available = TRUE;
-	}
-
-	if (!triplebuffer_not_available) {
-		for (int i = 0; i < 3; ++i) {
-			tb_page[i] = create_video_bitmap(SCREEN_W, SCREEN_H);
-		}
-		for (int i = 0; i < 3; ++i) {
-			if (!tb_page[i]) {
-				triplebuffer_not_available = true;
-			} else {
-				clear_bitmap(tb_page[i]);
-			}
-		}
-		if (triplebuffer_not_available) {
-			for (int i = 0; i < 3; ++i) {
-				destroy_bitmap(tb_page[i]);
-			}
-		}
-	}
-	Z_message("Triplebuffer %savailable\n", triplebuffer_not_available ? "not " : "");
-	
 	// load saved games
 	Z_message("Loading saved games...");
 	if (load_savedgames() != 0) {
@@ -1390,8 +1335,6 @@ int main(int argc, char* argv[]) {
 		titlescreen();
 
 		while (!Status) {
-			--logic_counter;
-			drawit = true;
 			game_loop();
 			advanceframe();
 		}

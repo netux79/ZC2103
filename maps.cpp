@@ -669,9 +669,6 @@ void bombdoor(int x, int y) {
 }
 
 void do_scrolling_layer(BITMAP* bmp, int type, mapscr* layer, int x, int y, bool scrolling, int tempscreen) {
-	if (!drawit) {
-		return;
-	}
 	int i;
 	static int mf;
 	mapscr* tscr;

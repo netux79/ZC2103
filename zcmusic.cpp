@@ -266,7 +266,7 @@ error:
 		zcmusic_poll();
 	}
 
-	bool zcmusic_play(ZCMUSIC* zcm, int vol, bool autopoll) { /* = FALSE */
+	bool zcmusic_play(ZCMUSIC* zcm, int vol, bool autopoll) { /* = false */
 		// the libraries require polling
 		// of individual streams, so here we must keep
 		// record of each file which is
@@ -278,9 +278,9 @@ error:
 		// called from here.
 
 		if (zcm == NULL) {
-			return FALSE;
+			return false;
 		}
-		int ret = TRUE;
+		int ret = true;
 
 		if (autopoll) {
 			//      install_int_ex(zcmusic_autopoll, MSEC_TO_TIMER(100));
@@ -317,27 +317,27 @@ error:
 				case ZCMF_DUH:
 					if (((DUHFILE*)zcm)->s != NULL) {
 						((DUHFILE*)zcm)->p = al_start_duh(((DUHFILE*)zcm)->s, DUH_CHANNELS, 0/*pos*/, ((float)vol) / (float)255, (zcmusic_bufsz_private * 1024)/*bufsize*/, DUH_SAMPLES);
-						ret = (((DUHFILE*)zcm)->p != NULL) ? TRUE : FALSE;
+						ret = (((DUHFILE*)zcm)->p != NULL) ? true : false;
 					}
 					break;
 				case ZCMF_OGG:
 					if (((OGGFILE*)zcm)->s != NULL) {
 						if (alogg_play_oggstream(((OGGFILE*)zcm)->s, (zcmusic_bufsz_private * 1024), vol, 128) != ALOGG_OK) {
-							ret = FALSE;
+							ret = false;
 						}
 						((OGGFILE*)zcm)->vol = vol;
 					} else {
-						ret = FALSE;
+						ret = false;
 					}
 					break;
 				case ZCMF_MP3:
 					if (((MP3FILE*)zcm)->s != NULL) {
 						if (almp3_play_mp3stream(((MP3FILE*)zcm)->s, (zcmusic_bufsz_private * 1024), vol, 128) != ALMP3_OK) {
-							ret = FALSE;
+							ret = false;
 						}
 						((MP3FILE*)zcm)->vol = vol;
 					} else {
-						ret = FALSE;
+						ret = false;
 					}
 					break;
 				case ZCMF_GME:
@@ -347,7 +347,7 @@ error:
 					break;
 			}
 
-			if (ret != FALSE) {
+			if (ret != false) {
 				zcm->playing = ZCM_PLAYING;
 				playlist.push_back(zcm);
 			}
@@ -362,7 +362,7 @@ error:
 		// -1 (or if the default argument is invoked) will
 		// toggle the current state; passing 1 will pause.
 		if (zcm == NULL) {
-			return FALSE;
+			return false;
 		}
 		if (zcm->playing != ZCM_STOPPED) {
 			int p = ZCM_PLAYING;
@@ -416,14 +416,14 @@ error:
 				}
 			}
 		}
-		return TRUE;
+		return true;
 	}
 
 	bool zcmusic_stop(ZCMUSIC* zcm) {
 		// this function will stop playback of 'zcm' and reset
 		// the stream position to the beginning.
 		if (zcm == NULL) {
-			return FALSE;
+			return false;
 		}
 		switch (zcm->type & libflags) {
 			case ZCMF_DUH:
@@ -449,7 +449,7 @@ error:
 				break;
 
 		}
-		return TRUE;
+		return true;
 	}
 
 	void zcmusic_unload_file(ZCMUSIC*& zcm) {
@@ -568,11 +568,11 @@ MP3FILE* load_mp3_file(char* filename) {
 		goto error;
 	}
 	if (len < (zcmusic_bufsz_private * 512)) {
-		if ((s = almp3_create_mp3stream(data, len, TRUE)) == NULL) {
+		if ((s = almp3_create_mp3stream(data, len, true)) == NULL) {
 			goto error;
 		}
 	} else {
-		if ((s = almp3_create_mp3stream(data, (zcmusic_bufsz_private * 512), FALSE)) == NULL) {
+		if ((s = almp3_create_mp3stream(data, (zcmusic_bufsz_private * 512), false)) == NULL) {
 			goto error;
 		}
 	}
@@ -694,11 +694,11 @@ OGGFILE* load_ogg_file(char* filename) {
 		goto error;
 	}
 	if (len < (zcmusic_bufsz_private * 512)) {
-		if ((s = alogg_create_oggstream(data, len, TRUE)) == NULL) {
+		if ((s = alogg_create_oggstream(data, len, true)) == NULL) {
 			goto error;
 		}
 	} else {
-		if ((s = alogg_create_oggstream(data, (zcmusic_bufsz_private * 512), FALSE)) == NULL) {
+		if ((s = alogg_create_oggstream(data, (zcmusic_bufsz_private * 512), false)) == NULL) {
 			goto error;
 		}
 	}
@@ -874,7 +874,7 @@ int gme_play(GMEFILE* gme, int vol) {
 	if (gme->playing != ZCM_STOPPED) {
 		stop_audio_stream(gme->stream);
 	}
-	gme->stream = play_audio_stream(samples, 16, TRUE, DUH_SAMPLES, vol, 128);
+	gme->stream = play_audio_stream(samples, 16, true, DUH_SAMPLES, vol, 128);
 	return true;
 }
 

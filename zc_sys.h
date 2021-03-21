@@ -76,9 +76,8 @@ bool DrunkrLbtn();
 bool DrunkrRbtn();
 bool DrunkrMbtn();
 
-enum {bosCIRCLE = 0, bosOVAL, bosTRIANGLE, bosSMAS, bosMAX};
+enum { bosCIRCLE = 0, bosOVAL, bosTRIANGLE, bosSMAS, bosMAX };
 
-void dump_pal(BITMAP* dest);
 void show_paused();
 void show_fps();
 bool game_vid_mode(int mode, int wait);

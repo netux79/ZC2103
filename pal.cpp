@@ -129,8 +129,6 @@ void loadfadepal(int dataset) {
 }
 
 void fade(int level, bool blackall, bool fromblack, bool total) {
-	logic_counter = 0;
-	drawit = true;
 	int cx = fromblack ? 30 : 0;
 	for (int i = 0; i <= 30; i += (get_bit(quest_rules, qr_FADE)) ? 2 : 1) {
 		if (get_bit(quest_rules, qr_FADE)) {

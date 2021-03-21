@@ -16,8 +16,6 @@
 #include "sprite.h"
 #include "tiles.h"
 
-extern bool halt;
-
 /**********************************/
 /******* Sprite Base Class ********/
 /**********************************/
@@ -66,10 +64,6 @@ int sprite::real_x(fix fx) {
 
 int sprite::real_y(fix fy) {
 	return fy.v >> 16;
-
-
-
-
 }
 
 bool sprite::hit(sprite* s) {

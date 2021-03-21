@@ -48,10 +48,10 @@
 /******** Enums & Structs ********/
 /*********************************/
 
-enum { qQUIT = 1, qRESET, qEXIT, qGAMEOVER, qCONT, qWON, qRESUME };
+enum {qQUIT = 1, qRESET, qEXIT, qGAMEOVER, qCONT, qWON, qRESUME};
 
 //magic types
-enum  { mgc_none, mgc_dinsfire, mgc_nayruslove, mgc_faroreswind };
+enum  {mgc_none, mgc_dinsfire, mgc_nayruslove, mgc_faroreswind};
 
 // "special" walk flags
 enum {
@@ -152,9 +152,6 @@ extern word     door_combo_set_count;
 extern word     introclk, intropos, dmapmsgclk, linkedmsgclk;
 extern short    Bpos, lensclk, lenscnt;
 extern byte screengrid[22];
-extern int logic_counter;
-extern bool drawit;
-extern bool halt;
 extern bool screenscrolling;
 extern bool anymsg, anyprice;
 

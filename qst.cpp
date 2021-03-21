@@ -32,9 +32,7 @@ extern guydata*      guysbuf;
 extern ZCHEATS      zcheats;
 extern zinitdata    zinit;
 extern int          memrequested;
-extern char*         byte_conversion2(int number1, int number2, int format1, int format2);
-//enum { qe_OK, qe_notfound, qe_invalid, qe_version, qe_obsolete,
-//       qe_missing, qe_internal, qe_pwd, qe_match, qe_minver };
+extern char*         byte_conversion(int number1, int number2, int format1, int format2);
 
 static const char* QH_IDSTR     = "AG Zelda Classic Quest File\n ";
 static const char* QH_NEWIDSTR  = "AG ZC Enhanced Quest File\n   ";
@@ -56,7 +54,7 @@ char* VerStr(int version) {
 	return ver_str;
 }
 
-char* byte_conversion2(int number1, int number2, int format1, int format2) {
+char* byte_conversion(int number1, int number2, int format1, int format2) {
 	static char num_str1[40];
 	static char num_str2[40];
 	static char num_str[80];
@@ -366,70 +364,70 @@ bool init_section(zquestheader* Header, long section_id) {
 
 void get_qst_buffers() {
 	memrequested += (sizeof(mapscr) * MAPSCRS);
-	Z_message("Allocating map buffer (%s)...", byte_conversion2(sizeof(mapscr)*MAPSCRS, memrequested, -1, -1));
+	Z_message("Allocating map buffer (%s)...", byte_conversion(sizeof(mapscr)*MAPSCRS, memrequested, -1, -1));
 	if (!(TheMaps = (mapscr*)malloc(sizeof(mapscr) * MAPSCRS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating map buffer...
 
 	memrequested += (sizeof(MsgStr) * MAXMSGS);
-	Z_message("Allocating string buffer (%s)...", byte_conversion2(sizeof(MsgStr)*MAXMSGS, memrequested, -1, -1));
+	Z_message("Allocating string buffer (%s)...", byte_conversion(sizeof(MsgStr)*MAXMSGS, memrequested, -1, -1));
 	if (!(MsgStrings = (MsgStr*)malloc(sizeof(MsgStr) * MAXMSGS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating string buffer...
 
 	memrequested += (sizeof(DoorComboSet) * MAXDOORCOMBOSETS);
-	Z_message("Allocating door combo buffer (%s)...", byte_conversion2(sizeof(DoorComboSet)*MAXDOORCOMBOSETS, memrequested, -1, -1));
+	Z_message("Allocating door combo buffer (%s)...", byte_conversion(sizeof(DoorComboSet)*MAXDOORCOMBOSETS, memrequested, -1, -1));
 	if (!(DoorComboSets = (DoorComboSet*)malloc(sizeof(DoorComboSet) * MAXDOORCOMBOSETS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating door combo buffer...
 
 	memrequested += (sizeof(dmap) * MAXDMAPS);
-	Z_message("Allocating dmap buffer (%s)...", byte_conversion2(sizeof(dmap)*MAXDMAPS, memrequested, -1, -1));
+	Z_message("Allocating dmap buffer (%s)...", byte_conversion(sizeof(dmap)*MAXDMAPS, memrequested, -1, -1));
 	if (!(DMaps = (dmap*)malloc(sizeof(dmap) * MAXDMAPS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating dmap buffer...
 
 	memrequested += (sizeof(newcombo) * MAXCOMBOS);
-	Z_message("Allocating combo buffer (%s)...", byte_conversion2(sizeof(newcombo)*MAXCOMBOS, memrequested, -1, -1));
+	Z_message("Allocating combo buffer (%s)...", byte_conversion(sizeof(newcombo)*MAXCOMBOS, memrequested, -1, -1));
 	if (!(combobuf = (newcombo*)malloc(sizeof(newcombo) * MAXCOMBOS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating combo buffer...
 
 	memrequested += (psTOTAL);
-	Z_message("Allocating color data buffer (%s)...", byte_conversion2(psTOTAL, memrequested, -1, -1));
+	Z_message("Allocating color data buffer (%s)...", byte_conversion(psTOTAL, memrequested, -1, -1));
 	if (!(colordata = (byte*)malloc(psTOTAL))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating color data buffer...
 
 	memrequested += (NEWTILE_SIZE);
-	Z_message("Allocating tile buffer (%s)...", byte_conversion2(NEWTILE_SIZE, memrequested, -1, -1));
+	Z_message("Allocating tile buffer (%s)...", byte_conversion(NEWTILE_SIZE, memrequested, -1, -1));
 	if (!(tilebuf = (byte*)malloc(NEWTILE_SIZE))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating tile buffer...
 
 	memrequested += (sizeof(itemdata) * MAXITEMS);
-	Z_message("Allocating item buffer (%s)...", byte_conversion2(sizeof(itemdata)*MAXITEMS, memrequested, -1, -1));
+	Z_message("Allocating item buffer (%s)...", byte_conversion(sizeof(itemdata)*MAXITEMS, memrequested, -1, -1));
 	if (!(itemsbuf = (itemdata*)malloc(sizeof(itemdata) * MAXITEMS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating item buffer...
 
 	memrequested += (sizeof(wpndata) * MAXWPNS);
-	Z_message("Allocating weapon buffer (%s)...", byte_conversion2(sizeof(wpndata)*MAXWPNS, memrequested, -1, -1));
+	Z_message("Allocating weapon buffer (%s)...", byte_conversion(sizeof(wpndata)*MAXWPNS, memrequested, -1, -1));
 	if (!(wpnsbuf = (wpndata*)malloc(sizeof(wpndata) * MAXWPNS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating weapon buffer...
 
 	memrequested += (sizeof(guydata) * MAXGUYS);
-	Z_message("Allocating guy buffer (%s)...", byte_conversion2(sizeof(guydata)*MAXGUYS, memrequested, -1, -1));
+	Z_message("Allocating guy buffer (%s)...", byte_conversion(sizeof(guydata)*MAXGUYS, memrequested, -1, -1));
 	if (!(guysbuf = (guydata*)malloc(sizeof(guydata) * MAXGUYS))) {
 		Z_error("Error");
 	}
@@ -568,12 +566,6 @@ void reset_scr(int scr) {
 	TheMaps[scr].valid = mVERSION;
 
 }
-
-/*  For reference:
-
-    enum { qe_OK, qe_notfound, qe_invalid, qe_version, qe_obsolete,
-       qe_missing, qe_internal, qe_pwd, qe_match, qe_minver };
-*/
 
 int operator ==(DoorComboSet a, DoorComboSet b) {
 	for (int i = 0; i < 9; i++) {
@@ -801,26 +793,6 @@ int MakeDoors(int map, int scr) {
 		++door_combo_set_count;
 	}
 	return i;
-	/*
-	doorcombo_u[9][4];
-	doorcset_u[9][4];
-	doorcombo_d[9][4];
-	doorcset_d[9][4];
-	doorcombo_l[9][6];
-	doorcset_l[9][6];
-	doorcombo_r[9][6];
-	doorcset_r[9][6];
-	bombdoorcombo_u[2];
-	bombdoorcset_u[2];
-	bombdoorcombo_d[2];
-	bombdoorcset_d[2];
-	bombdoorcombo_l[3];
-	bombdoorcset_l[3];
-	bombdoorcombo_r[3];
-	bombdoorcset_r[3];
-	walkthroughcombo[4];
-	walkthroughcset[4];
-	*/
 }
 
 inline int tcmbdat2(int map, int scr, int pos) {
@@ -836,7 +808,6 @@ inline int tcmbflag2(int map, int pos) {
 	return TheMaps[map * MAPSCRS + TEMPLATE2].sflag[pos];
 }
 
-//int readheader(PACKFILE *f, zquestheader *header, char *filename)
 int readheader(PACKFILE* f, zquestheader* header, bool keepdata) {
 	int dummy;
 	zquestheader tempheader;
@@ -1044,12 +1015,6 @@ int readheader(PACKFILE* f, zquestheader* header, bool keepdata) {
 		if (!p_getc(&tempheader.use_keyfile, f, true)) {
 			return qe_invalid;
 		}
-		/*
-		    if(!pfread(tempheader.data_flags,sizeof(tempheader.data_flags),f,true))
-		    {
-		      return qe_invalid;
-		    }
-		*/
 		if (!p_getc(&tempheader.data_flags[ZQ_TILES], f, true)) {
 			return qe_invalid;
 		}
@@ -1159,12 +1124,6 @@ int readstrings(PACKFILE* f, zquestheader* header, bool keepdata) {
 		}
 
 		for (int x = 0; x < strings_to_read; x++) {
-			/*
-			      if(!pfread(&MsgStrings[x].s,sizeof(tempMsgString.s),f,true))
-			      {
-			        return qe_invalid;
-			      }
-			*/
 			memset(&tempMsgString.s, 0, 73);
 			tempMsgString.nextstring = 0;
 			memset(&tempMsgString.expansion, 0, 32);
@@ -1564,11 +1523,7 @@ void clear_screen(mapscr* temp_scr) {
 	}
 }
 
-int readdmaps(PACKFILE* f, zquestheader* Header, word version, word build, word start_dmap, word max_dmaps, bool keepdata) {
-	//these are here to bypass compiler warnings about unused arguments
-	version = version;
-	build = build;
-
+int readdmaps(PACKFILE* f, zquestheader* Header, word start_dmap, word max_dmaps, bool keepdata) {
 	word dmapstoread = 0;
 	dmap tempDMap;
 
@@ -3772,7 +3727,7 @@ int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midi
 						catchup = false;
 					}
 					Z_message("Reading DMaps...");
-					ret = readdmaps(f, &tempheader, tempheader.zelda_version, tempheader.build, 0, MAXDMAPS, true);
+					ret = readdmaps(f, &tempheader, 0, MAXDMAPS, true);
 					checkstatus(ret);
 					Z_message("OK\n");
 
@@ -3922,7 +3877,7 @@ int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midi
 
 		//dmaps
 		Z_message("Reading DMaps...");
-		ret = readdmaps(f, &tempheader, tempheader.zelda_version, tempheader.build, 0, MAXDMAPS, true);
+		ret = readdmaps(f, &tempheader, 0, MAXDMAPS, true);
 		checkstatus(ret);
 		Z_message("OK\n");
 

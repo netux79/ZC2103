@@ -32,14 +32,14 @@
 extern bool bad_version(int ver);
 
 enum {
-	qe_OK, qe_notfound, qe_invalid, qe_version, qe_obsolete,
-	qe_missing, qe_internal, qe_pwd, qe_match, qe_minver,
-	qe_nomem, qe_debug
+    qe_OK, qe_notfound, qe_invalid, qe_version, qe_obsolete,
+    qe_missing, qe_internal, qe_pwd, qe_match, qe_minver,
+    qe_nomem, qe_debug
 };
 
 enum {
-	zgp_tiles, zgp_combos, zgp_pals, zgp_items, zgp_wpns, zgp_misc,
-	zgp_maps, zgp_doors
+    zgp_tiles, zgp_combos, zgp_pals, zgp_items, zgp_wpns, zgp_misc,
+    zgp_maps, zgp_doors
 };
 
 extern const char* qst_error[];
@@ -65,13 +65,13 @@ int count_palcycles(miscQdata* misc);
 int count_windwarps(miscQdata* misc);
 int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midis);
 
-char* byte_conversion2(int number1, int number2, int format1, int format2);
+char* byte_conversion(int number1, int number2, int format1, int format2);
 
 int readheader(PACKFILE* f, zquestheader* header, bool keepdata);
 int readrules(PACKFILE* f, zquestheader* header, bool keepdata);
 int readstrings(PACKFILE* f, zquestheader* header, bool keepdata);
 int readdoorcombosets(PACKFILE* f, zquestheader* header, bool keepdata);
-int readdmaps(PACKFILE* f, zquestheader* header, word version, word build, word start_dmap, word max_dmaps, bool keepdata);
+int readdmaps(PACKFILE* f, zquestheader* header, word start_dmap, word max_dmaps, bool keepdata);
 int readmisc(PACKFILE* f, zquestheader* header, miscQdata* misc, bool keepdata);
 int readitems(PACKFILE* f, word version, word build, bool keepdata);
 int readweapons(PACKFILE* f, zquestheader* header, bool keepdata);
