@@ -82,7 +82,6 @@ void dump_pal(BITMAP* dest);
 void show_paused();
 void show_fps();
 bool game_vid_mode(int mode, int wait);
-void init_NES_mode();
 
 extern int black_opening_count;
 extern int black_opening_x, black_opening_y;

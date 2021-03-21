@@ -6883,7 +6883,7 @@ void getBigTri() {
 
 	draw_screen(tmpscr, 0, 0);
 
-	for (int f = 0; f < 24 * 8 && !Quit; f++) {
+	for (int f = 0; f < 24 * 8 && !Status; f++) {
 		if (f == 4) {
 			for (int i = 1; i < 16; i++) {
 				RAMpal[CSET(9) + i] = _RGB(63, 63, 63);

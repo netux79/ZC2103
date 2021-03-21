@@ -48,9 +48,6 @@ extern word door_combo_set_count;
 
 char* VerStr(int version);
 
-PACKFILE* open_quest_file(int* open_error, char* filename, char* deletefilename, bool compressed);
-PACKFILE* open_quest_template(zquestheader* header, char* deletefilename);
-
 void clear_combo(int i);
 void clear_combos();
 void pack_combos();
@@ -68,14 +65,7 @@ int count_palcycles(miscQdata* misc);
 int count_windwarps(miscQdata* misc);
 int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midis);
 
-char* byte_conversion(int number, int format);
 char* byte_conversion2(int number1, int number2, int format1, int format2);
-
-bool valid_zqt(PACKFILE* f);
-bool valid_zqt(char* filename);
-bool reset_items(zquestheader* header);
-bool init_tiles(zquestheader* header);
-bool init_colordata(zquestheader* header);
 
 int readheader(PACKFILE* f, zquestheader* header, bool keepdata);
 int readrules(PACKFILE* f, zquestheader* header, bool keepdata);
@@ -94,7 +84,4 @@ int readtiles(PACKFILE* f, byte* buf, zquestheader* header, word version, word b
 int readmidis(PACKFILE* f, zquestheader* header, music* midis, bool keepdata);
 int readcheatcodes(PACKFILE* f, zquestheader* header, bool keepdata);
 int readinitdata(PACKFILE* f, zquestheader* header, bool keepdata);
-
-int get_version_and_build(PACKFILE* f, word* version, word* build);
-bool find_section(PACKFILE* f, long section_id_requested);
 #endif                                                      // _ZC_QST_H_

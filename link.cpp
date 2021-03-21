@@ -1967,7 +1967,7 @@ bool LinkClass::startwpn(int wpn) {                         // an item index
 
 			for (int i = 0; i < 150; i++) {
 				advanceframe();
-				if (Quit) {
+				if (Status) {
 					return false;
 				}
 			}
@@ -4357,7 +4357,7 @@ void LinkClass::stepforward(int steps) {
 		move(dir);
 		draw_screen(tmpscr, 0, 0);
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			return;
 		}
 	}
@@ -4393,7 +4393,7 @@ void LinkClass::walkdown() { //entering cave
 		}
 		draw_screen(tmpscr, 0, 0);
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			break;
 		}
 	}
@@ -4428,7 +4428,7 @@ void LinkClass::walkdown2() { //exiting cave 2
 		}
 		draw_screen(tmpscr, 0, 0);
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			break;
 		}
 	}
@@ -4464,7 +4464,7 @@ void LinkClass::walkup() { //exiting cave
 		}
 		draw_screen(tmpscr, 0, 0);
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			break;
 		}
 	}
@@ -4502,7 +4502,7 @@ void LinkClass::walkup2() { //entering cave2
 		}
 		draw_screen(tmpscr, 0, 0);
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			break;
 		}
 	}
@@ -4845,7 +4845,7 @@ void LinkClass::scrollscr(int dir, int destscr, int destdmap) {
 			rehydratelake();
 		}
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			screenscrolling = false;
 			return;
 		}
@@ -5023,7 +5023,7 @@ void LinkClass::scrollscr(int dir, int destscr, int destdmap) {
 		putsubscr(framebuf, 0, 0);
 
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			screenscrolling = false;
 			return;
 		}
@@ -6512,7 +6512,7 @@ void LinkClass::gameover() {
 
 		advanceframe();
 		++f;
-	} while (f < 353 && !Quit);
+	} while (f < 353 && !Status);
 
 	action = none;
 	dontdraw = false;
@@ -6545,7 +6545,7 @@ void LinkClass::ganon_intro() {
 	action = holding2;
 	holditem = iTriforce;
 
-	for (int f = 0; f < 271 && !Quit; f++) {
+	for (int f = 0; f < 271 && !Status; f++) {
 		if (f == 47) {
 			music_stop();
 			stop_sfx(WAV_ROAR);
@@ -6605,7 +6605,7 @@ void LinkClass::ganon_intro() {
 void LinkClass::saved_Zelda() {
 	Playing = Paused = false;
 	action = won;
-	Quit = qWON;
+	Status = qWON;
 	hclk = 0;
 	x = 136;
 	y = (isdungeon() && currscr < 128) ? 75 : 73;

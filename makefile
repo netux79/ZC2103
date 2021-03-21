@@ -152,8 +152,6 @@ defdata$(PLATEXT).o: defdata.cpp defdata.h guys.h items.h sprite.h weapons.h zde
 	$(CC) $(OPTS) $(CFLAG) -c defdata.cpp -o defdata$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 ending$(PLATEXT).o: ending.cpp colors.h ending.h guys.h items.h link.h maps.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h title.h weapons.h zc_custom.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h zsys.h
 	$(CC) $(OPTS) $(CFLAG) -c ending.cpp -o ending$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-font$(PLATEXT).o: font.c font.h
-	$(CC) $(OPTS) $(CFLAG) -c font.cpp -o font$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 guys$(PLATEXT).o: guys.cpp colors.h guys.h items.h link.h maps.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h weapons.h zc_custom.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h zsys.h
 	$(CC) $(OPTS) $(CFLAG) -c guys.cpp -o guys$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 items$(PLATEXT).o: items.cpp items.h sprite.h zdefs.h
@@ -166,7 +164,7 @@ pal$(PLATEXT).o: pal.cpp colors.h items.h maps.h pal.h sfx.h sprite.h subscr.h z
 	$(CC) $(OPTS) $(CFLAG) -c pal.cpp -o pal$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 particles$(PLATEXT).o: particles.cpp particles.h sprite.h zdefs.h
 	$(CC) $(OPTS) $(CFLAG) -c particles.cpp -o particles$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-qst$(PLATEXT).o: qst.cpp colors.h defdata.h font.h guys.h items.h qst.h sprite.h tiles.h weapons.h zdefs.h zsys.h
+qst$(PLATEXT).o: qst.cpp colors.h defdata.h guys.h items.h qst.h sprite.h tiles.h weapons.h zdefs.h zsys.h
 	$(CC) $(OPTS) $(CFLAG) -c qst.cpp -o qst$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 sprite$(PLATEXT).o: sprite.cpp sprite.h tiles.h zdefs.h
 	$(CC) $(OPTS) $(CFLAG) -c sprite.cpp -o sprite$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)

@@ -98,7 +98,8 @@ int  init_game();
 int  cont_game();
 void restart_level();
 void resume_game();
-void  load_game(gamedata* g);
+void load_game(gamedata* g);
+void reset_status();
 
 inline void sfx(int index)         {
 	sfx(index, 128, false);
@@ -127,7 +128,7 @@ extern int strike_hint;
 
 extern RGB_MAP rgb_table;
 extern COLOR_MAP trans_table;
-extern BITMAP*     framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf, *pricesdisplaybuf, *tb_page[3], *real_screen;
+extern BITMAP*     framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf, *pricesdisplaybuf, *tb_page[3];
 extern DATAFILE* data, *sfxdata, *fontsdata, *mididata;
 extern SAMPLE   wav_refill;
 extern FONT*     zfont;
@@ -161,7 +162,7 @@ extern int homescr, currscr, frame, currmap, dlevel, warpscr, worldscr;
 extern int newscr_clk, opendoors, currdmap, fadeclk, currgame, listpos;
 extern int lastentrance, lastentrance_dmap, prices[3][2], loadside, Bwpn, Awpn;
 extern int digi_volume, midi_volume, currmidi, wand_x, wand_y, hasitem, whistleclk, pan_style;
-extern int Akey, Bkey, Skey, Lkey, Rkey, Mkey, Quit;
+extern int Akey, Bkey, Skey, Lkey, Rkey, Mkey, Status;
 extern int DUkey, DDkey, DLkey, DRkey;
 extern int arrow_x, arrow_y, brang_x, brang_y, chainlink_x, chainlink_y;
 extern int hs_startx, hs_starty, hs_xdist, hs_ydist, clockclk, clock_zoras;

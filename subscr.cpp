@@ -9,7 +9,6 @@
 //--------------------------------------------------------
 
 #include "subscr.h"
-//#include "guys.h"
 #include "zelda.h"
 #include "tiles.h"
 #include "zsys.h"
@@ -208,13 +207,6 @@ void putxnum(BITMAP* dest, int x, int y, int num) {
 	}
 }
 
-/*
-inline void putdot(BITMAP *dest,int x,int y,int c)
-{
-  rectfill(dest,x,y,x+2,y+2,c);
-}
-*/
-
 /****  Subscr items code  ****/
 
 item* Bitem = NULL, *Aitem = NULL;
@@ -388,14 +380,6 @@ void putsubscr(BITMAP* dest, int x, int y, bool showtime) {
 	destroy_bitmap(subscr);
 }
 
-/*
-const byte tripiece[8*3] =
-{
- 112,112,0, 128,112,1, 96,128,0, 144,128,1,
- 112,128,2, 112,128,1, 128,128,3, 128,128,0
-};
-*/
-
 void puttriframe(BITMAP* dest) {
 	if (QMisc.colors.triframe_tile) {
 		draw_block(dest, 80, 104, QMisc.colors.triframe_tile, QMisc.colors.triframe_cset, 6, 3);
@@ -463,21 +447,6 @@ void markBmap(int dir) {
 			break;
 	}
 }
-
-/*
-const byte bmap[16*2] = {
-0,0,1,0,0,1,0,0,1,0,0,0,1,0,0,0,
-0,3,0,0,0,3,0,0,0,0,3,0,0,0,3,0 };
-
-const int fringe[8] = { 6,2,4,7,6,8,7,5 };
-
-const byte bmaptiles[8*5] = {
- 0, 1, 2, 3, 2, 3, 3, 4,
-20,21,22,23,22,23,23,24,
-20,21,22,23,22,23,23,24,
-20,21,22,23,22,23,23,24,
-40,41,42,43,42,43,43,44 };
-*/
 
 void draw_block(BITMAP* dest, int x, int y, int tile, int cset, int w, int h);
 void putBmap(BITMAP* dest) {
@@ -592,16 +561,6 @@ void load_Sitems() {
 			}
 			break;
 	}
-	/*
-	 switch(zinit.subscreen) {
-	   case 0: //original
-	     break;
-	   case 1: //revision 1 ("New Subscreen")
-	     break;
-	   case 2: //revision 2 (1.92 beta 168)
-	     break;
-	 }
-	*/
 
 	Sitems.clear();
 
@@ -631,7 +590,7 @@ void load_Sitems() {
 	}
 
 	if (zinit.subscreen > 0)
-		//  if(NEWSUBSCR)
+	//  if(NEWSUBSCR)
 	{
 		y = 64;
 
@@ -643,7 +602,6 @@ void load_Sitems() {
 		if (current_item(itype_wallet, true)) {
 			Sitems.add(new item((fix)(x[1] - ofs), (fix)y, iWallet500 - 1 + current_item(itype_wallet, true), 0, 0));
 		}
-		//    if(game.misc2&iCROSS)       Sitems.add(new item(x[2]-ofs,y,iCross,0,0));
 		if (current_item(itype_amulet, true) >= i_amulet2) {
 			Sitems.add(new item((fix)(x[2] - ofs), (fix)y, iL2Amulet, 0, 0));
 		} else if (current_item(itype_amulet, true) >= i_amulet1) {
@@ -680,12 +638,9 @@ void load_Sitems() {
 			break;
 		case 2:                                                 //revision 2 (1.92 beta 168)
 			ofs = -2;
-			//      y=16;
 			y = 32;
 			break;
 	}
-	//  ofs = NEWSUBSCR ? 16 : 0;
-	//  y = NEWSUBSCR ? 32 : 48;
 
 	if (current_item(itype_brang, true)) {
 		if (current_item(itype_brang, true) < i_fbrang) {
@@ -723,11 +678,9 @@ void load_Sitems() {
 			y = 48;
 			break;
 		case 2:                                                 //revision 2 (1.92 beta 168)
-			//      y=32;
 			y = 48;
 			break;
 	}
-	//  y = NEWSUBSCR ? 48 : 64;
 
 	if (current_item(itype_whistle, true)) {
 		Sitems.add(new item((fix)(128 + ofs), (fix)y, iWhistle, 0, 0));
@@ -753,7 +706,6 @@ void load_Sitems() {
 		case 2:                                                 //revision 2 (1.92 beta 168)
 			y = 64;
 			if (zinit.subscreen == 2) {
-				//        y=48;
 			}
 			if (current_item(itype_hookshot, true)) {
 				Sitems.add(new item((fix)(128 + ofs), (fix)y, iHookshot, 0, 0));
@@ -817,7 +769,6 @@ void put_topsubscr() {
 
 	rectfill(subscr, 0, 0, 255, 173, QMisc.colors.subscr_bg);
 
-	//  if(NEWSUBSCR)
 	switch (zinit.subscreen) {
 		case 0:                                                 //original
 			blueframe(subscr, 56, 40, 4, 4);
@@ -857,18 +808,12 @@ void put_topsubscr() {
 			if (type == dmDNGN || type == dmCAVE) {
 				blueframe(subscr, 16, 104, 9, 4);
 			}
-			//      blueframe(subscr, 118, 8, 16, 10);
 			blueframe(subscr, 118, 24, 16, 8);
 			break;
 	}
-
-	//  blueframe(subscr, NEWSUBSCR ? 136:120, NEWSUBSCR ? 24:40, 13, NEWSUBSCR ? 8:6);
-
-	//  textprintf(subscr, zfont, 96, 168, QMisc.colors.text, "%x", game.misc2);
 }
 
 void update_topsubscr(int y) {
-	//  if(!NEWSUBSCR && (Bitem))
 	if ((zinit.subscreen == 0) && (Bitem)) {
 		Bitem->x = 64;
 		Bitem->y = 48 - y;
@@ -910,7 +855,7 @@ void dosubscr() {
 			blit(scrollbuf, framebuf, 0, y, 0, 0, 256, 230 - y);
 			update_topsubscr(y);
 			advanceframe();
-			if (Quit) {
+			if (Status) {
 				return;
 			}
 		}
@@ -920,11 +865,6 @@ void dosubscr() {
 		put_topsubscr();
 		miny = 0;
 		blit(scrollbuf, framebuf, 0, 230, 0, 56, 256, 176);
-		/* old code
-		    blit(scrollbuf,scrollbuf,0,0,0,230,256,176);
-		    put_topsubscr();
-		    miny = 0;
-		*/
 		for (int y = 174; y >= 0; y -= 3) {
 			domoney();
 			Link.refill();
@@ -932,7 +872,7 @@ void dosubscr() {
 			blit(scrollbuf, framebuf, 0, y, 0, 0, 256, 224);
 			update_topsubscr(y);
 			advanceframe();
-			if (Quit) {
+			if (Status) {
 				return;
 			}
 		}
@@ -966,15 +906,8 @@ void dosubscr() {
 		domoney();
 		Link.refill();
 		putsubscr(framebuf, 0, 174 - miny, showtime);
-		//    blit(scrollbuf,framebuf,0,32,0,32-miny,256,64);
-		//    blit(scrollbuf,framebuf,0,6,0,6-miny,256,100);
 		blit(scrollbuf, framebuf, 0, 6, 0, 6 - miny, 256, 168);
-		//    blit(scrollbuf,framebuf,0,6,0,6-miny,256,64);
 		update_topsubscr(miny);
-
-		//    int sx = ;
-		//    int sy = ;
-
 		sel.animate(0);
 		switch (zinit.subscreen) {
 			case 0:                                               //original
@@ -987,14 +920,13 @@ void dosubscr() {
 				break;
 			case 2:                                               //revision 2 (1.92 beta 168)
 				sel.x = (Bpos % 5) * 24 + 126;
-				//        sel.y = (Bpos/5)*16 + 16-miny;
 				sel.y = (Bpos / 5) * 16 + 32 - miny;
 				break;
 		}
 		sel.draw(framebuf);
 
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			return;
 		}
 		if (rSbtn()) {
@@ -1011,7 +943,7 @@ void dosubscr() {
 			blit(scrollbuf, framebuf, 0, y, 0, 0, 256, 230 - y);
 			update_topsubscr(y);
 			advanceframe();
-			if (Quit) {
+			if (Status) {
 				return;
 			}
 		}
@@ -1024,7 +956,7 @@ void dosubscr() {
 			blit(scrollbuf, framebuf, 0, y, 0, 0, 256, 224);
 			update_topsubscr(y);
 			advanceframe();
-			if (Quit) {
+			if (Status) {
 				return;
 			}
 		}

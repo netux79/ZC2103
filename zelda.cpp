@@ -58,7 +58,7 @@ bool triplebuffer_not_available = false;
 RGB_MAP rgb_table;
 COLOR_MAP trans_table;
 
-BITMAP* framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf, *pricesdisplaybuf, *tb_page[3], *real_screen;
+BITMAP* framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf, *pricesdisplaybuf, *tb_page[3];
 DATAFILE* data, *sfxdata, *fontsdata, *mididata;
 FONT* zfont;
 PALETTE RAMpal;
@@ -91,7 +91,7 @@ int homescr, currscr, frame = 0, currmap = 0, dlevel, warpscr, worldscr;
 int newscr_clk = 0, opendoors = 0, currdmap = 0, fadeclk = -1, currgame = 0, listpos = 0;
 int lastentrance = 0, lastentrance_dmap = 0, prices[3][2], loadside, Bwpn, Awpn;
 int digi_volume, midi_volume, currmidi, wand_x, wand_y, hasitem, whistleclk, pan_style;
-int Akey, Bkey, Skey, Lkey, Rkey, Mkey, Quit = 0;
+int Akey, Bkey, Skey, Lkey, Rkey, Mkey, Status = 0;
 int DUkey, DDkey, DLkey, DRkey;
 int arrow_x, arrow_y, brang_x, brang_y, chainlink_x, chainlink_y;
 int hs_startx, hs_starty, hs_xdist, hs_ydist, clockclk, clock_zoras;
@@ -385,18 +385,18 @@ void CatchBrang() {
 /***** Main Game Code *****/
 /**************************/
 
+void reset_status() {
+	Link.setDontDraw(false);
+	show_subscreen_dmap_dots = true;
+	show_subscreen_numbers = true;
+	show_subscreen_items = true;
+	show_subscreen_life = true;
+	introclk = intropos = 0;
+	reset_combo_animations();
+}
+
 void load_game(gamedata* g) {
-	//int ret = 0;
-
-	// Load the qst file and confirm it is valid.
-	packfile_password(datapwd);
-	int ret = loadquest(qstpath, &QHeader, &QMisc, tunes + MUSIC_COUNT);
-	packfile_password(NULL);
-
-	if (ret) {
-		printf("Error loading: %s, %s\n", get_filename(qstpath), qst_error[ret]);
-		exit(-1);
-	}
+	int ret = 0;
 
 	if (!g->title[0] || !g->hasplayed) {
 		strcpy(g->version, QHeader.version);
@@ -540,70 +540,55 @@ int init_game() {
 	if (!game.hasplayed) {
 		game.maxlife = zinit.hc * HP_PER_HEART;
 		if (zinit.sword > 0) {
-			//      game.items[itype_sword]=(1<<(zinit.sword-1));
 			game.items[itype_sword] = zinit.sword;
 		}
 		if (zinit.boomerang > 0) {
-			//      game.items[itype_brang]=(1<<(zinit.boomerang-1));
 			game.items[itype_brang] = zinit.boomerang;
 		}
 		game.items[itype_bomb] = zinit.bombs;
 		if (zinit.arrow > 0) {
-			//      game.items[itype_arrow]=(1<<(zinit.arrow-1));
 			game.items[itype_arrow] = zinit.arrow;
 		}
 		if (zinit.candle > 0)
 
 		{
-			//      game.items[itype_candle]=(1<<(zinit.candle-1));
 			game.items[itype_candle] = zinit.candle;
 		}
 		if (zinit.whistle > 0) {
-			//      game.items[itype_whistle]=(1<<(zinit.whistle-1));
 			game.items[itype_whistle] = zinit.whistle;
 		}
 		if (zinit.potion > 0) {
-			//      game.items[itype_potion]=(1<<(zinit.potion-1));
 			game.items[itype_potion] = zinit.potion;
 		}
 		if (zinit.ring > 0) {
-			//      game.items[itype_ring]=(1<<(zinit.ring-1));
 			game.items[itype_ring] = zinit.ring;
 			ringcolor();
 		}
 		game.keys = zinit.keys;
 		game.maxbombs = zinit.max_bombs;
-		//    game.items[itype_wallet]=(1<<(zinit.wallet-1));
 		game.items[itype_wallet] = zinit.wallet;
 		game.items[itype_sbomb] = zinit.super_bombs;
 		game.HCpieces = zinit.hcp;
 		game.rupies = zinit.rupies;
 		if (zinit.letter > 0) {
-			//      game.items[itype_letter]=(1<<(zinit.letter-1));
 			game.items[itype_letter] = zinit.letter;
 		}
 		if (zinit.bait) {
-			//      game.items[itype_bait]=(1<<(zinit.bait-1));
 			game.items[itype_bait] = zinit.bait;
 		}
 		if (zinit.wand) {
-			//      game.items[itype_wand]=(1<<(zinit.wand-1));
 			game.items[itype_wand] = zinit.wand;
 		}
 		if (zinit.dins_fire) {
-			//      game.items[itype_dinsfire]=(1<<(i_dinsfire-1));
 			game.items[itype_dinsfire] = i_dinsfire;
 		}
 		if (zinit.farores_wind) {
-			//      game.items[itype_faroreswind]=(1<<(i_faroreswind-1));
 			game.items[itype_faroreswind] = i_faroreswind;
 		}
 		if (zinit.nayrus_love) {
-			//      game.items[itype_nayruslove]=(1<<(i_nayruslove-1));
 			game.items[itype_nayruslove] = i_nayruslove;
 		}
 		if (zinit.bracelet > 0) {
-			//      game.items[itype_bracelet]=(1<<(i_bracelet1-1));
 			game.items[itype_bracelet] = zinit.bracelet;
 		}
 		if (zinit.bow > 0) {
@@ -612,24 +597,6 @@ int init_game() {
 		if (zinit.shield > 0) {
 			game.items[itype_shield] = zinit.shield;
 		}
-
-		/*
-		    if (zinit.bow>0) {
-		      game.misc|=iBOW;
-		    }
-
-		    if (zinit.shield>1) {
-		      game.misc|=iSHIELD;
-		      if (zinit.shield>2) {
-		        game.misc|=iMSHIELD;
-		      }
-		    }
-
-		game.misc|=zinit.raft?iRAFT:0;
-		game.misc|=zinit.ladder?iLADDER:0;
-		game.misc|=zinit.book?iBOOK:0;
-		game.misc|=zinit.key?iMKEY:0;
-		*/
 		if (zinit.raft > 0) {
 			game.items[itype_raft] = zinit.raft;
 		}
@@ -643,28 +610,22 @@ int init_game() {
 			game.items[itype_magickey] = zinit.key;
 		}
 		if (zinit.amulet > 0) {
-			//      game.items[itype_amulet]=(1<<(zinit.amulet-1));
 			game.items[itype_amulet] = zinit.amulet;
 		}
 		if (zinit.flippers > 0) {
-			//      game.items[itype_flippers]=(1<<(zinit.flippers-1));
 			game.items[itype_flippers] = zinit.flippers;
 		}
 		if (zinit.boots > 0) {
-			//      game.items[itype_boots]=(1<<(zinit.boots-1));
 			game.items[itype_boots] = zinit.boots;
 		}
 
 		if (zinit.hookshot > 0) {
-			//      game.items[itype_hookshot]=(1<<(zinit.hookshot-1));
 			game.items[itype_hookshot] = zinit.hookshot;
 		}
 		if (zinit.lens > 0) {
-			//      game.items[itype_lens]=(1<<(zinit.lens-1));
 			game.items[itype_lens] = zinit.lens;
 		}
 		if (zinit.hammer > 0) {
-			//      game.items[itype_hammer]=(1<<(zinit.hammer-1));
 			game.items[itype_hammer] = zinit.hammer;
 		}
 
@@ -698,15 +659,9 @@ int init_game() {
 	}
 	game.hasplayed = 1;
 
-	if (get_bit(quest_rules, qr_CONTFULL))
-
-	{
+	if (get_bit(quest_rules, qr_CONTFULL)) {
 		game.life = game.maxlife;
 	}
-	/*
-	  else
-	    game.life=3*HP_PER_HEART;
-	*/
 
 	selectBwpn(0, 0);
 	selectAwpn(0);
@@ -731,7 +686,7 @@ int init_game() {
 		Link.stepforward(12);
 	}
 
-	if (!Quit) {
+	if (!Status) {
 		play_DmapMusic();
 	}
 
@@ -796,7 +751,7 @@ int cont_game() {
 	show_subscreen_life = true;
 	loadguys();
 
-	if (!Quit) {
+	if (!Status) {
 		play_DmapMusic();
 		if (isdungeon()) {
 			Link.stepforward(12);
@@ -849,7 +804,7 @@ void restart_level() {
 	show_subscreen_life = true;
 	loadguys();
 
-	if (!Quit) {
+	if (!Status) {
 		play_DmapMusic();
 		if (isdungeon()) {
 			Link.stepforward(12);
@@ -896,7 +851,6 @@ void putintro() {
 		}
 
 	if (intropos >= 72) {
-		//   Link.unfreeze();
 		dmapmsgclk = 50;
 
 	}
@@ -917,7 +871,6 @@ void do_magic_casting() {
 				Lwpns.add(new weapon(LinkX(), LinkY(), wPhantom, pDINSFIREROCKET, 0, up));
 				weapon* w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
 				w1->step = 4;
-				//          Link.tile=(BSZ)?32:29;
 				linktile(&Link.tile, &Link.flip, ls_hold2, Link.getDir(), zinit.linkwalkstyle);
 				casty = Link.getY();
 			}
@@ -925,12 +878,10 @@ void do_magic_casting() {
 				Lwpns.add(new weapon((fix)LinkX(), (fix)(-32), wPhantom, pDINSFIREROCKETRETURN, 0, down));
 				weapon* w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
 				w1->step = 4;
-				//          Link.tile=29;
 				linktile(&Link.tile, &Link.flip, ls_hold2, Link.getDir(), zinit.linkwalkstyle);
 				castnext = false;
 			}
 			if (castnext) {
-				//          Link.tile=4;
 				linktile(&Link.tile, &Link.flip, ls_cast, Link.getDir(), zinit.linkwalkstyle);
 				for (int flamecounter = ((-1) * (flamemax / 2)) + 1; flamecounter < ((flamemax / 2) + 1); flamecounter++) {
 					Lwpns.add(new weapon((fix)LinkX(), (fix)LinkY(), wFire, 3, 8 * DAMAGE_MULTIPLIER, 0));
@@ -943,8 +894,6 @@ void do_magic_casting() {
 				magiccastclk = 128;
 			}
 
-			/*
-			 */
 			if ((magiccastclk++) == 226) {
 				magictype = mgc_none;
 			}
@@ -985,10 +934,7 @@ void do_magic_casting() {
 				}
 			}
 			if ((magiccastclk++) == 226) {
-				//attackclk=0;
 				restart_level();
-				//xofs=0;
-				//action=none;
 				magictype = mgc_none;
 				Link.setDontDraw(false);
 			}
@@ -1002,7 +948,6 @@ void do_magic_casting() {
 				Lwpns.add(new weapon(LinkX(), LinkY(), wPhantom, pNAYRUSLOVEROCKET2, 0, right));
 				w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
 				w1->step = 4;
-				//          Link.tile=(BSZ)?32:29;
 				linktile(&Link.tile, &Link.flip, ls_cast, Link.getDir(), zinit.linkwalkstyle);
 				castx = Link.getX();
 			}
@@ -1014,20 +959,16 @@ void do_magic_casting() {
 				Lwpns.add(new weapon((fix)(LinkX() + d), (fix)LinkY(), wPhantom, pNAYRUSLOVEROCKETRETURN2, 0, left));
 				w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
 				w1->step = 4;
-				//          Link.tile=29;
 				linktile(&Link.tile, &Link.flip, ls_cast, Link.getDir(), zinit.linkwalkstyle);
 				castnext = false;
 			}
 			if (castnext) {
-				//          Link.tile=4;
 				linktile(&Link.tile, &Link.flip, ls_hold2, Link.getDir(), zinit.linkwalkstyle);
 				Link.setNayrusLoveShieldClk(512);
 				castnext = false;
 				magiccastclk = 128;
 			}
 
-			/*
-			 */
 			if ((magiccastclk++) == 160) {
 				magictype = mgc_none;
 			}
@@ -1044,8 +985,6 @@ void update_hookshot() {
 	bool check_hs = false;
 	int dist_bx, dist_by, hs_w;
 	chainlinks.animate();
-	//  char tempbuf[80];
-	//  char tempbuf2[80];
 
 	//find out where the head is and make it
 	//easy to reference
@@ -1156,8 +1095,8 @@ void game_loop() {
 	checklink = true;
 	for (int i = 0; i < 1; i++) {
 		if (Link.animate(0)) {
-			if (!Quit) {
-				Quit = qGAMEOVER;
+			if (!Status) {
+				Status = qGAMEOVER;
 			}
 			return;
 		}
@@ -1228,12 +1167,31 @@ void game_loop() {
 int main(int argc, char* argv[]) {
 	Z_message("Zelda Classic %s (Build %d)\n", VerStr(ZELDA_VERSION), VERSION_BUILD);
 
+	/*
+	  Z_message("int size = %ld\n", sizeof(int));
+	  Z_message("word size = %ld\n", sizeof(word));
+	  Z_message("char size = %ld\n", sizeof(char));
+	  Z_message("byte size = %ld\n", sizeof(byte));
+	  Z_message("long size = %ld\n", sizeof(long));
+	  Z_message("dword size = %ld\n", sizeof(dword));
+	  Z_message("short size = %ld\n", sizeof(short));
+	  Z_message("bool size = %ld\n", sizeof(bool));
+	  Z_message("float size = %ld\n", sizeof(float));
+	  Z_message("double size = %ld\n", sizeof(double));
+	  Z_message("long double size = %ld\n", sizeof(long double));
+	  Z_message("long long size = %ld\n", sizeof(long long));
+	  Z_message("pointer size = %ld\n", sizeof(void *));
+	*/
+
 	set_uformat(U_ASCII);
 	set_config_file("zc.cfg");
 
 	// initialize Allegro
 	Z_message("Initializing Allegro...\n");
 	allegro_init();
+
+	set_window_title("Zelda Classic");
+	three_finger_flag = false;
 
 	// load game configurations
 	load_game_configs();
@@ -1260,52 +1218,17 @@ int main(int argc, char* argv[]) {
 	get_qst_buffers();
 
 	resolve_password(datapwd);
-
-	three_finger_flag = false;
-	zcmusic_init();
-
-	Z_message("Installing keyboard and timers...");
-	if (install_timer() < 0) {
-		Z_error(allegro_error);
-	}
-
-	if (install_keyboard() < 0) {
-		Z_error(allegro_error);
-	}
-
-	LOCK_VARIABLE(logic_counter);
-	LOCK_FUNCTION(update_logic_counter);
-	install_int_ex(update_logic_counter, BPS_TO_TIMER(60));
-
-	Z_init_timers();
-	Z_message("OK\n");
-
-	// Define the bit depth to use
-	set_color_depth(used_switch(argc, argv, "-16bit") ? 16 : 8);
-	set_color_conversion(COLORCONV_NONE);
-
-	// Allocate bitmap buffers
-	Z_message("Allocating bitmap buffers...");
-	framebuf  = create_bitmap_ex(8, 256, 224);
-	scrollbuf = create_bitmap_ex(8, 512, 406);
-	tmp_scr   = create_bitmap_ex(8, 320, 240);
-	tmp_bmp   = create_bitmap_ex(8, 32, 32);
-	msgdisplaybuf = create_bitmap_ex(8, 256, 168);
-	pricesdisplaybuf = create_bitmap_ex(8, 256, 168);
-	if (!framebuf || !scrollbuf || !tmp_bmp || !tmp_scr || !msgdisplaybuf || !pricesdisplaybuf) {
-		Z_error("Error");
-	}
-
-	clear_bitmap(scrollbuf);
-	clear_bitmap(framebuf);
-	clear_bitmap(msgdisplaybuf);
-	clear_bitmap(pricesdisplaybuf);
-	Z_message("OK\n");
-
-	int mode = VidMode; // from config file
-	int res_arg = used_switch(argc, argv, "-res");
-
 	packfile_password(datapwd);
+
+	// Load the qst file and confirm it is valid.
+	Z_message("Loading quest file...");
+	int ret = loadquest(qstpath, &QHeader, &QMisc, tunes + MUSIC_COUNT);
+
+	if (ret) {
+		Z_message("FAIL (Error loading:  %s: %s)\n", get_filename(qstpath), qst_error[ret]);
+		printf("Error loading: %s, %s\n", get_filename(qstpath), qst_error[ret]);
+		exit(-1);
+	}
 
 	Z_message("Loading data files:\n");
 	sprintf(zeldadat_sig, "Zelda.Dat %s Build %d", VerStr(ZELDADAT_VERSION), ZELDADAT_BUILD);
@@ -1341,36 +1264,62 @@ int main(int argc, char* argv[]) {
 	}
 	Z_message("OK\n");
 
+	// Setting up base assets
 	mididata = (DATAFILE*)data[MUSIC].dat;
 	font = (FONT*)fontsdata[FONT_GUI_PROP].dat;
 	zfont = (FONT*)fontsdata[FONT_NES].dat;
 
-	// load saved games
-	Z_message("Loading saved games...");
-	if (load_savedgames() != 0) {
-		Z_error("Insufficient memory");
+	// Allocate bitmap buffers
+	Z_message("Allocating bitmap buffers...");
+	framebuf  = create_bitmap_ex(8, 256, 224);
+	scrollbuf = create_bitmap_ex(8, 512, 406);
+	tmp_scr   = create_bitmap_ex(8, 320, 240);
+	tmp_bmp   = create_bitmap_ex(8, 32, 32);
+	msgdisplaybuf = create_bitmap_ex(8, 256, 168);
+	pricesdisplaybuf = create_bitmap_ex(8, 256, 168);
+	if (!framebuf || !scrollbuf || !tmp_bmp || !tmp_scr || !msgdisplaybuf || !pricesdisplaybuf) {
+		Z_error("Error");
 	}
+	clear_bitmap(scrollbuf);
+	clear_bitmap(framebuf);
+	clear_bitmap(msgdisplaybuf);
+	clear_bitmap(pricesdisplaybuf);
+	Z_message("OK\n");
 
+	Z_message("Installing keyboard and timers...");
+	if (install_timer() < 0) {
+		Z_error(allegro_error);
+	}
+	if (install_keyboard() < 0) {
+		Z_error(allegro_error);
+	}
+	LOCK_VARIABLE(logic_counter);
+	LOCK_FUNCTION(update_logic_counter);
+	install_int_ex(update_logic_counter, BPS_TO_TIMER(60));
+	Z_init_timers();
 	Z_message("OK\n");
 
 	// initialize sound driver
-	Z_message("Initializing sound driver...");
+	Z_message("Initializing audio...");
 	if (install_sound(DIGI_AUTODETECT, MIDI_AUTODETECT, NULL)) {
 		Z_message("Error initialising sound\n%s\n", allegro_error);
-	} else {
-		Z_message("OK\n");
 	}
-
 	Z_init_sound();
+	zcmusic_init();
+	Z_message("OK\n");
 
-	// set video mode
+	// initialize video driver
+	Z_message("Setting video mode...\n");
+	int mode = VidMode;
+	// define the bit depth and resultion to use
+	set_color_depth(used_switch(argc, argv, "-16bit") ? 16 : 8);
+	set_color_conversion(COLORCONV_NONE);	
+	int res_arg = used_switch(argc, argv, "-res");
 	if (res_arg && (argc > (res_arg + 2))) {
 		resx = atoi(argv[res_arg + 1]);
 		resy = atoi(argv[res_arg + 2]);
 		sbig = (argc > (res_arg + 3)) ? stricmp(argv[res_arg + 3], "big") == 0 : 0;
 	}
-	request_refresh_rate(60);
-
 #ifdef ALLEGRO_DOS
 	if (used_switch(argc, argv, "-modex")) {
 		mode = GFX_MODEX;
@@ -1394,14 +1343,11 @@ int main(int argc, char* argv[]) {
 		mode = GFX_AUTODETECT_WINDOWED;
 	}
 #endif
-
-	Z_message("Setting video mode...\n");
 	if (!game_vid_mode(mode, 250)) {
 		Z_error(allegro_error);
 	}
 	// log trace the video mode used.
 	LogVidMode();
-	real_screen = screen;
 
 	/* if triple buffering isn't available, try to enable it */
 	if (!(gfx_capabilities & GFX_CAN_TRIPLE_BUFFER)) {
@@ -1430,34 +1376,20 @@ int main(int argc, char* argv[]) {
 			}
 		}
 	}
-
 	Z_message("Triplebuffer %savailable\n", triplebuffer_not_available ? "not " : "");
+	
+	// load saved games
+	Z_message("Loading saved games...");
+	if (load_savedgames() != 0) {
+		Z_error("Insufficient memory");
+	}
+	Z_message("OK\n");
 
-	set_window_title("Zelda Classic");
-
-	//reset_items(&QHeader);
-
-	rgb_map = &rgb_table;
-	/*
-	  Z_message("int size = %ld\n", sizeof(int));
-	  Z_message("word size = %ld\n", sizeof(word));
-	  Z_message("char size = %ld\n", sizeof(char));
-	  Z_message("byte size = %ld\n", sizeof(byte));
-	  Z_message("long size = %ld\n", sizeof(long));
-	  Z_message("dword size = %ld\n", sizeof(dword));
-	  Z_message("short size = %ld\n", sizeof(short));
-	  Z_message("bool size = %ld\n", sizeof(bool));
-	  Z_message("float size = %ld\n", sizeof(float));
-	  Z_message("double size = %ld\n", sizeof(double));
-	  Z_message("long double size = %ld\n", sizeof(long double));
-	  Z_message("long long size = %ld\n", sizeof(long long));
-	  Z_message("pointer size = %ld\n", sizeof(void *));
-	*/
 	// play the game
-	while (Quit != qEXIT) {
+	while (Status != qEXIT) {
 		titlescreen();
 
-		while (!Quit) {
+		while (!Status) {
 			--logic_counter;
 			drawit = true;
 			game_loop();
@@ -1467,33 +1399,22 @@ int main(int argc, char* argv[]) {
 		tmpscr->flags3 = 0;
 		Playing = Paused = false;
 
-		switch (Quit) {
+		switch (Status) {
 			case qQUIT: {
 				go_quit();
 			}
 			break;
 			case qGAMEOVER: {
-				Link.setDontDraw(false);
-				show_subscreen_dmap_dots = true;
-				show_subscreen_numbers = true;
-				show_subscreen_items = true;
-				show_subscreen_life = true;
 				game_over();
-				introclk = intropos = 0;
 			}
 			break;
 			case qWON: {
-				Link.setDontDraw(false);
-				show_subscreen_dmap_dots = true;
-				show_subscreen_numbers = true;
-				show_subscreen_items = true;
-				show_subscreen_life = true;
 				ending();
 			}
 			break;
 		}
 
-		if (Quit != qRESUME) {
+		if (Status != qRESUME) {
 			kill_sfx();
 			music_stop();
 			clear_to_color(screen, BLACK);

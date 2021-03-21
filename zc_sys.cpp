@@ -193,6 +193,8 @@ void show_fps() {
 // sets the video mode and initializes the palette
 bool game_vid_mode(int mode, int wait) {
 
+	request_refresh_rate(60);
+
 #ifdef ALLEGRO_DOS
 	switch (mode) {
 		case GFX_AUTODETECT:
@@ -245,26 +247,17 @@ bool game_vid_mode(int mode, int wait) {
 			break;
 	}
 #endif
+	// wait a bit after setting the video mode
+	rest(wait);
 
 	scrx = (resx - 320) >> 1;
 	scry = (resy - 240) >> 1;
 
-	for (int i = 240; i < 256; i++) {
-		RAMpal[i] = ((RGB*)data[PAL_GUI].dat)[i];
-	}
-	set_palette(RAMpal);
+	rgb_map = &rgb_table;
+
 	clear_to_color(screen, BLACK);
 
-	rest(wait);
 	return true;
-}
-
-void init_NES_mode() {
-	if (!init_colordata(&QHeader)) {
-		return;
-	}
-	loadfullpal();
-	init_tiles(&QHeader);
 }
 
 //----------------------------------------------------------------
@@ -947,7 +940,6 @@ qword triangles[4][16][8] = { //[direction][value][line]
 int black_opening_count = 0;
 int black_opening_x, black_opening_y;
 int black_opening_shape = bosCIRCLE;
-//int black_opening_shape=bosSMAS;
 
 void close_black_opening(int x, int y, bool wait) {
 	int w = 256, h = 224;
@@ -962,17 +954,15 @@ void close_black_opening(int x, int y, bool wait) {
 	black_opening_x = x;
 	black_opening_y = y;
 	lensclk = 0;
-	//black_opening_shape=(black_opening_shape+1)%bosMAX;
 
 	if (wait) {
 		for (int i = 0; i < 66; i++) {
 			drawit = true;
 			draw_screen(tmpscr, 0, 0);
 			putsubscr(framebuf, 0, 0);
-			//      blit(scrollbuf,framebuf,0,0,0,56,256,168);
 			syskeys();
 			advanceframe();
-			if (Quit) {
+			if (Status) {
 				break;
 			}
 		}
@@ -1002,7 +992,7 @@ void open_black_opening(int x, int y, bool wait) {
 			putsubscr(framebuf, 0, 0);
 			syskeys();
 			advanceframe();
-			if (Quit) {
+			if (Status) {
 				break;
 			}
 		}
@@ -1046,7 +1036,6 @@ void black_opening(BITMAP* dest, int x, int y, int a, int max_a) {
 				for (int linerow = 0; linerow < 8; ++linerow) {
 					qword* triangleline = (qword*)(tmp_scr->line[(blockrow * 8 + linerow)]);
 					for (int blockcolumn = 0; blockcolumn < 32; ++blockcolumn) { //40
-						//*triangleline=triangles[(screen_triangles[blockrow][blockcolumn]&0xC000)>>14][min(max((((max_a-a)/2)+(screen_triangles[blockrow][blockcolumn]&0x0FFF)-15),0),15)][linerow];
 						*triangleline = triangles[(screen_triangles[blockrow][blockcolumn] & 0xC000) >> 14]
 						                [min(max((((31 + distance) * (max_a - a) / max_a) + ((screen_triangles[blockrow][blockcolumn] & 0x0FFF) - 0x0100) - (15 + distance)), 0), 15)]
 						                [linerow];
@@ -1063,7 +1052,6 @@ void black_opening(BITMAP* dest, int x, int y, int a, int max_a) {
 			double new_w = (w / 2) + abs(w / 2 - x);
 			double new_h = (h / 2) + abs(h / 2 - y);
 			int r = int(sqrt((new_w * new_w) + (new_h * new_h)) * a / max_a);
-			//circlefill(tmp_scr,x,y,a<<3,0);
 			circlefill(tmp_scr, x, y, r, 0);
 			break;
 		}
@@ -1816,10 +1804,8 @@ void draw_lens_under() {
 		mfREFFIREBALL, mfHAMMER, mfSWORDBEAM, mfWAND
 	};
 
-	//  int page = tmpscr->cpage;
 	{
 		int blink_rate = 1;
-		//    int temptimer=0;
 		int tempitem, tempweapon;
 		strike_hint = strike_hint_table[strike_hint_counter];
 		if (strike_hint_timer > 32) {
@@ -2419,7 +2405,6 @@ void draw_lens_under() {
 					if (get_bit(quest_rules, qr_LENSHINTS)) {
 					}
 					if (!getmapflag())
-						//          putitem2(framebuf,x,y,tmpscr->catchall);
 					{
 						putitem2(framebuf, x, y, tmpscr->catchall, lens_hint_item[tmpscr->catchall][0], lens_hint_item[tmpscr->catchall][1], 0);
 					}
@@ -2519,8 +2504,6 @@ void draw_wavy(int amplitude) {
 	blit(framebuf, wavebuf, 0, 0, 16, 0, 256, 224);
 
 	int ofs;
-	//  int amplitude=8;
-	//  int wavelength=4;
 	int amp2 = 168;
 	int i = frame % amp2;
 	for (int j = 0; j < 168; j++) {
@@ -2724,7 +2707,7 @@ void f_Quit(int type) {
 	music_pause();
 	pause_all_sfx();
 
-	Quit = type;
+	Status = type;
 
 	eat_buttons();
 }
@@ -2786,7 +2769,7 @@ void advanceframe() {
 	if (zcmusic != NULL) {
 		zcmusic_poll();
 	}
-	while (Paused && !Advance && !Quit) {
+	while (Paused && !Advance && !Status) {
 		// have to call this, otherwise we'll get an infinite loop
 		syskeys();
 		// to keep fps constant
@@ -2796,7 +2779,7 @@ void advanceframe() {
 			zcmusic_poll();
 		}
 	}
-	if (Quit) {
+	if (Status) {
 		return;
 	}
 
@@ -2821,7 +2804,7 @@ void zapout() {
 		draw_fuzzy(i);
 		syskeys();
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			break;
 		}
 	}
@@ -2838,7 +2821,7 @@ void zapin() {
 		draw_fuzzy(i);
 		syskeys();
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			break;
 		}
 	}
@@ -2883,8 +2866,8 @@ void wavyout() {
 		}
 		syskeys();
 		advanceframe();
-		//    animate_combos();
-		if (Quit) {
+
+		if (Status) {
 			break;
 		}
 	}
@@ -2932,9 +2915,8 @@ void wavyin() {
 		}
 		syskeys();
 		advanceframe();
-		//    animate_combos();
 
-		if (Quit) {
+		if (Status) {
 			break;
 		}
 	}
@@ -2950,7 +2932,7 @@ void blackscr(int fcnt, bool showsubscr) {
 		}
 		syskeys();
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			break;
 		};
 		--fcnt;
@@ -2982,20 +2964,9 @@ void openscreen() {
 			rectfill(framebuf, 0, 56, x, 223, 0);
 			rectfill(framebuf, 256 - x, 56, 255, 223, 0);
 		}
-		//    x=((80-i)/2)*4;
-		/*
-		    --x;
-		    switch(++c)
-		    {
-		      case 5: c=0;
-		      case 0:
-		      case 2:
-		      case 3: --x; break;
-		    }
-		*/
 		syskeys();
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			break;
 		}
 	}

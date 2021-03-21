@@ -18,7 +18,6 @@
 #include "qst.h"
 #include "zelda.h"
 #include "defdata.h"
-#include "font.h"
 
 extern mapscr*       TheMaps;
 extern MsgStr*       MsgStrings;
@@ -33,7 +32,6 @@ extern guydata*      guysbuf;
 extern ZCHEATS      zcheats;
 extern zinitdata    zinit;
 extern int          memrequested;
-extern char*         byte_conversion(int number, int format);
 extern char*         byte_conversion2(int number1, int number2, int format1, int format2);
 //enum { qe_OK, qe_notfound, qe_invalid, qe_version, qe_obsolete,
 //       qe_missing, qe_internal, qe_pwd, qe_match, qe_minver };
@@ -56,40 +54,6 @@ char* VerStr(int version) {
 	static char ver_str[16];
 	sprintf(ver_str, "v%d.%02X", version >> 8, version & 0xFF);
 	return ver_str;
-}
-
-char* byte_conversion(int number, int format) {
-	static char num_str[40];
-	if (format == -1) {                                       //auto
-		format = 1;                                             //bytes
-		if (number > 1024) {
-			format = 2;                                           //kilobytes
-		}
-		if (number > 1024 * 1024) {
-			format = 3;                                           //megabytes
-		}
-		if (number > 1024 * 1024 * 1024) {
-			format = 4;                                           //gigabytes (dude, what are you doing?)
-		}
-	}
-	switch (format) {
-		case 1:                                                 //bytes
-			sprintf(num_str, "%db", number);
-			break;
-		case 2:                                                 //kilobytes
-			sprintf(num_str, "%.2fk", float(number) / 1024);
-			break;
-		case 3:                                                 //megabytes
-			sprintf(num_str, "%.2fM", float(number) / (1024 * 1024));
-			break;
-		case 4:                                                 //gigabytes
-			sprintf(num_str, "%.2fG", float(number) / (1024 * 1024 * 1024));
-			break;
-		default:
-			exit(1);
-			break;
-	}
-	return num_str;
 }
 
 char* byte_conversion2(int number1, int number2, int format1, int format2) {
@@ -158,6 +122,7 @@ char* byte_conversion2(int number1, int number2, int format1, int format2) {
 	return num_str;
 }
 
+/*
 int get_version_and_build(PACKFILE* f, word* version, word* build) {
 	int ret;
 	*version = 0;
@@ -184,7 +149,6 @@ int get_version_and_build(PACKFILE* f, word* version, word* build) {
 	return 0;
 }
 
-
 bool find_section(PACKFILE* f, long section_id_requested) {
 
 	if (!f) {
@@ -195,25 +159,8 @@ bool find_section(PACKFILE* f, long section_id_requested) {
 	word dummy;
 	char tempbuf[65536];
 
-
 	switch (section_id_requested) {
-		case ID_RULES:
-		case ID_STRINGS:
-		case ID_MISC:
 		case ID_TILES:
-		case ID_COMBOS:
-		case ID_CSETS:
-		case ID_MAPS:
-		case ID_DMAPS:
-		case ID_DOORS:
-		case ID_ITEMS:
-		case ID_WEAPONS:
-		case ID_COLORS:
-		case ID_ICONS:
-		case ID_INITDATA:
-		case ID_GUYS:
-		case ID_MIDIS:
-		case ID_CHEATS:
 			break;
 		default:
 			return false;
@@ -229,30 +176,8 @@ bool find_section(PACKFILE* f, long section_id_requested) {
 
 	while (!pack_feof(f)) {
 		switch (section_id_read) {
-			/*			case ID_RULES:
-						case ID_STRINGS:
-						case ID_MISC:*/
 			case ID_TILES:
-				al_trace("ID_TILES\n");
 				break;
-			//case ID_COMBOS:
-			case ID_CSETS:
-				al_trace("ID_CSETS\n");
-				break;
-			/*case ID_MAPS:
-			case ID_DMAPS:
-			case ID_DOORS:*/
-			case ID_ITEMS:
-				al_trace("ID_ITEMS\n");
-				break;
-			/*case ID_WEAPONS:
-			case ID_COLORS:
-			case ID_ICONS:
-			case ID_INITDATA:
-			case ID_GUYS:
-			case ID_MIDIS:
-			case ID_CHEATS:
-				break;*/
 			default:
 				break;
 		}
@@ -374,8 +299,6 @@ PACKFILE* open_quest_template(zquestheader* header, char* deletefilename) {
 bool init_section(zquestheader* Header, long section_id) {
 	switch (section_id) {
 		case ID_TILES:
-		case ID_CSETS:
-		case ID_ITEMS:
 			break;
 		default:
 			return false;
@@ -419,14 +342,6 @@ bool init_section(zquestheader* Header, long section_id) {
 			clear_tiles(tilebuf);
 			ret = readtiles(f, tilebuf, Header, version, build, 0, NEWMAXTILES, true, true);
 			break;
-		case ID_CSETS:
-			//color data
-			ret = readcolordata(f, NULL, version, build, true);
-			break;
-		case ID_ITEMS:
-			//items
-			ret = readitems(f, version, build, true);
-			break;
 		default:
 			ret = -1;
 			break;
@@ -441,19 +356,13 @@ bool init_section(zquestheader* Header, long section_id) {
 		return true;
 	}
 	return false;
-}
+}*/
 
-bool init_tiles(zquestheader* Header) {
+/* Keep it in case it is really needed later on.
+ * For now, just comment it.
+ * bool init_tiles(zquestheader* Header) {
 	return init_section(Header, ID_TILES);
-}
-
-bool init_colordata(zquestheader* Header) {
-	return init_section(Header, ID_CSETS);
-}
-
-bool reset_items(zquestheader* Header) {
-	return init_section(Header, ID_ITEMS);
-}
+}*/
 
 void get_qst_buffers() {
 	memrequested += (sizeof(mapscr) * MAPSCRS);
@@ -3087,11 +2996,9 @@ int readtiles(PACKFILE* f, byte* buf, zquestheader* header, word version, word b
 	byte temp_tile[SINGLE_TILE_SIZE];
 
 	if (header != NULL && (!header->data_flags[ZQ_TILES] && !from_init)) { //keep for old quests
-		if (keepdata == true) {
-			packfile_password(NULL);
+		/*if (keepdata == true) {
 			init_tiles(header);
-			packfile_password(datapwd);
-		}
+		}*/
 	} else {
 		if (keepdata == true) {
 			clear_tiles(buf);

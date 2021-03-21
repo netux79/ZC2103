@@ -1948,7 +1948,7 @@ void ViewMap() {
 			done = true;
 		}
 
-	} while (!done && !Quit);
+	} while (!done && !Status);
 	destroy_bitmap(mappic);
 	loadscr2(0, currscr, -1);
 	for (int i = 0; i < 6; ++i) {

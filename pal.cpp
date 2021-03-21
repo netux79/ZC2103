@@ -182,7 +182,7 @@ void fade(int level, bool blackall, bool fromblack, bool total) {
 
 		putsubscr(framebuf, 0, 0);
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			break;
 		}
 		fromblack ? --cx : ++cx;
@@ -191,35 +191,6 @@ void fade(int level, bool blackall, bool fromblack, bool total) {
 		}
 	}
 }
-
-/*
-void lighting(int funct)
-// 1 = use candle
-// 2 = exit room
-// 3 = enter room
-{
- switch(funct) {
-  case 1:
-   if(darkroom) {
-     fade(DMaps[currdmap].color,false,true);
-     darkroom=false;
-}
-break;
-case 2:
-if(tmpscr->flags&fDARK && !darkroom) {
-fade(DMaps[currdmap].color,false,false);
-darkroom=true;
-}
-break;
-case 3:
-if(!(tmpscr->flags&fDARK) && darkroom) {
-fade(DMaps[currdmap].color,false,true);
-darkroom=false;
-}
-break;
-}
-}
-*/
 
 void lighting(int funct, int dir)
 // 1 = use candle
@@ -287,10 +258,10 @@ void rehydratelake() {
 		refreshpal = true;
 		advanceframe();
 		if (((whistleclk >> 3) & 3) == 1)
-			for (int i = 0; i < 4 && !Quit; i++) {
+			for (int i = 0; i < 4 && !Status; i++) {
 				advanceframe();
 			}
-	} while (whistleclk != 0 && !Quit);
+	} while (whistleclk != 0 && !Status);
 	whistleclk = -1;
 	loadpalset(3, 3);
 }

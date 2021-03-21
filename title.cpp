@@ -460,38 +460,27 @@ void load_game_icon(gamedata* g) {
 }
 
 static void select_mode() {
-	textout_ex(scrollbuf, zfont, "REGISTER YOUR NAME", 48, 152, 1, 0);
-	textout_ex(scrollbuf, zfont, "COPY FILE", 48, 168, 1, 0);
-	textout_ex(scrollbuf, zfont, "DELETE FILE", 48, 184, 1, 0);
-}
-
-static void register_mode() {
-	textout_ex(scrollbuf, zfont, "REGISTER YOUR NAME", 48, 152, CSET(2) + 3, 0);
+	textout_ex(scrollbuf, zfont, "REGISTER YOUR NAME", 48, 152, 1, -1);
+	textout_ex(scrollbuf, zfont, "COPY FILE", 48, 168, 1, -1);
+	textout_ex(scrollbuf, zfont, "DELETE FILE", 48, 184, 1, -1);
 }
 
 static void copy_mode() {
-	textout_ex(scrollbuf, zfont, "COPY FILE", 48, 168, CSET(2) + 3, 0);
+	textout_ex(scrollbuf, zfont, "COPY FILE", 48, 168, 3, -1);
 }
 
 static void delete_mode() {
-	textout_ex(scrollbuf, zfont, "DELETE FILE", 48, 184, CSET(2) + 3, 0);
+	textout_ex(scrollbuf, zfont, "DELETE FILE", 48, 184, 3, -1);
 }
 
 static void selectscreen() {
-	init_NES_mode();
-	//loadlvlpal(1);
+	loadfullpal();
 	clear_bitmap(scrollbuf);
-	QMisc.colors.blueframe_tile = 238;
-	QMisc.colors.blueframe_cset = 0;
 	blueframe(scrollbuf, 24, 48, 26, 20);
 	textout_ex(scrollbuf, zfont, "- S E L E C T -", 64, 24, 1, 0);
 	textout_ex(scrollbuf, zfont, " NAME ", 80, 48, 1, 0);
 	textout_ex(scrollbuf, zfont, " LIFE ", 152, 48, 1, 0);
 	select_mode();
-	RAMpal[CSET(9) + 1] = NESpal(0x15);
-	RAMpal[CSET(9) + 2] = NESpal(0x27);
-	RAMpal[CSET(9) + 3] = NESpal(0x30);
-	RAMpal[CSET(13) + 1] = NESpal(0x30);
 }
 
 static byte left_arrow_str[] = {132, 0};
@@ -504,15 +493,14 @@ static void list_save(int save_num, int ypos) {
 
 	if (save_num < savecnt) {
 		game.maxlife = game.life = saves[save_num].maxlife;
-		//boogie!
 		lifemeter(framebuf, 144, ypos + 24 + ((game.maxlife > 16 * (HP_PER_HEART)) ? 8 : 0));
-		textout_ex(framebuf, zfont, saves[save_num].name, 72, ypos + 16, 1, 0);
+		textout_ex(framebuf, zfont, saves[save_num].name, 72, ypos + 16, 1, -1);
 
 		if (saves[save_num].quest) {
-			textprintf_ex(framebuf, zfont, 72, ypos + 24, 1, 0, "%3d", saves[save_num].deaths);
+			textprintf_ex(framebuf, zfont, 72, ypos + 24, 1, -1, "%3d", saves[save_num].deaths);
 		}
 
-		textprintf_ex(framebuf, zfont, 72, ypos + 16, 1, 0, "%s", saves[save_num].name);
+		textprintf_ex(framebuf, zfont, 72, ypos + 16, 1, -1, "%s", saves[save_num].name);
 	}
 
 	byte* hold = tilebuf;
@@ -525,7 +513,7 @@ static void list_save(int save_num, int ypos) {
 	loadpalset((save_num % 3) + 10, 0);
 	colordata = hold;
 
-	textout_ex(framebuf, zfont, "-", 136, ypos + 16, 1, 0);
+	textout_ex(framebuf, zfont, "-", 136, ypos + 16, 1, -1);
 
 	refreshpal = r;
 }
@@ -538,21 +526,20 @@ static void list_saves() {
 	// Draw the arrows above the lifemeter!
 	if (savecnt > 3) {
 		if (listpos >= 3) {
-			textout_ex(framebuf, zfont, (char*)left_arrow_str, 96, 60, 3, 0);
+			textout_ex(framebuf, zfont, (char*)left_arrow_str, 96, 60, 3, -1);
 		}
 		if (listpos + 3 < savecnt) {
-			textout_ex(framebuf, zfont, (char*)right_arrow_str, 176, 60, 3, 0);
+			textout_ex(framebuf, zfont, (char*)right_arrow_str, 176, 60, 3, -1);
 		}
-		textprintf_ex(framebuf, zfont, 112, 60, 3, 0, "%2d - %-2d", listpos + 1, listpos + 3);
+		textprintf_ex(framebuf, zfont, 112, 60, 3, -1, "%2d - %-2d", listpos + 1, listpos + 3);
 	}
 }
 
 static void draw_cursor(int pos, int mode) {
-	int cs = (mode == 3) ? 13 : 9;
 	if (pos < 3) {
-		overtile8(framebuf, 0, 40, pos * 24 + 77, cs, 0);
+		overtile8(framebuf, 0, 40, pos * 24 + 77, 1, 0);
 	} else {
-		overtile8(framebuf, 0, 40, (pos - 3) * 16 + 153, cs, 0);
+		overtile8(framebuf, 0, 40, (pos - 3) * 16 + 153, 1, 0);
 	}
 }
 
@@ -570,18 +557,12 @@ static bool register_name() {
 	++savecnt;
 	listpos = (s / 3) * 3;
 
-	int pos = s % 3;
 	int y = 72;
 	int x = 0;
 	int spos = 0;
 	char name[9];
 
-	rectfill(framebuf, 32, 56, 223, 151, 0);
-	list_saves();
-	blit(framebuf, scrollbuf, 0, 0, 0, 0, 256, 224);
-
 	memset(name, 0, 9);
-	register_mode();
 	clear_keybuf();
 	refreshpal = true;
 	bool done = false;
@@ -595,26 +576,10 @@ static bool register_name() {
 	int letter_grid_spacing = 16;
 	const char* letter_grid = "ABCDEFGHIJKLMNOPQRSTUVWXYZ-.,!'&.0123456789 ";
 
-	BITMAP* info = create_bitmap_ex(8, 168, 32);
-	clear_bitmap(info);
-	blit(framebuf, info, 40, pos * 24 + 70, 0, 0, 168, 26);
-	rectfill(framebuf, 40, 64, 216, 192, 31);
-	rectfill(framebuf, 96, 60, 183, 67, 45);
-
-	int i = pos * 24 + 70;
-	do {
-		blit(info, framebuf, 0, 0, 40, i, 168, 32);
-		advanceframe();
-		i -= pos + pos;
-	} while (pos && i >= 70);
-
 	clear_bitmap(framebuf);
 	blueframe(framebuf, 24, 48, 26, 8);
 	textout_ex(framebuf, zfont, " NAME ", 80, 48, 1, 0);
 	textout_ex(framebuf, zfont, " LIFE ", 152, 48, 1, 0);
-
-	blit(info, framebuf, 0, 0, 40, 70, 168, 32);
-	destroy_bitmap(info);
 
 	blueframe(framebuf, letter_grid_x - letter_grid_offset, letter_grid_y - letter_grid_offset, 23, 9);
 
@@ -699,12 +664,12 @@ static bool register_name() {
 			int tx = (min(x, 7) << 3) + 72;
 			for (int dy = 0; dy < 8; dy++)
 				for (int dx = 0; dx < 8; dx++) {
-					if (framebuf->line[y + dy][tx + dx] == 0) {
-						framebuf->line[y + dy][tx + dx] = CSET(9) + 1;
+					if (framebuf->line[y + dy][tx + dx] != 1) {
+						framebuf->line[y + dy][tx + dx] = 3;
 					}
 
-					if (framebuf->line[y2 + dy][x2 + dx] == 0) {
-						framebuf->line[y2 + dy][x2 + dx] = CSET(9) + 1;
+					if (framebuf->line[y2 + dy][x2 + dx] != 1) {
+						framebuf->line[y2 + dy][x2 + dx] = 3;
 					}
 				}
 		}
@@ -712,7 +677,7 @@ static bool register_name() {
 		draw_cursor(0, 0);
 		advanceframe();
 
-		if (Quit) {
+		if (Status) {
 			cancel = true;
 		}
 
@@ -786,18 +751,16 @@ static int game_details(int file) {
 	if (saves[file].quest == 0) {
 		return 0;
 	}
-	BITMAP* info = create_bitmap_ex(8, 168, 32);
-	clear_bitmap(info);
-	blit(framebuf, info, 40, pos * 24 + 70, 0, 0, 168, 26);
-	rectfill(info, 40, 0, 168, 1, 0);
-	rectfill(info, 0, 24, 39, 25, 0);
-	rectfill(info, 0, 0, 7, 15, 0);
-	rectfill(framebuf, 40, 70, 216, 192, 0);
-	rectfill(framebuf, 96, 60, 183, 67, 0);
+	BITMAP* info = create_bitmap_ex(8, 160, 26);
+	blit(framebuf, info, 48, pos * 24 + 70, 0, 0, 160, 26);
+	rectfill(framebuf, 40, 60, 216, 192, 0);
+	blueframe(framebuf, 24, 48, 26, 20);
+	textout_ex(framebuf, zfont, " NAME ", 80, 48, 1, 0);
+	textout_ex(framebuf, zfont, " LIFE ", 152, 48, 1, 0);
 
 	int i = pos * 24 + 70;
 	do {
-		blit(info, framebuf, 0, 0, 40, i, 168, 32);
+		blit(info, framebuf, 0, 0, 48, i, 160, 26);
 		advanceframe();
 		i -= pos + pos;
 	} while (pos && i >= 70);
@@ -806,38 +769,36 @@ static int game_details(int file) {
 	char title[23];
 	strncpy(title, saves[file].title, 23);
 	title[22] = '\0';
-	textout_ex(framebuf, zfont, title, 40, 104, 1, 0);
+	textout_ex(framebuf, zfont, title, 40, 104, 1, -1);
 
-	textout_ex(framebuf, zfont, "FILE NAME", 40, 112, 3, 0);
-	textout_ex(framebuf, zfont, "QUEST VER", 40, 120, 3, 0);
-	textout_ex(framebuf, zfont, "PLAY TIME", 40, 128, 3, 0);
+	textout_ex(framebuf, zfont, "FILE NAME", 40, 112, 3, -1);
+	textout_ex(framebuf, zfont, "QUEST VER", 40, 120, 3, -1);
+	textout_ex(framebuf, zfont, "PLAY TIME", 40, 128, 3, -1);
 
-	textout_ex(framebuf, zfont, saves[file].qstpath, 120, 112, 1, 0);
-	textout_ex(framebuf, zfont, saves[file].version, 120, 120, 1, 0);
+	textout_ex(framebuf, zfont, saves[file].qstpath, 120, 112, 1, -1);
+	textout_ex(framebuf, zfont, saves[file].version, 120, 120, 1, -1);
 
 	if (!saves[file].hasplayed) {
-		textout_ex(framebuf, zfont, "Empty Game", 120, 128, 1, 0);
+		textout_ex(framebuf, zfont, "Empty Game", 120, 128, 1, -1);
 	} else if (!saves[file].timevalid) {
-		textout_ex(framebuf, zfont, "Time Unknown", 120, 128, 1, 0);
+		textout_ex(framebuf, zfont, "Time Unknown", 120, 128, 1, -1);
 	} else {
-		textout_ex(framebuf, zfont, time_str(saves[file].time), 120, 128, 1, 0);
+		textout_ex(framebuf, zfont, time_str(saves[file].time), 120, 128, 1, -1);
 	}
 
 	if (saves[file].cheat) {
-		textout_ex(framebuf, zfont, "(Cheats)", 120, 136, 1, 0);
+		textout_ex(framebuf, zfont, "(Cheats)", 120, 136, 1, -1);
 	}
 
-	textout_ex(framebuf, zfont, "START: PLAY QUEST", 56, 152, 1, 0);
-	textout_ex(framebuf, zfont, "    B: CANCEL", 56, 168, 1, 0);
+	textout_ex(framebuf, zfont, "START: PLAY QUEST", 56, 152, 1, -1);
+	textout_ex(framebuf, zfont, "    B: CANCEL", 56, 168, 1, -1);
 
-	while (!Quit) {
+	while (!Status) {
 		advanceframe();
 		if (rBbtn()) {
-			blit(scrollbuf, framebuf, 0, 0, 0, 0, 256, 224);
 			return 0;
 		}
 		if (rSbtn()) {
-			blit(framebuf, scrollbuf, 0, 0, 0, 0, 256, 224);
 			return 1;
 		}
 	}
@@ -966,7 +927,7 @@ static void select_game() {
 				}
 			}
 		}
-	} while (!Quit && !done);
+	} while (!Status && !done);
 }
 
 /**************************************/
@@ -974,9 +935,9 @@ static void select_game() {
 /**************************************/
 
 void titlescreen() {
-	int q = Quit;
+	int q = Status;
 
-	Quit = 0;
+	Status = 0;
 	Playing = Paused = false;
 
 	if (q == qRESUME) {
@@ -991,17 +952,14 @@ void titlescreen() {
 	}
 
 	if (q == qRESET) {
-		show_subscreen_dmap_dots = true;
-		show_subscreen_numbers = true;
-		show_subscreen_items = true;
-		show_subscreen_life = true;
+		reset_status();
 	}
 
-	if (!Quit) {
+	if (!Status) {
 		select_game();
 	}
 
-	if (!Quit) {
+	if (!Status) {
 		init_game();
 	}
 
@@ -1017,7 +975,7 @@ int selection_menu() {
 	int f = -1;
 	int htile = 2;
 	bool done = false;
-	Quit = 0;
+	Status = 0;
 
 	do {
 		if (f == -1) {
@@ -1057,7 +1015,7 @@ int selection_menu() {
 		rectfill(framebuf, 72, 72, 79, 127, 0);
 		puttile8(framebuf, htile, 72, pos * 24 + 72, 1, 0);
 		advanceframe();
-	} while (!Quit && !done);
+	} while (!Status && !done);
 
 	return pos;
 }
@@ -1073,12 +1031,12 @@ void game_over() {
 
 	int pos = selection_menu();
 
-	reset_combo_animations();
+	reset_status();
 	clear_bitmap(framebuf);
 	advanceframe();
 
-	if (!Quit) {
-		Quit = pos ? qQUIT : qCONT;
+	if (!Status) {
+		Status = pos ? qQUIT : qCONT;
 		if (pos == 1) {
 			game.cheat |= cheat;
 			saves[currgame] = game;
@@ -1090,16 +1048,19 @@ void game_over() {
 
 void go_quit() {
 	clear_to_color(screen, BLACK);
-	//loadfullpal();
 	clear_bitmap(framebuf);
 
 	int pos = selection_menu();
 
+	// if not resuming...
+	if (pos) {
+		reset_status();
+	}
 	clear_bitmap(framebuf);
 	advanceframe();
 
-	if (!Quit) {
-		Quit = pos ? qQUIT : qRESUME;
+	if (!Status) {
+		Status = pos ? qQUIT : qRESUME;
 		if (pos == 1) {
 			game.cheat |= cheat;
 			saves[currgame] = game;

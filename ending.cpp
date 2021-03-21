@@ -46,7 +46,7 @@ void putendmsg(const char* s, int x, int y, int speed, void(proc)()) {
 	int i = 0;
 	int c = strlen(s) * speed;
 
-	for (int f = 0; f < c && !Quit; f++) {
+	for (int f = 0; f < c && !Status; f++) {
 		if ((f % speed) == 0) {
 			if (s[i] != ' ') {
 				sfx(WAV_MSG);
@@ -124,7 +124,7 @@ void ending() {
 	music_stop();
 	kill_sfx();
 	sfx(WAV_ZELDA);
-	Quit = 0;
+	Status = 0;
 
 	game.cheat |= (cheat > 1) ? 1 : 0;
 
@@ -157,7 +157,7 @@ void ending() {
 		}
 		draw_screen(tmpscr, 0, 0);
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			return;
 		}
 	}
@@ -240,7 +240,7 @@ void ending() {
 			put_triforce();
 		}
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			return;
 		}
 	}
@@ -263,7 +263,7 @@ void ending() {
 			blit(tmp_bmp, framebuf, 0, 0, 120, 113, 32, 32);
 		}
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			return;
 		}
 	}
@@ -355,7 +355,7 @@ void ending() {
 		}
 
 		if (f == 112) {                                         // after subscreen has scrolled away
-			init_NES_mode();
+			loadfullpal();
 			loadpalset(9, pSprite(spPILE));
 			endingpal();
 		}
@@ -365,7 +365,7 @@ void ending() {
 		}
 		blit(scrollbuf, framebuf, 0, 0, 0, 0, 256, 224);
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			return;
 		}
 		rSbtn();
@@ -381,11 +381,12 @@ void ending() {
 		}
 
 		advanceframe();
-		if (Quit) {
+		if (Status) {
 			return;
 		}
 	} while (!rSbtn());
 
+	reset_status();
 	ringcolor();
 	load_game(&game);
 	load_game_icon(&game);
