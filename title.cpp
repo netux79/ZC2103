@@ -558,9 +558,8 @@ static bool register_name() {
 	int y = 72;
 	int x = 0;
 	int spos = 0;
-	char name[9];
+	char name[9] = "        ";
 
-	memset(name, 0, 9);
 	clear_keybuf();
 	refreshpal = true;
 	bool done = false;
@@ -639,16 +638,18 @@ static bool register_name() {
 			}
 			sfx(WAV_PLACE);
 		} else if (rSbtn()) {
-			done = true;
-			int ltrs = 0;
-			for (int i = 0; i < 8; i++) {
-				if (name[i] != ' ' && name[i] != 0) {
-					++ltrs;
+			for (int i = 7; i >= 0; i--) {
+				if (name[i] != ' ') {
+					// Found name is not empty
+					done = true;
+					break;
+				} else {
+					name[i] = '\0';
 				}
 			}
-			if (!ltrs) {
-				cancel = true;
-			}
+
+			// cancel if name is empty
+			cancel = !done;
 		}
 
 		strcpy(saves[s].name, name);
@@ -660,7 +661,7 @@ static bool register_name() {
 
 		if (frame & 8) {
 			int tx = (min(x, 7) << 3) + 72;
-			for (int dy = 0; dy < 8; dy++)
+			for (int dy = 0; dy < 8; dy++) {
 				for (int dx = 0; dx < 8; dx++) {
 					if (framebuf->line[y + dy][tx + dx] != 1) {
 						framebuf->line[y + dy][tx + dx] = 3;
@@ -670,6 +671,7 @@ static bool register_name() {
 						framebuf->line[y2 + dy][x2 + dx] = 3;
 					}
 				}
+			}
 		}
 
 		draw_cursor(0, 0);
@@ -681,7 +683,7 @@ static bool register_name() {
 
 	} while (!done && !cancel);
 
-	if (!cancel) {
+	if (done) {
 		saves[s].quest = 0xFF;
 		strncpy(saves[s].qstpath, get_filename(qstpath), 80);
 		load_game(saves + s);
