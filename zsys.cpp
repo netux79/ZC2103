@@ -171,7 +171,7 @@ static int rand_007(int method) {
 //   1 - srcfile not opened
 //   2 - destfile not opened
 //
-int encode_file_007(char* srcfile, char* destfile, unsigned int key, const char* header, int method) {
+int encode_file_007(const char* srcfile, const char* destfile, unsigned int key, const char* header, int method) {
 	FILE* src, *dest;
 	int tog = 0, c, r = 0;
 	short c1 = 0, c2 = 0;
@@ -241,7 +241,7 @@ int encode_file_007(char* srcfile, char* destfile, unsigned int key, const char*
 //   5 - checksum mismatch
 //   6 - header mismatch
 //
-int decode_file_007(char* srcfile, char* destfile, const char* header, int method, bool packed) {
+int decode_file_007(const char* srcfile, const char* destfile, const char* header, int method, bool packed) {
 	FILE* normal_src = NULL, *dest = NULL;
 	PACKFILE* packed_src = NULL;
 	int tog = 0, c, r = 0, err;

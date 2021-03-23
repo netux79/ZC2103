@@ -6300,7 +6300,6 @@ void LinkClass::gameover() {
 
 	action = none;
 	Playing = false;
-	Paused = false;
 	game.deaths = min(game.deaths + 1, 999);
 	dir = down;
 	music_stop();
@@ -6592,7 +6591,7 @@ void LinkClass::ganon_intro() {
 }
 
 void LinkClass::saved_Zelda() {
-	Playing = Paused = false;
+	Playing = false;
 	action = won;
 	Status = qWON;
 	hclk = 0;

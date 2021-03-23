@@ -45,23 +45,33 @@ extern sprite_list  guys, items, Ewpns, Lwpns, Sitems, chainlinks, decorations, 
 static char cfg_sect[] = "zeldadx";
 
 void load_game_configs() {
-	Akey = get_config_int(cfg_sect, "key_a", KEY_ALT);
-	Bkey = get_config_int(cfg_sect, "key_b", KEY_ZC_LCONTROL);
-	Skey = get_config_int(cfg_sect, "key_s", KEY_ENTER);
-	Lkey = get_config_int(cfg_sect, "key_l", KEY_Z);
-	Rkey = get_config_int(cfg_sect, "key_r", KEY_X);
-	Mkey = get_config_int(cfg_sect, "key_m", KEY_SPACE);
+	Akey = get_config_int(cfg_sect, "key_a", KEY_Z);
+	Bkey = get_config_int(cfg_sect, "key_b", KEY_X);
+	Lkey = get_config_int(cfg_sect, "key_l", KEY_A);
+	Rkey = get_config_int(cfg_sect, "key_r", KEY_S);
+	Ekey = get_config_int(cfg_sect, "key_select", KEY_ESC);
+	Skey = get_config_int(cfg_sect, "key_start", KEY_ENTER);
+	Mkey = get_config_int(cfg_sect, "key_map", KEY_SPACE);
 
 	DUkey = get_config_int(cfg_sect, "key_up",   KEY_UP);
 	DDkey = get_config_int(cfg_sect, "key_down", KEY_DOWN);
 	DLkey = get_config_int(cfg_sect, "key_left", KEY_LEFT);
 	DRkey = get_config_int(cfg_sect, "key_right", KEY_RIGHT);
 
-	digi_volume = get_config_int(cfg_sect, "sfx", 248);
+	JoyN = get_config_int(cfg_sect,"joy_idx", 0);
+	Abtn = get_config_int(cfg_sect,"joy_a", 0);
+	Bbtn = get_config_int(cfg_sect,"joy_b", 1);
+	Lbtn = get_config_int(cfg_sect,"joy_l", 6);
+	Rbtn = get_config_int(cfg_sect,"joy_r", 7);
+	Ebtn = get_config_int(cfg_sect,"joy_select", 10);
+	Sbtn = get_config_int(cfg_sect,"joy_start", 11);
+	Mbtn = get_config_int(cfg_sect,"joy_map", 3);
+
+	digi_volume = get_config_int(cfg_sect, "sfx", 255);
 	midi_volume = get_config_int(cfg_sect, "music", 255);
 	pan_style = get_config_int(cfg_sect, "pan", 1);
 
-	Capfps = get_config_int(cfg_sect, "capfps", 1) != 0;
+	Capfps = (bool)get_config_int(cfg_sect, "capfps", 1);
 	TransLayers = (bool)get_config_int(cfg_sect, "translayers", 1);
 	ShowFPS = (bool)get_config_int(cfg_sect, "showfps", 0);
 
@@ -76,21 +86,31 @@ void load_game_configs() {
 	scanlines = get_config_int(cfg_sect, "scanlines", 0);
 	HeartBeep = get_config_int(cfg_sect, "heartbeep", 1);
 
-	strcpy(qstpath, get_config_string(cfg_sect, "qst_dir", ""));
+	strcpy(qstpath, get_config_string(cfg_sect, "qst_path", ""));
 }
 
 void save_game_configs() {
 	set_config_int(cfg_sect, "key_a", Akey);
 	set_config_int(cfg_sect, "key_b", Bkey);
-	set_config_int(cfg_sect, "key_s", Skey);
 	set_config_int(cfg_sect, "key_l", Lkey);
 	set_config_int(cfg_sect, "key_r", Rkey);
-	set_config_int(cfg_sect, "key_m", Mkey);
+	set_config_int(cfg_sect, "key_select", Ekey);
+	set_config_int(cfg_sect, "key_start", Skey);
+	set_config_int(cfg_sect, "key_map", Mkey);
 
 	set_config_int(cfg_sect, "key_up",   DUkey);
 	set_config_int(cfg_sect, "key_down", DDkey);
 	set_config_int(cfg_sect, "key_left", DLkey);
 	set_config_int(cfg_sect, "key_right", DRkey);
+
+	set_config_int(cfg_sect,"joy_idx", JoyN);
+	set_config_int(cfg_sect,"joy_a", Abtn);
+	set_config_int(cfg_sect,"joy_b", Bbtn);
+	set_config_int(cfg_sect,"joy_l", Lbtn);
+	set_config_int(cfg_sect,"joy_r", Rbtn);
+	set_config_int(cfg_sect,"joy_select", Ebtn);
+	set_config_int(cfg_sect,"joy_start", Sbtn);
+	set_config_int(cfg_sect,"joy_map", Mbtn);
 
 	set_config_int(cfg_sect, "sfx", digi_volume);
 	set_config_int(cfg_sect, "music", midi_volume);
@@ -103,7 +123,7 @@ void save_game_configs() {
 	set_config_int(cfg_sect, "resy", resy);
 	set_config_int(cfg_sect, "sbig", sbig);
 	set_config_int(cfg_sect, "scanlines", scanlines);
-	set_config_string(cfg_sect, "qst_dir", qstpath);
+	set_config_string(cfg_sect, "qst_path", qstpath);
 	set_config_int(cfg_sect, "heartbeep", HeartBeep);
 }
 
@@ -2576,14 +2596,10 @@ void updatescr() {
 
 	if (black_opening_count < 0) { //shape is opening up
 		black_opening(framebuf, black_opening_x, black_opening_y, (66 + black_opening_count), 66);
-		if (Advance || (!Paused)) {
-			++black_opening_count;
-		}
+		++black_opening_count;
 	} else if (black_opening_count > 0) { //shape is closing
 		black_opening(framebuf, black_opening_x, black_opening_y, black_opening_count, 66);
-		if (Advance || (!Paused)) {
-			--black_opening_count;
-		}
+		--black_opening_count;
 	}
 
 	waitvsync();
@@ -2632,10 +2648,6 @@ void updatescr() {
 		show_fps();
 	}
 
-	if (Paused) {
-		show_paused();
-	}
-
 	if (panorama != NULL) {
 		destroy_bitmap(panorama);
 	}
@@ -2646,10 +2658,6 @@ void updatescr() {
 //----------------------------------------------------------------
 
 void f_Quit(int type) {
-	if (type == qQUIT && !Playing) {
-		return;
-	}
-
 	music_pause();
 	pause_all_sfx();
 
@@ -2661,34 +2669,24 @@ void f_Quit(int type) {
 //----------------------------------------------------------------
 
 void syskeys() {
+	// Update joystick state
+	poll_joystick();
+	
 	if (ReadKey(KEY_F1)) {
 		Capfps = !Capfps;
 	}
-
 	if (ReadKey(KEY_F2)) {
 		ShowFPS = !ShowFPS;
 	}
-	if (ReadKey(KEY_F3)) {
-		TransLayers = !TransLayers;
-	}
-	if (ReadKey(KEY_F4) && Playing)  {
-		Paused = true;
-		Advance = true;
-	}
-	if (ReadKey(KEY_F5) && Playing) {
-		Paused = !Paused;
-	}
-	if (ReadKey(KEY_F6)) {
+	bool eBtn = rEbtn();	
+	if ((ReadKey(KEY_F6) || eBtn) && Playing) {
 		f_Quit(qQUIT);
 	}
 	if (ReadKey(KEY_F7)) {
 		f_Quit(qRESET);
 	}
-	if (ReadKey(KEY_F8)) {
+	if (ReadKey(KEY_ESC) || (eBtn && !Playing)) {
 		f_Quit(qEXIT);
-	}
-	if (ReadKey(KEY_F9)) {
-		HeartBeep = !HeartBeep;
 	}
 
 	while (Playing && keypressed()) {
@@ -2703,16 +2701,7 @@ void advanceframe() {
 	if (zcmusic != NULL) {
 		zcmusic_poll();
 	}
-	while (Paused && !Advance && !Status) {
-		// have to call this, otherwise we'll get an infinite loop
-		syskeys();
-		// to keep fps constant
-		updatescr();
-		// to keep music playing
-		if (zcmusic != NULL) {
-			zcmusic_poll();
-		}
-	}
+
 	if (Status) {
 		return;
 	}
@@ -2721,7 +2710,6 @@ void advanceframe() {
 		++game.time;
 	}
 
-	Advance = false;
 	++frame;
 
 	syskeys();
@@ -3308,66 +3296,72 @@ static bool rButton(bool(proc)(), bool& flag) {
 	return false;
 }
 
-bool Up()     {
-	return key[DUkey];
+bool Up() {
+	return key[DUkey] || joy[JoyN].stick[0].axis[1].d1;
 }
-bool Down()   {
-	return key[DDkey];
+bool Down() {
+	return key[DDkey] || joy[JoyN].stick[0].axis[1].d2;
 }
-bool Left()   {
-	return key[DLkey];
+bool Left() {
+	return key[DLkey] || joy[JoyN].stick[0].axis[0].d1;
 }
-bool Right()  {
-	return key[DRkey];
+bool Right() {
+	return key[DRkey] || joy[JoyN].stick[0].axis[0].d2;
 }
-bool cAbtn()  {
-	return key[Akey];
+bool cAbtn() {
+	return key[Akey] || joybtn(Abtn);
 }
-bool cBbtn()  {
-	return key[Bkey];
+bool cBbtn() {
+	return key[Bkey] || joybtn(Bbtn);
 }
-bool cSbtn()  {
-	return key[Skey];
+bool cEbtn() {
+	return key[Ekey] || joybtn(Ebtn);
 }
-bool cLbtn()  {
-	return key[Lkey];
+bool cSbtn() {
+	return key[Skey] || joybtn(Sbtn);
 }
-bool cRbtn()  {
-	return key[Rkey];
+bool cLbtn() {
+	return key[Lkey] || joybtn(Lbtn);
 }
-bool cMbtn()  {
-	return key[Mkey];
+bool cRbtn() {
+	return key[Rkey] || joybtn(Rbtn);
+}
+bool cMbtn() {
+	return key[Mkey] || joybtn(Mbtn);
 }
 
-bool rUp()    {
+bool rUp() {
 	return rButton(Up, Udown);
 }
-bool rDown()  {
+bool rDown() {
 	return rButton(Down, Ddown);
 }
-bool rLeft()  {
+bool rLeft() {
 	return rButton(Left, Ldown);
 }
 bool rRight() {
 	return rButton(Right, Rdown);
 }
-bool rAbtn()  {
+bool rAbtn() {
 	return rButton(cAbtn, Adown);
 }
-bool rBbtn()  {
+bool rBbtn() {
 	return rButton(cBbtn, Bdown);
 }
-bool rSbtn()  {
+bool rEbtn() {
+	return rButton(cEbtn, Edown);
+}
+bool rSbtn() {
 	return rButton(cSbtn, Sdown);
 }
-bool rLbtn()  {
+bool rLbtn() {
 	return rButton(cLbtn, LBdown);
 }
-bool rRbtn()  {
+bool rRbtn() {
 	return rButton(cRbtn, RBdown);
 }
-bool rMbtn()  {
-	return rButton(cMbtn, Pdown);
+bool rMbtn() {
+	return rButton(cMbtn, Mdown);
 }
 
 bool drunk() {
@@ -3452,6 +3446,10 @@ bool ReadKey(int k) {
 		return true;
 	}
 	return false;
+}
+
+bool joybtn(int b) {
+	return joy[JoyN].button[b].b;
 }
 
 /*** end of zc_sys.cc ***/

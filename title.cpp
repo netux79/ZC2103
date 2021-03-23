@@ -169,8 +169,7 @@ int readsaves(gamedata* savedata, PACKFILE* f) {
 int load_savedgames() {
 	int ret;
 	PACKFILE* f = NULL;
-	char tmpbuf[L_tmpnam];
-	char* tmpfilename = tmpnam(tmpbuf);
+	const char* tmpfilename = "tmpsav";
 
 	int  section_id;
 	int  section_size;
@@ -378,8 +377,7 @@ int save_savedgames(bool freemem) {
 		return 1;
 	}
 
-	char tmpbuf[L_tmpnam];
-	char* tmpfilename = tmpnam(tmpbuf);
+	const char* tmpfilename = "tmpsav";
 
 	PACKFILE* f = pack_fopen(tmpfilename, F_WRITE_PACKED);
 	if (!f) {
@@ -938,7 +936,7 @@ void titlescreen() {
 	int q = Status;
 
 	Status = 0;
-	Playing = Paused = false;
+	Playing = false;
 
 	if (q == qRESUME) {
 		resume_game();
@@ -970,6 +968,7 @@ int selection_menu() {
 	textout_ex(framebuf, zfont, "CONTINUE", 88, 72, QMisc.colors.text, -1);
 	textout_ex(framebuf, zfont, "SAVE", 88, 96, QMisc.colors.text, -1);
 	textout_ex(framebuf, zfont, "RETRY", 88, 120, QMisc.colors.text, -1);
+	textout_ex(framebuf, zfont, "QUIT", 88, 144, QMisc.colors.text, -1);
 
 	int pos = 0;
 	int f = -1;
@@ -981,11 +980,11 @@ int selection_menu() {
 		if (f == -1) {
 			if (rUp())   {
 				sfx(WAV_CHINK);
-				pos = (pos == 0) ? 2 : pos - 1;
+				pos = (pos == 0) ? 3 : pos - 1;
 			}
 			if (rDown()) {
 				sfx(WAV_CHINK);
-				pos = (pos + 1) % 3;
+				pos = (pos + 1) % 4;
 			}
 			if (rSbtn()) {
 				++f;
@@ -1008,13 +1007,23 @@ int selection_menu() {
 					case 2:
 						textout_ex(framebuf, zfont, "RETRY", 88, 120, c, -1);
 						break;
+					case 3:
+						textout_ex(framebuf, zfont, "QUIT", 88, 144, c, -1);
+						break;
 				}
 			}
 		}
 
-		rectfill(framebuf, 72, 72, 79, 127, 0);
+		rectfill(framebuf, 72, 72, 79, 151, 0);
 		puttile8(framebuf, htile, 72, pos * 24 + 72, 1, 0);
 		advanceframe();
+		
+		// Need to avoid player hit the exit key 
+		// by mistake in this menu.
+		if (Status == qEXIT) {
+			Status = 0;
+		}
+
 	} while (!Status && !done);
 
 	return pos;
@@ -1036,12 +1045,16 @@ void game_over() {
 	advanceframe();
 
 	if (!Status) {
-		Status = pos ? qQUIT : qCONT;
-		if (pos == 1) {
-			game.cheat |= cheat;
-			saves[currgame] = game;
-			load_game_icon(saves + currgame);
-			save_savedgames(false);
+		switch (pos) {
+			case 0: Status = qCONT; break;
+			case 3: Status = qEXIT; break;
+			case 1:
+					game.cheat |= cheat;
+					saves[currgame] = game;
+					load_game_icon(saves + currgame);
+					save_savedgames(false);
+					// fall thru...
+			case 2: Status = qQUIT; break;
 		}
 	}
 }
@@ -1060,12 +1073,16 @@ void go_quit() {
 	advanceframe();
 
 	if (!Status) {
-		Status = pos ? qQUIT : qRESUME;
-		if (pos == 1) {
-			game.cheat |= cheat;
-			saves[currgame] = game;
-			load_game_icon(saves + currgame);
-			save_savedgames(false);
+		switch (pos) {
+			case 0: Status = qRESUME; break;
+			case 3: Status = qEXIT; break;
+			case 1:
+					game.cheat |= cheat;
+					saves[currgame] = game;
+					load_game_icon(saves + currgame);
+					save_savedgames(false);
+					// fall thru...
+			case 2: Status = qQUIT; break;
 		}
 	}
 }

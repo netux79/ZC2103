@@ -3555,8 +3555,7 @@ int readinitdata(PACKFILE* f, zquestheader* header, bool keepdata) {
 }
 
 int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midis) {
-	char tmpbuf[L_tmpnam];
-	char* tmpfilename = tmpnam(tmpbuf);
+	const char* tmpfilename = "tmp007";
 	bool catchup = false;
 	byte tempbyte;
 	zquestheader tempheader;

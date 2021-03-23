@@ -74,8 +74,8 @@ int homescr, currscr, frame = 0, currmap = 0, dlevel, warpscr, worldscr;
 int newscr_clk = 0, opendoors = 0, currdmap = 0, fadeclk = -1, currgame = 0, listpos = 0;
 int lastentrance = 0, lastentrance_dmap = 0, prices[3][2], loadside, Bwpn, Awpn;
 int digi_volume, midi_volume, currmidi, wand_x, wand_y, hasitem, whistleclk, pan_style;
-int Akey, Bkey, Skey, Lkey, Rkey, Mkey, Status = 0;
-int DUkey, DDkey, DLkey, DRkey;
+int Akey, Bkey, Ekey, Skey, Lkey, Rkey, Mkey, Abtn, Bbtn, Ebtn, Sbtn, Lbtn, Rbtn, Mbtn;
+int DUkey, DDkey, DLkey, DRkey, JoyN, Status = 0;
 int arrow_x, arrow_y, brang_x, brang_y, chainlink_x, chainlink_y;
 int hs_startx, hs_starty, hs_xdist, hs_ydist, clockclk, clock_zoras;
 int cheat_goto_map = 0, cheat_goto_screen = 0, swordhearts[4], currcset;
@@ -89,12 +89,12 @@ int checkx, checky;
 
 bool nosecretsounds = false;
 
-bool Capfps = false, Paused = false, Advance = false, ShowFPS = false, HeartBeep = true;
+bool Capfps = false, ShowFPS = false, HeartBeep = true;
 bool Playing, TransLayers;
 bool refreshpal, blockpath, wand_dead, loaded_guys, freeze_guys,
      loaded_enemies, drawguys, watch;
 bool darkroom = false, BSZ, COOLSCROLL;                     //,NEWSUBSCR;
-bool Udown, Ddown, Ldown, Rdown, Adown, Bdown, Sdown, Mdown, LBdown, RBdown, Pdown,
+bool Udown, Ddown, Ldown, Rdown, Adown, Bdown, Edown, Sdown, LBdown, RBdown, Mdown,
      fixed_door = false, hookshot_used = false, hookshot_frozen = false,
      pull_link = false, add_chainlink = false, del_chainlink = false, hs_fix = false,
      checklink = true, didpit = false,
@@ -1266,10 +1266,15 @@ int main(int argc, char* argv[]) {
 	clear_bitmap(pricesdisplaybuf);
 	Z_message("OK\n");
 
-	Z_message("Installing keyboard and timers...");
+	Z_message("Installing keyboard joystick and timers...");
 	if (install_keyboard() < 0) {
 		Z_error(allegro_error);
 	}
+	
+	if(install_joystick(JOY_TYPE_AUTODETECT) < 0) {
+		Z_error(allegro_error);
+	}
+	
 	Z_init_timers();
 	Z_message("OK\n");
 
@@ -1340,7 +1345,7 @@ int main(int argc, char* argv[]) {
 		}
 
 		tmpscr->flags3 = 0;
-		Playing = Paused = false;
+		Playing = false;
 
 		switch (Status) {
 			case qQUIT: {

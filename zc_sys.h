@@ -31,6 +31,7 @@ void LogVidMode();
 
 bool ReadKey(int k);
 void eat_buttons();
+bool joybtn(int b);
 
 bool Up();
 bool Down();
@@ -52,6 +53,7 @@ bool DrunkrRight();
 
 bool cAbtn();
 bool cBbtn();
+bool cEbtn();
 bool cSbtn();
 bool cLbtn();
 bool cRbtn();
@@ -65,6 +67,7 @@ bool DrunkcMbtn();
 
 bool rAbtn();
 bool rBbtn();
+bool rEbtn();
 bool rSbtn();
 bool rLbtn();
 bool rRbtn();
