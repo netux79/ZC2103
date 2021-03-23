@@ -52,7 +52,7 @@ itemdata* itemsbuf;
 wpndata* wpnsbuf;
 guydata* guysbuf;
 ZCHEATS zcheats;
-byte use_tiles;
+byte use_tiles, oldflags3;
 word animated_combo_table[MAXCOMBOS][2];                    //[0]=position in act2, [1]=original tile
 word animated_combo_table4[MAXCOMBOS][2];                   //[0]=combo, [1]=clock
 word animated_combos;
@@ -746,6 +746,8 @@ void resume_game() {
 	music_resume();
 	resume_all_sfx();
 	Playing = true;
+	// restore subscreen status
+	tmpscr->flags3 = oldflags3;
 }
 
 void restart_level() {
@@ -1343,7 +1345,9 @@ int main(int argc, char* argv[]) {
 			game_loop();
 			advanceframe();
 		}
-
+		
+		// save subscreen status
+		oldflags3 = tmpscr->flags3;
 		tmpscr->flags3 = 0;
 		Playing = false;
 
