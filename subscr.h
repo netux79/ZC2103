@@ -19,20 +19,20 @@ extern bool show_subscreen_numbers;
 extern bool show_subscreen_items;
 extern bool show_subscreen_life;
 
-void blueframe(BITMAP* dest, int x, int y, int xsize, int ysize);
-void drawgrid(BITMAP* dest, int c1, int c2);
-void draw_block(BITMAP* dest, int x, int y, int tile, int cset, int w, int h);
-void drawdmap(BITMAP* dest);
-void lifemeter(BITMAP* dest, int x, int y);
-void magicmeter(BITMAP* dest, int x, int y);
-void putxnum(BITMAP* dest, int x, int y, int num);
-inline void putdot(BITMAP* dest, int x, int y, int c) {
+void blueframe(BITMAP *dest, int x, int y, int xsize, int ysize);
+void drawgrid(BITMAP *dest, int c1, int c2);
+void draw_block(BITMAP *dest, int x, int y, int tile, int cset, int w, int h);
+void drawdmap(BITMAP *dest);
+void lifemeter(BITMAP *dest, int x, int y);
+void magicmeter(BITMAP *dest, int x, int y);
+void putxnum(BITMAP *dest, int x, int y, int num);
+inline void putdot(BITMAP *dest, int x, int y, int c) {
 	rectfill(dest, x, y, x + 2, y + 2, c);
 }
 
 /****  Subscr items code  ****/
 
-extern item* Bitem, *Aitem;
+extern item *Bitem, *Aitem;
 extern int   Bid, Aid;
 const byte tripiece[8 * 3] = {
 	112, 112, 0, 128, 112, 1, 96, 128, 0, 144, 128, 1,
@@ -53,11 +53,11 @@ const byte bmaptiles[8 * 5] = {
 
 void reset_subscr_items();
 void update_subscr_items();
-void putsubscr(BITMAP* dest, int x, int y, bool showtime = false);
-void puttriframe(BITMAP* dest);
+void putsubscr(BITMAP *dest, int x, int y, bool showtime = false);
+void puttriframe(BITMAP *dest);
 void markBmap(int dir);
-void draw_block(BITMAP* dest, int x, int y, int tile, int cset, int w, int h);
-void putBmap(BITMAP* dest);
+void draw_block(BITMAP *dest, int x, int y, int tile, int cset, int w, int h);
+void putBmap(BITMAP *dest);
 void load_Sitems();
 void put_topsubscr();
 void update_topsubscr(int y);

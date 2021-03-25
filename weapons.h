@@ -38,11 +38,11 @@ public:
 	virtual void onhit(bool clipped);
 	virtual void onhit(bool clipped, int special, int linkdir);
 	// override hit detection to check for invicibility, etc
-	virtual bool hit(sprite* s);
+	virtual bool hit(sprite *s);
 	virtual bool hit(int tx, int ty, int txsz, int tysz);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
-void putweapon(BITMAP* dest, int x, int y, int weapon_id, int type, int dir, int& aclk, int& aframe);
+void putweapon(BITMAP *dest, int x, int y, int weapon_id, int type, int dir, int &aclk, int &aframe);
 #endif
 /*** end of weapons.h ***/

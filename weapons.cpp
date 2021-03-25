@@ -1483,7 +1483,7 @@ void weapon::onhit(bool clipped, int special, int linkdir) {
 }
 
 // override hit detection to check for invicibility, etc
-bool weapon::hit(sprite* s) {
+bool weapon::hit(sprite *s) {
 	if (id == ewBrang && misc) {
 		return false;
 	}
@@ -1497,7 +1497,7 @@ bool weapon::hit(int tx, int ty, int txsz, int tysz) {
 	return (dead != -1) ? false : sprite::hit(tx, ty, txsz, tysz);
 }
 
-void weapon::draw(BITMAP* dest) {
+void weapon::draw(BITMAP *dest) {
 	if (flash == 1) {
 		if (!BSZ) {
 			cs = (id == wBeam) ? 6 : wpnsbuf[wid].csets & 15;
@@ -1688,7 +1688,7 @@ void weapon::draw(BITMAP* dest) {
 	sprite::draw(dest);
 }
 
-void putweapon(BITMAP* dest, int x, int y, int weapon_id, int type, int dir, int& aclk, int& aframe) {
+void putweapon(BITMAP *dest, int x, int y, int weapon_id, int type, int dir, int &aclk, int &aframe) {
 	weapon temp((fix)x, (fix)y, weapon_id, type, 0, dir);
 	temp.yofs = 0;
 	temp.clk2 = aclk;

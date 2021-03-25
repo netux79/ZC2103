@@ -83,7 +83,7 @@ class LinkClass : public sprite {
 	void do_rafting();
 	void do_hopping();
 	bool walkflag(int wx, int wy, int cnt, byte d);
-	bool checkmaze(mapscr* scr);
+	bool checkmaze(mapscr *scr);
 	void scrollscr(int dir, int destscr = -1, int destdmap = -1);
 	void scrollscr2(int dir, int destscr = -1, int destdmap = -1);
 	void walkdown();
@@ -93,7 +93,7 @@ class LinkClass : public sprite {
 	bool dowarp(int type);
 	void exitcave();
 	void stepout();
-	void masked_draw(BITMAP* dest);
+	void masked_draw(BITMAP *dest);
 	void getTriforce(int id);
 	void checkstab();
 	void fairycircle();
@@ -114,12 +114,12 @@ public:
 	int DrunkClock();
 	LinkClass();
 	void init();
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	virtual bool animate(int index);
 
 	void linkstep();
 	void stepforward(int steps);
-	void draw_under(BITMAP* dest);
+	void draw_under(BITMAP *dest);
 
 	// called by ALLOFF()
 	void resetflags(bool all);
@@ -164,7 +164,7 @@ public:
 	int  getNayrusLoveShieldClk();
 };
 
-void linktile(int* tile, int* flip, int state, int dir, int style);
+void linktile(int *tile, int *flip, int state, int dir, int style);
 void setuplinktiles(int style);
 
 bool isRaftFlag(int flag);

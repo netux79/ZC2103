@@ -57,14 +57,14 @@ void load_game_configs() {
 	DLkey = get_config_int(cfg_sect, "key_left", KEY_LEFT);
 	DRkey = get_config_int(cfg_sect, "key_right", KEY_RIGHT);
 
-	JoyN = get_config_int(cfg_sect,"joy_idx", 0);
-	Abtn = get_config_int(cfg_sect,"joy_a", 0);
-	Bbtn = get_config_int(cfg_sect,"joy_b", 1);
-	Lbtn = get_config_int(cfg_sect,"joy_l", 6);
-	Rbtn = get_config_int(cfg_sect,"joy_r", 7);
-	Ebtn = get_config_int(cfg_sect,"joy_select", 10);
-	Sbtn = get_config_int(cfg_sect,"joy_start", 11);
-	Mbtn = get_config_int(cfg_sect,"joy_map", 3);
+	JoyN = get_config_int(cfg_sect, "joy_idx", 0);
+	Abtn = get_config_int(cfg_sect, "joy_a", 0);
+	Bbtn = get_config_int(cfg_sect, "joy_b", 1);
+	Lbtn = get_config_int(cfg_sect, "joy_l", 6);
+	Rbtn = get_config_int(cfg_sect, "joy_r", 7);
+	Ebtn = get_config_int(cfg_sect, "joy_select", 10);
+	Sbtn = get_config_int(cfg_sect, "joy_start", 11);
+	Mbtn = get_config_int(cfg_sect, "joy_map", 3);
 
 	digi_volume = get_config_int(cfg_sect, "sfx", 255);
 	midi_volume = get_config_int(cfg_sect, "music", 255);
@@ -102,14 +102,14 @@ void save_game_configs() {
 	set_config_int(cfg_sect, "key_left", DLkey);
 	set_config_int(cfg_sect, "key_right", DRkey);
 
-	set_config_int(cfg_sect,"joy_idx", JoyN);
-	set_config_int(cfg_sect,"joy_a", Abtn);
-	set_config_int(cfg_sect,"joy_b", Bbtn);
-	set_config_int(cfg_sect,"joy_l", Lbtn);
-	set_config_int(cfg_sect,"joy_r", Rbtn);
-	set_config_int(cfg_sect,"joy_select", Ebtn);
-	set_config_int(cfg_sect,"joy_start", Sbtn);
-	set_config_int(cfg_sect,"joy_map", Mbtn);
+	set_config_int(cfg_sect, "joy_idx", JoyN);
+	set_config_int(cfg_sect, "joy_a", Abtn);
+	set_config_int(cfg_sect, "joy_b", Bbtn);
+	set_config_int(cfg_sect, "joy_l", Lbtn);
+	set_config_int(cfg_sect, "joy_r", Rbtn);
+	set_config_int(cfg_sect, "joy_select", Ebtn);
+	set_config_int(cfg_sect, "joy_start", Sbtn);
+	set_config_int(cfg_sect, "joy_map", Mbtn);
 
 	set_config_int(cfg_sect, "sfx", digi_volume);
 	set_config_int(cfg_sect, "music", midi_volume);
@@ -146,7 +146,7 @@ void myvsync_callback() {
 END_OF_FUNCTION(myvsync_callback)
 
 void Z_init_timers() {
-	const char* err_str = "Couldn't install timer";
+	const char *err_str = "Couldn't install timer";
 
 	if (install_timer() < 0) {
 		Z_error(err_str);
@@ -991,7 +991,7 @@ void open_black_opening(int x, int y, bool wait) {
 	}
 }
 
-void black_opening(BITMAP* dest, int x, int y, int a, int max_a) {
+void black_opening(BITMAP *dest, int x, int y, int a, int max_a) {
 	clear_to_color(tmp_scr, BLACK);
 	int w = 256, h = 224;
 	switch (black_opening_shape) {
@@ -1024,7 +1024,7 @@ void black_opening(BITMAP* dest, int x, int y, int a, int max_a) {
 			int distance = max(abs(w / 2 - x), abs(h / 2 - y)) / 8;
 			for (int blockrow = 0; blockrow < 28; ++blockrow) { //30
 				for (int linerow = 0; linerow < 8; ++linerow) {
-					qword* triangleline = (qword*)(tmp_scr->line[(blockrow * 8 + linerow)]);
+					qword *triangleline = (qword *)(tmp_scr->line[(blockrow * 8 + linerow)]);
 					for (int blockcolumn = 0; blockcolumn < 32; ++blockcolumn) { //40
 						*triangleline = triangles[(screen_triangles[blockrow][blockcolumn] & 0xC000) >> 14]
 						                [min(max((((31 + distance) * (max_a - a) / max_a) + ((screen_triangles[blockrow][blockcolumn] & 0x0FFF) - 0x0100) - (15 + distance)), 0), 15)]
@@ -2394,8 +2394,7 @@ void draw_lens_under() {
 				case mfDIVE_ITEM:
 					if (get_bit(quest_rules, qr_LENSHINTS)) {
 					}
-					if (!getmapflag())
-					{
+					if (!getmapflag()) {
 						putitem2(framebuf, x, y, tmpscr->catchall, lens_hint_item[tmpscr->catchall][0], lens_hint_item[tmpscr->catchall][1], 0);
 					}
 					break;
@@ -2489,7 +2488,7 @@ void draw_lens_over() {
 //----------------------------------------------------------------
 
 void draw_wavy(int amplitude) {
-	BITMAP* wavebuf = create_bitmap_ex(8, 288, 224);
+	BITMAP *wavebuf = create_bitmap_ex(8, 288, 224);
 	clear_to_color(wavebuf, 0);
 	blit(framebuf, wavebuf, 0, 0, 16, 0, 256, 224);
 
@@ -2514,7 +2513,7 @@ void draw_fuzzy(int fuzz)
 // draws from right half of scrollbuf to framebuf
 {
 	int firstx, firsty, xstep, ystep, i, y, dx, dy;
-	byte* start, *si, *di;
+	byte *start, *si, *di;
 
 	if (fuzz < 1) {
 		fuzz = 1;
@@ -2600,7 +2599,7 @@ void updatescr() {
 	if (Link.DrunkClock()) {
 		draw_wavy(Link.DrunkClock() / (MAXDRUNKCLOCK / 32));
 	}
-	BITMAP* panorama = NULL;
+	BITMAP *panorama = NULL;
 
 	bool nosubscr = (tmpscr->flags3 & fNOSUBSCR) != 0;
 
@@ -2612,7 +2611,7 @@ void updatescr() {
 	}
 
 	if (scanlines && sbig) {
-		BITMAP* scanlinesbmp = create_bitmap_ex(8, 512, 448);
+		BITMAP *scanlinesbmp = create_bitmap_ex(8, 512, 448);
 		stretch_blit(nosubscr ? panorama : framebuf, scanlinesbmp, 0, 0, 256, 224, 0, 0, 512, 448);
 		for (int i = 0; i < 224; ++i) {
 			hline(scanlinesbmp, 0, i * 2 + 1, 512, BLACK);
@@ -2621,7 +2620,7 @@ void updatescr() {
 
 		destroy_bitmap(scanlinesbmp);
 	} else if (sbig) {
-		BITMAP* tempscreen = create_bitmap_ex(8, 512, 448);
+		BITMAP *tempscreen = create_bitmap_ex(8, 512, 448);
 		clear_bitmap(tempscreen);
 		stretch_blit(nosubscr ? panorama : framebuf, tempscreen, 0, 0, 256, 224, 0, 0, 512, 448);
 		blit(tempscreen, screen, 0, 0, scrx + 32 - 128, scry + 8 - 112, 512, 448);
@@ -2657,14 +2656,14 @@ void f_Quit(int type) {
 void syskeys() {
 	// Update joystick state
 	poll_joystick();
-	
+
 	if (ReadKey(KEY_F1)) {
 		Capfps = !Capfps;
 	}
 	if (ReadKey(KEY_F2)) {
 		ShowFPS = !ShowFPS;
 	}
-	bool eBtn = rEbtn();	
+	bool eBtn = rEbtn();
 	if ((ReadKey(KEY_F6) || eBtn) && Playing) {
 		f_Quit(qQUIT);
 	}
@@ -2740,7 +2739,7 @@ void wavyout() {
 	draw_screen(tmpscr, 0, 0);
 	putsubscr(framebuf, 0, 0);
 
-	BITMAP* wavebuf = create_bitmap_ex(8, 288, 224);
+	BITMAP *wavebuf = create_bitmap_ex(8, 288, 224);
 	clear_to_color(wavebuf, 0);
 	blit(framebuf, wavebuf, 0, 0, 16, 0, 256, 224);
 
@@ -2786,7 +2785,7 @@ void wavyin() {
 	draw_screen(tmpscr, 0, 0);
 	putsubscr(framebuf, 0, 0);
 
-	BITMAP* wavebuf = create_bitmap_ex(8, 288, 224);
+	BITMAP *wavebuf = create_bitmap_ex(8, 288, 224);
 	clear_to_color(wavebuf, 0);
 	blit(framebuf, wavebuf, 0, 0, 16, 0, 256, 224);
 
@@ -2971,7 +2970,7 @@ void LogVidMode() {
 	Z_message("Video Mode set: %s (%s)\n", str_a, str_b);
 }
 
-void color_layer(RGB* src, RGB* dest, char r, char g, char b, char pos, int from, int to) {
+void color_layer(RGB *src, RGB *dest, char r, char g, char b, char pos, int from, int to) {
 	PALETTE tmp;
 	for (int i = 0; i < 256; i++) {
 		tmp[i].r = r;
@@ -3062,7 +3061,7 @@ void play_DmapMusic() {
 #endif
 			strcat(tmfname, DMaps[currdmap].tmusic);
 
-			zcmusic = (ZCMUSIC*)zcmusic_load_file(tmfname);
+			zcmusic = (ZCMUSIC *)zcmusic_load_file(tmfname);
 
 			if (zcmusic != NULL) {
 				stop_midi();
@@ -3124,7 +3123,7 @@ void Z_init_sound() {
 		sfx_voice[i] = -1;
 	}
 	for (int i = 0; i < MUSIC_COUNT; i++) {
-		tunes[i].midi = (MIDI*)mididata[i].dat;
+		tunes[i].midi = (MIDI *)mididata[i].dat;
 	}
 	master_volume(digi_volume, midi_volume);
 }
@@ -3160,7 +3159,7 @@ bool sfx_init(int index) {
 
 	if (sfx_voice[index] == -1) {
 		// allocate voice
-		sfx_voice[index] = allocate_voice((SAMPLE*)sfxdata[index].dat);
+		sfx_voice[index] = allocate_voice((SAMPLE *)sfxdata[index].dat);
 	}
 
 	return sfx_voice[index] != -1;
@@ -3272,7 +3271,7 @@ int pan(int x) {
 /******* Input Handlers ********/
 /*******************************/
 
-static bool rButton(bool(proc)(), bool& flag) {
+static bool rButton(bool(proc)(), bool &flag) {
 	if (!proc()) {
 		flag = false;
 	} else if (!flag) {
@@ -3438,7 +3437,7 @@ bool joybtn(int b) {
 	return joy[JoyN].button[b].b;
 }
 
-char* time_str(dword time) {
+char *time_str(dword time) {
 	static char s[32];
 
 	dword secs = (time / 60) % 60;
@@ -3469,7 +3468,7 @@ float vbound(float x, float low, float high) {
 	return x;
 }
 
-int used_switch(int argc, char* argv[], const char* s) {
+int used_switch(int argc, char *argv[], const char *s) {
 	// assumes a switch won't be in argv[0]
 	for (int i = 1; i < argc; i++)
 		if (stricmp(argv[i], s) == 0) {
@@ -3479,7 +3478,7 @@ int used_switch(int argc, char* argv[], const char* s) {
 }
 
 // Returns the first no switch (-) argv param
-char* get_cmd_arg(int argc, char* argv[]) {
+char *get_cmd_arg(int argc, char *argv[]) {
 	// assumes a switch won't be in argv[0] since it is the exe name.
 	for (int i = 1; i < argc; i++)
 		if (argv[i][0] != '-') {
@@ -3490,13 +3489,13 @@ char* get_cmd_arg(int argc, char* argv[]) {
 
 char datapwd[8] = { char('l' + 11), char('o' + 22), char('n' + 33), char('g' + 44), char('t' + 55), char('a' + 66), char('n' + 77), char(0 + 88) };
 
-void resolve_password(char* pwd) {
+void resolve_password(char *pwd) {
 	for (int i = 0; i < 8; i++) {
 		pwd[i] -= (i + 1) * 11;
 	}
 }
 
-void set_bit(byte* bitstr, int bit, byte val) {
+void set_bit(byte *bitstr, int bit, byte val) {
 	bitstr += bit >> 3;
 	byte mask = 1 << (bit & 7);
 
@@ -3507,12 +3506,12 @@ void set_bit(byte* bitstr, int bit, byte val) {
 	}
 }
 
-int get_bit(byte* bitstr, int bit) {
+int get_bit(byte *bitstr, int bit) {
 	bitstr += bit >> 3;
 	return ((*bitstr) >> (bit & 7)) & 1;
 }
 
-void Z_error(const char* format, ...) {
+void Z_error(const char *format, ...) {
 	char buf[256];
 
 	va_list ap;
@@ -3527,7 +3526,7 @@ void Z_error(const char* format, ...) {
 	exit(1);
 }
 
-void Z_message(const char* format, ...) {
+void Z_message(const char *format, ...) {
 	char buf[2048];
 
 	va_list ap;
@@ -3588,8 +3587,8 @@ static int rand_007(int method) {
 //   1 - srcfile not opened
 //   2 - destfile not opened
 //
-int encode_file_007(const char* srcfile, const char* destfile, unsigned int key, const char* header, int method) {
-	FILE* src, *dest;
+int encode_file_007(const char *srcfile, const char *destfile, unsigned int key, const char *header, int method) {
+	FILE *src, *dest;
 	int tog = 0, c, r = 0;
 	short c1 = 0, c2 = 0;
 
@@ -3658,9 +3657,9 @@ int encode_file_007(const char* srcfile, const char* destfile, unsigned int key,
 //   5 - checksum mismatch
 //   6 - header mismatch
 //
-int decode_file_007(const char* srcfile, const char* destfile, const char* header, int method, bool packed) {
-	FILE* normal_src = NULL, *dest = NULL;
-	PACKFILE* packed_src = NULL;
+int decode_file_007(const char *srcfile, const char *destfile, const char *header, int method, bool packed) {
+	FILE *normal_src = NULL, *dest = NULL;
+	PACKFILE *packed_src = NULL;
 	int tog = 0, c, r = 0, err;
 	long size, i;
 	short c1 = 0, c2 = 0, check1, check2;

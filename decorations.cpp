@@ -141,7 +141,7 @@ bool dBushLeaves::animate(int index) {
 	return (clk++ >= 24);
 }
 
-void dBushLeaves::draw(BITMAP* dest) {
+void dBushLeaves::draw(BITMAP *dest) {
 	int t = wpnsbuf[iwBushLeaves].tile;
 	cs = wpnsbuf[iwBushLeaves].csets & 15;
 	for (int i = 0; i < 4; ++i) {
@@ -263,7 +263,7 @@ bool dFlowerClippings::animate(int index) {
 	return (clk++ >= 24);
 }
 
-void dFlowerClippings::draw(BITMAP* dest) {
+void dFlowerClippings::draw(BITMAP *dest) {
 	int t = wpnsbuf[iwFlowerClippings].tile;
 	cs = wpnsbuf[iwFlowerClippings].csets & 15;
 	for (int i = 0; i < 4; ++i) {
@@ -336,7 +336,7 @@ bool dGrassClippings::animate(int index) {
 	return (clk++ >= 12);
 }
 
-void dGrassClippings::draw(BITMAP* dest) {
+void dGrassClippings::draw(BITMAP *dest) {
 	int t = wpnsbuf[iwGrassClippings].tile;
 	cs = wpnsbuf[iwGrassClippings].csets & 15;
 	for (int i = 0; i < 3; ++i) {
@@ -384,7 +384,7 @@ bool dHammerSmack::animate(int index) {
 	return (clk++ >= 12);
 }
 
-void dHammerSmack::draw(BITMAP* dest) {
+void dHammerSmack::draw(BITMAP *dest) {
 	int t = wpnsbuf[iwHammerSmack].tile;
 	cs = wpnsbuf[iwHammerSmack].csets & 15;
 	flip = 0;
@@ -406,7 +406,7 @@ bool dTallGrass::animate(int index) {
 	        (COMBOTYPE(LinkX() + 15, LinkY() + 15) != cTALLGRASS));
 }
 
-void dTallGrass::draw(BITMAP* dest) {
+void dTallGrass::draw(BITMAP *dest) {
 	int t = wpnsbuf[iwTallGrass].tile * 4;
 	cs = wpnsbuf[iwTallGrass].csets & 15;
 	flip = 0;
@@ -434,7 +434,7 @@ bool dRipples::animate(int index) {
 	        (COMBOTYPE(LinkX() + 15, LinkY() + 15) != cSHALLOWWATER));
 }
 
-void dRipples::draw(BITMAP* dest) {
+void dRipples::draw(BITMAP *dest) {
 	int t = wpnsbuf[iwRipples].tile * 4;
 	cs = wpnsbuf[iwRipples].csets & 15;
 	flip = 0;
@@ -459,7 +459,7 @@ bool dNayrusLoveShield::animate(int index) {
 
 
 
-void dNayrusLoveShield::realdraw(BITMAP* dest, int draw_what) {
+void dNayrusLoveShield::realdraw(BITMAP *dest, int draw_what) {
 	if (misc != draw_what) {
 		return;
 	}
@@ -491,11 +491,11 @@ void dNayrusLoveShield::realdraw(BITMAP* dest, int draw_what) {
 	}
 }
 
-void dNayrusLoveShield::draw(BITMAP* dest) {
+void dNayrusLoveShield::draw(BITMAP *dest) {
 	realdraw(dest, 0);
 }
 
-void dNayrusLoveShield::draw2(BITMAP* dest) {
+void dNayrusLoveShield::draw2(BITMAP *dest) {
 	realdraw(dest, 1);
 }
 

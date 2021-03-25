@@ -38,7 +38,7 @@ bool isfloater(int id);
 
 class enemy : public sprite {
 public:
-	guydata* d;
+	guydata *d;
 	int  clk2, clk3, stunclk, hclk, sclk, timer;
 	int  hp, fading, superman, frate;
 	byte movestatus, item_set, grumble, foobyte;
@@ -70,15 +70,15 @@ public:
 	bool dont_draw();
 	// base drawing function to be used by all derived classes instead of
 	// sprite::draw()
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	// similar to the overblock function--can do up to a 32x32 sprite
-	void drawblock(BITMAP* dest, int mask);
-	virtual void drawshadow(BITMAP* dest, bool translucent);
-	void masked_draw(BITMAP* dest, int mx, int my, int mw, int mh);
+	void drawblock(BITMAP *dest, int mask);
+	virtual void drawshadow(BITMAP *dest, bool translucent);
+	void masked_draw(BITMAP *dest, int mx, int my, int mw, int mh);
 	// override hit detection to check for invicibility, stunned, etc
-	virtual bool hit(sprite* s);
+	virtual bool hit(sprite *s);
 	virtual bool hit(int tx, int ty, int txsz, int tysz);
-	virtual bool hit(weapon* w);
+	virtual bool hit(weapon *w);
 	//                         --==**==--
 	//   Movement routines that can be used by derived classes as needed
 	//                         --==**==--
@@ -145,7 +145,7 @@ class guy : public enemy {
 public:
 	guy(fix X, fix Y, int Id, int Clk, bool mg);            // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 /*******************************/
@@ -155,7 +155,7 @@ public:
 class eFire : public enemy {
 public:
 	eFire(fix X, fix Y, int Id, int Clk);                   // : enemy(X,Y,Id,Clk)
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 void removearmos(int ax, int ay);
@@ -165,7 +165,7 @@ public:
 	bool fromstatue;
 	eArmos(fix X, fix Y, int Id, int Clk);                  // : enemy(X,Y,Id,0)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eGhini : public enemy {
@@ -173,7 +173,7 @@ public:
 	int ox, oy, c;
 	eGhini(fix X, fix Y, int Id, int Clk);                  // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	virtual void kickbucket();
 };
 
@@ -185,15 +185,15 @@ public:
 
 	eTektite(fix X, fix Y, int Id, int Clk);                // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void drawshadow(BITMAP* dest, bool translucent);
-	virtual void draw(BITMAP* dest);
+	virtual void drawshadow(BITMAP *dest, bool translucent);
+	virtual void draw(BITMAP *dest);
 };
 
 class eItemFairy : public enemy {
 public:
 	eItemFairy(fix X, fix Y, int Id, int Clk);              // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class ePeahat : public enemy {
@@ -201,8 +201,8 @@ public:
 	int ox, oy, moving_superman, c;
 	ePeahat(fix X, fix Y, int Id, int Clk);                 // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void drawshadow(BITMAP* dest, bool translucent);
-	virtual void draw(BITMAP* dest);
+	virtual void drawshadow(BITMAP *dest, bool translucent);
+	virtual void draw(BITMAP *dest);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 };
 
@@ -212,21 +212,21 @@ public:
 	eLeever(fix X, fix Y, int Id, int Clk);                 // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
 	bool canplace(int d);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eGel : public enemy {
 public:
 	eGel(fix X, fix Y, int Id, int Clk);                    // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eZol : public enemy {
 public:
 	eZol(fix X, fix Y, int Id, int Clk);                    // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 };
 
@@ -235,14 +235,14 @@ public:
 	int clk4;
 	eGelTrib(fix X, fix Y, int Id, int Clk);                // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eZolTrib : public enemy {
 public:
 	eZolTrib(fix X, fix Y, int Id, int Clk);                // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 };
 
@@ -253,7 +253,7 @@ public:
 	virtual bool animate(int index);
 	void wallm_crawl();
 	void grablink();
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eTrap : public enemy {
@@ -263,7 +263,7 @@ public:
 	virtual bool animate(int index);
 	bool trapmove(int ndir);
 	bool clip();
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 };
 
@@ -273,7 +273,7 @@ public:
 	virtual bool animate(int index);
 	bool trapmove(int ndir);
 	bool clip();
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 };
 
@@ -281,8 +281,8 @@ class eRock : public enemy {
 public:
 	eRock(fix X, fix Y, int Id, int Clk);                   // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void drawshadow(BITMAP* dest, bool translucent);
-	virtual void draw(BITMAP* dest);
+	virtual void drawshadow(BITMAP *dest, bool translucent);
+	virtual void draw(BITMAP *dest);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 };
 
@@ -293,20 +293,20 @@ class eFBall : public enemy {
 public:
 	eFBall(fix X, fix Y, int Id, int Clk);                  // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eTrigger : public enemy {
 public:
 	eTrigger(fix X, fix Y, int Id, int Clk);                // : enemy(X,Y,Id,Clk)
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eNPC : public enemy {
 public:
 	eNPC(fix X, fix Y, int Id, int Clk);                    // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 };
 
@@ -315,7 +315,7 @@ public:
 	eZora(fix X, fix Y, int Id, int Clk);                   // : enemy(X,Y,Id,0)
 	virtual void facelink();
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eStalfos : public enemy {
@@ -323,21 +323,21 @@ public:
 	bool doubleshot;
 	eStalfos(fix X, fix Y, int Id, int Clk);                // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eGibdo : public enemy {
 public:
 	eGibdo(fix X, fix Y, int Id, int Clk);                  // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eBubble : public enemy {
 public:
 	eBubble(fix X, fix Y, int Id, int Clk);                 // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eRope : public enemy {
@@ -346,7 +346,7 @@ public:
 	eRope(fix X, fix Y, int Id, int Clk);                   // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
 	void charge_attack();
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eKeese : public enemy {
@@ -354,16 +354,16 @@ public:
 	int ox, oy, c;
 	eKeese(fix X, fix Y, int Id, int Clk);                  // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void drawshadow(BITMAP* dest, bool translucent);
-	virtual void draw(BITMAP* dest);
+	virtual void drawshadow(BITMAP *dest, bool translucent);
+	virtual void draw(BITMAP *dest);
 };
 
 class eVire : public enemy {
 public:
 	eVire(fix X, fix Y, int Id, int Clk);                   // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void drawshadow(BITMAP* dest, bool translucent);
-	virtual void draw(BITMAP* dest);
+	virtual void drawshadow(BITMAP *dest, bool translucent);
+	virtual void draw(BITMAP *dest);
 	void vire_hop();
 };
 
@@ -373,16 +373,16 @@ public:
 	int clk4;
 	eKeeseTrib(fix X, fix Y, int Id, int Clk);              // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void drawshadow(BITMAP* dest, bool translucent);
-	virtual void draw(BITMAP* dest);
+	virtual void drawshadow(BITMAP *dest, bool translucent);
+	virtual void draw(BITMAP *dest);
 };
 
 class eVireTrib : public enemy {
 public:
 	eVireTrib(fix X, fix Y, int Id, int Clk);               // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void drawshadow(BITMAP* dest, bool translucent);
-	virtual void draw(BITMAP* dest);
+	virtual void drawshadow(BITMAP *dest, bool translucent);
+	virtual void draw(BITMAP *dest);
 	void vire_hop();
 
 };
@@ -392,8 +392,8 @@ public:
 	fix fy, shadowdistance;
 	ePolsVoice(fix X, fix Y, int Id, int Clk);              // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void drawshadow(BITMAP* dest, bool translucent);
-	virtual void draw(BITMAP* dest);
+	virtual void drawshadow(BITMAP *dest, bool translucent);
+	virtual void draw(BITMAP *dest);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 	void polsvoice_hop();
 };
@@ -403,7 +403,7 @@ public:
 	bool haslink;
 	eLikeLike(fix X, fix Y, int Id, int Clk);               // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	void eatlink();
 };
 
@@ -411,28 +411,28 @@ class eShooter : public enemy {
 public:
 	eShooter(fix X, fix Y, int Id, int Clk);                // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eOctorok : public enemy {
 public:
 	eOctorok(fix X, fix Y, int Id, int Clk);                // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eMoblin : public enemy {
 public:
 	eMoblin(fix X, fix Y, int Id, int Clk);                // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eLynel : public enemy {
 public:
 	eLynel(fix X, fix Y, int Id, int Clk);                  // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eGoriya : public enemy {
@@ -441,7 +441,7 @@ public:
 	virtual bool animate(int index);
 	bool WeaponOut();
 	void KillWeapon();
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eDarknut : public enemy {
@@ -451,7 +451,7 @@ private:
 public:
 	eDarknut(fix X, fix Y, int Id, int Clk);                // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 };
 
@@ -463,7 +463,7 @@ public:
 	eWizzrobe(fix X, fix Y, int Id, int Clk);               // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
 	void wizzrobe_attack();
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 };
 
@@ -475,7 +475,7 @@ class eDodongo : public enemy {
 public:
 	eDodongo(fix X, fix Y, int Id, int Clk);                // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 	virtual void death_sfx();
 };
@@ -485,7 +485,7 @@ public:
 	int previous_dir;
 	eDodongo2(fix X, fix Y, int Id, int Clk);               // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 	virtual void death_sfx();
 };
@@ -495,8 +495,8 @@ public:
 	int fbx; //fireball x position
 	eAquamentus(fix X, fix Y, int Id, int Clk);             // : enemy((fix)176,(fix)64,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
-	virtual bool hit(weapon* w);
+	virtual void draw(BITMAP *dest);
+	virtual bool hit(weapon *w);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 	virtual void death_sfx();
 };
@@ -505,7 +505,7 @@ class eGohma : public enemy {
 public:
 	eGohma(fix X, fix Y, int Id, int Clk);                  // : enemy((fix)128,(fix)48,Id,0)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 	virtual void death_sfx();
 };
@@ -514,14 +514,14 @@ class eLilDig : public enemy {
 public:
 	eLilDig(fix X, fix Y, int Id, int Clk);                 // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eBigDig : public enemy {
 public:
 	eBigDig(fix X, fix Y, int Id, int Clk);                 // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 };
 
@@ -531,9 +531,9 @@ public:
 	eGanon(fix X, fix Y, int Id, int Clk);                  // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
-	virtual void draw(BITMAP* dest);
-	void draw_guts(BITMAP* dest);
-	void draw_flash(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
+	void draw_guts(BITMAP *dest);
+	void draw_flash(BITMAP *dest);
 };
 
 void getBigTri();
@@ -557,7 +557,7 @@ public:
 	esMoldorm(fix X, fix Y, int Id, int Clk);               // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	virtual void death_sfx();
 };
 
@@ -577,7 +577,7 @@ public:
 	esLanmola(fix X, fix Y, int Id, int Clk);               // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eManhandla : public enemy {
@@ -589,7 +589,7 @@ public:
 	virtual bool animate(int index);
 	virtual void death_sfx();
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class esManhandla : public enemy {
@@ -598,7 +598,7 @@ public:
 	esManhandla(fix X, fix Y, int Id, int Clk);             // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class eGleeok : public enemy {
@@ -609,8 +609,8 @@ public:
 	virtual bool animate(int index);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 	virtual void death_sfx();
-	virtual void draw(BITMAP* dest);
-	virtual void draw2(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
+	virtual void draw2(BITMAP *dest);
 };
 
 // head class
@@ -623,8 +623,8 @@ public:
 	esGleeok(fix X, fix Y, int Id, int Clk);                // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
-	virtual void draw(BITMAP* dest);
-	virtual void draw2(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
+	virtual void draw2(BITMAP *dest);
 };
 
 class ePatra : public enemy {
@@ -635,7 +635,7 @@ public:
 	bool adjusted;
 	ePatra(fix X, fix Y, int Id, int Clk);                  // : enemy((fix)128,(fix)48,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 	virtual void death_sfx();
 };
@@ -646,7 +646,7 @@ public:
 	esPatra(fix X, fix Y, int Id, int Clk);                 // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class ePatraBS : public enemy {
@@ -656,7 +656,7 @@ public:
 	bool adjusted;
 	ePatraBS(fix X, fix Y, int Id, int Clk);                // : enemy((fix)128,(fix)48,Id,Clk)
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
 	virtual void death_sfx();
 };
@@ -667,7 +667,7 @@ public:
 	esPatraBS(fix X, fix Y, int Id, int Clk);               // : enemy(X,Y,Id,Clk)
 	virtual bool animate(int index);
 	virtual int takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 /**********************************/
@@ -691,7 +691,7 @@ bool hasMainGuy();
 void EatLink(int index);
 void GrabLink(int index);
 bool CarryLink();
-void movefairy(fix& x, fix& y, int misc);
+void movefairy(fix &x, fix &y, int misc);
 void killfairy(int misc);
 void addenemy(int x, int y, int id, int clk);
 bool checkpos(int id);

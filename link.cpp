@@ -30,7 +30,7 @@ enum {spr_standhold, spr_swimhold};
 enum {spr_hold1, spr_hold2};
 enum {las_original, las_bszelda, las_max};
 
-extern wpndata*    wpnsbuf;
+extern wpndata    *wpnsbuf;
 
 int swimspr, slashspr, linkspr;
 int walkspr[4][2];                                          //dir, tile/flip
@@ -42,7 +42,7 @@ int poundspr[4][2];                                         //dir, tile/flip
 int castingspr;
 int holdspr[2][2];                                          //stand/swim, tile/flip
 
-void linktile(int* tile, int* flip, int state, int dir, int style) {
+void linktile(int *tile, int *flip, int state, int dir, int style) {
 	switch (state) {
 		case ls_swim:
 			*tile = swimspr2[dir][spr_tile];
@@ -407,7 +407,7 @@ void LinkClass::init() {
 	drunkclk = 0;
 }
 
-void LinkClass::draw_under(BITMAP* dest) {
+void LinkClass::draw_under(BITMAP *dest) {
 	if (action == rafting) {
 		if (((dir == left) || (dir == right)) && (get_bit(quest_rules, qr_RLFIX))) {
 
@@ -431,7 +431,7 @@ void LinkClass::draw_under(BITMAP* dest) {
 	}
 }
 
-void LinkClass::draw(BITMAP* dest) {
+void LinkClass::draw(BITMAP *dest) {
 	if (tmpscr->flags3 & fINVISLINK) {
 		return;
 	}
@@ -587,7 +587,7 @@ void LinkClass::draw(BITMAP* dest) {
 					wy += 2;
 				}
 				if (isdungeon() && currscr < 128) {
-					BITMAP* sub = create_sub_bitmap(dest, 16, 72, 224, 144);
+					BITMAP *sub = create_sub_bitmap(dest, 16, 72, 224, 144);
 					overtile16(sub, t, x + wx - 16, y + wy - (72 - yofs), cs, f);
 					destroy_bitmap(sub);
 				} else {
@@ -683,7 +683,7 @@ void LinkClass::draw(BITMAP* dest) {
 				wy += 2;
 			}
 			if (isdungeon() && currscr < 128) {
-				BITMAP* sub = create_sub_bitmap(dest, 16, 72, 224, 144);
+				BITMAP *sub = create_sub_bitmap(dest, 16, 72, 224, 144);
 				overtile16(sub, t, x + wx - 16, y + wy - (72 - yofs), cs, f);
 				destroy_bitmap(sub);
 			} else {
@@ -803,10 +803,10 @@ void LinkClass::draw(BITMAP* dest) {
 	} while (a > PI / 2 && hearts < 8);
 }
 
-void LinkClass::masked_draw(BITMAP* dest) {
+void LinkClass::masked_draw(BITMAP *dest) {
 	if (isdungeon() && currscr < 128 && (x < 16 || x > 224 || y < 18 || y > 146) && !get_bit(quest_rules, qr_FREEFORM)) {
 		// clip under doorways
-		BITMAP* sub = create_sub_bitmap(dest, 16, 72, 224, 144);
+		BITMAP *sub = create_sub_bitmap(dest, 16, 72, 224, 144);
 		if (sub != NULL) {
 			yofs -= 72;
 			xofs -= 16;
@@ -935,14 +935,14 @@ void LinkClass::checkstab() {
 	}
 	if (!get_bit(quest_rules, qr_NOITEMMELEE)) {
 		for (int j = 0; j < items.Count(); j++) {
-			if (((item*)items.spr(j))->pickup & ipTIMER) {
-				if (((item*)items.spr(j))->clk2 >= 32) {
+			if (((item *)items.spr(j))->pickup & ipTIMER) {
+				if (((item *)items.spr(j))->clk2 >= 32) {
 					if (items.spr(j)->hit(wx, wy, wxsz, wysz) || (attack == wWand && items.spr(j)->hit(x, y - 8, 16, 24))
 					        || (attack == wHammer && items.spr(j)->hit(x, y - 8, 16, 24))) {
 						getitem(items.spr(j)->id);
 						items.del(j);
 						for (int i = 0; i < Lwpns.Count(); i++) {
-							weapon* w = (weapon*)Lwpns.spr(i);
+							weapon *w = (weapon *)Lwpns.spr(i);
 							if (w->dragging == j) {
 								w->dragging = -1;
 							} else if (w->dragging > j) {
@@ -1090,7 +1090,7 @@ void LinkClass::check_slash_block(int bx, int by) {
 		return;
 	}
 
-	mapscr* s = tmpscr + ((currscr >= 128) ? 1 : 0);
+	mapscr *s = tmpscr + ((currscr >= 128) ? 1 : 0);
 
 	if ((flag >= 16) && (flag <= 31)) {
 		s->data[i] = s->secretcombo[(s->sflag[i]) - 16 + 4];
@@ -1164,7 +1164,7 @@ void LinkClass::check_wand_block(int bx, int by) {
 		return;
 	}
 
-	mapscr* s = tmpscr + ((currscr >= 128) ? 1 : 0);
+	mapscr *s = tmpscr + ((currscr >= 128) ? 1 : 0);
 
 	findentrance(bx, by, mfWAND, true);
 	findentrance(bx, by, mfSTRIKE, true);
@@ -1192,7 +1192,7 @@ void LinkClass::check_pound_block(int bx, int by) {
 		return;
 	}
 
-	mapscr* s = tmpscr + ((currscr >= 128) ? 1 : 0);
+	mapscr *s = tmpscr + ((currscr >= 128) ? 1 : 0);
 
 	if ((flag >= 16) && (flag <= 31)) {
 		s->data[i] = s->secretcombo[(s->sflag[i]) - 16 + 4];
@@ -1226,7 +1226,7 @@ void LinkClass::check_pound_block(int bx, int by) {
 int LinkClass::EwpnHit() {
 	for (int i = 0; i < Ewpns.Count(); i++)
 		if (Ewpns.spr(i)->hit(x + 7, y + 7, 2, 2)) {
-			weapon* ew = (weapon*)(Ewpns.spr(i));
+			weapon *ew = (weapon *)(Ewpns.spr(i));
 			bool hitshield = false;
 			if ((ew->ignoreLink) == true) {
 				break;
@@ -1300,7 +1300,7 @@ int LinkClass::EwpnHit() {
 int LinkClass::LwpnHit() {                                  //only here to check magic hits
 	for (int i = 0; i < Lwpns.Count(); i++)
 		if (Lwpns.spr(i)->hit(x + 7, y + 7, 2, 2)) {
-			weapon* lw = (weapon*)(Lwpns.spr(i));
+			weapon *lw = (weapon *)(Lwpns.spr(i));
 			bool hitshield = false;
 			if ((lw->ignoreLink) == true) {
 				break;
@@ -1416,11 +1416,11 @@ void LinkClass::checkhit() {
 	}
 
 	for (int i = 0; i < Lwpns.Count(); i++) {
-		sprite* s = Lwpns.spr(i);
+		sprite *s = Lwpns.spr(i);
 
 		if (!get_bit(quest_rules, qr_FIREPROOFLINK)) {
 			if (s->id == wFire && (superman ? s->hit(x + 7, y + 7, 2, 2) : s->hit(this)) &&
-			        ((weapon*)(Lwpns.spr(i)))->type < 3) {
+			        ((weapon *)(Lwpns.spr(i)))->type < 3) {
 				if (NayrusLoveShieldClk <= 0) {
 					game.life = max(game.life - ((HP_PER_HEART / 2) >> current_item(itype_ring, true)), 0);
 				}
@@ -1442,7 +1442,7 @@ void LinkClass::checkhit() {
 			if (s->id == wBrang || s->id == wHookshot) {
 				int w = (s->id == wHookshot) ? 0 : current_item(itype_brang, true);
 				for (int j = 0; j < Ewpns.Count(); j++) {
-					sprite* t = Ewpns.spr(j);
+					sprite *t = Ewpns.spr(j);
 					if (s->hit(t->x + 7, t->y + 7, 2, 2)) {
 						switch (w) {
 							case 0:                                       //hookshot
@@ -1452,8 +1452,8 @@ void LinkClass::checkhit() {
 									case ewBrang:
 									case ewArrow:
 									case ewRock:
-										((weapon*)s)->dead = 1;
-										((weapon*)t)->onhit(true, 1, -1);
+										((weapon *)s)->dead = 1;
+										((weapon *)t)->onhit(true, 1, -1);
 										break;
 									case ewMagic:
 										break;
@@ -1464,8 +1464,8 @@ void LinkClass::checkhit() {
 									case ewBrang:
 									case ewArrow:
 									case ewRock:
-										((weapon*)s)->dead = 1;
-										((weapon*)t)->onhit(true, 1, -1);
+										((weapon *)s)->dead = 1;
+										((weapon *)t)->onhit(true, 1, -1);
 										break;
 									case ewFireball:
 									case ewSword:
@@ -1481,8 +1481,8 @@ void LinkClass::checkhit() {
 									case ewFireball:
 									case ewSword:
 									case ewMagic:
-										((weapon*)s)->dead = 1;
-										((weapon*)t)->onhit(true, 1, -1);
+										((weapon *)s)->dead = 1;
+										((weapon *)t)->onhit(true, 1, -1);
 										if (s->dummy_bool[0]) {
 											add_grenade(s->x, s->y, 0);
 											s->dummy_bool[0] = false;
@@ -1498,9 +1498,9 @@ void LinkClass::checkhit() {
 									case ewFireball:
 									case ewSword:
 									case ewMagic:
-										weapon* ew = ((weapon*)t);
+										weapon *ew = ((weapon *)t);
 										int oldid = ew->id;
-										((weapon*)s)->dead = 1;
+										((weapon *)s)->dead = 1;
 										ew->onhit(true, 2, ew->dir);
 										if (s->dummy_bool[0]) {
 											add_grenade(s->x, s->y, 1);
@@ -1570,7 +1570,7 @@ void LinkClass::checkhit() {
 			game.life = max(game.life - (lwpn_dp(hit) >> current_item(itype_ring, true)), 0);
 		}
 		hitdir = Lwpns.spr(hit)->hitdir(x, y, 16, 16, dir);
-		((weapon*)Lwpns.spr(hit))->onhit(false);
+		((weapon *)Lwpns.spr(hit))->onhit(false);
 		if (action == swimming || hopclk == 0xFF) {
 			action = swimhit;
 		} else {
@@ -1587,7 +1587,7 @@ void LinkClass::checkhit() {
 			game.life = max(game.life - (ewpn_dp(hit) >> current_item(itype_ring, true)), 0);
 		}
 		hitdir = Ewpns.spr(hit)->hitdir(x, y, 16, 16, dir);
-		((weapon*)Ewpns.spr(hit))->onhit(false);
+		((weapon *)Ewpns.spr(hit))->onhit(false);
 		if (action == swimming || hopclk == 0xFF) {
 			action = swimhit;
 		} else {
@@ -1735,12 +1735,12 @@ bool LinkClass::animate(int index) {
 		if (hookshot_used == true) {
 			action = freeze;
 			if (pull_link == true) {
-				sprite* t;
+				sprite *t;
 				int i;
 				for (i = 0; i < Lwpns.Count() && (Lwpns.spr(i)->id != wHSHandle); i++);
 				t = Lwpns.spr(i);
 				for (i = 0; i < Lwpns.Count(); i++) {
-					sprite* s = Lwpns.spr(i);
+					sprite *s = Lwpns.spr(i);
 					if (s->id == wHookshot) {
 						if ((s->y) > y) {
 							y += 4;
@@ -2312,7 +2312,7 @@ bool LinkClass::startwpn(int wpn) {                         // an item index
 			}
 			--game.drupy;
 			Lwpns.add(new weapon((fix)wx, (fix)wy, wArrow, current_item(itype_arrow, true), (1 * DAMAGE_MULTIPLIER) << current_item(itype_arrow, true), dir));
-			((weapon*)Lwpns.spr(Lwpns.Count() - 1))->step *= current_item(itype_bow, true);
+			((weapon *)Lwpns.spr(Lwpns.Count() - 1))->step *= current_item(itype_bow, true);
 			sfx(WAV_ARROW, pan(wx));
 			break;
 
@@ -3746,7 +3746,7 @@ void LinkClass::checktouchblk() {
 		int di = ty + (tx >> 4);
 		int gc = 0;
 		for (int i = 0; i < guys.Count(); ++i) {
-			if (((enemy*)guys.spr(i))->mainguy) {
+			if (((enemy *)guys.spr(i))->mainguy) {
 				++gc;
 			}
 		}
@@ -4886,7 +4886,7 @@ void LinkClass::checkscroll() {
 
 // assumes current direction is in lastdir[3]
 // compares directions with scr->path and scr->exitdir
-bool LinkClass::checkmaze(mapscr* scr) {
+bool LinkClass::checkmaze(mapscr *scr) {
 	if (!(scr->flags & fMAZE)) {
 		return true;
 	}
@@ -4984,8 +4984,8 @@ void LinkClass::scrollscr(int dir, int destscr, int destdmap) {
 	screenscrolling = true;
 	tmpscr[1] = tmpscr[0];
 	memcpy(tmpscr3, tmpscr2, sizeof(mapscr) * 6);
-	mapscr* newscr = &tmpscr[0];
-	mapscr* oldscr = &tmpscr[1];
+	mapscr *newscr = &tmpscr[0];
+	mapscr *oldscr = &tmpscr[1];
 	int sx = 0, sy = 0, tx = 0, ty = 0, tx2 = 0, ty2 = 0;
 	int cx = 0, step = (isdungeon() && !get_bit(quest_rules, qr_FASTDNGN)) ? 2 : 4;
 	int scx = get_bit(quest_rules, qr_FASTDNGN) ? 30 : 0;
@@ -5555,12 +5555,12 @@ void dospecialmoney(int index) {
 			msgclk = msgpos = 0;
 			rectfill(msgdisplaybuf, 0, 0, msgdisplaybuf->w, 80, 0);
 			for (int i = 1; i < 4; i++) {
-				((item*)items.spr(i))->pickup = ipDUMMY;
+				((item *)items.spr(i))->pickup = ipDUMMY;
 			}
 			break;
 
 		case rMONEY:                                            // secret money
-			((item*)items.spr(0))->pickup = ipDUMMY;
+			((item *)items.spr(0))->pickup = ipDUMMY;
 			game.drupy += (prices[0][0] = tmpscr[tmp].catchall);
 			putprices(false);
 			setmapflag();
@@ -5577,7 +5577,7 @@ void dospecialmoney(int index) {
 			game.drupy += prices[index - 1][0];
 			putprices(true);
 			for (int i = 1; i < 4; i++) {
-				((item*)items.spr(i))->pickup = ipDUMMY;
+				((item *)items.spr(i))->pickup = ipDUMMY;
 			}
 		}
 		break;
@@ -5590,7 +5590,7 @@ void dospecialmoney(int index) {
 			setmapflag();
 			game.maxbombs += 4;
 			game.items[itype_bomb] = game.maxbombs;
-			((item*)items.spr(index))->pickup = ipDUMMY + ipFADE;
+			((item *)items.spr(index))->pickup = ipDUMMY + ipFADE;
 			fadeclk = 66;
 			msgstr = 0;
 			clear_bitmap(msgdisplaybuf);
@@ -5614,8 +5614,8 @@ void dospecialmoney(int index) {
 				game.maxlife = max(game.maxlife - HP_PER_HEART, (HP_PER_HEART));
 			}
 			setmapflag();
-			((item*)items.spr(0))->pickup = ipDUMMY + ipFADE;
-			((item*)items.spr(1))->pickup = ipDUMMY + ipFADE;
+			((item *)items.spr(0))->pickup = ipDUMMY + ipFADE;
+			((item *)items.spr(1))->pickup = ipDUMMY + ipFADE;
 			fadeclk = 66;
 			msgstr = 0;
 			clear_bitmap(msgdisplaybuf);
@@ -6100,7 +6100,7 @@ void getdraggeditem(int j) {
 	getitem(items.spr(j)->id);
 	items.del(j);
 	for (int i = 0; i < Lwpns.Count(); i++) {
-		weapon* w = (weapon*)Lwpns.spr(i);
+		weapon *w = (weapon *)Lwpns.spr(i);
 		if (w->dragging == j) {
 			w->dragging = -1;
 		} else if (w->dragging > j) {
@@ -6116,10 +6116,10 @@ void LinkClass::checkitems() {
 		return;
 	}
 
-	int pickup = ((item*)items.spr(index))->pickup;
-	int id = ((item*)items.spr(index))->id;
+	int pickup = ((item *)items.spr(index))->pickup;
+	int id = ((item *)items.spr(index))->id;
 
-	if ((pickup & ipTIMER) && (((item*)items.spr(index))->clk2 < 32))
+	if ((pickup & ipTIMER) && (((item *)items.spr(index))->clk2 < 32))
 		if ((items.spr(index)->id != iFairyMoving) && (items.spr(index)->id != iFairyMoving))
 			// wait for it to stop flashing, doesn't check for other items yet
 		{
@@ -6170,7 +6170,7 @@ void LinkClass::checkitems() {
 					}
 				}
 				for (int i = 1; i <= count; i++) {
-					((item*)items.spr(i))->pickup = ipDUMMY + ipFADE;
+					((item *)items.spr(i))->pickup = ipDUMMY + ipFADE;
 				}
 				break;
 		}
@@ -6200,7 +6200,7 @@ void LinkClass::checkitems() {
 				action = holding1;
 			}
 
-			if (((item*)items.spr(index))->twohand) {
+			if (((item *)items.spr(index))->twohand) {
 				if (action == swimhold1) {
 					action = swimhold2;
 				} else {
@@ -6218,7 +6218,7 @@ void LinkClass::checkitems() {
 		}
 		items.del(index);
 		for (int i = 0; i < Lwpns.Count(); i++) {
-			weapon* w = (weapon*)Lwpns.spr(i);
+			weapon *w = (weapon *)Lwpns.spr(i);
 			if (w->dragging == index) {
 				w->dragging = -1;
 			} else if (w->dragging > index) {
@@ -6227,10 +6227,10 @@ void LinkClass::checkitems() {
 		}
 		// clear up shop stuff
 		if ((isdungeon() == 0) && (index != 0)) {
-			if (((item*)items.spr(0))->pickup & ipDUMMY) {
+			if (((item *)items.spr(0))->pickup & ipDUMMY) {
 				items.del(0);
 				for (int i = 0; i < Lwpns.Count(); i++) {
-					weapon* w = (weapon*)Lwpns.spr(i);
+					weapon *w = (weapon *)Lwpns.spr(i);
 					if (w->dragging == 0) {
 						w->dragging = -1;
 					} else if (w->dragging > 0) {
@@ -6247,7 +6247,7 @@ void LinkClass::checkitems() {
 	} else {
 		items.del(index);
 		for (int i = 0; i < Lwpns.Count(); i++) {
-			weapon* w = (weapon*)Lwpns.spr(i);
+			weapon *w = (weapon *)Lwpns.spr(i);
 			if (w->dragging == index) {
 				w->dragging = -1;
 			} else if (w->dragging > index) {
@@ -6917,11 +6917,11 @@ void LinkClass::check_conveyor() {
 void LinkClass::setNayrusLoveShieldClk(int newclk) {
 	NayrusLoveShieldClk = newclk;
 	if (decorations.idCount(dNAYRUSLOVESHIELD) == 0) {
-		decoration* d;
+		decoration *d;
 		decorations.add(new dNayrusLoveShield(LinkX(), LinkY(), dNAYRUSLOVESHIELD, 0));
 		decorations.spr(decorations.Count() - 1)->misc = 0;
 		decorations.add(new dNayrusLoveShield(LinkX(), LinkY(), dNAYRUSLOVESHIELD, 0));
-		d = (decoration*)decorations.spr(decorations.Count() - 1);
+		d = (decoration *)decorations.spr(decorations.Count() - 1);
 		decorations.spr(decorations.Count() - 1)->misc = 1;
 		(void)d;
 	}

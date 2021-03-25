@@ -98,7 +98,7 @@ int  init_game();
 int  cont_game();
 void restart_level();
 void resume_game();
-void load_game(gamedata* g);
+void load_game(gamedata *g);
 void reset_status();
 
 /**********************************/
@@ -106,7 +106,7 @@ void reset_status();
 /**********************************/
 
 
-extern ZCMUSIC* zcmusic;
+extern ZCMUSIC *zcmusic;
 
 extern int colordepth;
 extern int db;
@@ -119,16 +119,16 @@ extern int strike_hint;
 
 extern RGB_MAP rgb_table;
 extern COLOR_MAP trans_table;
-extern BITMAP*     framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf, *pricesdisplaybuf, *tb_page[3];
-extern DATAFILE* data, *sfxdata, *fontsdata, *mididata;
+extern BITMAP     *framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf, *pricesdisplaybuf, *tb_page[3];
+extern DATAFILE *data, *sfxdata, *fontsdata, *mididata;
 extern SAMPLE   wav_refill;
-extern FONT*     zfont;
+extern FONT     *zfont;
 extern PALETTE  RAMpal;
-extern byte*     tilebuf, *colordata;
-extern newcombo* combobuf;
-extern itemdata* itemsbuf;
-extern wpndata*  wpnsbuf;
-extern guydata*  guysbuf;
+extern byte     *tilebuf, *colordata;
+extern newcombo *combobuf;
+extern itemdata *itemsbuf;
+extern wpndata  *wpnsbuf;
+extern guydata  *guysbuf;
 extern ZCHEATS  zcheats;
 extern byte     use_tiles;
 
@@ -193,7 +193,7 @@ extern int cheat;                                           // 0 = none; 1,2,3,4
 
 extern int idle_count;
 extern char qstpath[1024];
-extern gamedata* saves;
+extern gamedata *saves;
 extern gamedata game;
 
 extern volatile int lastfps;
@@ -205,11 +205,11 @@ extern zquestheader QHeader;
 extern byte         quest_rules[QUESTRULES_SIZE];
 extern byte         midi_flags[MIDIFLAGS_SIZE];
 extern word         map_count;
-extern MsgStr*       MsgStrings;
-extern DoorComboSet* DoorComboSets;
-extern dmap*         DMaps;
+extern MsgStr       *MsgStrings;
+extern DoorComboSet *DoorComboSets;
+extern dmap         *DMaps;
 extern miscQdata    QMisc;
-extern mapscr*       TheMaps;
+extern mapscr       *TheMaps;
 
 /**********************************/
 /*********** Misc Data ************/

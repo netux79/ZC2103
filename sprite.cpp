@@ -42,10 +42,10 @@ sprite::sprite(fix X, fix Y, int T, int CS, int F, int Clk, int Yofs):
 }
 
 sprite::~sprite() {}
-void sprite::draw2(BITMAP* dest) {                          // top layer for special needs
+void sprite::draw2(BITMAP *dest) {                          // top layer for special needs
 }
 
-void sprite::drawcloaked2(BITMAP* dest) {                   // top layer for special needs
+void sprite::drawcloaked2(BITMAP *dest) {                   // top layer for special needs
 }
 
 bool sprite::animate(int index) {
@@ -68,7 +68,7 @@ int sprite::real_y(fix fy) {
 	return fy.v >> 16;
 }
 
-bool sprite::hit(sprite* s) {
+bool sprite::hit(sprite *s) {
 	if (id < 0 || s->id < 0 || clk < 0) {
 		return false;
 	}
@@ -146,7 +146,7 @@ void sprite::move(fix s) {
 	}
 }
 
-void sprite::draw(BITMAP* dest) {
+void sprite::draw(BITMAP *dest) {
 	int sx = real_x(x + xofs);
 	int sy = real_y(y + yofs);
 
@@ -187,7 +187,7 @@ void sprite::draw(BITMAP* dest) {
 	}
 }
 
-void sprite::draw8(BITMAP* dest) {
+void sprite::draw8(BITMAP *dest) {
 	int sx = real_x(x + xofs);
 	int sy = real_y(y + yofs);
 
@@ -206,7 +206,7 @@ void sprite::draw8(BITMAP* dest) {
 	}
 }
 
-void sprite::drawcloaked(BITMAP* dest) {
+void sprite::drawcloaked(BITMAP *dest) {
 	int sx = real_x(x + xofs);
 	int sy = real_y(y + yofs);
 
@@ -237,7 +237,7 @@ void sprite::drawcloaked(BITMAP* dest) {
 	}
 }
 
-void sprite::drawshadow(BITMAP* dest, bool translucent) {
+void sprite::drawshadow(BITMAP *dest, bool translucent) {
 	if (shadowtile == 0) {
 		return;
 	}
@@ -301,7 +301,7 @@ void sprite_list::clear() {
 	}
 }
 
-sprite* sprite_list::spr(int index) {
+sprite *sprite_list::spr(int index) {
 	if (index < 0 || index >= count) {
 		return NULL;
 	}
@@ -312,13 +312,13 @@ bool sprite_list::swap(int a, int b) {
 	if (a < 0 || a >= count || b < 0 || b >= count) {
 		return false;
 	}
-	sprite* c = sprites[a];
+	sprite *c = sprites[a];
 	sprites[a] = sprites[b];
 	sprites[b] = c;
 	return true;
 }
 
-bool sprite_list::add(sprite* s) {
+bool sprite_list::add(sprite *s) {
 	if (count >= SLMAX) {
 		delete s;
 		return false;
@@ -327,7 +327,7 @@ bool sprite_list::add(sprite* s) {
 	return true;
 }
 
-bool sprite_list::remove(sprite* s)
+bool sprite_list::remove(sprite *s)
 // removes pointer from list but doesn't delete it
 {
 	int j = 0;
@@ -389,7 +389,7 @@ bool sprite_list::del(int j) {
 	return true;
 }
 
-void sprite_list::draw(BITMAP* dest, bool lowfirst) {
+void sprite_list::draw(BITMAP *dest, bool lowfirst) {
 	switch (lowfirst) {
 		case true:
 			for (int i = 0; i < count; i++) {
@@ -404,7 +404,7 @@ void sprite_list::draw(BITMAP* dest, bool lowfirst) {
 	}
 }
 
-void sprite_list::drawshadow(BITMAP* dest, bool translucent, bool lowfirst) {
+void sprite_list::drawshadow(BITMAP *dest, bool translucent, bool lowfirst) {
 	switch (lowfirst) {
 		case true:
 			for (int i = 0; i < count; i++) {
@@ -419,7 +419,7 @@ void sprite_list::drawshadow(BITMAP* dest, bool translucent, bool lowfirst) {
 	}
 }
 
-void sprite_list::draw2(BITMAP* dest, bool lowfirst) {
+void sprite_list::draw2(BITMAP *dest, bool lowfirst) {
 	switch (lowfirst) {
 		case true:
 			for (int i = 0; i < count; i++) {
@@ -434,7 +434,7 @@ void sprite_list::draw2(BITMAP* dest, bool lowfirst) {
 	}
 }
 
-void sprite_list::drawcloaked2(BITMAP* dest, bool lowfirst) {
+void sprite_list::drawcloaked2(BITMAP *dest, bool lowfirst) {
 	switch (lowfirst) {
 		case true:
 			for (int i = 0; i < count; i++) {
@@ -475,7 +475,7 @@ int sprite_list::Count() {
 	return count;
 }
 
-int sprite_list::hit(sprite* s) {
+int sprite_list::hit(sprite *s) {
 	for (int i = 0; i < count; i++)
 		if (sprites[i]->hit(s)) {
 			return i;
@@ -545,7 +545,7 @@ movingblock::movingblock() : sprite() {
 	id = 1;
 }
 
-void movingblock::draw(BITMAP* dest) {
+void movingblock::draw(BITMAP *dest) {
 	if (clk) {
 		overcombo(dest, real_x(x + xofs), real_y(y + yofs), bcombo, cs);
 	}
@@ -557,8 +557,8 @@ void movingblock::push(fix bx, fix by, int d, int f) {
 	endy = y = by;
 	dir = d;
 	oldflag = f;
-	word* di = &(tmpscr->data[(int(y) & 0xF0) + (int(x) >> 4)]);
-	byte* ci = &(tmpscr->cset[(int(y) & 0xF0) + (int(x) >> 4)]);
+	word *di = &(tmpscr->data[(int(y) & 0xF0) + (int(x) >> 4)]);
+	byte *ci = &(tmpscr->cset[(int(y) & 0xF0) + (int(x) >> 4)]);
 	bcombo =  tmpscr->data[(int(y) & 0xF0) + (int(x) >> 4)];
 	cs     =  tmpscr->cset[(int(y) & 0xF0) + (int(x) >> 4)];
 	tile = combobuf[bcombo].tile;

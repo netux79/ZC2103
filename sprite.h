@@ -12,8 +12,8 @@
 #include "zdefs.h"
 // this code needs some patching for use in zquest.cpp
 
-extern itemdata* itemsbuf;
-extern wpndata*  wpnsbuf;
+extern itemdata *itemsbuf;
+extern wpndata  *wpnsbuf;
 extern bool     freeze_guys;
 extern int fadeclk;
 extern int frame;
@@ -41,17 +41,17 @@ public:
 	sprite();
 	sprite(fix X, fix Y, int T, int CS, int F, int Clk, int Yofs);
 	virtual ~sprite();
-	virtual void draw(BITMAP* dest);                        // main layer
-	virtual void draw8(BITMAP* dest);                       // main layer
-	virtual void drawcloaked(BITMAP* dest);                 // main layer
-	virtual void drawshadow(BITMAP* dest, bool translucent);// main layer
-	virtual void draw2(BITMAP* dest);                       // top layer for special needs
-	virtual void drawcloaked2(BITMAP* dest);                // top layer for special needs
+	virtual void draw(BITMAP *dest);                        // main layer
+	virtual void draw8(BITMAP *dest);                       // main layer
+	virtual void drawcloaked(BITMAP *dest);                 // main layer
+	virtual void drawshadow(BITMAP *dest, bool translucent);// main layer
+	virtual void draw2(BITMAP *dest);                       // top layer for special needs
+	virtual void drawcloaked2(BITMAP *dest);                // top layer for special needs
 	virtual bool animate(int index);
 	virtual void check_conveyor();
 	int real_x(fix fx);
 	int real_y(fix fy);
-	virtual bool hit(sprite* s);
+	virtual bool hit(sprite *s);
 	virtual bool hit(int tx, int ty, int txsz, int tysz);
 
 
@@ -69,30 +69,30 @@ public:
 #define SLMAX 255
 
 class sprite_list {
-	sprite* sprites[SLMAX];
+	sprite *sprites[SLMAX];
 	int count;
 
 public:
 	sprite_list();
 	void clear();
-	sprite* spr(int index);
+	sprite *spr(int index);
 	bool swap(int a, int b);
-	bool add(sprite* s);
+	bool add(sprite *s);
 	// removes pointer from list but doesn't delete it
-	bool remove(sprite* s);
+	bool remove(sprite *s);
 	fix getX(int j);
 	fix getY(int j);
 	int getID(int j);
 	int getMisc(int j);
 	bool del(int j);
-	void draw(BITMAP* dest, bool lowfirst);
-	void drawshadow(BITMAP* dest, bool translucent, bool lowfirst);
-	void draw2(BITMAP* dest, bool lowfirst);
-	void drawcloaked2(BITMAP* dest, bool lowfirst);
+	void draw(BITMAP *dest, bool lowfirst);
+	void drawshadow(BITMAP *dest, bool translucent, bool lowfirst);
+	void draw2(BITMAP *dest, bool lowfirst);
+	void drawcloaked2(BITMAP *dest, bool lowfirst);
 	void animate();
 	void check_conveyor();
 	int Count();
-	int hit(sprite* s);
+	int hit(sprite *s);
 	int hit(int x, int y, int xsize, int ysize);
 	// returns the number of sprites with matching id
 	int idCount(int id, int mask);
@@ -123,6 +123,6 @@ public:
 	movingblock();
 	void push(fix bx, fix by, int d, int f);
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 #endif

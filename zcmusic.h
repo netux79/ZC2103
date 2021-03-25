@@ -29,7 +29,7 @@ extern "C"
 #define ZCM_RESUME  0
 #define ZCM_TOGGLE -1
 
-ZCM_EXTERN char const* zcmusic_types;
+ZCM_EXTERN char const *zcmusic_types;
 ZCM_EXTERN int zcmusic_bufsz;
 
 ZCM_EXTERN bool zcmusic_init(int flags = -1);
@@ -41,13 +41,13 @@ typedef struct ZCMUSICBASE {
 	int playing;                                            // -1 = paused, 0 = stopped, 1 = playing
 } ZCMUSIC;
 
-ZCM_EXTERN ZCMUSIC const* zcmusic_load_file(char* filename);
-ZCM_EXTERN bool zcmusic_play(ZCMUSIC* zcm, int vol, bool autopoll = 0);
-ZCM_EXTERN bool zcmusic_pause(ZCMUSIC* zcm, int pause);
-ZCM_EXTERN bool zcmusic_stop(ZCMUSIC* zcm);
-ZCM_EXTERN void zcmusic_unload_file(ZCMUSIC*& zcm);
-ZCM_EXTERN int zcmusic_get_tracks(ZCMUSIC* zcm);
-ZCM_EXTERN int zcmusic_change_track(ZCMUSIC* zcm, int tracknum);
+ZCM_EXTERN ZCMUSIC const *zcmusic_load_file(char *filename);
+ZCM_EXTERN bool zcmusic_play(ZCMUSIC *zcm, int vol, bool autopoll = 0);
+ZCM_EXTERN bool zcmusic_pause(ZCMUSIC *zcm, int pause);
+ZCM_EXTERN bool zcmusic_stop(ZCMUSIC *zcm);
+ZCM_EXTERN void zcmusic_unload_file(ZCMUSIC *&zcm);
+ZCM_EXTERN int zcmusic_get_tracks(ZCMUSIC *zcm);
+ZCM_EXTERN int zcmusic_change_track(ZCMUSIC *zcm, int tracknum);
 
 #ifdef __cplusplus
 }                                                           // extern "C"

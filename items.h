@@ -14,7 +14,7 @@
 #include "zc_sys.h"
 #include "zdefs.h"
 
-void movefairy(fix& x, fix& y, int misc);
+void movefairy(fix &x, fix &y, int misc);
 void killfairy(int misc);
 void addenemy(int x, int y, int id, int clk);
 void addfairy(fix x, fix y, int misc);
@@ -27,10 +27,10 @@ public:
 	item(fix X, fix Y, int i, int p, int c);
 	virtual ~item();
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 // easy way to draw an item
-void putitem(BITMAP* dest, int x, int y, int item_id);
-void putitem2(BITMAP* dest, int x, int y, int item_id, int& aclk, int& aframe, int flash);
+void putitem(BITMAP *dest, int x, int y, int item_id);
+void putitem2(BITMAP *dest, int x, int y, int item_id, int &aclk, int &aframe, int flash);
 #endif

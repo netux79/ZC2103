@@ -582,7 +582,7 @@ bool enemy::dont_draw() {
 
 // base drawing function to be used by all derived classes instead of
 // sprite::draw()
-void enemy::draw(BITMAP* dest) {
+void enemy::draw(BITMAP *dest) {
 	if (dont_draw()) {
 		return;
 	}
@@ -634,7 +634,7 @@ void enemy::draw(BITMAP* dest) {
 }
 
 // similar to the overblock function--can do up to a 32x32 sprite
-void enemy::drawblock(BITMAP* dest, int mask) {
+void enemy::drawblock(BITMAP *dest, int mask) {
 	int thold = tile;
 	int t1 = tile;
 	int t2 = tile + 20;
@@ -695,7 +695,7 @@ void enemy::drawblock(BITMAP* dest, int mask) {
 	tile = thold;
 }
 
-void enemy::drawshadow(BITMAP* dest, bool translucent) {
+void enemy::drawshadow(BITMAP *dest, bool translucent) {
 	if (dont_draw()) {
 		return;
 	}
@@ -713,8 +713,8 @@ void enemy::drawshadow(BITMAP* dest, bool translucent) {
 	cs = cshold;
 }
 
-void enemy::masked_draw(BITMAP* dest, int mx, int my, int mw, int mh) {
-	BITMAP* sub = create_sub_bitmap(dest, mx, my, mw, mh);
+void enemy::masked_draw(BITMAP *dest, int mx, int my, int mw, int mh) {
+	BITMAP *sub = create_sub_bitmap(dest, mx, my, mw, mh);
 	if (sub != NULL) {
 		xofs -= mx;
 		yofs -= my;
@@ -728,7 +728,7 @@ void enemy::masked_draw(BITMAP* dest, int mx, int my, int mw, int mh) {
 }
 
 // override hit detection to check for invicibility, stunned, etc
-bool enemy::hit(sprite* s) {
+bool enemy::hit(sprite *s) {
 	return (dying || hclk > 0) ? false : sprite::hit(s);
 }
 
@@ -736,7 +736,7 @@ bool enemy::hit(int tx, int ty, int txsz, int tysz) {
 	return (dying || hclk > 0) ? false : sprite::hit(tx, ty, txsz, tysz);
 }
 
-bool enemy::hit(weapon* w) {
+bool enemy::hit(weapon *w) {
 	return (dying || hclk > 0) ? false : sprite::hit(w);
 }
 
@@ -1441,7 +1441,7 @@ bool guy::animate(int index) {
 	return enemy::animate(index);
 }
 
-void guy::draw(BITMAP* dest) {
+void guy::draw(BITMAP *dest) {
 	update_enemy_frame();
 	if (!mainguy || fadeclk < 0 || fadeclk & 1) {
 		enemy::draw(dest);
@@ -1461,7 +1461,7 @@ eFire::eFire(fix X, fix Y, int Id, int Clk) : enemy(X, Y, Id, Clk) {
 	}
 }
 
-void eFire::draw(BITMAP* dest) {
+void eFire::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -1607,7 +1607,7 @@ bool eArmos::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eArmos::draw(BITMAP* dest) {
+void eArmos::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -1706,7 +1706,7 @@ bool eGhini::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eGhini::draw(BITMAP* dest) {
+void eGhini::draw(BITMAP *dest) {
 	if ((id == eGHINI2) && (get_bit(quest_rules, qr_GHINI2BLINK)) && (clk & 1)) {
 		return;
 	}
@@ -1902,7 +1902,7 @@ bool eTektite::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eTektite::drawshadow(BITMAP* dest, bool translucent) {
+void eTektite::drawshadow(BITMAP *dest, bool translucent) {
 	int tempy = yofs;
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -1929,7 +1929,7 @@ void eTektite::drawshadow(BITMAP* dest, bool translucent) {
 	yofs = tempy;
 }
 
-void eTektite::draw(BITMAP* dest) {
+void eTektite::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -2015,7 +2015,7 @@ bool eItemFairy::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eItemFairy::draw(BITMAP* dest) {
+void eItemFairy::draw(BITMAP *dest) {
 }
 
 ePeahat::ePeahat(fix X, fix Y, int Id, int Clk) : enemy(X, Y, Id, Clk) {
@@ -2067,7 +2067,7 @@ bool ePeahat::animate(int index) {
 	return enemy::animate(index);
 }
 
-void ePeahat::drawshadow(BITMAP* dest, bool translucent) {
+void ePeahat::drawshadow(BITMAP *dest, bool translucent) {
 	int tempy = yofs;
 	flip = 0;
 	shadowtile = wpnsbuf[iwShadow].tile + foobyte + dummy_int[1];
@@ -2077,7 +2077,7 @@ void ePeahat::drawshadow(BITMAP* dest, bool translucent) {
 	yofs = tempy;
 }
 
-void ePeahat::draw(BITMAP* dest) {
+void ePeahat::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
@@ -2197,7 +2197,7 @@ bool eLeever::animate(int index) {
 					case -1: {
 						int active = 0;
 						for (int i = 0; i < guys.Count(); i++)
-							if (guys.spr(i)->id == id && ((enemy*)guys.spr(i))->misc >= 0) {
+							if (guys.spr(i)->id == id && ((enemy *)guys.spr(i))->misc >= 0) {
 								++active;
 							}
 						if (active < 2) {
@@ -2209,7 +2209,7 @@ bool eLeever::animate(int index) {
 					case 0: {
 						int s = 0;
 						for (int i = 0; i < guys.Count(); i++)
-							if (guys.spr(i)->id == id && ((enemy*)guys.spr(i))->misc == 1) {
+							if (guys.spr(i)->id == id && ((enemy *)guys.spr(i))->misc == 1) {
 								++s;
 							}
 						if (s > 0) {
@@ -2334,7 +2334,7 @@ bool eLeever::canplace(int d) {
 	return true;
 }
 
-void eLeever::draw(BITMAP* dest) {
+void eLeever::draw(BITMAP *dest) {
 	cs = d->cset;
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
@@ -2478,7 +2478,7 @@ bool eGel::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eGel::draw(BITMAP* dest) {
+void eGel::draw(BITMAP *dest) {
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
 
@@ -2533,7 +2533,7 @@ bool eZol::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eZol::draw(BITMAP* dest) {
+void eZol::draw(BITMAP *dest) {
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
 
@@ -2656,13 +2656,13 @@ bool eGelTrib::animate(int index) {
 			guys.add(new eZolTrib((fix)x, (fix)y, eZOLTRIB, -21));
 		}
 		//    ((enemy*)guys.spr(kids))->count_enemy = false;
-		((enemy*)guys.spr(kids))->count_enemy = count_enemy;
+		((enemy *)guys.spr(kids))->count_enemy = count_enemy;
 		return true;
 	}
 	return enemy::animate(index);
 }
 
-void eGelTrib::draw(BITMAP* dest) {
+void eGelTrib::draw(BITMAP *dest) {
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
 
@@ -2718,7 +2718,7 @@ bool eZolTrib::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eZolTrib::draw(BITMAP* dest) {
+void eZolTrib::draw(BITMAP *dest) {
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
 
@@ -2779,8 +2779,8 @@ bool eWallM::animate(int index) {
 			int wallm_cnt = 0;
 			for (int i = 0; i < guys.Count(); i++)
 				if (guys.spr(i)->id == eWALLM) {
-					register int m = ((enemy*)guys.spr(i))->misc;
-					if (m && ((enemy*)guys.spr(i))->clk3 == (wall ^ 1)) {
+					register int m = ((enemy *)guys.spr(i))->misc;
+					if (m && ((enemy *)guys.spr(i))->clk3 == (wall ^ 1)) {
 						++wallm_cnt;
 					}
 				}
@@ -2884,7 +2884,7 @@ void eWallM::grablink() {
 	superman = 1;
 }
 
-void eWallM::draw(BITMAP* dest) {
+void eWallM::draw(BITMAP *dest) {
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
 	int tempdir = 0;
@@ -3097,7 +3097,7 @@ bool eTrap::clip() {
 	}
 }
 
-void eTrap::draw(BITMAP* dest) {
+void eTrap::draw(BITMAP *dest) {
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
 
@@ -3240,7 +3240,7 @@ bool eTrap2::clip() {
 	return false;
 }
 
-void eTrap2::draw(BITMAP* dest) {
+void eTrap2::draw(BITMAP *dest) {
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
 
@@ -3335,7 +3335,7 @@ bool eRock::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eRock::drawshadow(BITMAP* dest, bool translucent) {
+void eRock::drawshadow(BITMAP *dest, bool translucent) {
 	int tempy = yofs;
 	flip = 0;
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
@@ -3348,7 +3348,7 @@ void eRock::drawshadow(BITMAP* dest, bool translucent) {
 	yofs = tempy;
 }
 
-void eRock::draw(BITMAP* dest) {
+void eRock::draw(BITMAP *dest) {
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
 
@@ -3424,7 +3424,7 @@ bool eFBall::animate(int index) {
 	return false;
 }
 
-void eFBall::draw(BITMAP* dest) {
+void eFBall::draw(BITMAP *dest) {
 }
 
 eTrigger::eTrigger(fix X, fix Y, int Id, int Clk) : enemy(X, Y, Id, Clk) {
@@ -3432,7 +3432,7 @@ eTrigger::eTrigger(fix X, fix Y, int Id, int Clk) : enemy(X, Y, Id, Clk) {
 	y = -1000;
 }
 
-void eTrigger::draw(BITMAP* dest) {
+void eTrigger::draw(BITMAP *dest) {
 }
 
 eNPC::eNPC(fix X, fix Y, int Id, int Clk) : enemy(X, Y, Id, Clk) {
@@ -3489,7 +3489,7 @@ bool eNPC::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eNPC::draw(BITMAP* dest) {
+void eNPC::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -3641,7 +3641,7 @@ bool eZora::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eZora::draw(BITMAP* dest) {
+void eZora::draw(BITMAP *dest) {
 	if (clk < 3) {
 		return;
 	}
@@ -3761,7 +3761,7 @@ bool eStalfos::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eStalfos::draw(BITMAP* dest) {
+void eStalfos::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -3819,7 +3819,7 @@ bool eGibdo::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eGibdo::draw(BITMAP* dest) {
+void eGibdo::draw(BITMAP *dest) {
 	//    update_enemy_frame();
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
@@ -3869,7 +3869,7 @@ bool eBubble::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eBubble::draw(BITMAP* dest) {
+void eBubble::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 
@@ -3974,7 +3974,7 @@ void eRope::charge_attack() {
 	--clk3;
 }
 
-void eRope::draw(BITMAP* dest) {
+void eRope::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 
@@ -4064,7 +4064,7 @@ bool eKeese::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eKeese::drawshadow(BITMAP* dest, bool translucent) {
+void eKeese::drawshadow(BITMAP *dest, bool translucent) {
 	int tempy = yofs;
 	flip = 0;
 	shadowtile = wpnsbuf[iwShadow].tile + foobyte + dummy_int[1];
@@ -4074,7 +4074,7 @@ void eKeese::drawshadow(BITMAP* dest, bool translucent) {
 	yofs = tempy;
 }
 
-void eKeese::draw(BITMAP* dest) {
+void eKeese::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir - 8) {                                      //directions get screwed up after 8.  *shrug*
@@ -4150,15 +4150,15 @@ bool eVire::animate(int index) {
 		int kids = guys.Count();
 		guys.add(new eKeese(x, y, eKEESE2, -24));
 		guys.add(new eKeese(x, y, eKEESE2, -24));
-		((enemy*)guys.spr(kids))->count_enemy = false;
-		((enemy*)guys.spr(kids + 1))->count_enemy = false;
+		((enemy *)guys.spr(kids))->count_enemy = false;
+		((enemy *)guys.spr(kids + 1))->count_enemy = false;
 		return true;
 	}
 	vire_hop();
 	return enemy::animate(index);
 }
 
-void eVire::drawshadow(BITMAP* dest, bool translucent) {
+void eVire::drawshadow(BITMAP *dest, bool translucent) {
 	int tempy = yofs;
 	flip = 0;
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
@@ -4173,7 +4173,7 @@ void eVire::drawshadow(BITMAP* dest, bool translucent) {
 	yofs = tempy;
 }
 
-void eVire::draw(BITMAP* dest) {
+void eVire::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -4256,7 +4256,7 @@ bool eKeeseTrib::animate(int index) {
 				guys.add(new eVireTrib((fix)x, (fix)y, eVIRETRIB, -24));
 			}
 			//      ((enemy*)guys.spr(kids))->count_enemy = false;
-			((enemy*)guys.spr(kids))->count_enemy = count_enemy;
+			((enemy *)guys.spr(kids))->count_enemy = count_enemy;
 			return true;
 		} else {
 			clk4 = 0;
@@ -4286,7 +4286,7 @@ bool eKeeseTrib::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eKeeseTrib::drawshadow(BITMAP* dest, bool translucent) {
+void eKeeseTrib::drawshadow(BITMAP *dest, bool translucent) {
 	int tempy = yofs;
 	flip = 0;
 	shadowtile = wpnsbuf[iwShadow].tile + foobyte + dummy_int[1];
@@ -4296,7 +4296,7 @@ void eKeeseTrib::drawshadow(BITMAP* dest, bool translucent) {
 	yofs = tempy;
 }
 
-void eKeeseTrib::draw(BITMAP* dest) {
+void eKeeseTrib::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir - 8) {                                      //directions get screwed up after 8.  *shrug*
@@ -4358,15 +4358,15 @@ bool eVireTrib::animate(int index) {
 		int kids = guys.Count();
 		guys.add(new eKeeseTrib(x, y, eKEESETRIB, -24));
 		guys.add(new eKeeseTrib(x, y, eKEESETRIB, -24));
-		((enemy*)guys.spr(kids))->count_enemy = false;
-		((enemy*)guys.spr(kids + 1))->count_enemy = false;
+		((enemy *)guys.spr(kids))->count_enemy = false;
+		((enemy *)guys.spr(kids + 1))->count_enemy = false;
 		return true;
 	}
 	eVireTrib::vire_hop();
 	return enemy::animate(index);
 }
 
-void eVireTrib::drawshadow(BITMAP* dest, bool translucent) {
+void eVireTrib::drawshadow(BITMAP *dest, bool translucent) {
 	int tempy = yofs;
 	flip = 0;
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
@@ -4380,7 +4380,7 @@ void eVireTrib::drawshadow(BITMAP* dest, bool translucent) {
 	yofs = tempy;
 }
 
-void eVireTrib::draw(BITMAP* dest) {
+void eVireTrib::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -4452,7 +4452,7 @@ bool ePolsVoice::animate(int index) {
 
 }
 
-void ePolsVoice::drawshadow(BITMAP* dest, bool translucent) {
+void ePolsVoice::drawshadow(BITMAP *dest, bool translucent) {
 	int tempy = yofs;
 	flip = 0;
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
@@ -4469,7 +4469,7 @@ void ePolsVoice::drawshadow(BITMAP* dest, bool translucent) {
 	yofs = tempy;
 }
 
-void ePolsVoice::draw(BITMAP* dest) {
+void ePolsVoice::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -4626,7 +4626,7 @@ bool eLikeLike::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eLikeLike::draw(BITMAP* dest) {
+void eLikeLike::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -4704,7 +4704,7 @@ bool eShooter::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eShooter::draw(BITMAP* dest) {
+void eShooter::draw(BITMAP *dest) {
 	update_enemy_frame();
 	enemy::draw(dest);
 }
@@ -4742,7 +4742,7 @@ bool eOctorok::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eOctorok::draw(BITMAP* dest) {
+void eOctorok::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -4843,7 +4843,7 @@ bool eMoblin::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eMoblin::draw(BITMAP* dest) {
+void eMoblin::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -4935,7 +4935,7 @@ bool eLynel::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eLynel::draw(BITMAP* dest) {
+void eLynel::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -5019,7 +5019,7 @@ bool eGoriya::animate(int index) {
 
 bool eGoriya::WeaponOut() {
 	for (int i = 0; i < Ewpns.Count(); i++)
-		if (((weapon*)Ewpns.spr(i))->type == misc && Ewpns.spr(i)->id == ewBrang) {
+		if (((weapon *)Ewpns.spr(i))->type == misc && Ewpns.spr(i)->id == ewBrang) {
 			return true;
 		}
 	return false;
@@ -5027,12 +5027,12 @@ bool eGoriya::WeaponOut() {
 
 void eGoriya::KillWeapon() {
 	for (int i = 0; i < Ewpns.Count(); i++)
-		if (((weapon*)Ewpns.spr(i))->type == misc && Ewpns.spr(i)->id == ewBrang) {
+		if (((weapon *)Ewpns.spr(i))->type == misc && Ewpns.spr(i)->id == ewBrang) {
 			Ewpns.del(i);
 		}
 }
 
-void eGoriya::draw(BITMAP* dest) {
+void eGoriya::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -5139,7 +5139,7 @@ bool eDarknut::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eDarknut::draw(BITMAP* dest)
+void eDarknut::draw(BITMAP *dest)
 
 {
 	tile = dummy_int[0];
@@ -5388,7 +5388,7 @@ bool eWizzrobe::animate(int index) {
 					} else {
 						int bc = 0;
 						for (int gc = 0; gc < guys.Count(); gc++) {
-							if ((((enemy*)guys.spr(gc))->id) == eBAT) {
+							if ((((enemy *)guys.spr(gc))->id) == eBAT) {
 								++bc;
 							}
 						}
@@ -5397,7 +5397,7 @@ bool eWizzrobe::animate(int index) {
 							int bats = (rand() % 3) + 1;
 							for (int i = 0; i < bats; i++) {
 								guys.add(new eKeese(x, y, eBAT, -10));
-								((enemy*)guys.spr(kids + i))->count_enemy = false;
+								((enemy *)guys.spr(kids + i))->count_enemy = false;
 								sfx(WAV_FIRE, pan(int(x)));
 							}
 						}
@@ -5552,7 +5552,7 @@ void eWizzrobe::wizzrobe_attack() {
 	}
 }
 
-void eWizzrobe::draw(BITMAP* dest) {
+void eWizzrobe::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	if (d->misc1 && (misc == 1 || misc == 3) && (clk3 & 1)
 	        && hp > 0 && !watch && !stunclk) {                      // phasing
@@ -5769,7 +5769,7 @@ bool eDodongo::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eDodongo::draw(BITMAP* dest) {
+void eDodongo::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	if (clk < 0) {
 		enemy::draw(dest);
@@ -6000,7 +6000,7 @@ bool eDodongo2::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eDodongo2::draw(BITMAP* dest) {
+void eDodongo2::draw(BITMAP *dest) {
 	int fr4 = 0;
 	tile = dummy_int[0];
 	if (clk < 0) {
@@ -6237,7 +6237,7 @@ bool eAquamentus::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eAquamentus::draw(BITMAP* dest) {
+void eAquamentus::draw(BITMAP *dest) {
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		xofs = (id == eLAQUAM ? -16 : 0);
 		tile = dummy_int[0] + ((clk & 24) >> 2) + (clk3 > -32 ? (clk3 > 0 ? 40 : 80) : 0);
@@ -6273,7 +6273,7 @@ void eAquamentus::draw(BITMAP* dest) {
 	}
 }
 
-bool eAquamentus::hit(weapon* w) {
+bool eAquamentus::hit(weapon *w) {
 	switch (w->id) {
 		case wBeam:
 		case wMagic:
@@ -6378,7 +6378,7 @@ bool eGohma::animate(int index) {
 			sfx(WAV_FIRE, pan(int(x)));
 
 			int i = Ewpns.Count() - 1;
-			weapon* ew = (weapon*)(Ewpns.spr(i));
+			weapon *ew = (weapon *)(Ewpns.spr(i));
 			if (wpnsbuf[ewFLAME].frames > 1) {
 				ew->aframe = rand() % wpnsbuf[ewFLAME].frames;
 			}
@@ -6396,7 +6396,7 @@ bool eGohma::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eGohma::draw(BITMAP* dest) {
+void eGohma::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	if (clk < 0 || dying) {
 		enemy::draw(dest);
@@ -6549,7 +6549,7 @@ bool eLilDig::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eLilDig::draw(BITMAP* dest) {
+void eLilDig::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	//    tile = 160;
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
@@ -6641,7 +6641,7 @@ bool eBigDig::animate(int index) {
 	return enemy::animate(index);
 }
 
-void eBigDig::draw(BITMAP* dest) {
+void eBigDig::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -6811,7 +6811,7 @@ int eGanon::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 	return 0;
 }
 
-void eGanon::draw(BITMAP* dest) {
+void eGanon::draw(BITMAP *dest) {
 	switch (misc) {
 		case 0:
 			if ((clk & 3) == 3) {
@@ -6836,7 +6836,7 @@ void eGanon::draw(BITMAP* dest) {
 	}
 }
 
-void eGanon::draw_guts(BITMAP* dest) {
+void eGanon::draw_guts(BITMAP *dest) {
 	int c = min(clk >> 3, 8);
 	tile = clk < 24 ? 74 : 75;
 	overtile16(dest, tile, x + 8, y + c + 56, 9, 0);
@@ -6849,7 +6849,7 @@ void eGanon::draw_guts(BITMAP* dest) {
 	overtile16(dest, tile, x + 16 - c, y + 16 - c + 56, 9, 0);
 }
 
-void eGanon::draw_flash(BITMAP* dest) {
+void eGanon::draw_flash(BITMAP *dest) {
 
 	int c = clk - (clk >> 2);
 	cs = (frame & 3) + 6;
@@ -6945,21 +6945,21 @@ bool eMoldorm::animate(int index) {
 		misc = dir;
 
 		for (int i = index + 1; i < index + segcnt + 1; i++) {
-			((enemy*)guys.spr(i))->dummy_int[0] = tile;
+			((enemy *)guys.spr(i))->dummy_int[0] = tile;
 			if ((i == index + segcnt) && (i != index + 1)) {      //tail
-				((enemy*)guys.spr(i))->dummy_int[1] = 2;
+				((enemy *)guys.spr(i))->dummy_int[1] = 2;
 			} else {
-				((enemy*)guys.spr(i))->dummy_int[1] = 1;
+				((enemy *)guys.spr(i))->dummy_int[1] = 1;
 			}
 			if (i == index + 1) {                                 //head
-				((enemy*)guys.spr(i))->dummy_int[1] = 0;
+				((enemy *)guys.spr(i))->dummy_int[1] = 0;
 			}
-			if (((enemy*)guys.spr(i))->hp <= 0) {
+			if (((enemy *)guys.spr(i))->hp <= 0) {
 				for (int j = i; j < index + segcnt; j++) {
-					swap(((enemy*)guys.spr(j))->hp, ((enemy*)guys.spr(j + 1))->hp);
-					swap(((enemy*)guys.spr(j))->hclk, ((enemy*)guys.spr(j + 1))->hclk);
+					swap(((enemy *)guys.spr(j))->hp, ((enemy *)guys.spr(j + 1))->hp);
+					swap(((enemy *)guys.spr(j))->hclk, ((enemy *)guys.spr(j + 1))->hclk);
 				}
-				((enemy*)guys.spr(i))->hclk = 33;
+				((enemy *)guys.spr(i))->hclk = 33;
 				--segcnt;
 			}
 		}
@@ -6991,7 +6991,7 @@ bool esMoldorm::animate(int index) {
 		hxofs = 4;
 		if (!(clk & 15)) {
 			misc = dir;
-			dir = ((enemy*)guys.spr(index - 1))->misc;
+			dir = ((enemy *)guys.spr(index - 1))->misc;
 		}
 		if (!watch) {
 			sprite::move(step);
@@ -7007,7 +7007,7 @@ int esMoldorm::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 	return 0;
 }
 
-void esMoldorm::draw(BITMAP* dest) {
+void esMoldorm::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -7091,18 +7091,18 @@ bool eLanmola::animate(int index) {
 	misc = dir;
 
 	for (int i = index + 1; i < index + segcnt + 1; i++) {
-		((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0];
+		((enemy *)guys.spr(i))->dummy_int[0] = dummy_int[0];
 		if ((i == index + segcnt) && (i != index + 1)) {
-			((enemy*)guys.spr(i))->dummy_int[1] = 1;              //tail
+			((enemy *)guys.spr(i))->dummy_int[1] = 1;             //tail
 		} else {
-			((enemy*)guys.spr(i))->dummy_int[1] = 0;
+			((enemy *)guys.spr(i))->dummy_int[1] = 0;
 		}
-		if (((enemy*)guys.spr(i))->hp <= 0) {
+		if (((enemy *)guys.spr(i))->hp <= 0) {
 			for (int j = i; j < index + segcnt; j++) {
-				swap(((enemy*)guys.spr(j))->hp, ((enemy*)guys.spr(j + 1))->hp);
-				swap(((enemy*)guys.spr(j))->hclk, ((enemy*)guys.spr(j + 1))->hclk);
+				swap(((enemy *)guys.spr(j))->hp, ((enemy *)guys.spr(j + 1))->hp);
+				swap(((enemy *)guys.spr(j))->hclk, ((enemy *)guys.spr(j + 1))->hclk);
 			}
-			((enemy*)guys.spr(i))->hclk = 33;
+			((enemy *)guys.spr(i))->hclk = 33;
 			--segcnt;
 		}
 	}
@@ -7134,7 +7134,7 @@ bool esLanmola::animate(int index) {
 		hxofs = 4;
 		if (!(clk & crate)) {
 			misc = dir;
-			dir = ((enemy*)guys.spr(index - 1))->misc;
+			dir = ((enemy *)guys.spr(index - 1))->misc;
 		}
 		if (!watch) {
 			sprite::move(step);
@@ -7150,7 +7150,7 @@ int esLanmola::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 	return 0;
 }
 
-void esLanmola::draw(BITMAP* dest) {
+void esLanmola::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -7222,12 +7222,12 @@ bool eManhandla::animate(int index) {
 	for (int i = 0; i < armcnt; i++) {
 		if (!adjusted) {
 			if (id == eMANHAN) {
-				((enemy*)guys.spr(index + i + 1))->dummy_int[0] = dummy_int[0] + 40;
+				((enemy *)guys.spr(index + i + 1))->dummy_int[0] = dummy_int[0] + 40;
 			} else {
-				((enemy*)guys.spr(index + i + 1))->dummy_int[0] = dummy_int[0] + 160;
+				((enemy *)guys.spr(index + i + 1))->dummy_int[0] = dummy_int[0] + 160;
 			}
 		}
-		if (((enemy*)guys.spr(index + i + 1))->dying) {
+		if (((enemy *)guys.spr(index + i + 1))->dying) {
 			for (int j = i; j < armcnt - 1; j++) {
 				swap(arm[j], arm[j + 1]);
 				guys.swap(index + j + 1, index + j + 2);
@@ -7375,7 +7375,7 @@ int eManhandla::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 	return 1;
 }
 
-void eManhandla::draw(BITMAP* dest) {
+void eManhandla::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -7533,7 +7533,7 @@ int esManhandla::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 	return 1;
 }
 
-void esManhandla::draw(BITMAP* dest) {
+void esManhandla::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -7608,19 +7608,19 @@ bool eGleeok::animate(int index) {
 	//fix for the "kill all enemies" item
 	if (hp == -1000) {
 		for (int i = 0; i < clk3; ++i) {
-			((enemy*)guys.spr(index + i + 1))->hp = 1;             // re-animate each head,
-			((enemy*)guys.spr(index + i + 1))->misc = -1;          // disconnect it,
-			((enemy*)guys.spr(index + i + 1))->animate(index + i + 1); // let it animate one frame,
-			((enemy*)guys.spr(index + i + 1))->hp = -1000;         // and kill it for good
+			((enemy *)guys.spr(index + i + 1))->hp = 1;            // re-animate each head,
+			((enemy *)guys.spr(index + i + 1))->misc = -1;         // disconnect it,
+			((enemy *)guys.spr(index + i + 1))->animate(index + i + 1); // let it animate one frame,
+			((enemy *)guys.spr(index + i + 1))->hp = -1000;        // and kill it for good
 		}
 		clk3 = 0;
 		for (int i = 0; i < misc; i++) {
-			((enemy*)guys.spr(index + i + 1))->misc = -2;    // give the signal to disappear
+			((enemy *)guys.spr(index + i + 1))->misc = -2;   // give the signal to disappear
 		}
 	}
 
 	for (int i = 0; i < clk3; i++) {
-		enemy* head = ((enemy*)guys.spr(index + i + 1));
+		enemy *head = ((enemy *)guys.spr(index + i + 1));
 		head->dummy_int[1] = necktile;
 		if (id >= eGLEEOK1F) {
 			head->dummy_bool[0] = true;
@@ -7638,20 +7638,20 @@ bool eGleeok::animate(int index) {
 	}
 
 	if (hp <= (guysbuf[id].misc2) * (clk3 - 1)*DAMAGE_MULTIPLIER) {
-		((enemy*)guys.spr(index + clk3))->misc = -1;            // give signal to fly off
+		((enemy *)guys.spr(index + clk3))->misc = -1;           // give signal to fly off
 		hp = (guysbuf[id].misc2) * (--clk3) * DAMAGE_MULTIPLIER;
 	}
 
 	if (id < eGLEEOK1F) {
 		if (++clk2 > 72 && !(rand() & 3)) {
 			int i = rand() % misc;
-			enemy* head = ((enemy*)guys.spr(index + i + 1));
+			enemy *head = ((enemy *)guys.spr(index + i + 1));
 			addEwpn(head->x, head->y, ewFireball, 1, d->wdp, 0);
 			clk2 = 0;
 		}
 	} else {
 		if (++clk2 > 100 && !(rand() & 3)) {
-			enemy* head = ((enemy*)guys.spr(rand() % misc + index + 1));
+			enemy *head = ((enemy *)guys.spr(rand() % misc + index + 1));
 			head->timer = rand() % 50 + 50;
 			clk2 = 0;
 		}
@@ -7659,7 +7659,7 @@ bool eGleeok::animate(int index) {
 
 	if (hp <= 0) {
 		for (int i = 0; i < misc; i++) {
-			((enemy*)guys.spr(index + i + 1))->misc = -2;    // give the signal to disappear
+			((enemy *)guys.spr(index + i + 1))->misc = -2;   // give the signal to disappear
 		}
 		never_return(index);
 	}
@@ -7677,7 +7677,7 @@ void eGleeok::death_sfx() {
 	sfx(WAV_GASP, pan(int(x)));
 }
 
-void eGleeok::draw(BITMAP* dest) {
+void eGleeok::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 
 	if (dying) {
@@ -7726,7 +7726,7 @@ void eGleeok::draw(BITMAP* dest) {
 	enemy::drawblock(dest, 15);
 }
 
-void eGleeok::draw2(BITMAP* dest) {
+void eGleeok::draw2(BITMAP *dest) {
 	// the neck stub
 	tile = necktile;
 	xofs = 0;
@@ -7880,7 +7880,7 @@ bool esGleeok::animate(int index) {
 			sfx(WAV_FIRE, pan(int(x)));
 
 			int i = Ewpns.Count() - 1;
-			weapon* ew = (weapon*)(Ewpns.spr(i));
+			weapon *ew = (weapon *)(Ewpns.spr(i));
 			if (wpnsbuf[ewFLAME].frames > 1) {
 				ew->aframe = rand() % wpnsbuf[ewFLAME].frames;
 			}
@@ -7919,7 +7919,7 @@ int esGleeok::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 	return 0;
 }
 
-void esGleeok::draw(BITMAP* dest) {
+void esGleeok::draw(BITMAP *dest) {
 	switch (misc) {
 		case 0:                                                 //neck
 			/*
@@ -7976,7 +7976,7 @@ void esGleeok::draw(BITMAP* dest) {
 	}
 }
 
-void esGleeok::draw2(BITMAP* dest) {
+void esGleeok::draw2(BITMAP *dest) {
 	enemy::draw(dest);
 }
 
@@ -8041,35 +8041,35 @@ bool ePatra::animate(int index) {
 			if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 				switch (id) {
 					case ePATRA1:
-						((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 40;
+						((enemy *)guys.spr(i))->dummy_int[0] = dummy_int[0] + 40;
 						break;
 					case ePATRA2:
-						((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 40;
+						((enemy *)guys.spr(i))->dummy_int[0] = dummy_int[0] + 40;
 						break;
 					case ePATRAL2:
-						((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 160;
+						((enemy *)guys.spr(i))->dummy_int[0] = dummy_int[0] + 160;
 						break;
 					case ePATRAL3:
-						((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 160;
+						((enemy *)guys.spr(i))->dummy_int[0] = dummy_int[0] + 160;
 						break;
 				}
 			} else {
-				((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 1;
+				((enemy *)guys.spr(i))->dummy_int[0] = dummy_int[0] + 1;
 			}
 			//        ((enemy*)guys.spr(i))->dummy_int[0]=192;
 			if (id == ePATRAL2 || id == ePATRAL3) {
-				((enemy*)guys.spr(i))->hp = 9 * DAMAGE_MULTIPLIER;
+				((enemy *)guys.spr(i))->hp = 9 * DAMAGE_MULTIPLIER;
 			} else {
-				((enemy*)guys.spr(i))->hp = 6 * DAMAGE_MULTIPLIER;
+				((enemy *)guys.spr(i))->hp = 6 * DAMAGE_MULTIPLIER;
 			}
 		}
-		if (((enemy*)guys.spr(i))->hp <= 0) {
+		if (((enemy *)guys.spr(i))->hp <= 0) {
 			for (int j = i; j < index + flycnt + flycnt2; j++) {
 				guys.swap(j, j + 1);
 			}
 			--flycnt;
 		} else {
-			int pos = ((enemy*)guys.spr(i))->misc;
+			int pos = ((enemy *)guys.spr(i))->misc;
 			double a = (clk2 - pos * 10.5) * PI / 42;
 
 			if (id == ePATRA1 || id == ePATRAL2 || id == ePATRAL3) {
@@ -8130,26 +8130,26 @@ bool ePatra::animate(int index) {
 		}
 		for (int i = index + flycnt + 1; i < index + flycnt + flycnt2 + 1; i++) { //inner ring
 			if (!adjusted) {
-				((enemy*)guys.spr(i))->hp = 12 * DAMAGE_MULTIPLIER;
+				((enemy *)guys.spr(i))->hp = 12 * DAMAGE_MULTIPLIER;
 				if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 					switch (id) {
 						case ePATRAL2:
-							((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 120;
+							((enemy *)guys.spr(i))->dummy_int[0] = dummy_int[0] + 120;
 							break;
 						case ePATRAL3:
-							((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 40;
+							((enemy *)guys.spr(i))->dummy_int[0] = dummy_int[0] + 40;
 							break;
 					}
 				} else {
-					((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 1;
+					((enemy *)guys.spr(i))->dummy_int[0] = dummy_int[0] + 1;
 				}
 			}
 			if (flycnt > 0) {
-				((enemy*)guys.spr(i))->superman = true;
+				((enemy *)guys.spr(i))->superman = true;
 			} else {
-				((enemy*)guys.spr(i))->superman = false;
+				((enemy *)guys.spr(i))->superman = false;
 			}
-			if (((enemy*)guys.spr(i))->hp <= 0) {
+			if (((enemy *)guys.spr(i))->hp <= 0) {
 				for (int j = i; j < index + flycnt + flycnt2; j++) {
 					guys.swap(j, j + 1);
 				}
@@ -8160,7 +8160,7 @@ bool ePatra::animate(int index) {
 						addEwpn(guys.spr(i)->x, guys.spr(i)->y, ewFireball, 1, d->wdp, 0);
 					}
 				}
-				int pos = ((enemy*)guys.spr(i))->misc;
+				int pos = ((enemy *)guys.spr(i))->misc;
 				double a = ((clk2 - pos * 10.5) * PI / (42));
 
 				if (loopcnt > 0) {
@@ -8203,7 +8203,7 @@ bool ePatra::animate(int index) {
 	return enemy::animate(index);
 }
 
-void ePatra::draw(BITMAP* dest) {
+void ePatra::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		double ddir = atan2(double(y - (Link.y)), double(Link.x - x));
@@ -8348,7 +8348,7 @@ int esPatra::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 	return 0;
 }
 
-void esPatra::draw(BITMAP* dest) {
+void esPatra::draw(BITMAP *dest) {
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		tile = dummy_int[0] + (clk & 3);
 		switch (dir) {                                          //directions get screwed up after 8.  *shrug*
@@ -8430,20 +8430,20 @@ bool ePatraBS::animate(int index) {
 	//    double size=1;;
 	for (int i = index + 1; i < index + flycnt + 1; i++) {
 		if (!adjusted) {
-			((enemy*)guys.spr(i))->hp = 6 * DAMAGE_MULTIPLIER;
+			((enemy *)guys.spr(i))->hp = 6 * DAMAGE_MULTIPLIER;
 			if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
-				((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 160;
+				((enemy *)guys.spr(i))->dummy_int[0] = dummy_int[0] + 160;
 			} else {
-				((enemy*)guys.spr(i))->dummy_int[0] = dummy_int[0] + 1;
+				((enemy *)guys.spr(i))->dummy_int[0] = dummy_int[0] + 1;
 			}
 		}
-		if (((enemy*)guys.spr(i))->hp <= 0) {
+		if (((enemy *)guys.spr(i))->hp <= 0) {
 			for (int j = i; j < index + flycnt + flycnt2; j++) {
 				guys.swap(j, j + 1);
 			}
 			--flycnt;
 		} else {
-			int pos = ((enemy*)guys.spr(i))->misc;
+			int pos = ((enemy *)guys.spr(i))->misc;
 			double a = (clk2 - pos * 15) * PI / 45;
 			temp_x =  cos(a + PI / 2) * 45;
 			temp_y = -sin(a + PI / 2) * 45;
@@ -8482,7 +8482,7 @@ bool ePatraBS::animate(int index) {
 	return enemy::animate(index);
 }
 
-void ePatraBS::draw(BITMAP* dest) {
+void ePatraBS::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		double ddir = atan2(double(y - (Link.y)), double(Link.x - x));
@@ -8641,7 +8641,7 @@ int esPatraBS::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 	return 0;
 }
 
-void esPatraBS::draw(BITMAP* dest) {
+void esPatraBS::draw(BITMAP *dest) {
 	tile = dummy_int[0];
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 		switch (dir) {                                          //directions get screwed up after 8.  *shrug*
@@ -8695,23 +8695,23 @@ void addEwpn(int x, int y, int id, int type, int power, int dir) {
 }
 
 int enemy_dp(int index) {
-	return (((enemy*)guys.spr(index))->d->dp) << 2;
+	return (((enemy *)guys.spr(index))->d->dp) << 2;
 }
 
 int ewpn_dp(int index) {
-	return (((weapon*)Ewpns.spr(index))->power) << 2;
+	return (((weapon *)Ewpns.spr(index))->power) << 2;
 }
 
 int lwpn_dp(int index) {
-	return (((weapon*)Lwpns.spr(index))->power) << 2;
+	return (((weapon *)Lwpns.spr(index))->power) << 2;
 }
 
 int hit_enemy(int index, int wpnId, int power, int wpnx, int wpny, int dir) {
-	return ((enemy*)guys.spr(index))->takehit(wpnId, power, wpnx, wpny, dir);
+	return ((enemy *)guys.spr(index))->takehit(wpnId, power, wpnx, wpny, dir);
 }
 
 void enemy_scored(int index) {
-	((enemy*)guys.spr(index))->scored = true;
+	((enemy *)guys.spr(index))->scored = true;
 }
 
 void addguy(int x, int y, int id, int clk, bool mainguy) {
@@ -8728,7 +8728,7 @@ void additem(int x, int y, int id, int pickup, int clk) {
 
 void kill_em_all() {
 	for (int i = 0; i < guys.Count(); i++) {
-		((enemy*)guys.spr(i))->kickbucket();
+		((enemy *)guys.spr(i))->kickbucket();
 	}
 }
 
@@ -8736,8 +8736,8 @@ void kill_em_all() {
 int GuyHit(int tx, int ty, int txsz, int tysz) {
 	for (int i = 0; i < guys.Count(); i++) {
 		if (guys.spr(i)->hit(tx, ty, txsz, tysz))
-			if (((enemy*)guys.spr(i))->stunclk == 0 &&
-			        (((enemy*)guys.spr(i))->d->family != eeGUY || ((enemy*)guys.spr(i))->d->misc1)) {
+			if (((enemy *)guys.spr(i))->stunclk == 0 &&
+			        (((enemy *)guys.spr(i))->d->family != eeGUY || ((enemy *)guys.spr(i))->d->misc1)) {
 				return i;
 			}
 	}
@@ -8746,7 +8746,7 @@ int GuyHit(int tx, int ty, int txsz, int tysz) {
 
 // For Link's hit detection. Count them if they are dying.
 int GuyHit(int index, int tx, int ty, int txsz, int tysz) {
-	enemy* e = (enemy*)guys.spr(index);
+	enemy *e = (enemy *)guys.spr(index);
 	if (e->hp > 0) {
 		return -1;
 	}
@@ -8766,32 +8766,32 @@ bool hasMainGuy()
 
 {
 	for (int i = 0; i < guys.Count(); i++)
-		if (((enemy*)guys.spr(i))->mainguy) {
+		if (((enemy *)guys.spr(i))->mainguy) {
 			return true;
 		}
 	return false;
 }
 
 void EatLink(int index) {
-	((eLikeLike*)guys.spr(index))->eatlink();
+	((eLikeLike *)guys.spr(index))->eatlink();
 }
 
 void GrabLink(int index) {
-	((eWallM*)guys.spr(index))->grablink();
+	((eWallM *)guys.spr(index))->grablink();
 }
 
 bool CarryLink() {
 	for (int i = 0; i < guys.Count(); i++)
 		if (guys.spr(i)->id == eWALLM)
-			if (((eWallM*)guys.spr(i))->haslink) {
+			if (((eWallM *)guys.spr(i))->haslink) {
 				Link.x = guys.spr(i)->x;
 				Link.y = guys.spr(i)->y;
-				return ((eWallM*)guys.spr(i))->misc > 0;
+				return ((eWallM *)guys.spr(i))->misc > 0;
 			}
 	return false;
 }
 
-void movefairy(fix& x, fix& y, int misc) {
+void movefairy(fix &x, fix &y, int misc) {
 	int i = guys.idFirst(eITEMFAIRY + 0x1000 + misc);
 	x = guys.spr(i)->x;
 	y = guys.spr(i)->y;
@@ -8803,7 +8803,7 @@ void killfairy(int misc) {
 }
 
 void addenemy(int x, int y, int id, int clk) {
-	sprite* e;
+	sprite *e;
 	switch (id) {
 		case eROCTO1:
 		case eROCTO2:
@@ -9244,7 +9244,7 @@ void never_return(int index) {
 	}
 
 	for (int i = 0; i < guys.Count(); i++)
-		if (((((enemy*)guys.spr(i))->d->flags)&guy_neverret) && i != index) {
+		if (((((enemy *)guys.spr(i))->d->flags)&guy_neverret) && i != index) {
 			goto dontdoit;
 		}
 
@@ -9792,13 +9792,13 @@ void loadenemies() {
 				if (i == 0 && tmpscr->enemyflags & efLEADER) {
 					int index = guys.idFirst(tmpscr->enemy[i], 0xFFF);
 					if (index != -1) {
-						((enemy*)guys.spr(index))->leader = true;
+						((enemy *)guys.spr(index))->leader = true;
 					}
 				}
 				if (i == 0 && hasitem == 2) {
 					int index = guys.idFirst(tmpscr->enemy[i], 0xFFF);
 					if (index != -1) {
-						((enemy*)guys.spr(index))->itemguy = true;
+						((enemy *)guys.spr(index))->itemguy = true;
 					}
 				}
 			}                                                     // if(t < 20)
@@ -9807,14 +9807,14 @@ placed_enemy:
 				if (i == 0 && tmpscr->enemyflags & efLEADER) {
 					int index = guys.idFirst(tmpscr->enemy[i], 0xFFF);
 					if (index != -1) {
-						((enemy*)guys.spr(index))->leader = true;
+						((enemy *)guys.spr(index))->leader = true;
 					}
 				}
 				if (i == 0 && hasitem == 2) {
 					int index = guys.idFirst(tmpscr->enemy[i], 0xFFF);
 					if (index != -1) {
 
-						((enemy*)guys.spr(index))->itemguy = true;
+						((enemy *)guys.spr(index))->itemguy = true;
 					}
 				}
 			}
@@ -10158,11 +10158,11 @@ void domagic() {                                            //basically a copy o
 
 void check_collisions() {
 	for (int i = 0; i < Lwpns.Count(); i++) {
-		weapon* w = (weapon*)Lwpns.spr(i);
+		weapon *w = (weapon *)Lwpns.spr(i);
 		if (!(w->Dead())) {
 			for (int j = 0; j < guys.Count(); j++) {
-				if (((enemy*)guys.spr(j))->hit(w)) {
-					int h = ((enemy*)guys.spr(j)) -> takehit(w->id, w->power, w->x, w->y, w->dir);
+				if (((enemy *)guys.spr(j))->hit(w)) {
+					int h = ((enemy *)guys.spr(j)) -> takehit(w->id, w->power, w->x, w->y, w->dir);
 					if (h) {
 						w->onhit(false);
 					}
@@ -10178,15 +10178,15 @@ void check_collisions() {
 				if (w->id == wBrang || w->id == wHookshot) {
 					for (int j = 0; j < items.Count(); j++) {
 						if (items.spr(j)->hit(w)) {
-							if (((item*)items.spr(j))->pickup & ipTIMER) {
-								if (((item*)items.spr(j))->clk2 >= 32) {
+							if (((item *)items.spr(j))->pickup & ipTIMER) {
+								if (((item *)items.spr(j))->clk2 >= 32) {
 									if (w->dragging == -1) {
 										w->dead = 1;
 										if (w->id == wBrang && w->dummy_bool[0] && (w->misc == 1) && current_item(itype_brang, true) > 1) {
 											add_grenade(w->x, w->y, current_item(itype_brang, true) > 2);
 											w->dummy_bool[0] = false;
 										}
-										((item*)items.spr(j))->clk2 = 256;
+										((item *)items.spr(j))->clk2 = 256;
 										w->dragging = j;
 									}
 								}
@@ -10198,8 +10198,8 @@ void check_collisions() {
 				if (w->id == wBrang || w->id == wArrow || w->id == wHookshot) {
 					for (int j = 0; j < items.Count(); j++) {
 						if (items.spr(j)->hit(w)) {
-							if (((item*)items.spr(j))->pickup & ipTIMER) {
-								if (((item*)items.spr(j))->clk2 >= 32) {
+							if (((item *)items.spr(j))->pickup & ipTIMER) {
+								if (((item *)items.spr(j))->clk2 >= 32) {
 									getitem(items.spr(j)->id);
 									items.del(j);
 									--j;
@@ -10218,7 +10218,7 @@ void check_collisions() {
 void dragging_item() {
 	if (get_bit(quest_rules, qr_Z3BRANG_HSHOT)) {
 		for (int i = 0; i < Lwpns.Count(); i++) {
-			weapon* w = (weapon*)Lwpns.spr(i);
+			weapon *w = (weapon *)Lwpns.spr(i);
 			if (w->id == wBrang || w->id == wHookshot) {
 				if (w->dragging >= 0 && w->dragging < items.Count()) {
 					items.spr(w->dragging)->x = w->x;
@@ -10242,7 +10242,7 @@ void roaming_item() {
 	if (itemindex == -1) {
 		guyindex = -1;
 		for (int i = 0; i < guys.Count(); i++) {
-			if (((enemy*)guys.spr(i))->itemguy) {
+			if (((enemy *)guys.spr(i))->itemguy) {
 				guyindex = i;
 			}
 		}

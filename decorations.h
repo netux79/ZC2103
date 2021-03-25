@@ -29,7 +29,7 @@ public:
 	int ox, oy;
 	dBushLeaves(fix X, fix Y, int Id, int Clk);
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class dFlowerClippings : public decoration {
@@ -38,7 +38,7 @@ public:
 	int ox, oy;
 	dFlowerClippings(fix X, fix Y, int Id, int Clk);
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class dGrassClippings : public decoration {
@@ -47,7 +47,7 @@ public:
 	int ox, oy;
 	dGrassClippings(fix X, fix Y, int Id, int Clk);
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class dHammerSmack : public decoration {
@@ -56,29 +56,29 @@ public:
 	int ox, oy;
 	dHammerSmack(fix X, fix Y, int Id, int Clk);
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class dTallGrass : public decoration {
 public:
 	dTallGrass(fix X, fix Y, int Id, int Clk);
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class dRipples : public decoration {
 public:
 	dRipples(fix X, fix Y, int Id, int Clk);
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class dNayrusLoveShield : public decoration {
 public:
 	dNayrusLoveShield(fix X, fix Y, int Id, int Clk);
 	virtual bool animate(int index);
-	virtual void realdraw(BITMAP* dest, int draw_what);
-	virtual void draw(BITMAP* dest);
-	virtual void draw2(BITMAP* dest);
+	virtual void realdraw(BITMAP *dest, int draw_what);
+	virtual void draw(BITMAP *dest);
+	virtual void draw2(BITMAP *dest);
 };
 #endif

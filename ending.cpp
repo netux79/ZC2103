@@ -41,7 +41,7 @@ void put_triforce() {
 	}
 }
 
-void putendmsg(const char* s, int x, int y, int speed, void(proc)()) {
+void putendmsg(const char *s, int x, int y, int speed, void(proc)()) {
 	int i = 0;
 	int c = strlen(s) * speed;
 
@@ -72,7 +72,7 @@ void endingpal() {
 		26, 34, 63,                                             // blue
 		22, 54, 21                                              // green
 	};
-	byte* hold = colordata;
+	byte *hold = colordata;
 	colordata = pal;
 	loadpalset(csBOSS, 0);
 	colordata = hold;

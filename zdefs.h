@@ -824,7 +824,7 @@ typedef struct newcombo {
 
 typedef struct tiletype {
 	byte bitplanes;
-	byte* data;
+	byte *data;
 } tiletype;
 
 typedef struct ZCHEATS {
@@ -1077,7 +1077,7 @@ typedef struct music {
 	short loop;
 	short volume;
 	//36
-	MIDI* midi;
+	MIDI *midi;
 	//40
 } music;
 
@@ -1235,13 +1235,13 @@ typedef struct zinitdata {
 #define DCLICK_NOT        3
 
 template <class T>
-static inline void swap(T& a, T& b) {
+static inline void swap(T &a, T &b) {
 	T c = a;
 	a = b;
 	b = c;
 }
 
-INLINE bool pfwrite(void* p, long n, PACKFILE* f) {
+INLINE bool pfwrite(void *p, long n, PACKFILE *f) {
 	bool success = (pack_fwrite(p, n, f) == n);
 	if (success) {
 		writesize += n;
@@ -1249,7 +1249,7 @@ INLINE bool pfwrite(void* p, long n, PACKFILE* f) {
 	return success;
 }
 
-INLINE bool pfread(void* p, long n, PACKFILE* f, bool keepdata) {
+INLINE bool pfread(void *p, long n, PACKFILE *f, bool keepdata) {
 	bool success;
 	if (keepdata == true) {
 		success = (pack_fread(p, n, f) == n);
@@ -1266,8 +1266,8 @@ INLINE bool pfread(void* p, long n, PACKFILE* f, bool keepdata) {
 	}
 }
 
-INLINE bool p_getc(void* p, PACKFILE* f, bool keepdata) {
-	unsigned char* cp = (unsigned char*)p;
+INLINE bool p_getc(void *p, PACKFILE *f, bool keepdata) {
+	unsigned char *cp = (unsigned char *)p;
 	int c;
 	if (!f) {
 		return false;
@@ -1296,7 +1296,7 @@ INLINE bool p_getc(void* p, PACKFILE* f, bool keepdata) {
 	return true;
 }
 
-INLINE bool p_putc(int c, PACKFILE* f) {
+INLINE bool p_putc(int c, PACKFILE *f) {
 	if (!f) {
 		return false;
 	}
@@ -1318,8 +1318,8 @@ INLINE bool p_putc(int c, PACKFILE* f) {
 	return success;
 }
 
-INLINE bool p_igetw(void* p, PACKFILE* f, bool keepdata) {
-	short* cp = (short*)p;
+INLINE bool p_igetw(void *p, PACKFILE *f, bool keepdata) {
+	short *cp = (short *)p;
 	int c;
 	if (!f) {
 		return false;
@@ -1348,7 +1348,7 @@ INLINE bool p_igetw(void* p, PACKFILE* f, bool keepdata) {
 	return true;
 }
 
-INLINE bool p_iputw(int c, PACKFILE* f) {
+INLINE bool p_iputw(int c, PACKFILE *f) {
 	if (!f) {
 		return false;
 	}
@@ -1370,8 +1370,8 @@ INLINE bool p_iputw(int c, PACKFILE* f) {
 	return success;
 }
 
-INLINE bool p_igetl(void* p, PACKFILE* f, bool keepdata) {
-	dword* cp = (dword*)p;
+INLINE bool p_igetl(void *p, PACKFILE *f, bool keepdata) {
+	dword *cp = (dword *)p;
 	long32 c;
 	if (!f) {
 		return false;
@@ -1400,7 +1400,7 @@ INLINE bool p_igetl(void* p, PACKFILE* f, bool keepdata) {
 	return true;
 }
 
-INLINE bool p_iputl(long c, PACKFILE* f) {
+INLINE bool p_iputl(long c, PACKFILE *f) {
 	if (!f) {
 		return false;
 	}
@@ -1422,8 +1422,8 @@ INLINE bool p_iputl(long c, PACKFILE* f) {
 	return success;
 }
 
-INLINE bool p_mgetw(void* p, PACKFILE* f, bool keepdata) {
-	short* cp = (short*)p;
+INLINE bool p_mgetw(void *p, PACKFILE *f, bool keepdata) {
+	short *cp = (short *)p;
 	int c;
 	if (!f) {
 		return false;
@@ -1452,7 +1452,7 @@ INLINE bool p_mgetw(void* p, PACKFILE* f, bool keepdata) {
 	return true;
 }
 
-INLINE bool p_mputw(int c, PACKFILE* f) {
+INLINE bool p_mputw(int c, PACKFILE *f) {
 	if (!f) {
 		return false;
 	}
@@ -1474,8 +1474,8 @@ INLINE bool p_mputw(int c, PACKFILE* f) {
 	return success;
 }
 
-INLINE bool p_mgetl(void* p, PACKFILE* f, bool keepdata) {
-	dword* cp = (dword*)p;
+INLINE bool p_mgetl(void *p, PACKFILE *f, bool keepdata) {
+	dword *cp = (dword *)p;
 	long32 c;
 	if (!f) {
 		return false;
@@ -1504,7 +1504,7 @@ INLINE bool p_mgetl(void* p, PACKFILE* f, bool keepdata) {
 	return true;
 }
 
-INLINE bool p_mputl(long c, PACKFILE* f) {
+INLINE bool p_mputl(long c, PACKFILE *f) {
 	if (!f) {
 		return false;
 	}

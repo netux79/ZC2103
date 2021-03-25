@@ -20,7 +20,7 @@ public:
 	particle(fix X, fix Y, int layer, int cset, int color, int timer);
 	virtual ~particle();
 	virtual bool animate(int index);
-	virtual void draw(BITMAP* dest);
+	virtual void draw(BITMAP *dest);
 };
 
 class pFaroresWindDust : public particle {

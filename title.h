@@ -14,7 +14,7 @@
 
 int  load_savedgames();
 int  save_savedgames(bool freemem);
-void load_game_icon(gamedata* g);
+void load_game_icon(gamedata *g);
 void titlescreen();
 void game_over();
 void go_quit();

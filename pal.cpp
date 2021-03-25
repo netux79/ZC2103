@@ -81,7 +81,7 @@ const byte nes_pal[] = {
 	31, 63, 63                                                // 63
 };
 
-RGB _RGB(const byte* si) {
+RGB _RGB(const byte *si) {
 	RGB x;
 	x.r = si[0];
 	x.g = si[1];
@@ -113,7 +113,7 @@ RGB mixRGB(int r1, int g1, int b1, int r2, int g2, int b2, int ratio) {
 	return x;
 }
 
-void copy_pal(RGB* src, RGB* dest) {
+void copy_pal(RGB *src, RGB *dest) {
 	for (int i = 0; i < 256; i++) {
 		dest[i] = src[i];
 	}
@@ -124,7 +124,7 @@ void loadfullpal() {
 		RAMpal[i] = _RGB(colordata + i * 3);
 	}
 	for (int i = 240; i < 255; i++) {
-		RAMpal[i] = ((RGB*)data[PAL_GUI].dat)[i];
+		RAMpal[i] = ((RGB *)data[PAL_GUI].dat)[i];
 	}
 	refreshpal = true;
 }
@@ -136,10 +136,10 @@ void loadfullpal() {
  *  callback function is not NULL, it will be called 256 times during the
  *  calculation, allowing you to display a progress indicator.
  */
-void create_zc_trans_table(COLOR_MAP* table, AL_CONST PALETTE pal, int r, int g, int b, void (*callback)(int pos)) {
+void create_zc_trans_table(COLOR_MAP *table, AL_CONST PALETTE pal, int r, int g, int b, void (*callback)(int pos)) {
 	int tmp[768], *q;
 	int x, y, i, j, k;
-	unsigned char* p;
+	unsigned char *p;
 	RGB c;
 
 	for (x = 0; x < 256; x++) {
@@ -183,7 +183,7 @@ void create_zc_trans_table(COLOR_MAP* table, AL_CONST PALETTE pal, int r, int g,
 }
 
 void loadlvlpal(int level) {
-	byte* si = colordata + CSET(level * pdLEVEL + poLEVEL) * 3;
+	byte *si = colordata + CSET(level * pdLEVEL + poLEVEL) * 3;
 
 	for (int i = 0; i < 16 * 3; i++) {
 		RAMpal[CSET(2) + i] = _RGB(si);
@@ -206,7 +206,7 @@ void loadlvlpal(int level) {
 }
 
 void loadpalset(int cset, int dataset) {
-	byte* si = colordata + CSET(dataset) * 3;
+	byte *si = colordata + CSET(dataset) * 3;
 	for (int i = 0; i < 16; i++) {
 		RAMpal[CSET(cset) + i] = _RGB(si);
 		si += 3;
@@ -233,7 +233,7 @@ void ringcolor() {
 }
 
 void loadfadepal(int dataset) {
-	byte* si = colordata + CSET(dataset) * 3;
+	byte *si = colordata + CSET(dataset) * 3;
 
 	for (int i = 0; i < pdFADE * 16; i++) {
 		RAMpal[CSET(2) + i] = _RGB(si);
@@ -257,7 +257,7 @@ void fade(int level, bool blackall, bool fromblack, bool total) {
 			}
 
 			loadlvlpal(level);
-			byte* si = colordata + CSET(level * pdLEVEL + poFADE1) * 3;
+			byte *si = colordata + CSET(level * pdLEVEL + poFADE1) * 3;
 			for (int i = 0; i < 16; i++) {
 				int light = si[0] + si[1] + si[2];
 				si += 3;
@@ -404,7 +404,7 @@ void cycle_palette() {
 					palpos[i] = 0;
 				}
 
-				byte* si = colordata + CSET(level * pdLEVEL + poFADE1 + 1 + palpos[i]) * 3;
+				byte *si = colordata + CSET(level * pdLEVEL + poFADE1 + 1 + palpos[i]) * 3;
 				si += (c.first & 15) * 3;
 
 				for (int col = c.first & 15; col <= (c.count & 15); col++) {

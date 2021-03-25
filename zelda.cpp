@@ -42,7 +42,7 @@ movingblock mblock2;                                        //mblock[4]?
 sprite_list  guys, items, Ewpns, Lwpns, Sitems, chainlinks, decorations, particles;
 LinkClass   Link;
 
-ZCMUSIC* zcmusic = NULL;
+ZCMUSIC *zcmusic = NULL;
 int colordepth;
 int db = 0;
 zinitdata  zinit;
@@ -52,15 +52,15 @@ int strike_hint_counter = 0;
 int strike_hint_timer = 0;
 int strike_hint;
 
-BITMAP* framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf, *pricesdisplaybuf;
-DATAFILE* data, *sfxdata, *fontsdata, *mididata;
-FONT* zfont;
+BITMAP *framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf, *pricesdisplaybuf;
+DATAFILE *data, *sfxdata, *fontsdata, *mididata;
+FONT *zfont;
 PALETTE RAMpal;
-byte* tilebuf, *colordata;
-newcombo* combobuf;
-itemdata* itemsbuf;
-wpndata* wpnsbuf;
-guydata* guysbuf;
+byte *tilebuf, *colordata;
+newcombo *combobuf;
+itemdata *itemsbuf;
+wpndata *wpnsbuf;
+guydata *guysbuf;
 ZCHEATS zcheats;
 byte use_tiles, oldflags3;
 word animated_combo_table[MAXCOMBOS][2];                    //[0]=position in act2, [1]=original tile
@@ -138,14 +138,14 @@ zquestheader QHeader;
 byte         quest_rules[QUESTRULES_SIZE];
 byte         midi_flags[MIDIFLAGS_SIZE];
 word         map_count;
-MsgStr*       MsgStrings;
-DoorComboSet* DoorComboSets;
-dmap*         DMaps;
+MsgStr       *MsgStrings;
+DoorComboSet *DoorComboSets;
+dmap         *DMaps;
 miscQdata    QMisc;
-mapscr*       TheMaps;
+mapscr       *TheMaps;
 
 char     qstpath[1024] = {'\0'};
-gamedata* saves = NULL;
+gamedata *saves = NULL;
 
 volatile int lastfps = 0;
 volatile int framecnt = 0;
@@ -299,14 +299,14 @@ bool GuySuperman(int j) {
 	if ((j >= guys.Count()) || (j < 0)) {
 		return true;
 	}
-	return ((enemy*)guys.spr(j))->superman;
+	return ((enemy *)guys.spr(j))->superman;
 }
 
 int GuyCount() {
 	return guys.Count();
 }
 void StunGuy(int j) {
-	((enemy*)guys.spr(j))->stunclk = 160;
+	((enemy *)guys.spr(j))->stunclk = 160;
 }
 
 fix LinkModifiedX() {
@@ -362,7 +362,7 @@ void reset_status() {
 	reset_combo_animations();
 }
 
-void load_game(gamedata* g) {
+void load_game(gamedata *g) {
 	int ret = 0;
 
 	if (!g->title[0] || !g->hasplayed) {
@@ -381,7 +381,7 @@ void load_game(gamedata* g) {
 	}
 }
 
-void get_questpwd(char* pwd) {
+void get_questpwd(char *pwd) {
 	if (QHeader.pwdkey == 0) {
 		pwd[0] = 0;
 	} else {
@@ -434,7 +434,7 @@ int init_game() {
 	bool gotfromkey = false;
 	if (exists(keyfilename)) {
 		char password[32], pwd[32];
-		PACKFILE* fp = pack_fopen(keyfilename, F_READ);
+		PACKFILE *fp = pack_fopen(keyfilename, F_READ);
 		char msg[80];
 		memset(msg, 0, 80);
 		pfread(msg, 80, fp, true);
@@ -499,7 +499,7 @@ int init_game() {
 	Link.init();
 	Link.resetflags(true);
 
-	copy_pal((RGB*)data[PAL_GUI].dat, RAMpal);
+	copy_pal((RGB *)data[PAL_GUI].dat, RAMpal);
 	loadfullpal();
 	ringcolor();
 	loadlvlpal(DMaps[currdmap].color);
@@ -838,14 +838,14 @@ void do_magic_casting() {
 			int flamemax = 32;
 			if (magiccastclk == 0) {
 				Lwpns.add(new weapon(LinkX(), LinkY(), wPhantom, pDINSFIREROCKET, 0, up));
-				weapon* w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
+				weapon *w1 = (weapon *)(Lwpns.spr(Lwpns.Count() - 1));
 				w1->step = 4;
 				linktile(&Link.tile, &Link.flip, ls_hold2, Link.getDir(), zinit.linkwalkstyle);
 				casty = Link.getY();
 			}
 			if (magiccastclk == 64) {
 				Lwpns.add(new weapon((fix)LinkX(), (fix)(-32), wPhantom, pDINSFIREROCKETRETURN, 0, down));
-				weapon* w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
+				weapon *w1 = (weapon *)(Lwpns.spr(Lwpns.Count() - 1));
 				w1->step = 4;
 				linktile(&Link.tile, &Link.flip, ls_hold2, Link.getDir(), zinit.linkwalkstyle);
 				castnext = false;
@@ -854,7 +854,7 @@ void do_magic_casting() {
 				linktile(&Link.tile, &Link.flip, ls_cast, Link.getDir(), zinit.linkwalkstyle);
 				for (int flamecounter = ((-1) * (flamemax / 2)) + 1; flamecounter < ((flamemax / 2) + 1); flamecounter++) {
 					Lwpns.add(new weapon((fix)LinkX(), (fix)LinkY(), wFire, 3, 8 * DAMAGE_MULTIPLIER, 0));
-					weapon* w = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
+					weapon *w = (weapon *)(Lwpns.spr(Lwpns.Count() - 1));
 					w->step = 2;
 					w->angular = true;
 					w->angle = (flamecounter * PI / (flamemax / 2));
@@ -893,7 +893,7 @@ void do_magic_casting() {
 						if (linktilebuf[i * 16 + j]) {
 							particles.add(new pFaroresWindDust(Link.getX() + j, Link.getY() + i, 5, 6, linktilebuf[i * 16 + j], rand() % 96));
 							int k = particles.Count() - 1;
-							particle* p = (particle*)(particles.spr(k));
+							particle *p = (particle *)(particles.spr(k));
 							p->angular = true;
 							p->angle = rand();
 							p->step = (((double)j) / 8);
@@ -912,10 +912,10 @@ void do_magic_casting() {
 		case mgc_nayruslove: {
 			if (magiccastclk == 0) {
 				Lwpns.add(new weapon(LinkX(), LinkY(), wPhantom, pNAYRUSLOVEROCKET1, 0, left));
-				weapon* w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
+				weapon *w1 = (weapon *)(Lwpns.spr(Lwpns.Count() - 1));
 				w1->step = 4;
 				Lwpns.add(new weapon(LinkX(), LinkY(), wPhantom, pNAYRUSLOVEROCKET2, 0, right));
-				w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
+				w1 = (weapon *)(Lwpns.spr(Lwpns.Count() - 1));
 				w1->step = 4;
 				linktile(&Link.tile, &Link.flip, ls_cast, Link.getDir(), zinit.linkwalkstyle);
 				castx = Link.getX();
@@ -923,10 +923,10 @@ void do_magic_casting() {
 			if (magiccastclk == 64) {
 				int d = max(LinkX(), 256 - LinkX()) + 32;
 				Lwpns.add(new weapon((fix)(LinkX() - d), (fix)LinkY(), wPhantom, pNAYRUSLOVEROCKETRETURN1, 0, right));
-				weapon* w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
+				weapon *w1 = (weapon *)(Lwpns.spr(Lwpns.Count() - 1));
 				w1->step = 4;
 				Lwpns.add(new weapon((fix)(LinkX() + d), (fix)LinkY(), wPhantom, pNAYRUSLOVEROCKETRETURN2, 0, left));
-				w1 = (weapon*)(Lwpns.spr(Lwpns.Count() - 1));
+				w1 = (weapon *)(Lwpns.spr(Lwpns.Count() - 1));
 				w1->step = 4;
 				linktile(&Link.tile, &Link.flip, ls_cast, Link.getDir(), zinit.linkwalkstyle);
 				castnext = false;
@@ -966,7 +966,7 @@ void update_hookshot() {
 		hs_dx = hs_x - hs_startx;
 		hs_dy = hs_y - hs_starty;
 		//extending
-		if (((weapon*)Lwpns.spr(Lwpns.idFirst(wHookshot)))->misc == 0) {
+		if (((weapon *)Lwpns.spr(Lwpns.idFirst(wHookshot)))->misc == 0) {
 			if (chainlinks.Count() < zinit.hookshot_links) {      //extending chain
 				if (abs(hs_dx) >= hs_xdist + 8) {
 					hs_xdist = abs(hs_x - hs_startx);
@@ -997,7 +997,7 @@ void update_hookshot() {
 				}
 			}
 		}                                                       //retracting
-		else if (((weapon*)Lwpns.spr(Lwpns.idFirst(wHookshot)))->misc == 1) {
+		else if (((weapon *)Lwpns.spr(Lwpns.idFirst(wHookshot)))->misc == 1) {
 			dist_bx = (abs(hs_dx) - (8 * chainlinks.Count())) / (chainlinks.Count() + 1);
 			dist_by = (abs(hs_dy) - (8 * chainlinks.Count())) / (chainlinks.Count() + 1);
 			hs_w = 8;
@@ -1133,7 +1133,7 @@ void game_loop() {
 /********** Main **********/
 /**************************/
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
 	Z_message("Zelda Classic %s (Build %d)\n", VerStr(ZELDA_VERSION), VERSION_BUILD);
 
 	/*
@@ -1166,7 +1166,7 @@ int main(int argc, char* argv[]) {
 	load_game_configs();
 
 	// Get the quest file to run.
-	char* temp = get_cmd_arg(argc, argv);
+	char *temp = get_cmd_arg(argc, argv);
 
 	if (temp != NULL) {
 		strcpy(qstpath, temp);
@@ -1208,7 +1208,7 @@ int main(int argc, char* argv[]) {
 	if ((data = load_datafile("zelda.dat")) == NULL) {
 		Z_error("failed");
 	}
-	if (strncmp((char*)data[0].dat, zeldadat_sig, 23)) {
+	if (strncmp((char *)data[0].dat, zeldadat_sig, 23)) {
 		Z_error("\nIncompatible version of zelda.dat.\nPlease upgrade to %s Build %d", VerStr(ZELDADAT_VERSION), ZELDADAT_BUILD);
 	}
 	Z_message("OK\n");
@@ -1217,7 +1217,7 @@ int main(int argc, char* argv[]) {
 	if ((fontsdata = load_datafile("fonts.dat")) == NULL) {
 		Z_error("failed");
 	}
-	if (strncmp((char*)fontsdata[0].dat, fontsdat_sig, 23)) {
+	if (strncmp((char *)fontsdata[0].dat, fontsdat_sig, 23)) {
 		Z_error("\nIncompatible version of fonts.dat.\nPlease upgrade to %s Build %d", VerStr(FONTSDAT_VERSION), FONTSDAT_BUILD);
 	}
 	Z_message("OK\n");
@@ -1228,15 +1228,15 @@ int main(int argc, char* argv[]) {
 	if ((sfxdata = load_datafile("sfx.dat")) == NULL) {
 		Z_error("failed");
 	}
-	if (strncmp((char*)sfxdata[0].dat, sfxdat_sig, 21)) {
+	if (strncmp((char *)sfxdata[0].dat, sfxdat_sig, 21)) {
 		Z_error("\nIncompatible version of sfx.dat.\nPlease upgrade to %s Build %d", VerStr(SFXDAT_VERSION), SFXDAT_BUILD);
 	}
 	Z_message("OK\n");
 
 	// Setting up base assets
-	mididata = (DATAFILE*)data[MUSIC].dat;
-	font = (FONT*)fontsdata[FONT_GUI_PROP].dat;
-	zfont = (FONT*)fontsdata[FONT_NES].dat;
+	mididata = (DATAFILE *)data[MUSIC].dat;
+	font = (FONT *)fontsdata[FONT_GUI_PROP].dat;
+	zfont = (FONT *)fontsdata[FONT_NES].dat;
 
 	// Allocate bitmap buffers
 	Z_message("Allocating bitmap buffers...");
@@ -1259,11 +1259,11 @@ int main(int argc, char* argv[]) {
 	if (install_keyboard() < 0) {
 		Z_error(allegro_error);
 	}
-	
-	if(install_joystick(JOY_TYPE_AUTODETECT) < 0) {
+
+	if (install_joystick(JOY_TYPE_AUTODETECT) < 0) {
 		Z_error(allegro_error);
 	}
-	
+
 	Z_init_timers();
 	Z_message("OK\n");
 
@@ -1281,7 +1281,7 @@ int main(int argc, char* argv[]) {
 	int mode = VidMode;
 	// define the bit depth and resultion to use
 	set_color_depth(used_switch(argc, argv, "-16bit") ? 16 : 8);
-	set_color_conversion(COLORCONV_NONE);	
+	set_color_conversion(COLORCONV_NONE);
 	int res_arg = used_switch(argc, argv, "-res");
 	if (res_arg && (argc > (res_arg + 2))) {
 		resx = atoi(argv[res_arg + 1]);
@@ -1332,7 +1332,7 @@ int main(int argc, char* argv[]) {
 			game_loop();
 			advanceframe();
 		}
-		
+
 		// save subscreen status
 		oldflags3 = tmpscr->flags3;
 		tmpscr->flags3 = 0;

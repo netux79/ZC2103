@@ -23,7 +23,7 @@ bool particle::animate(int index) {
 	return (!timer);
 }
 
-void particle::draw(BITMAP* dest) {
+void particle::draw(BITMAP *dest) {
 	int tcs = cset;
 	tcs &= 15;
 	tcs <<= CSET_SHFT;

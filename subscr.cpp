@@ -24,7 +24,7 @@ bool show_subscreen_life = true;
 extern sprite_list  guys, items, Ewpns, Lwpns, Sitems, chainlinks, decorations;
 extern LinkClass   Link;
 
-void blueframe(BITMAP* dest, int x, int y, int xsize, int ysize) {
+void blueframe(BITMAP *dest, int x, int y, int xsize, int ysize) {
 	/*
 	   /- -- -- -\
 	   |         |
@@ -64,7 +64,7 @@ void blueframe(BITMAP* dest, int x, int y, int xsize, int ysize) {
 	}
 }
 
-void drawgrid(BITMAP* dest, int c1, int c2) {
+void drawgrid(BITMAP *dest, int c1, int c2) {
 	int si = 0;
 	for (int y = 16; y < 48; y += 4) {
 		byte dl = DMaps[currdmap].grid[si];
@@ -85,14 +85,14 @@ void drawgrid(BITMAP* dest, int c1, int c2) {
 	}
 }
 
-void draw_block(BITMAP* dest, int x, int y, int tile, int cset, int w, int h) {
+void draw_block(BITMAP *dest, int x, int y, int tile, int cset, int w, int h) {
 	for (int j = 0; j < h; j++)
 		for (int i = 0; i < w; i++) {
 			overtile16(dest, tile + j * 20 + i, x + (i << 4), y + (j << 4), cset, 0);
 		}
 }
 
-void drawdmap(BITMAP* dest) {
+void drawdmap(BITMAP *dest) {
 	zcolors c = QMisc.colors;
 
 	switch ((DMaps[currdmap].type & dmfTYPE)) {
@@ -143,7 +143,7 @@ void drawdmap(BITMAP* dest) {
 	}
 }
 
-void lifemeter(BITMAP* dest, int x, int y) {
+void lifemeter(BITMAP *dest, int x, int y) {
 	if (!show_subscreen_life) {
 		return;
 	}
@@ -164,7 +164,7 @@ void lifemeter(BITMAP* dest, int x, int y) {
 	}
 }
 
-void magicmeter(BITMAP* dest, int x, int y) {
+void magicmeter(BITMAP *dest, int x, int y) {
 	if (!get_bit(quest_rules, qr_ENABLEMAGIC)) {
 		return;
 	}
@@ -195,7 +195,7 @@ void magicmeter(BITMAP* dest, int x, int y) {
 
 }
 
-void putxnum(BITMAP* dest, int x, int y, int num) {
+void putxnum(BITMAP *dest, int x, int y, int num) {
 	if (!show_subscreen_numbers) {
 		return;
 	}
@@ -208,7 +208,7 @@ void putxnum(BITMAP* dest, int x, int y, int num) {
 
 /****  Subscr items code  ****/
 
-item* Bitem = NULL, *Aitem = NULL;
+item *Bitem = NULL, *Aitem = NULL;
 int   Bid = 0, Aid = 0;
 
 void reset_subscr_items() {
@@ -264,7 +264,7 @@ void update_subscr_items() {
 	}
 }
 
-static int stripspaces(char* source, char* target, int stop) {
+static int stripspaces(char *source, char *target, int stop) {
 	int begin, end;
 	for (begin = 0; ((begin < stop) && (source[begin] == ' ')); begin++);
 	if (begin == stop) {
@@ -275,9 +275,9 @@ static int stripspaces(char* source, char* target, int stop) {
 	return (end - begin + 1);
 }
 
-void putsubscr(BITMAP* dest, int x, int y, bool showtime) {
+void putsubscr(BITMAP *dest, int x, int y, bool showtime) {
 	int type = (DMaps[currdmap].type & dmfTYPE);
-	BITMAP* subscr = create_sub_bitmap(dest, x, y, 256, 56);
+	BITMAP *subscr = create_sub_bitmap(dest, x, y, 256, 56);
 	if (tmpscr->flags3 & fNOSUBSCR) {
 		clear_to_color(subscr, 0);
 		return;
@@ -348,7 +348,7 @@ void putsubscr(BITMAP* dest, int x, int y, bool showtime) {
 	}
 
 	if (showtime) {
-		char* ts = time_str(game.time);
+		char *ts = time_str(game.time);
 		textout_ex(subscr, zfont, ts, 240 - (strlen(ts) << 3), 0, QMisc.colors.text, -1);
 	}
 
@@ -379,7 +379,7 @@ void putsubscr(BITMAP* dest, int x, int y, bool showtime) {
 	destroy_bitmap(subscr);
 }
 
-void puttriframe(BITMAP* dest) {
+void puttriframe(BITMAP *dest) {
 	if (QMisc.colors.triframe_tile) {
 		draw_block(dest, 80, 104, QMisc.colors.triframe_tile, QMisc.colors.triframe_cset, 6, 3);
 	} else {
@@ -447,8 +447,8 @@ void markBmap(int dir) {
 	}
 }
 
-void draw_block(BITMAP* dest, int x, int y, int tile, int cset, int w, int h);
-void putBmap(BITMAP* dest) {
+void draw_block(BITMAP *dest, int x, int y, int tile, int cset, int w, int h);
+void putBmap(BITMAP *dest) {
 	int si = 0;
 
 	int maptile = (game.lvlitems[dlevel] & liMAP) ?
@@ -468,7 +468,7 @@ void putBmap(BITMAP* dest) {
 				++si;
 			}
 	} else {
-		BITMAP* bmp = create_bitmap_ex(8, 8, 8);
+		BITMAP *bmp = create_bitmap_ex(8, 8, 8);
 		if (!bmp) {
 			return;
 		}
@@ -589,7 +589,7 @@ void load_Sitems() {
 	}
 
 	if (zinit.subscreen > 0)
-	//  if(NEWSUBSCR)
+		//  if(NEWSUBSCR)
 	{
 		y = 64;
 
@@ -615,7 +615,7 @@ void load_Sitems() {
 
 		// HC Pieces
 		if (QMisc.colors.HCpieces_tile) {
-			item* HCP = new item((fix)(x[5] - ofs), (fix)y, iMax, 0, 0);
+			item *HCP = new item((fix)(x[5] - ofs), (fix)y, iMax, 0, 0);
 			if (HCP) {
 				HCP->tile = QMisc.colors.HCpieces_tile + vbound(game.HCpieces, 0, 3);
 				HCP->cs   = QMisc.colors.HCpieces_cset;
@@ -763,7 +763,7 @@ void load_Sitems() {
 }
 
 void put_topsubscr() {
-	BITMAP* subscr = scrollbuf;
+	BITMAP *subscr = scrollbuf;
 	int type = (DMaps[currdmap].type & dmfTYPE);
 
 	rectfill(subscr, 0, 0, 255, 173, QMisc.colors.subscr_bg);

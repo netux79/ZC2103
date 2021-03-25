@@ -28,10 +28,10 @@
 
 // first the game saving & loading system
 
-static const char* SAVE_HEADER = "Zelda Classic Save File";
+static const char *SAVE_HEADER = "Zelda Classic Save File";
 static char SAVE_FILE[1048] = {'\0'};
 
-int readsaves(gamedata* savedata, PACKFILE* f) {
+int readsaves(gamedata *savedata, PACKFILE *f) {
 	word item_count;
 	word qstpath_len;
 	word save_count;
@@ -166,8 +166,8 @@ int readsaves(gamedata* savedata, PACKFILE* f) {
 // call once at startup
 int load_savedgames() {
 	int ret;
-	PACKFILE* f = NULL;
-	const char* tmpfilename = "tmpsav";
+	PACKFILE *f = NULL;
+	const char *tmpfilename = "tmpsav";
 
 	int  section_id;
 	int  section_size;
@@ -178,7 +178,7 @@ int load_savedgames() {
 	replace_extension(SAVE_FILE, qstpath, "sav", sizeof(SAVE_FILE));
 
 	if (saves == NULL) {
-		saves = (gamedata*)malloc(sizeof(gamedata) * MAXSAVES);
+		saves = (gamedata *)malloc(sizeof(gamedata) * MAXSAVES);
 		if (saves == NULL) {
 			return 1;
 		}
@@ -243,7 +243,7 @@ reset:
 	Z_message("Format error.  Resetting game data...");
 
 init:
-	int* di = (int*)saves;
+	int *di = (int *)saves;
 	for (unsigned i = 0; i < sizeof(gamedata)*MAXSAVES / sizeof(int); i++) {
 		*(di++) = 0;
 	}
@@ -251,7 +251,7 @@ init:
 	return 0;
 }
 
-int writesaves(gamedata* savedata, PACKFILE* f) {
+int writesaves(gamedata *savedata, PACKFILE *f) {
 	word item_count = iMax;
 	word qstpath_len = 0;
 	if (!p_iputw(MAXSAVES, f)) {
@@ -375,9 +375,9 @@ int save_savedgames(bool freemem) {
 		return 1;
 	}
 
-	const char* tmpfilename = "tmpsav";
+	const char *tmpfilename = "tmpsav";
 
-	PACKFILE* f = pack_fopen(tmpfilename, F_WRITE_PACKED);
+	PACKFILE *f = pack_fopen(tmpfilename, F_WRITE_PACKED);
 	if (!f) {
 		delete_file(tmpfilename);
 		return 2;
@@ -426,7 +426,7 @@ int save_savedgames(bool freemem) {
 	return ret;
 }
 
-void load_game_icon(gamedata* g) {
+void load_game_icon(gamedata *g) {
 	int i = high_item(imax_ring, itype_ring, true, g->items[itype_ring], true);
 	int t = QMisc.icons[i];
 
@@ -434,7 +434,7 @@ void load_game_icon(gamedata* g) {
 		t = 0;
 	}
 
-	byte* si = tilebuf + ((t ? t : 28) << 7);
+	byte *si = tilebuf + ((t ? t : 28) << 7);
 
 	for (int j = 0; j < 128; j++) {
 		g->icon[j] = *(si++);
@@ -499,7 +499,7 @@ static void list_save(int save_num, int ypos) {
 		textprintf_ex(framebuf, zfont, 72, ypos + 16, 1, -1, "%s", saves[save_num].name);
 	}
 
-	byte* hold = tilebuf;
+	byte *hold = tilebuf;
 	tilebuf = saves[save_num].icon;
 	overtile16(framebuf, 0, 48, ypos + 17, (save_num % 3) + 10, 0);    //link?
 	tilebuf = hold;
@@ -522,10 +522,10 @@ static void list_saves() {
 	// Draw the arrows above the lifemeter!
 	if (savecnt > 3) {
 		if (listpos >= 3) {
-			textout_ex(framebuf, zfont, (char*)left_arrow_str, 96, 60, 3, -1);
+			textout_ex(framebuf, zfont, (char *)left_arrow_str, 96, 60, 3, -1);
 		}
 		if (listpos + 3 < savecnt) {
-			textout_ex(framebuf, zfont, (char*)right_arrow_str, 176, 60, 3, -1);
+			textout_ex(framebuf, zfont, (char *)right_arrow_str, 176, 60, 3, -1);
 		}
 		textprintf_ex(framebuf, zfont, 112, 60, 3, -1, "%2d - %-2d", listpos + 1, listpos + 3);
 	}
@@ -569,7 +569,7 @@ static bool register_name() {
 	int letter_grid_width = 11;
 	int letter_grid_height = 4;
 	int letter_grid_spacing = 16;
-	const char* letter_grid = "ABCDEFGHIJKLMNOPQRSTUVWXYZ-.,!'&.0123456789 ";
+	const char *letter_grid = "ABCDEFGHIJKLMNOPQRSTUVWXYZ-.,!'&.0123456789 ";
 
 	clear_bitmap(framebuf);
 	blueframe(framebuf, 24, 48, 26, 8);
@@ -698,7 +698,7 @@ static bool register_name() {
 		for (int i = s; i < MAXSAVES - 1; i++) {
 			saves[i] = saves[i + 1];
 		}
-		int* di = (int*)(saves + MAXSAVES - 1);
+		int *di = (int *)(saves + MAXSAVES - 1);
 		for (unsigned i = 0; i < sizeof(gamedata) / sizeof(int); i++) {
 			*(di++) = 0;
 		}
@@ -729,7 +729,7 @@ static bool delete_save(int file) {
 		for (int i = file; i < MAXSAVES - 1; i++) {
 			saves[i] = saves[i + 1];
 		}
-		int* di = (int*)(saves + MAXSAVES - 1);
+		int *di = (int *)(saves + MAXSAVES - 1);
 		for (unsigned i = 0; i < sizeof(gamedata) / sizeof(int); i++) {
 			*(di++) = 0;
 		}
@@ -749,7 +749,7 @@ static int game_details(int file) {
 	if (saves[file].quest == 0) {
 		return 0;
 	}
-	BITMAP* info = create_bitmap_ex(8, 160, 26);
+	BITMAP *info = create_bitmap_ex(8, 160, 26);
 	blit(framebuf, info, 48, pos * 24 + 70, 0, 0, 160, 26);
 	rectfill(framebuf, 40, 60, 216, 192, 0);
 	blueframe(framebuf, 24, 48, 26, 20);
@@ -1017,8 +1017,8 @@ int selection_menu() {
 		rectfill(framebuf, 72, 72, 79, 151, 0);
 		puttile8(framebuf, htile, 72, pos * 24 + 72, 1, 0);
 		advanceframe();
-		
-		// Need to avoid player hit the exit key 
+
+		// Need to avoid player hit the exit key
 		// by mistake in this menu.
 		if (Status == qEXIT) {
 			Status = 0;
@@ -1046,15 +1046,21 @@ void game_over() {
 
 	if (!Status) {
 		switch (pos) {
-			case 0: Status = qCONT; break;
-			case 3: Status = qEXIT; break;
+			case 0:
+				Status = qCONT;
+				break;
+			case 3:
+				Status = qEXIT;
+				break;
 			case 1:
-					game.cheat |= cheat;
-					saves[currgame] = game;
-					load_game_icon(saves + currgame);
-					save_savedgames(false);
-					// fall thru...
-			case 2: Status = qQUIT; break;
+				game.cheat |= cheat;
+				saves[currgame] = game;
+				load_game_icon(saves + currgame);
+				save_savedgames(false);
+			// fall thru...
+			case 2:
+				Status = qQUIT;
+				break;
 		}
 	}
 }
@@ -1074,15 +1080,21 @@ void go_quit() {
 
 	if (!Status) {
 		switch (pos) {
-			case 0: Status = qRESUME; break;
-			case 3: Status = qEXIT; break;
+			case 0:
+				Status = qRESUME;
+				break;
+			case 3:
+				Status = qEXIT;
+				break;
 			case 1:
-					game.cheat |= cheat;
-					saves[currgame] = game;
-					load_game_icon(saves + currgame);
-					save_savedgames(false);
-					// fall thru...
-			case 2: Status = qQUIT; break;
+				game.cheat |= cheat;
+				saves[currgame] = game;
+				load_game_icon(saves + currgame);
+				save_savedgames(false);
+			// fall thru...
+			case 2:
+				Status = qQUIT;
+				break;
 		}
 	}
 }

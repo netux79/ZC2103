@@ -153,7 +153,7 @@ int WARPCODE(int dmap, int scr, int dw)
 // returns: -1 = not a warp screen
 //          0+ = warp screen code ( high byte=dmap, low byte=scr )
 {
-	mapscr* s = TheMaps + (DMaps[dmap].map * MAPSCRS + scr);
+	mapscr *s = TheMaps + (DMaps[dmap].map * MAPSCRS + scr);
 	if (s->room != rWARP) {
 		return -1;
 	}
@@ -223,7 +223,7 @@ bool isstepable(int combo) {                                //can use ladder on 
 }
 
 bool hiddenstair(int tmp, bool redraw) {                    // tmp = index of tmpscr[]
-	mapscr* s = tmpscr + tmp;
+	mapscr *s = tmpscr + tmp;
 
 	if (s->stairx || s->stairy) {
 		int di = (s->stairy & 0xF0) + (s->stairx >> 4);
@@ -239,8 +239,8 @@ bool hiddenstair(int tmp, bool redraw) {                    // tmp = index of tm
 }
 
 bool remove_lockblocks(int tmp, bool redraw) {              // tmp = index of tmpscr[]
-	mapscr* s = tmpscr + tmp;
-	mapscr* t = tmpscr2;
+	mapscr *s = tmpscr + tmp;
+	mapscr *t = tmpscr2;
 	bool didit = false;
 
 	for (int i = 0; i < 176; i++) {
@@ -263,8 +263,8 @@ bool remove_lockblocks(int tmp, bool redraw) {              // tmp = index of tm
 }
 
 bool remove_bosslockblocks(int tmp, bool redraw) {          // tmp = index of tmpscr[]
-	mapscr* s = tmpscr + tmp;
-	mapscr* t = tmpscr2;
+	mapscr *s = tmpscr + tmp;
+	mapscr *t = tmpscr2;
 	bool didit = false;
 
 	for (int i = 0; i < 176; i++) {
@@ -286,7 +286,7 @@ bool remove_bosslockblocks(int tmp, bool redraw) {          // tmp = index of tm
 	return didit;
 }
 
-bool overheadcombos(mapscr* s) {
+bool overheadcombos(mapscr *s) {
 	for (int i = 0; i < 176; i++) {
 		if (combobuf[s->data[i]].type == cOVERHEAD) {
 			return true;
@@ -295,7 +295,7 @@ bool overheadcombos(mapscr* s) {
 	return false;
 }
 
-void delete_fireball_shooter(mapscr* s, int i) {
+void delete_fireball_shooter(mapscr *s, int i) {
 	int cx = 0, cy = 0;
 	int ct = combobuf[s->data[i]].type;
 	if (ct != cL_STATUE && ct != cR_STATUE && ct != cC_STATUE) {
@@ -324,8 +324,8 @@ void delete_fireball_shooter(mapscr* s, int i) {
 }
 
 void hidden_entrance(int tmp, bool refresh, bool high16only) {
-	mapscr* s = tmpscr + tmp;
-	mapscr* t = tmpscr2;
+	mapscr *s = tmpscr + tmp;
+	mapscr *t = tmpscr2;
 	int ft = 0;
 	for (int i = 0; i < 176; i++) {
 		bool putit = true;
@@ -667,10 +667,10 @@ void bombdoor(int x, int y) {
 	}
 }
 
-void do_scrolling_layer(BITMAP* bmp, int type, mapscr* layer, int x, int y, bool scrolling, int tempscreen) {
+void do_scrolling_layer(BITMAP *bmp, int type, mapscr *layer, int x, int y, bool scrolling, int tempscreen) {
 	int i;
 	static int mf;
-	mapscr* tscr;
+	mapscr *tscr;
 	switch (type) {
 		case -2:                                                //push blocks
 			for (i = 0; i < 176; i++) {
@@ -728,11 +728,11 @@ void do_scrolling_layer(BITMAP* bmp, int type, mapscr* layer, int x, int y, bool
 	}
 }
 
-void do_layer(BITMAP* bmp, int type, mapscr* layer, int x, int y, int tempscreen) {
+void do_layer(BITMAP *bmp, int type, mapscr *layer, int x, int y, int tempscreen) {
 	do_scrolling_layer(bmp, type, layer, x, y, false, tempscreen);
 }
 
-void draw_screen(mapscr* layer1, mapscr* layer2, int x1, int y1, int x2, int y2) {
+void draw_screen(mapscr *layer1, mapscr *layer2, int x1, int y1, int x2, int y2) {
 	int cmby2 = 0;
 	int pcounter;
 
@@ -742,7 +742,7 @@ void draw_screen(mapscr* layer1, mapscr* layer2, int x1, int y1, int x2, int y2)
 	putscr(scrollbuf, x1, y1, layer1);
 	blit(scrollbuf, framebuf, 0, 0, 0, 56, 256, 168);
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
-		if (((particle*)particles.spr(pcounter))->layer == -3) {
+		if (((particle *)particles.spr(pcounter))->layer == -3) {
 			particles.spr(pcounter)->draw(framebuf);
 			//particles.del(pcounter);
 		}
@@ -770,21 +770,21 @@ void draw_screen(mapscr* layer1, mapscr* layer2, int x1, int y1, int x2, int y2)
 	}
 	do_layer(framebuf, 0, layer1, x1, y1, 2);
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
-		if (((particle*)particles.spr(pcounter))->layer == 0) {
+		if (((particle *)particles.spr(pcounter))->layer == 0) {
 			particles.spr(pcounter)->draw(framebuf);
 			//particles.del(pcounter);
 		}
 	}
 	do_layer(framebuf, 1, layer1, x1, y1, 2);
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
-		if (((particle*)particles.spr(pcounter))->layer == 1) {
+		if (((particle *)particles.spr(pcounter))->layer == 1) {
 			particles.spr(pcounter)->draw(framebuf);
 			//particles.del(pcounter);
 		}
 	}
 	do_layer(framebuf, -2, layer1, x1, y1, 2);
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
-		if (((particle*)particles.spr(pcounter))->layer == -2) {
+		if (((particle *)particles.spr(pcounter))->layer == -2) {
 			particles.spr(pcounter)->draw(framebuf);
 			//particles.del(pcounter);
 		}
@@ -845,12 +845,12 @@ void draw_screen(mapscr* layer1, mapscr* layer2, int x1, int y1, int x2, int y2)
 	// draw likelike over Link
 	for (int i = 0; i < guys.Count(); i++) {
 		if (guys.spr(i)->id == eLIKE) {
-			if (((eLikeLike*)guys.spr(i))->haslink) {
+			if (((eLikeLike *)guys.spr(i))->haslink) {
 				guys.spr(i)->draw(framebuf);
 			}
 		}
 		if (guys.spr(i)->id == eWALLM) {
-			if (((eWallM*)guys.spr(i))->haslink) {
+			if (((eWallM *)guys.spr(i))->haslink) {
 				guys.spr(i)->draw(framebuf);
 			}
 		}
@@ -873,21 +873,21 @@ void draw_screen(mapscr* layer1, mapscr* layer2, int x1, int y1, int x2, int y2)
 
 	do_layer(framebuf, 2, layer1, x1, y1, 2);
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
-		if (((particle*)particles.spr(pcounter))->layer == 2) {
+		if (((particle *)particles.spr(pcounter))->layer == 2) {
 			particles.spr(pcounter)->draw(framebuf);
 			//particles.del(pcounter);
 		}
 	}
 	do_layer(framebuf, 3, layer1, x1, y1, 2);
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
-		if (((particle*)particles.spr(pcounter))->layer == 3) {
+		if (((particle *)particles.spr(pcounter))->layer == 3) {
 			particles.spr(pcounter)->draw(framebuf);
 			//particles.del(pcounter);
 		}
 	}
 	do_layer(framebuf, -1, layer1, x1, y1, 2);
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
-		if (((particle*)particles.spr(pcounter))->layer == -1) {
+		if (((particle *)particles.spr(pcounter))->layer == -1) {
 			particles.spr(pcounter)->draw(framebuf);
 			//particles.del(pcounter);
 		}
@@ -937,14 +937,14 @@ void draw_screen(mapscr* layer1, mapscr* layer2, int x1, int y1, int x2, int y2)
 
 	do_layer(framebuf, 4, layer1, x1, y1, 2);
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
-		if (((particle*)particles.spr(pcounter))->layer == 4) {
+		if (((particle *)particles.spr(pcounter))->layer == 4) {
 			particles.spr(pcounter)->draw(framebuf);
 			//particles.del(pcounter);
 		}
 	}
 	do_layer(framebuf, 5, layer1, x1, y1, 2);
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
-		if (((particle*)particles.spr(pcounter))->layer == 5) {
+		if (((particle *)particles.spr(pcounter))->layer == 5) {
 			particles.spr(pcounter)->draw(framebuf);
 			//particles.del(pcounter);
 		}
@@ -988,11 +988,11 @@ void draw_screen(mapscr* layer1, mapscr* layer2, int x1, int y1, int x2, int y2)
 			if (draw_screen_clip_rect_show_link) {
 				for (int i = 0; i < guys.Count(); i++) {
 					if (guys.spr(i)->id == eLIKE) {
-						if (((eLikeLike*)guys.spr(i))->haslink) {
+						if (((eLikeLike *)guys.spr(i))->haslink) {
 							guys.spr(i)->draw(framebuf);
 						}
 					} else if (guys.spr(i)->id == eWALLM) {
-						if (((eWallM*)guys.spr(i))->haslink) {
+						if (((eWallM *)guys.spr(i))->haslink) {
 							guys.spr(i)->draw(framebuf);
 						}
 					}
@@ -1572,7 +1572,7 @@ void loadscr2(int tmp, int scr, int ldir) {
 	}
 }
 
-void putscr(BITMAP* dest, int x, int y, mapscr* screen) {
+void putscr(BITMAP *dest, int x, int y, mapscr *screen) {
 	if (screen->valid == 0) {
 		rectfill(dest, x, y, x + 255, y + 175, 0);
 		return;
@@ -1611,7 +1611,7 @@ bool _walkflag(int x, int y, int cnt) {
 	if (y > 168) {
 		return false;
 	}
-	mapscr* s1, *s2;
+	mapscr *s1, *s2;
 	/*
 	  s1=(((*tmpscr).layermap[0]-1)>=0)?
 	       (TheMaps+((*tmpscr).layermap[0]-1)*MAPSCRS+((*tmpscr).layerscreen[0])):
@@ -1677,7 +1677,7 @@ bool water_walkflag(int x, int y, int cnt) {
 		return false;
 	}
 
-	mapscr* s1, *s2;
+	mapscr *s1, *s2;
 	/*
 	  s1=(((*tmpscr).layermap[0]-1)>=0)?
 	       (TheMaps+((*tmpscr).layermap[0]-1)*MAPSCRS+((*tmpscr).layerscreen[0])):
@@ -1778,7 +1778,7 @@ void ViewMap() {
 		}
 		memcpy(&(tmpscr_b[i]), &(tmpscr[i]), sizeof(mapscr));
 	}
-	BITMAP* mappic = NULL;
+	BITMAP *mappic = NULL;
 	static double scales[17] = {
 		0.03125, 0.04419, 0.0625, 0.08839, 0.125, 0.177, 0.25, 0.3535,
 		0.50, 0.707, 1.0, 1.414, 2.0, 2.828, 4.0, 5.657, 8.0

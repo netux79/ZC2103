@@ -68,7 +68,7 @@ bool item::animate(int index) {
 	return false;
 }
 
-void item::draw(BITMAP* dest) {
+void item::draw(BITMAP *dest) {
 	if (pickup & ipNODRAW) {
 		return;
 	}
@@ -129,14 +129,14 @@ item::item(fix X, fix Y, int i, int p, int c) : sprite() {
 
 // easy way to draw an item
 
-void putitem(BITMAP* dest, int x, int y, int item_id) {
+void putitem(BITMAP *dest, int x, int y, int item_id) {
 	item temp((fix)x, (fix)y, item_id, 0, 0);
 	temp.yofs = 0;
 	temp.animate(0);
 	temp.draw(dest);
 }
 
-void putitem2(BITMAP* dest, int x, int y, int item_id, int& aclk, int& aframe, int flash) {
+void putitem2(BITMAP *dest, int x, int y, int item_id, int &aclk, int &aframe, int flash) {
 	item temp((fix)x, (fix)y, item_id, 0, 0);
 	temp.yofs = 0;
 	temp.aclk = aclk;

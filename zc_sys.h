@@ -93,7 +93,7 @@ void zapin();
 void wavyout();
 void wavyin();
 void blackscr(int fcnt, bool showsubscr);
-void black_opening(BITMAP* dest, int x, int y, int a, int max_a);
+void black_opening(BITMAP *dest, int x, int y, int a, int max_a);
 void close_black_opening(int x, int y, bool wait);
 void open_black_opening(int x, int y, bool wait);
 void openscreen();
@@ -138,25 +138,25 @@ void stop_sfx(int index);
 void kill_sfx();
 int  pan(int x);
 
-char* time_str(dword time);
+char *time_str(dword time);
 
 int  vbound(int x, int low, int high);
 float vbound(float x, float low, float high);
-int  used_switch(int argc, char* argv[], const char* s);
-char* get_cmd_arg(int argc, char* argv[]);
+int  used_switch(int argc, char *argv[], const char *s);
+char *get_cmd_arg(int argc, char *argv[]);
 bool isinRect(int x, int y, int rx1, int ry1, int rx2, int ry2);
 
 extern char datapwd[8];
-void resolve_password(char* pwd);
+void resolve_password(char *pwd);
 
-int encode_file_007(const char* srcfile, const char* destfile, unsigned int key, const char* header, int method);
-int decode_file_007(const char* srcfile, const char* destfile, const char* header, int method, bool packed);
+int encode_file_007(const char *srcfile, const char *destfile, unsigned int key, const char *header, int method);
+int decode_file_007(const char *srcfile, const char *destfile, const char *header, int method, bool packed);
 
-int  get_bit(byte* bitstr, int bit);
-void set_bit(byte* bitstr, int bit, byte val);
+int  get_bit(byte *bitstr, int bit);
+void set_bit(byte *bitstr, int bit, byte val);
 
-void Z_error(const char* format, ...);
-void Z_message(const char* format, ...);
+void Z_error(const char *format, ...);
+void Z_message(const char *format, ...);
 
 int anim_3_4(int clk, int speed);
 #endif                                                      // _ZC_SYS_H_

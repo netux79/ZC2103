@@ -18,27 +18,27 @@
 #include "zelda.h"
 #include "defdata.h"
 
-extern mapscr*       TheMaps;
-extern MsgStr*       MsgStrings;
-extern DoorComboSet* DoorComboSets;
-extern dmap*         DMaps;
-extern newcombo*     combobuf;
-extern byte*         colordata;
-extern byte*         tilebuf;
-extern itemdata*     itemsbuf;
-extern wpndata*      wpnsbuf;
-extern guydata*      guysbuf;
+extern mapscr       *TheMaps;
+extern MsgStr       *MsgStrings;
+extern DoorComboSet *DoorComboSets;
+extern dmap         *DMaps;
+extern newcombo     *combobuf;
+extern byte         *colordata;
+extern byte         *tilebuf;
+extern itemdata     *itemsbuf;
+extern wpndata      *wpnsbuf;
+extern guydata      *guysbuf;
 extern ZCHEATS      zcheats;
 extern zinitdata    zinit;
 extern int          memrequested;
-extern char*         byte_conversion(int number1, int number2, int format1, int format2);
+extern char         *byte_conversion(int number1, int number2, int format1, int format2);
 
-static const char* QH_IDSTR     = "AG Zelda Classic Quest File\n ";
-static const char* QH_NEWIDSTR  = "AG ZC Enhanced Quest File\n   ";
-static const char* ENC_STR      = "Zelda Classic Quest File";
+static const char *QH_IDSTR     = "AG Zelda Classic Quest File\n ";
+static const char *QH_NEWIDSTR  = "AG ZC Enhanced Quest File\n   ";
+static const char *ENC_STR      = "Zelda Classic Quest File";
 
 bool keepit = true;
-const char* qst_error[] = {
+const char *qst_error[] = {
 	"OK", "File not found", "Invalid quest file",
 	"Version not supported", "Obsolete version",
 	"Missing new data",                                       /* but let it pass in ZQuest */
@@ -47,13 +47,13 @@ const char* qst_error[] = {
 	"Out of memory", "File Debug Mode"
 };
 
-char* VerStr(int version) {
+char *VerStr(int version) {
 	static char ver_str[16];
 	sprintf(ver_str, "v%d.%02X", version >> 8, version & 0xFF);
 	return ver_str;
 }
 
-char* byte_conversion(int number1, int number2, int format1, int format2) {
+char *byte_conversion(int number1, int number2, int format1, int format2) {
 	static char num_str1[40];
 	static char num_str2[40];
 	static char num_str[80];
@@ -364,70 +364,70 @@ bool init_section(zquestheader* Header, long section_id) {
 void get_qst_buffers() {
 	memrequested += (sizeof(mapscr) * MAPSCRS);
 	Z_message("Allocating map buffer (%s)...", byte_conversion(sizeof(mapscr)*MAPSCRS, memrequested, -1, -1));
-	if (!(TheMaps = (mapscr*)malloc(sizeof(mapscr) * MAPSCRS))) {
+	if (!(TheMaps = (mapscr *)malloc(sizeof(mapscr) * MAPSCRS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating map buffer...
 
 	memrequested += (sizeof(MsgStr) * MAXMSGS);
 	Z_message("Allocating string buffer (%s)...", byte_conversion(sizeof(MsgStr)*MAXMSGS, memrequested, -1, -1));
-	if (!(MsgStrings = (MsgStr*)malloc(sizeof(MsgStr) * MAXMSGS))) {
+	if (!(MsgStrings = (MsgStr *)malloc(sizeof(MsgStr) * MAXMSGS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating string buffer...
 
 	memrequested += (sizeof(DoorComboSet) * MAXDOORCOMBOSETS);
 	Z_message("Allocating door combo buffer (%s)...", byte_conversion(sizeof(DoorComboSet)*MAXDOORCOMBOSETS, memrequested, -1, -1));
-	if (!(DoorComboSets = (DoorComboSet*)malloc(sizeof(DoorComboSet) * MAXDOORCOMBOSETS))) {
+	if (!(DoorComboSets = (DoorComboSet *)malloc(sizeof(DoorComboSet) * MAXDOORCOMBOSETS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating door combo buffer...
 
 	memrequested += (sizeof(dmap) * MAXDMAPS);
 	Z_message("Allocating dmap buffer (%s)...", byte_conversion(sizeof(dmap)*MAXDMAPS, memrequested, -1, -1));
-	if (!(DMaps = (dmap*)malloc(sizeof(dmap) * MAXDMAPS))) {
+	if (!(DMaps = (dmap *)malloc(sizeof(dmap) * MAXDMAPS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating dmap buffer...
 
 	memrequested += (sizeof(newcombo) * MAXCOMBOS);
 	Z_message("Allocating combo buffer (%s)...", byte_conversion(sizeof(newcombo)*MAXCOMBOS, memrequested, -1, -1));
-	if (!(combobuf = (newcombo*)malloc(sizeof(newcombo) * MAXCOMBOS))) {
+	if (!(combobuf = (newcombo *)malloc(sizeof(newcombo) * MAXCOMBOS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating combo buffer...
 
 	memrequested += (psTOTAL);
 	Z_message("Allocating color data buffer (%s)...", byte_conversion(psTOTAL, memrequested, -1, -1));
-	if (!(colordata = (byte*)malloc(psTOTAL))) {
+	if (!(colordata = (byte *)malloc(psTOTAL))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating color data buffer...
 
 	memrequested += (NEWTILE_SIZE);
 	Z_message("Allocating tile buffer (%s)...", byte_conversion(NEWTILE_SIZE, memrequested, -1, -1));
-	if (!(tilebuf = (byte*)malloc(NEWTILE_SIZE))) {
+	if (!(tilebuf = (byte *)malloc(NEWTILE_SIZE))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating tile buffer...
 
 	memrequested += (sizeof(itemdata) * MAXITEMS);
 	Z_message("Allocating item buffer (%s)...", byte_conversion(sizeof(itemdata)*MAXITEMS, memrequested, -1, -1));
-	if (!(itemsbuf = (itemdata*)malloc(sizeof(itemdata) * MAXITEMS))) {
+	if (!(itemsbuf = (itemdata *)malloc(sizeof(itemdata) * MAXITEMS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating item buffer...
 
 	memrequested += (sizeof(wpndata) * MAXWPNS);
 	Z_message("Allocating weapon buffer (%s)...", byte_conversion(sizeof(wpndata)*MAXWPNS, memrequested, -1, -1));
-	if (!(wpnsbuf = (wpndata*)malloc(sizeof(wpndata) * MAXWPNS))) {
+	if (!(wpnsbuf = (wpndata *)malloc(sizeof(wpndata) * MAXWPNS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating weapon buffer...
 
 	memrequested += (sizeof(guydata) * MAXGUYS);
 	Z_message("Allocating guy buffer (%s)...", byte_conversion(sizeof(guydata)*MAXGUYS, memrequested, -1, -1));
-	if (!(guysbuf = (guydata*)malloc(sizeof(guydata) * MAXGUYS))) {
+	if (!(guysbuf = (guydata *)malloc(sizeof(guydata) * MAXGUYS))) {
 		Z_error("Error");
 	}
 	Z_message("OK\n");                                        // Allocating guy buffer...
@@ -446,8 +446,8 @@ void free_qst_buffers() {
 	free(guysbuf);
 }
 
-static void* read_block(PACKFILE* f, int size, int alloc_size, bool keepdata) {
-	void* p;
+static void *read_block(PACKFILE *f, int size, int alloc_size, bool keepdata) {
+	void *p;
 
 	p = malloc(MAX(size, alloc_size)); // This memory is later freed by the destroy_midi call.
 	if (!p) {
@@ -472,13 +472,13 @@ static void* read_block(PACKFILE* f, int size, int alloc_size, bool keepdata) {
  *  standard midi file format).
  */
 
-static MIDI* read_midi(PACKFILE* f, bool keepdata) {
-	MIDI* m;
+static MIDI *read_midi(PACKFILE *f, bool keepdata) {
+	MIDI *m;
 	int c;
 	short divisions = 0;
 	int len = 0;
 
-	m = (MIDI*)malloc(sizeof(MIDI));
+	m = (MIDI *)malloc(sizeof(MIDI));
 	if (!m) {
 		return NULL;
 	}
@@ -495,7 +495,7 @@ static MIDI* read_midi(PACKFILE* f, bool keepdata) {
 		p_mgetl(&len, f, true);
 		m->track[c].len = len;
 		if (m->track[c].len > 0) {
-			m->track[c].data = (byte*)read_block(f, m->track[c].len, 0, true);
+			m->track[c].data = (byte *)read_block(f, m->track[c].len, 0, true);
 			if (!m->track[c].data) {
 				destroy_midi(m);
 				return NULL;
@@ -534,7 +534,7 @@ void pack_combos() {
 	}
 }
 
-void reset_midi(music* m) {
+void reset_midi(music *m) {
 	m->title[0] = 0;
 	m->loop = 1;
 	m->volume = 144;
@@ -547,14 +547,14 @@ void reset_midi(music* m) {
 	m->midi = NULL;
 }
 
-void reset_midis(music* m) {
+void reset_midis(music *m) {
 	for (int i = 0; i < MAXMIDIS; i++) {
 		reset_midi(m + i);
 	}
 }
 
 void reset_scr(int scr) {
-	byte* di = ((byte*)TheMaps) + (scr * sizeof(mapscr));
+	byte *di = ((byte *)TheMaps) + (scr * sizeof(mapscr));
 	memset(di, 0, sizeof(mapscr));
 	for (int i = 0; i < 6; i++) {
 		TheMaps[scr].layerxsize[i] = 16;
@@ -807,7 +807,7 @@ inline int tcmbflag2(int map, int pos) {
 	return TheMaps[map * MAPSCRS + TEMPLATE2].sflag[pos];
 }
 
-int readheader(PACKFILE* f, zquestheader* header, bool keepdata) {
+int readheader(PACKFILE *f, zquestheader *header, bool keepdata) {
 	int dummy;
 	zquestheader tempheader;
 	memcpy(&tempheader, header, sizeof(tempheader));
@@ -925,9 +925,9 @@ int readheader(PACKFILE* f, zquestheader* header, bool keepdata) {
 		}
 
 		if (tempheader.zelda_version >= 0x192) {                    //  lacks newer header stuff...
-			byte* mf = temp_midi_flags;
+			byte *mf = temp_midi_flags;
 			if ((tempheader.zelda_version == 0x192) && (tempheader.build < 178)) {
-				mf = (byte*)dummybuf;
+				mf = (byte *)dummybuf;
 			}
 			if (!pfread(mf, 32, f, true)) {            // read new header additions
 				return qe_invalid;                                  // starting at foo2
@@ -1043,7 +1043,7 @@ int readheader(PACKFILE* f, zquestheader* header, bool keepdata) {
 	return 0;
 }
 
-int readrules(PACKFILE* f, zquestheader* header, bool keepdata) {
+int readrules(PACKFILE *f, zquestheader *header, bool keepdata) {
 	int dummy;
 	zquestheader tempheader;
 
@@ -1090,7 +1090,7 @@ int readrules(PACKFILE* f, zquestheader* header, bool keepdata) {
 	return 0;
 }
 
-int readstrings(PACKFILE* f, zquestheader* header, bool keepdata) {
+int readstrings(PACKFILE *f, zquestheader *header, bool keepdata) {
 	//reset the message strings
 	if (keepdata == true) {
 		for (int i = 0; i < MAXMSGS; i++) {
@@ -1191,7 +1191,7 @@ int readstrings(PACKFILE* f, zquestheader* header, bool keepdata) {
 	return 0;
 }
 
-int readdoorcombosets(PACKFILE* f, zquestheader* header, bool keepdata) {
+int readdoorcombosets(PACKFILE *f, zquestheader *header, bool keepdata) {
 	if ((header->zelda_version < 0x192) ||
 	        ((header->zelda_version == 0x192) && (header->build < 158))) {
 		return 0;
@@ -1426,7 +1426,7 @@ int count_dmaps() {
 }
 
 
-int count_shops(miscQdata* misc) {
+int count_shops(miscQdata *misc) {
 	int i = 15, j;
 	bool found = false;
 	while (i >= 0 && !found) {
@@ -1445,7 +1445,7 @@ int count_shops(miscQdata* misc) {
 	return i + 1;
 }
 
-int count_infos(miscQdata* misc) {
+int count_infos(miscQdata *misc) {
 	int i = 15, j;
 	bool found = false;
 	while (i >= 0 && !found) {
@@ -1464,7 +1464,7 @@ int count_infos(miscQdata* misc) {
 	return i + 1;
 }
 
-int count_warprings(miscQdata* misc) {
+int count_warprings(miscQdata *misc) {
 	int i = 15, j;
 	bool found = false;
 	while (i >= 0 && !found) {
@@ -1483,7 +1483,7 @@ int count_warprings(miscQdata* misc) {
 	return i + 1;
 }
 
-int count_palcycles(miscQdata* misc) {
+int count_palcycles(miscQdata *misc) {
 	int i = 255, j;
 	bool found = false;
 	while (i >= 0 && !found) {
@@ -1502,7 +1502,7 @@ int count_palcycles(miscQdata* misc) {
 	return i + 1;
 }
 
-int count_windwarps(miscQdata* misc) {
+int count_windwarps(miscQdata *misc) {
 	int i = 8;
 	bool found = false;
 	while (i >= 0 && !found) {
@@ -1515,14 +1515,14 @@ int count_windwarps(miscQdata* misc) {
 	return i + 1;
 }
 
-void clear_screen(mapscr* temp_scr) {
+void clear_screen(mapscr *temp_scr) {
 	memset(temp_scr, 0, sizeof(mapscr));
 	for (int j = 0; j < 6; j++) {
 		temp_scr->layeropacity[j] = 255;
 	}
 }
 
-int readdmaps(PACKFILE* f, zquestheader* Header, word start_dmap, word max_dmaps, bool keepdata) {
+int readdmaps(PACKFILE *f, zquestheader *Header, word start_dmap, word max_dmaps, bool keepdata) {
 	word dmapstoread = 0;
 	dmap tempDMap;
 
@@ -1690,7 +1690,7 @@ int readdmaps(PACKFILE* f, zquestheader* Header, word start_dmap, word max_dmaps
 }
 
 
-int readmisc(PACKFILE* f, zquestheader* header, miscQdata* misc, bool keepdata) {
+int readmisc(PACKFILE *f, zquestheader *header, miscQdata *misc, bool keepdata) {
 	word maxinfos = 16;
 	word maxshops = 16;
 	word shops = 16, infos = 16, warprings = 8, palcycles = 256, windwarps = 9, triforces = 8, icons = 4;
@@ -2049,7 +2049,7 @@ int readmisc(PACKFILE* f, zquestheader* header, miscQdata* misc, bool keepdata) 
 	return 0;
 }
 
-int readitems(PACKFILE* f, word version, word build, bool keepdata) {
+int readitems(PACKFILE *f, word version, word build, bool keepdata) {
 	byte padding;
 	int  dummy;
 	word items_to_read = MAXITEMS;
@@ -2139,7 +2139,7 @@ int readitems(PACKFILE* f, word version, word build, bool keepdata) {
 	return 0;
 }
 
-int readweapons(PACKFILE* f, zquestheader* header, bool keepdata) {
+int readweapons(PACKFILE *f, zquestheader *header, bool keepdata) {
 	word weapons_to_read = MAXWPNS;
 	int dummy;
 	byte padding;
@@ -2203,8 +2203,8 @@ int readweapons(PACKFILE* f, zquestheader* header, bool keepdata) {
 	}
 	if (keepdata == true) {
 		if (header->zelda_version < 0x176) {
-			wpnsbuf[iwSpawn] = *((wpndata*)(itemsbuf + iMisc1));
-			wpnsbuf[iwDeath] = *((wpndata*)(itemsbuf + iMisc2));
+			wpnsbuf[iwSpawn] = *((wpndata *)(itemsbuf + iMisc1));
+			wpnsbuf[iwDeath] = *((wpndata *)(itemsbuf + iMisc2));
 			memset(&itemsbuf[iMisc1], 0, sizeof(itemdata));
 			memset(&itemsbuf[iMisc2], 0, sizeof(itemdata));
 		}
@@ -2223,7 +2223,7 @@ int init_guys() {
 	return 0;
 }
 
-int readguys(PACKFILE* f, zquestheader* header, bool keepdata) {
+int readguys(PACKFILE *f, zquestheader *header, bool keepdata) {
 	dword dummy;
 
 	if (header->zelda_version >= 0x193) {
@@ -2249,7 +2249,7 @@ int readguys(PACKFILE* f, zquestheader* header, bool keepdata) {
 }
 
 
-int readmapscreen(PACKFILE* f, zquestheader* header, mapscr* temp_mapscr) {
+int readmapscreen(PACKFILE *f, zquestheader *header, mapscr *temp_mapscr) {
 	byte tempbyte, padding;
 	int extras, secretcombos;
 
@@ -2649,7 +2649,7 @@ int readmapscreen(PACKFILE* f, zquestheader* header, mapscr* temp_mapscr) {
 	return 0;
 }
 
-int readmaps(PACKFILE* f, zquestheader* header, bool keepdata) {
+int readmaps(PACKFILE *f, zquestheader *header, bool keepdata) {
 	int scr = 0;
 
 	dword dummy;
@@ -2688,7 +2688,7 @@ int readmaps(PACKFILE* f, zquestheader* header, bool keepdata) {
 
 	if (keepdata == true) {
 		free(TheMaps);
-		if (!(TheMaps = (mapscr*)malloc(sizeof(mapscr) * MAPSCRS * temp_map_count))) {
+		if (!(TheMaps = (mapscr *)malloc(sizeof(mapscr) * MAPSCRS * temp_map_count))) {
 			return qe_nomem;
 		}
 	}
@@ -2728,7 +2728,7 @@ int readmaps(PACKFILE* f, zquestheader* header, bool keepdata) {
 	return 0;
 }
 
-int readcombos(PACKFILE* f, zquestheader* Header, word version, word build, word start_combo, word max_combos, bool keepdata) {
+int readcombos(PACKFILE *f, zquestheader *Header, word version, word build, word start_combo, word max_combos, bool keepdata) {
 	//these are here to bypass compiler warnings about unused arguments
 	Header = Header;
 
@@ -2849,7 +2849,7 @@ int readcombos(PACKFILE* f, zquestheader* Header, word version, word build, word
 	return 0;
 }
 
-int readcolordata(PACKFILE* f, miscQdata* misc, word version, word build, bool keepdata) {
+int readcolordata(PACKFILE *f, miscQdata *misc, word version, word build, bool keepdata) {
 	miscQdata temp_misc;
 	byte temp_colordata[48];
 	char temp_palname[PALNAMESIZE];
@@ -2944,7 +2944,7 @@ int readcolordata(PACKFILE* f, miscQdata* misc, word version, word build, bool k
 	return 0;
 }
 
-int readtiles(PACKFILE* f, byte* buf, zquestheader* header, word version, word build, word start_tile, word max_tiles, bool from_init, bool keepdata) {
+int readtiles(PACKFILE *f, byte *buf, zquestheader *header, word version, word build, word start_tile, word max_tiles, bool from_init, bool keepdata) {
 	int dummy;
 	word tiles_used = 0;
 	byte temp_tile[SINGLE_TILE_SIZE];
@@ -3025,8 +3025,8 @@ int readtiles(PACKFILE* f, byte* buf, zquestheader* header, word version, word b
 	return 0;
 }
 
-int readmidis(PACKFILE* f, zquestheader* header, music* midis, bool keepdata) {
-	byte* mf;
+int readmidis(PACKFILE *f, zquestheader *header, music *midis, bool keepdata) {
+	byte *mf;
 	long dummy;
 	music temp_midi;
 	int midis_to_read;
@@ -3108,7 +3108,7 @@ int readmidis(PACKFILE* f, zquestheader* header, music* midis, bool keepdata) {
 	return 0;
 }
 
-int readcheatcodes(PACKFILE* f, zquestheader* header, bool keepdata) {
+int readcheatcodes(PACKFILE *f, zquestheader *header, bool keepdata) {
 	int dummy;
 	ZCHEATS tempzcheats;
 	char temp_use_cheats = 0;
@@ -3150,7 +3150,7 @@ int readcheatcodes(PACKFILE* f, zquestheader* header, bool keepdata) {
 	return 0;
 }
 
-int readinitdata(PACKFILE* f, zquestheader* header, bool keepdata) {
+int readinitdata(PACKFILE *f, zquestheader *header, bool keepdata) {
 	int dummy;
 	byte padding;
 
@@ -3553,15 +3553,15 @@ int readinitdata(PACKFILE* f, zquestheader* header, bool keepdata) {
 	return 0;
 }
 
-int loadquest(char* filename, zquestheader* Header, miscQdata* Misc, music* midis) {
-	const char* tmpfilename = "tmp007";
+int loadquest(char *filename, zquestheader *Header, miscQdata *Misc, music *midis) {
+	const char *tmpfilename = "tmp007";
 	bool catchup = false;
 	byte tempbyte;
 	zquestheader tempheader;
 
 	// oldquest flag is set when an unencrypted qst file is suspected.
 	bool oldquest = false;
-	PACKFILE* f = NULL;
+	PACKFILE *f = NULL;
 	int ret;
 
 	Z_message("Loading Quest %s...\n", filename);
