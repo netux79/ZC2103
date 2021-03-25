@@ -2,7 +2,7 @@
 //  Zelda Classic
 //  by Jeremy Craner, 1999-2000
 //
-//  ending.cc
+//  ending.cpp
 //
 //  Ending code for Zelda Classic.
 //
@@ -10,7 +10,6 @@
 
 #include "ending.h"
 #include "zelda.h"
-#include "zsys.h"
 #include "sprite.h"
 #include "items.h"
 #include "pal.h"

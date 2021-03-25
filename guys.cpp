@@ -13,7 +13,6 @@
 
 #include "guys.h"
 #include "zelda.h"
-#include "zsys.h"
 #include "maps.h"
 #include "link.h"
 #include "subscr.h"

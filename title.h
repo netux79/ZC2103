@@ -4,7 +4,7 @@
 //
 //  title.h
 //
-//  Title screen and intro for zelda.cc
+//  Title screen and intro for zelda.cpp
 //  Also has game loading and select screen code.
 //
 //--------------------------------------------------------

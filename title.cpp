@@ -2,9 +2,9 @@
 //  Zelda Classic
 //  by Jeremy Craner, 1999-2000
 //
-//  title.cc
+//  title.cpp
 //
-//  Title screen and intro for zelda.cc
+//  Title screen and intro for zelda.cpp
 //  Also has game loading and select screen code.
 //
 //--------------------------------------------------------
@@ -15,10 +15,8 @@
 
 #include "zdefs.h"
 #include "zelda.h"
-#include "zsys.h"
 #include "qst.h"
 #include "tiles.h"
-#include "colors.h"
 #include "pal.h"
 #include "sprite.h"
 #include "subscr.h"
@@ -1089,4 +1087,4 @@ void go_quit() {
 	}
 }
 
-/*** end of title.cc ***/
+/*** end of title.cpp ***/

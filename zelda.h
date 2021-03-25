@@ -4,7 +4,7 @@
 //
 //  zelda.h
 //
-//  Definitions, function prototypes, etc. for zelda.cc
+//  Definitions, function prototypes, etc. for zelda.cpp
 //
 //--------------------------------------------------------
 
@@ -69,7 +69,7 @@ enum {
 /*********** Procedures **********/
 /*********************************/
 
-// zelda.cc
+// zelda.cpp
 void addLwpn(int x, int y, int id, int type, int power, int dir);
 void ALLOFF();
 fix  LinkX();
@@ -101,14 +101,6 @@ void resume_game();
 void load_game(gamedata* g);
 void reset_status();
 
-inline void sfx(int index)         {
-	sfx(index, 128, false);
-}
-inline void sfx(int index, int pan) {
-	sfx(index, pan, false);
-}
-
-
 /**********************************/
 /******** Global Variables ********/
 /**********************************/
@@ -118,7 +110,6 @@ extern ZCMUSIC* zcmusic;
 
 extern int colordepth;
 extern int db;
-extern int detail_int[10];                                  //temporary holder for things you want to detail
 extern zinitdata  zinit;
 extern int lens_hint_item[MAXITEMS][2];                     //aclk, aframe
 extern int lens_hint_weapon[MAXWPNS][5];                    //aclk, aframe, dir, x, y
@@ -232,5 +223,3 @@ extern const byte ten_rupies_x[10];
 extern const byte ten_rupies_y[10];
 extern music tunes[MAXMUSIC];
 #endif
-
-/*** end of zelda.h ***/

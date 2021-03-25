@@ -2,7 +2,7 @@
 //  Zelda Classic
 //  by Jeremy Craner, 1999-2000
 //
-//  link.cc
+//  link.h
 //
 //  Link's class: LinkClass
 //  Handles a lot of game play stuff as well as Link's
@@ -18,12 +18,9 @@
 #include "zelda.h"
 #include "maps.h"
 #include "tiles.h"
-#include "colors.h"
 #include "pal.h"
-#include "zsys.h"
 #include "qst.h"
 #include "sprite.h"
-#include "zc_custom.h"
 
 extern movingblock mblock2;                                 //mblock[4]?
 extern sprite_list  guys, items, Ewpns, Lwpns, Sitems, chainlinks, decorations;
@@ -37,6 +34,11 @@ enum actiontype {
 	rafting, gothit, inwind, scrolling, won, swimming, hopping,
 	swimhit, swimhold1, swimhold2, casting, climbcovertop,
 	climbcoverbottom, dying
+};
+
+enum {
+	ls_walk, ls_jump, ls_slash, ls_stab, ls_pound, ls_swim, ls_dive,
+	ls_hold1, ls_hold2, ls_swimhold1, ls_swimhold2, ls_cast
 };
 
 typedef struct tilesequence {
@@ -162,6 +164,9 @@ public:
 	int  getNayrusLoveShieldClk();
 };
 
+void linktile(int* tile, int* flip, int state, int dir, int style);
+void setuplinktiles(int style);
+
 bool isRaftFlag(int flag);
 void do_lens();
 int touchcombo(int x, int y);
@@ -183,4 +188,3 @@ void getdraggeditem(int j);
 void setup_red_screen();
 void slide_in_color(int color);
 #endif
-/*** end of link.cc ***/

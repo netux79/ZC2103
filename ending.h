@@ -2,7 +2,7 @@
 //  Zelda Classic
 //  by Jeremy Craner, 1999-2000
 //
-//  ending.cc
+//  ending.h
 //
 //  Ending code for Zelda Classic.
 //

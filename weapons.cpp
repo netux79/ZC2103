@@ -2,20 +2,13 @@
 //  Zelda Classic
 //  by Jeremy Craner, 1999-2000
 //
-//  sprite.cc
-//
-//  Sprite classes:
-//   - sprite:      base class for the guys and enemies in zelda.cc
-//   - movingblock: the moving block class
-//   - sprite_list: main container class for different groups of sprites
-//   - item:        items class
+//  weapons.cpp
 //
 //--------------------------------------------------------
 
 #include <strings.h>
 #include "weapons.h"
 #include "zelda.h"
-#include "zsys.h"
 #include "maps.h"
 #include "tiles.h"
 #include "pal.h"
@@ -1706,4 +1699,4 @@ void putweapon(BITMAP* dest, int x, int y, int weapon_id, int type, int dir, int
 	aframe = temp.aframe;
 }
 
-/*** end of sprite.cc ***/
+/*** end of weapons.cpp ***/

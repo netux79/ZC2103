@@ -2,7 +2,7 @@
 //  Zelda Classic
 //  by Jeremy Craner, 1999-2000
 //
-//  qst.cc
+//  qst.cpp
 //
 //  Code for loading '.qst' files in ZC and ZQuest.
 //
@@ -12,9 +12,8 @@
 #include <string.h>
 
 #include "zdefs.h"
-#include "colors.h"
+#include "pal.h"
 #include "tiles.h"
-#include "zsys.h"
 #include "qst.h"
 #include "zelda.h"
 #include "defdata.h"
@@ -3989,4 +3988,4 @@ invalid:
 	return qe_invalid;
 }
 
-/*** end of qst.cc ***/
+/*** end of qst.cpp ***/

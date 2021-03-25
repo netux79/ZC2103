@@ -2,13 +2,7 @@
 //  Zelda Classic
 //  by Jeremy Craner, 1999-2000
 //
-//  sprite.cc
-//
-//  Sprite classes:
-//   - sprite:      base class for the guys and enemies in zelda.cc
-//   - movingblock: the moving block class
-//   - sprite_list: main container class for different groups of sprites
-//   - item:        items class
+//  decorations.cpp
 //
 //--------------------------------------------------------
 
@@ -16,7 +10,6 @@
 #include "decorations.h"
 #include "zelda.h"
 #include "maps.h"
-#include "zsys.h"
 
 /***************************************/
 /*******  Decoration Base Class  *******/
@@ -507,4 +500,4 @@ void dNayrusLoveShield::draw2(BITMAP* dest) {
 }
 
 
-/*** end of sprite.cc ***/
+/*** end of decorations.cpp ***/

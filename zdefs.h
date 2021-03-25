@@ -5,7 +5,7 @@
 //  zdefs.h
 //
 //  Data formats, definitions, and a few small functions
-//  for zelda.cc and zquest.cc
+//  for zelda.cpp and zquest.cpp
 //
 //--------------------------------------------------------
 
@@ -80,7 +80,6 @@
 
 #include <math.h>
 #include <allegro.h>
-#include <allegro/internal/aintern.h>
 #include <string.h>
 
 #define ZELDA_VERSION       0x0210                          //version of the program
@@ -116,7 +115,6 @@ enum {ENC_METHOD_192B104 = 0, ENC_METHOD_192B105, ENC_METHOD_192B185, ENC_METHOD
 #define PI 3.14159265358979323846
 #endif
 
-#define QUEST_COUNT           3
 #define HP_PER_HEART          16
 #define DAMAGE_MULTIPLIER     2
 
@@ -195,9 +193,6 @@ enum {ENC_METHOD_192B104 = 0, ENC_METHOD_192B105, ENC_METHOD_192B185, ENC_METHOD
 #define CV_MIDIS        1
 #define CV_CHEATS       1
 #define CV_SAVEGAME     1
-
-extern int CSET_SIZE;
-extern int CSET_SHFT;
 
 typedef unsigned char         byte;                              //0-                       255  ( 8 bits)
 typedef unsigned short        word;                              //0-                    65,535  (16 bits)
@@ -1535,5 +1530,3 @@ inline bool isinRect(int x, int y, int rx1, int ry1, int rx2, int ry2) {
 	return x >= rx1 && x <= rx2 && y >= ry1 && y <= ry2;
 }
 #endif                                                      //_ZDEFS_H_
-
-//	-lalmp3 -lalogg -lvorbisidec -laldmb -ldumb -lalleg

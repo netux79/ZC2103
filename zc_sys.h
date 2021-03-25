@@ -81,7 +81,6 @@ bool DrunkrMbtn();
 
 enum { bosCIRCLE = 0, bosOVAL, bosTRIANGLE, bosSMAS, bosMAX };
 
-void show_paused();
 void show_fps();
 bool game_vid_mode(int mode, int wait);
 
@@ -120,6 +119,14 @@ int  sfx_count();
 void sfx_cleanup();
 bool sfx_init(int index);
 void sfx(int index, int pan, bool loop);
+
+inline void sfx(int index)         {
+	sfx(index, 128, false);
+}
+inline void sfx(int index, int pan) {
+	sfx(index, pan, false);
+}
+
 void cont_sfx(int index);
 void stop_sfx(int index);
 void adjust_sfx(int index, int pan, bool loop);
@@ -130,4 +137,26 @@ void resume_all_sfx();
 void stop_sfx(int index);
 void kill_sfx();
 int  pan(int x);
+
+char* time_str(dword time);
+
+int  vbound(int x, int low, int high);
+float vbound(float x, float low, float high);
+int  used_switch(int argc, char* argv[], const char* s);
+char* get_cmd_arg(int argc, char* argv[]);
+bool isinRect(int x, int y, int rx1, int ry1, int rx2, int ry2);
+
+extern char datapwd[8];
+void resolve_password(char* pwd);
+
+int encode_file_007(const char* srcfile, const char* destfile, unsigned int key, const char* header, int method);
+int decode_file_007(const char* srcfile, const char* destfile, const char* header, int method, bool packed);
+
+int  get_bit(byte* bitstr, int bit);
+void set_bit(byte* bitstr, int bit, byte val);
+
+void Z_error(const char* format, ...);
+void Z_message(const char* format, ...);
+
+int anim_3_4(int clk, int speed);
 #endif                                                      // _ZC_SYS_H_

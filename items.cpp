@@ -2,13 +2,7 @@
 //  Zelda Classic
 //  by Jeremy Craner, 1999-2000
 //
-//  sprite.cc
-//
-//  Sprite classes:
-//   - sprite:      base class for the guys and enemies in zelda.cc
-//   - movingblock: the moving block class
-//   - sprite_list: main container class for different groups of sprites
-//   - item:        items class
+//  items.cpp
 //
 //--------------------------------------------------------
 
@@ -19,6 +13,12 @@
 #include "items.h"
 
 int fairy_cnt = 0;
+
+void addfairy(fix x, fix y, int id) {
+	addenemy(x, y, eITEMFAIRY, id + 0x1000);
+	sfx(WAV_SCALE);
+	movefairy(x, y, id);
+}
 
 item::~item() {
 	if (id == iFairyMoving && misc > 0) {
@@ -150,4 +150,4 @@ void putitem2(BITMAP* dest, int x, int y, int item_id, int& aclk, int& aframe, i
 	aframe = temp.aframe;
 }
 
-/*** end of sprite.cc ***/
+/*** end of items.cpp ***/

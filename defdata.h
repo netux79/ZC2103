@@ -2,7 +2,7 @@
 //  Zelda Classic
 //  by Jeremy Craner, 1999-2000
 //
-//  defdata.cc
+//  defdata.h
 //
 //  Default item, weapon, and enemy data for Zelda Classic.
 //
@@ -15,8 +15,6 @@
 #ifndef _DEFDATA_H_
 #define _DEFDATA_H_
 
-#include "items.h"
 #include "guys.h"
-extern itemdata default_items[MAXITEMS];
-extern guydata default_guys[eMAXGUYS];
+extern const guydata default_guys[eMAXGUYS];
 #endif

@@ -2,7 +2,7 @@
 //  Zelda Classic
 //  by Jeremy Craner, 1999-2000
 //
-//  tiles.cc
+//  tiles.cpp
 //
 //  Tile drawing routines for ZC.
 //
@@ -14,6 +14,7 @@
 
 #include "zdefs.h"
 #include "tiles.h"
+#include "pal.h"
 
 extern RGB_MAP rgb_table;
 extern COLOR_MAP trans_table;
@@ -1351,4 +1352,4 @@ void overcombo2(BITMAP* dest, int x, int y, int cmbdat, int cset) {
 	}
 }
 
-/* end of tiles.cc */
+/* end of tiles.cpp */

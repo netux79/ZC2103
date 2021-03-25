@@ -17,8 +17,6 @@
 
 extern byte* tilebuf;
 extern newcombo* combobuf;
-
-// in tiles.cc
 extern byte unpackbuf[256];
 
 void register_blank_tiles();

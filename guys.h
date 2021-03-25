@@ -2,16 +2,15 @@
 //  Zelda Classic
 //  by Jeremy Craner, 1999-2000
 //
-//  guys.cc
+//  guys.h
 //
-//  "Guys" code (and other related stuff) for zelda.cc
+//  "Guys" code (and other related stuff) for zelda.cpp
 //
 //  Still has some hardcoded stuff that should be moved
-//  out into defdata.cc for customizing the enemies.
+//  out into defdata.cpp for customizing the enemies.
 //
 //--------------------------------------------------------
 
-//#include "guys.h"
 #ifndef _GUYS_H_
 #define _GUYS_H_
 #include "sprite.h"
@@ -723,4 +722,3 @@ void check_collisions();
 void dragging_item();
 void roaming_item();
 #endif
-/*** end of guys.cc ***/

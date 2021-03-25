@@ -2,7 +2,7 @@
 //  Zelda Classic
 //  by Jeremy Craner, 1999-2000
 //
-//  defdata.cc
+//  defdata.cpp
 //
 //  Default item, weapon, and enemy data for Zelda Classic.
 //
@@ -14,49 +14,7 @@
 
 #include "defdata.h"
 
-// **** in zdefs.h ****
-//
-// typedef struct itemdata {
-//   word tile;
-//   byte misc;     // 0000vhtf (v:v-flip, h:h-flip, t:two hands, f:flash)
-//   byte csets;    // ffffcccc (f:flash cset, c:cset)
-//   byte frames;   // animation frame count
-//   byte speed;    // animation speed
-//   byte delay;    // extra delay factor (-1) for first frame
-//   byte exp;
-//   // 8 bytes
-// } itemdata;
-
-itemdata default_items[MAXITEMS] = {
-	// 0-4  : rupee,       blue rupee, heart,       bombs,    clock
-	{49, 1, 0x78}, {49, 0, 7}, {82, 1, 0x78}, {50, 0, 7}, {68, 0, 8},
-	// 5-9  : sword,     white sword,  magic sword,  shield,    key
-	{41, 0, 6}, {41, 0, 7}, {59, 0, 8}, {40, 0, 6}, {48, 0, 8},
-	// 10-14: blue candle,  red candle,  letter,    arrow,     silver arrow
-	{44, 0, 7}, {44, 0, 8}, {81, 0, 7}, {45, 0, 6}, {45, 0, 7},
-	// 15-19: bow,       bait,      blue ring,  red ring,   power bracelet
-	{80, 0, 6}, {79, 0, 8}, {58, 0, 7}, {58, 0, 8}, {62, 0, 8},
-	// 20-24: triforce,    map,       compass,   wood boomerang,  magic boomerang
-	{72, 3, 0x78}, {81, 0, 8}, {70, 0, 8}, {51, 0, 6}, {51, 0, 7},
-	// 25-29: wand,      raft,      ladder,    heart container,  blue potion
-	{60, 0, 7}, {71, 2, 6}, {76, 2, 6}, {69, 2, 8}, {55, 0, 7},
-	// 30-34: red potion,  whistle,    magic book,  magic key,   fairy,
-	{55, 0, 8}, {37, 0, 8}, {56, 0, 8}, {47, 0, 8}, {63, 0, 8, 2, 4},
-	// 35-39: fire brang,  Excalibur,  mirror shield,  20 rupies,  50 rupies
-	{51, 0, 8}, {59, 0, 7}, {40, 0, 7}, {49, 0, 10}, {49, 0, 11},
-	// 40-44: 200 rupies,  500 wallet,  999 wallet,  pile,       big triforce
-	{49, 0, 12}, {0, 0, 6}, {0, 0, 7}, {176, 0, 9}, {175, 3, 0x78},
-	// 45     selection,    misc1,    misc2,    super bomb,  HC piece
-	{39, 1, 0x78}, {0, 0, 0}, {0, 0, 0}, {50, 0, 8}, {0, 0, 0},
-	// 50     cross,    flippers,  hookshot,  lens,     hammer
-	{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
-	// 55     boots,    L2 bracelet  golden arrow    magic cont.  magic jar (sm)
-	{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0},
-	// 60     magic jar (lg)   golden ring
-	{0, 0, 0}, {0, 0, 0}
-};
-
-guydata default_guys[eMAXGUYS] = {
+const guydata default_guys[eMAXGUYS] = {
 	// flags        tile  hp                    family       cset  anim   frate   dp                  wdp                 weapon     rate hrate  step  homing  grumble  item_set       misc1  misc2  bosspal
 	{ 0x00000001,    0,   0 * DAMAGE_MULTIPLIER,  0,            0,  0,         0,   0,                  0,                  0,          0,    0,     0,    0,      0,       0,             0,     0,     0},
 	{ 0x00000001,   84,   1 * DAMAGE_MULTIPLIER,  eeGUY,        8,  aNONE,     0,   1,                  1,                  wNone,      0,    0,     0,    0,      0,       0,             0,     0,     0},

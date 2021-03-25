@@ -2,16 +2,15 @@
 //  Zelda Classic
 //  by Jeremy Craner, 1999-2000
 //
-//  subscr.cc
+//  subscr.cpp
 //
-//  Subscreen code for zelda.cc
+//  Subscreen code for zelda.cpp
 //
 //--------------------------------------------------------
 
 #include "subscr.h"
 #include "zelda.h"
 #include "tiles.h"
-#include "zsys.h"
 #include "guys.h"
 #include "link.h"
 #include <stdio.h>
@@ -967,4 +966,4 @@ void dosubscr() {
 	resume_sfx(WAV_BRANG);
 }
 
-/*** end of subscr.cc ***/
+/*** end of subscr.cpp ***/

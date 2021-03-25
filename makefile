@@ -68,7 +68,7 @@ endif
 
 ZELDA_EXE = zelda$(PLATEXT)$(EXEEXT)
 
-ZELDA_OBJECTS = colors$(PLATEXT).o decorations$(PLATEXT).o defdata$(PLATEXT).o ending$(PLATEXT).o guys$(PLATEXT).o items$(PLATEXT).o link$(PLATEXT).o maps$(PLATEXT).o pal$(PLATEXT).o particles$(PLATEXT).o qst$(PLATEXT).o sprite$(PLATEXT).o subscr$(PLATEXT).o tiles$(PLATEXT).o title$(PLATEXT).o weapons$(PLATEXT).o zc_custom$(PLATEXT).o zc_items$(PLATEXT).o zc_sprite$(PLATEXT).o zc_sys$(PLATEXT).o zcmusic$(PLATEXT).o zelda$(PLATEXT).o zsys$(PLATEXT).o $(ZC_ICON)
+ZELDA_OBJECTS = decorations$(PLATEXT).o defdata$(PLATEXT).o ending$(PLATEXT).o guys$(PLATEXT).o items$(PLATEXT).o link$(PLATEXT).o maps$(PLATEXT).o pal$(PLATEXT).o particles$(PLATEXT).o qst$(PLATEXT).o sprite$(PLATEXT).o subscr$(PLATEXT).o tiles$(PLATEXT).o title$(PLATEXT).o weapons$(PLATEXT).o zc_sys$(PLATEXT).o zcmusic$(PLATEXT).o zelda$(PLATEXT).o $(ZC_ICON)
 
 .PHONY: default veryclean clean all msg dos win windows linux gp2x test done
 
@@ -144,51 +144,41 @@ ifdef COMPILE_FOR_MACOSX
 	mv $(ZELDA_EXE).app "Zelda Classic.app"
 endif
 
-colors$(PLATEXT).o: colors.cpp colors.h zdefs.h
-	$(CC) $(OPTS) $(CFLAG) -c colors.cpp -o colors$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-decorations$(PLATEXT).o: decorations.cpp decorations.h maps.h sfx.h sprite.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h zsys.h
+decorations$(PLATEXT).o: decorations.cpp decorations.h maps.h sfx.h sprite.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h
 	$(CC) $(OPTS) $(CFLAG) -c decorations.cpp -o decorations$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 defdata$(PLATEXT).o: defdata.cpp defdata.h guys.h items.h sprite.h weapons.h zdefs.h
 	$(CC) $(OPTS) $(CFLAG) -c defdata.cpp -o defdata$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-ending$(PLATEXT).o: ending.cpp colors.h ending.h guys.h items.h link.h maps.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h title.h weapons.h zc_custom.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h zsys.h
+ending$(PLATEXT).o: ending.cpp ending.h guys.h items.h link.h maps.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h title.h weapons.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h
 	$(CC) $(OPTS) $(CFLAG) -c ending.cpp -o ending$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-guys$(PLATEXT).o: guys.cpp colors.h guys.h items.h link.h maps.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h weapons.h zc_custom.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h zsys.h
+guys$(PLATEXT).o: guys.cpp guys.h items.h link.h maps.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h weapons.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h
 	$(CC) $(OPTS) $(CFLAG) -c guys.cpp -o guys$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 items$(PLATEXT).o: items.cpp items.h sprite.h zdefs.h
 	$(CC) $(OPTS) $(CFLAG) -c items.cpp -o items$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-link$(PLATEXT).o: link.cpp colors.h decorations.h guys.h items.h link.h maps.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h weapons.h zc_custom.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h zsys.h
+link$(PLATEXT).o: link.cpp decorations.h guys.h items.h link.h maps.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h weapons.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h
 	$(CC) $(OPTS) $(CFLAG) -c link.cpp -o link$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-maps$(PLATEXT).o: maps.cpp colors.h guys.h items.h link.h maps.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h weapons.h zc_custom.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h zsys.h
+maps$(PLATEXT).o: maps.cpp guys.h items.h link.h maps.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h weapons.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h
 	$(CC) $(OPTS) $(CFLAG) -c maps.cpp -o maps$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-pal$(PLATEXT).o: pal.cpp colors.h items.h maps.h pal.h sfx.h sprite.h subscr.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h zsys.h
+pal$(PLATEXT).o: pal.cpp items.h maps.h pal.h sfx.h sprite.h subscr.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h
 	$(CC) $(OPTS) $(CFLAG) -c pal.cpp -o pal$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 particles$(PLATEXT).o: particles.cpp particles.h sprite.h zdefs.h
 	$(CC) $(OPTS) $(CFLAG) -c particles.cpp -o particles$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-qst$(PLATEXT).o: qst.cpp colors.h defdata.h guys.h items.h qst.h sprite.h tiles.h weapons.h zdefs.h zsys.h
+qst$(PLATEXT).o: qst.cpp defdata.h guys.h items.h qst.h sprite.h tiles.h weapons.h zdefs.h
 	$(CC) $(OPTS) $(CFLAG) -c qst.cpp -o qst$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 sprite$(PLATEXT).o: sprite.cpp sprite.h tiles.h zdefs.h
 	$(CC) $(OPTS) $(CFLAG) -c sprite.cpp -o sprite$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-subscr$(PLATEXT).o: subscr.cpp colors.h guys.h items.h link.h maps.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h weapons.h zc_custom.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h zsys.h
+subscr$(PLATEXT).o: subscr.cpp guys.h items.h link.h maps.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h weapons.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h
 	$(CC) $(OPTS) $(CFLAG) -c subscr.cpp -o subscr$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 tiles$(PLATEXT).o: tiles.cpp tiles.h zdefs.h
 	$(CC) $(OPTS) $(CFLAG) -c tiles.cpp -o tiles$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-title$(PLATEXT).o: title.cpp colors.h items.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h zsys.h
+title$(PLATEXT).o: title.cpp items.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h
 	$(CC) $(OPTS) $(CFLAG) -c title.cpp -o title$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-weapons$(PLATEXT).o: weapons.cpp colors.h link.h maps.h pal.h qst.h sfx.h sprite.h tiles.h weapons.h zc_custom.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h zsys.h
+weapons$(PLATEXT).o: weapons.cpp link.h maps.h pal.h qst.h sfx.h sprite.h tiles.h weapons.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h
 	$(CC) $(OPTS) $(CFLAG) -c weapons.cpp -o weapons$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zc_custom$(PLATEXT).o: zc_custom.cpp zc_custom.h zdefs.h
-	$(CC) $(OPTS) $(CFLAG) -c zc_custom.cpp -o zc_custom$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 zc_icon$(PLATEXT).o: zc_icon.rc
 	windres --use-temp-file -I rc -O coff -i zc_icon.rc -o zc_icon$(PLATEXT).o
-zc_items$(PLATEXT).o: zc_items.cpp guys.h sfx.h sprite.h weapons.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h
-	$(CC) $(OPTS) $(CFLAG) -c zc_items.cpp -o zc_items$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zc_sprite$(PLATEXT).o: zc_sprite.cpp maps.h sfx.h sprite.h tiles.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h
-	$(CC) $(OPTS) $(CFLAG) -c zc_sprite.cpp -o zc_sprite$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zc_sys$(PLATEXT).o: zc_sys.cpp colors.h guys.h items.h link.h maps.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h title.h weapons.h zc_custom.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h zsys.h
+zc_sys$(PLATEXT).o: zc_sys.cpp guys.h items.h link.h maps.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h title.h weapons.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h
 	$(CC) $(OPTS) $(CFLAG) -c zc_sys.cpp -o zc_sys$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
 zcmusic$(PLATEXT).o: zcmusic.cpp zcmusic.h
 	$(CC) $(OPTS) $(CFLAG) -c zcmusic.cpp -o zcmusic$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zelda$(PLATEXT).o: zelda.cpp colors.h ending.h fontsdat.h guys.h items.h link.h maps.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h title.h weapons.h zc_custom.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h zsys.h
+zelda$(PLATEXT).o: zelda.cpp ending.h fontsdat.h guys.h items.h link.h maps.h pal.h qst.h sfx.h sprite.h subscr.h tiles.h title.h weapons.h zc_sys.h zcmusic.h zdefs.h zelda.h zeldadat.h
 	$(CC) $(OPTS) $(CFLAG) -c zelda.cpp -o zelda$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)
-zsys$(PLATEXT).o: zsys.cpp zc_sys.h zdefs.h zsys.h
-	$(CC) $(OPTS) $(CFLAG) -c zsys.cpp -o zsys$(PLATEXT).o $(SFLAG) $(WINFLAG) $(LDFLAG)

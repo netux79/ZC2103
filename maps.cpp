@@ -2,9 +2,9 @@
 //  Zelda Classic
 //  by Jeremy Craner, 1999-2000
 //
-//  maps.cc
+//  maps.cpp
 //
-//  Map and screen scrolling stuff for zelda.cc
+//  Map and screen scrolling stuff for zelda.cpp
 //
 //--------------------------------------------------------
 
@@ -12,7 +12,6 @@
 #include "zelda.h"
 #include "tiles.h"
 #include "sprite.h"
-#include "zsys.h"
 #include "subscr.h"
 #include "link.h"
 #include "guys.h"
@@ -1955,7 +1954,6 @@ void ViewMap() {
 		}
 		memcpy(&(tmpscr[i]), &(tmpscr_b[i]), sizeof(mapscr));
 	}
-
 }
 
 void onViewMap() {
@@ -1970,4 +1968,4 @@ void onViewMap() {
 }
 
 
-/*** end of maps.cc ***/
+/*** end of maps.cpp ***/

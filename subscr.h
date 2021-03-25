@@ -2,9 +2,9 @@
 //  Zelda Classic
 //  by Jeremy Craner, 1999-2000
 //
-//  subscr.cc
+//  subscr.h
 //
-//  Subscreen code for zelda.cc
+//  Subscreen code for zelda.cpp
 //
 //--------------------------------------------------------
 
@@ -63,5 +63,3 @@ void put_topsubscr();
 void update_topsubscr(int y);
 void dosubscr();
 #endif
-
-/*** end of subscr.cc ***/

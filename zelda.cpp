@@ -2,7 +2,7 @@
 //  Zelda Classic
 //  by Jeremy Craner, 1999-2000
 //
-//  zelda.cc
+//  zelda.cpp
 //
 //  Main code for Zelda Classic. Originally written in
 //  SPHINX C--, now rewritten in DJGPP with Allegro.
@@ -17,23 +17,18 @@
 #include "zdefs.h"
 #include "zelda.h"
 #include "tiles.h"
-#include "colors.h"
 #include "pal.h"
-#include "zsys.h"
 #include "qst.h"
 #include "fontsdat.h"
 #include "particles.h"
-
-ZCMUSIC* zcmusic = NULL;
-int colordepth;
-int db = 0;
-zinitdata  zinit;
-int detail_int[10];                                         //temporary holder for things you want to detail
-int lens_hint_item[MAXITEMS][2];                            //aclk, aframe
-int lens_hint_weapon[MAXWPNS][5];                           //aclk, aframe, dir, x, y
-int strike_hint_counter = 0;
-int strike_hint_timer = 0;
-int strike_hint;
+#include "link.h"
+#include "sprite.h"
+#include "maps.h"
+#include "subscr.h"
+#include "guys.h"
+#include "title.h"
+#include "ending.h"
+#include "zc_sys.h"
 
 /**********************************/
 /******** Global Variables ********/
@@ -41,6 +36,21 @@ int strike_hint;
 
 RGB_MAP rgb_table;
 COLOR_MAP trans_table;
+
+bool blockmoving;
+movingblock mblock2;                                        //mblock[4]?
+sprite_list  guys, items, Ewpns, Lwpns, Sitems, chainlinks, decorations, particles;
+LinkClass   Link;
+
+ZCMUSIC* zcmusic = NULL;
+int colordepth;
+int db = 0;
+zinitdata  zinit;
+int lens_hint_item[MAXITEMS][2];                            //aclk, aframe
+int lens_hint_weapon[MAXWPNS][5];                           //aclk, aframe, dir, x, y
+int strike_hint_counter = 0;
+int strike_hint_timer = 0;
+int strike_hint;
 
 BITMAP* framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf, *pricesdisplaybuf;
 DATAFILE* data, *sfxdata, *fontsdata, *mididata;
@@ -197,29 +207,6 @@ bool bad_version(int version) {
 
 	return false;
 }
-
-/**********************************/
-/******* Other Source Files *******/
-/**********************************/
-
-bool blockmoving;
-#include "sprite.h"
-movingblock mblock2;                                        //mblock[4]?
-
-sprite_list  guys, items, Ewpns, Lwpns, Sitems, chainlinks, decorations, particles;
-
-#include "zc_custom.h"
-#include "link.h"
-LinkClass   Link;
-
-#include "maps.h"
-#include "subscr.h"
-#include "guys.h"
-
-#include "title.h"
-#include "ending.h"
-
-#include "zc_sys.h"
 
 void addLwpn(int x, int y, int id, int type, int power, int dir) {
 	Lwpns.add(new weapon((fix)x, (fix)y, id, type, power, dir));
@@ -1401,4 +1388,4 @@ int main(int argc, char* argv[]) {
 }
 
 END_OF_MAIN()
-/*** end of zelda.cc ***/
+/*** end of zelda.cpp ***/
