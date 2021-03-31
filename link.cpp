@@ -2116,7 +2116,6 @@ bool LinkClass::startwpn(int wpn) {                         // an item index
 
 		case iRPotion:
 		case iBPotion:
-			//  --game.potion;
 			game.items[itype_potion] = game.items[itype_potion] >> 1;
 			Bwpn = 0;
 
@@ -2131,11 +2130,9 @@ bool LinkClass::startwpn(int wpn) {                         // an item index
 			return false;
 
 		case iLetter:
-			//  if(game.letter==1 && currscr==128 && tmpscr[1].room==rP_SHOP) {
 			if (current_item(itype_letter, true) == i_letter &&
 			        tmpscr[currscr < 128 ? 0 : 1].room == rP_SHOP &&
 			        tmpscr[currscr < 128 ? 0 : 1].guy &&
-			        //        ((currscr<128&&isdungeon())||(currscr>=128&&!isdungeon()))
 			        ((currscr < 128 && dlevel) || (currscr >= 128 && !isdungeon()))
 			   ) {
 				game.items[itype_letter] |= i_letter_used;
@@ -2262,15 +2259,6 @@ bool LinkClass::startwpn(int wpn) {                         // an item index
 			if (Lwpns.idCount(wBeam) || Lwpns.idCount(wMagic)) {
 				return false;
 			}
-			//  Lwpns.add(new weapon(wx,wy,wBeam,0,((get_bit(quest_rules,qr_BEAMHALFPWR))?1:2)<<(game.sword-1),dir));
-			//  ((x<<z)>>y)
-			//  ((DAMAGE_MULTIPLIER<<(game.sword-1))>>(get_bit(quest_rules,qr_BEAMHALFPWR)))
-			//  x=DAMAGE_MULTIPLIER
-			//  y=(game.sword-1)
-			//  z=(get_bit(quest_rules,qr_BEAMHALFPWR))
-
-
-			//  Lwpns.add(new weapon(wx,wy,wBeam,0,((DAMAGE_MULTIPLIER<<(game.sword-1))>>(get_bit(quest_rules,qr_BEAMHALFPWR))),dir));
 			float temppower;
 			temppower = DAMAGE_MULTIPLIER << (current_item(itype_sword, true) - 1);
 			temppower = temppower * zinit.beam_power[current_item(itype_sword, true) - 1];
@@ -2541,8 +2529,6 @@ bool isRaftFlag(int flag) {
 }
 
 void do_lens() {
-	//  if(cBbtn() && lensclk==0 && (lenscnt > 0 || game.drupy+game.rupies > 0))
-	//  ((get_bit(quest_rules,qr_ENABLEMAGIC))? (game.drupy+game.rupies > 0) : (game.dmagic+game.magic > 0))
 	if (DrunkcBbtn() && lensclk == 0 && (lenscnt > 0 ||
 	                                     ((get_bit(quest_rules, qr_ENABLEMAGIC)) ?
 	                                      (game.dmagic + game.magic > 0) :
@@ -2759,68 +2745,12 @@ void LinkClass::movelink() {
 
 	if (Bwpn == iLens && itemclk == 0) {
 		do_lens();
-		/* flamethrower
-		 } else if((Bwpn==iBCandle)||(Bwpn==iRCandle)) {
-		   if (!(frame%4)) {
-
-		     if(can_attack() && itemclk==0 && DrunkcBbtn()) {
-		       if(!((get_bit(quest_rules,qr_ENABLEMAGIC))&&
-		          ((game.magic+game.dmagic)<CANDLEDRAINAMOUNT*game.magicdrainrate)&&
-		          ((get_bit(quest_rules,qr_MAGICCANDLE))))) {
-		         didstuff|=did_candle;
-		         Lwpns.add(new weapon((fix)wx,(fix)wy,wFire,4,4*DAMAGE_MULTIPLIER,0));
-		         if (!(frame%24)&&(get_bit(quest_rules,qr_MAGICCANDLE))) {
-		           game.magic-=(CANDLEDRAINAMOUNT*game.magicdrainrate);
-		}
-		sfx(WAV_FIRE,pan(wx));
-		//         action=attacking;
-		attackclk=0;
-		attack=wFire;
-
-		int i=Lwpns.Count()-1;
-		weapon *lw = (weapon*)(Lwpns.spr(i));
-		if (wpnsbuf[wFIRE].frames>1) {
-		lw->aframe=rand()%wpnsbuf[wFIRE].frames;
-		} else {
-		lw->flip=rand()%2;
-		}
-		lw->angular=true;
-		if     (dir==up)           lw->angle=-PI/2;
-		else if(dir==down)         lw->angle=PI/2;
-		else if(dir==left)         lw->angle=PI;
-		else if(dir==right)        lw->angle=0;
-
-		lw->angle+=((double)(rand()%64)/64)-.325;
-
-		if(lw->angle==-PI || lw->angle==PI) lw->dir=left;
-		else if(lw->angle==-PI/2) lw->dir=up;
-		else if(lw->angle==PI/2)  lw->dir=down;
-		else if(lw->angle==0)     lw->dir=right;
-		else if(lw->angle<-PI/2)  lw->dir=l_up;
-		else if(lw->angle<0)      lw->dir=r_up;
-		else if(lw->angle>PI/2)   lw->dir=l_down;
-		else                      lw->dir=r_down;
-
-		lw->step=2;
-		if (Bwpn==iRCandle) {
-		lw->step=3;
-		}
-		lw->clk=rand()%32;
-
-		for(int j=Lwpns.Count()-1; j>0; j--) {
-		Lwpns.swap(j,j-1);
-		}
-		}
-		}
-		}
-		*/
 	} else if (can_attack() && itemclk == 0 && DrunkrBbtn()) {
 		if (Bwpn == iWand) {
 			action = attacking;
 			attack = wWand;
 			attackclk = 0;
 		}
-		//    else if(Bwpn==iHammer)
 		else if ((Bwpn == iHammer) && !(action == attacking && attack == wHammer)) {
 			action = attacking;
 			attack = wHammer;
@@ -2873,8 +2803,6 @@ void LinkClass::movelink() {
 		autostep = false;
 		if (xoff || yoff) {
 			if (dir == up) {
-				// int xstep=(lsteps[int(x)&7]);
-				// int ystep=lsteps[int(y)&7];
 				if (int(x) & 8) {
 					if (!walkflag(x, y + 8 - (lsteps[int(y) & 7]), 2, up)) {
 						move(up);
@@ -2882,7 +2810,6 @@ void LinkClass::movelink() {
 						action = none;
 					}
 				}
-				//       else if(!walkflag(x+8,y+9,1,up))
 				else if (!walkflag(x, y + 8 - (lsteps[int(y) & 7]), 2, up)) {
 					move(up);
 				} else {
@@ -2897,7 +2824,6 @@ void LinkClass::movelink() {
 						action = none;
 					}
 				}
-				//       else if(!walkflag(x+8,y+16,1,down))
 				else if (!walkflag(x, y + 15 + (lsteps[int(y) & 7]), 2, down)) {
 					move(down);
 				} else {
@@ -2958,7 +2884,6 @@ void LinkClass::movelink() {
 					return;
 				}
 			} else {
-				//       if(!walkflag(x,y+7,1,up)) {
 				if (!walkflag(x, y + 8 - (lsteps[int(y) & 7]), 2, up)) {
 					move(up);
 					return;
@@ -2997,7 +2922,6 @@ void LinkClass::movelink() {
 					return;
 				}
 			} else {
-				//       if(!walkflag(x,y+16,1,down)) {
 				if (!walkflag(x, y + 15 + (lsteps[int(y) & 7]), 2, down)) {
 					move(down);
 					return;
@@ -3073,87 +2997,6 @@ LEFTRIGHT:
 			}
 		}
 	}
-
-	/* Use this code for free movement
-	 if(Up()) {
-	     if((isdungeon())||(int(x)&8)) {
-	       if(!walkflag(x,y+7,2,up)) {
-	         move(up);
-	         return;
-	       }
-	     } else {
-	//       if(!walkflag(x,y+7,1,up)) {
-	       if(!walkflag(x,y+7,2,up)) {
-	         move(up);
-	return;
-	}
-	}
-
-	if( !Left() && !Right() ) {
-	pushing=push+1;
-	dir=up;
-	if(action!=swimming)
-	linkstep();
-	return;
-	} else goto LEFTRIGHT;
-	return;
-	}
-
-	if(Down()) {
-	if((isdungeon())||(int(x)&8)) {
-	if(!walkflag(x,y+16,2,down)) {
-	move(down);
-	return;
-	}
-	} else {
-	//       if(!walkflag(x,y+16,1,down)) {
-	if(!walkflag(x,y+16,2,down)) {
-	move(down);
-	return;
-	}
-	}
-	if( !Left() && !Right() ) {
-	pushing=push+1;
-	dir=down;
-	if(action!=swimming)
-	linkstep();
-	return;
-	}
-	else goto LEFTRIGHT;
-	return;
-	}
-
-	LEFTRIGHT:
-
-	if(isdungeon() && (y<=26 || y>=134))
-	return;
-
-	if(Left()) {
-	if(!walkflag(x-1,y+8,1,left))
-	move(left);
-	else if( !Up() && !Down() ) {
-	pushing=push+1;
-	dir=left;
-	if(action!=swimming)
-	linkstep();
-	return;
-	}
-	return;
-	}
-
-	if(Right()) {
-	if(!walkflag(x+16,y+8,1,right))
-	move(right);
-	else if( !Up() && !Down() ) {
-	pushing=push+1;
-	dir=right;
-	if(action!=swimming)
-	linkstep();
-	return;
-	}
-	}
-	*/
-
 }
 
 void LinkClass::move(int d) {
@@ -3163,7 +3006,6 @@ void LinkClass::move(int d) {
 	int dx = 0, dy = 0;
 	int xstep = lsteps[int(x) & 7];
 	int ystep = lsteps[int(y) & 7];
-	// xstep=ystep=0;
 	if (combobuf[MAPDATA(x + 7, y + 8)].type == cWALKSLOW) {
 		if (d < left) {
 			if (ystep > 1) {
@@ -3306,7 +3148,6 @@ void LinkClass::checkpushblock() {
 	if (int(x) & 15) {
 		return;
 	}
-	// if(y<16) return;
 
 	int bx = int(x) & 0xF0;
 	int by = (int(y) & 0xF0);
@@ -3423,12 +3264,10 @@ void LinkClass::checkpushblock() {
 	}
 
 	if (doit) {
-		//   for(int i=0; i<1; i++)
 		if (!blockmoving) {
 			tmpscr->sflag[(by & 0xF0) + (bx >> 4)] = 0;
 			if (mblock2.clk <= 0) {
 				mblock2.push((fix)bx, (fix)by, dir, f);
-				//       break;
 			}
 		}
 	}
@@ -4560,7 +4399,6 @@ void LinkClass::walkdown() { //entering cave
 	stop_sfx(WAV_BRANG);
 	sfx(WAV_STAIRS, pan(int(x)));
 	clk = 0;
-	//  int cmby=(int(y)&0xF0)+16;
 	action = climbcoverbottom;
 	climb_cover_x = int(x) & 0xF0;
 	climb_cover_y = (int(y) & 0xF0) + 16;
@@ -4593,7 +4431,6 @@ void LinkClass::walkdown2() { //exiting cave 2
 	stop_sfx(WAV_BRANG);
 	sfx(WAV_STAIRS, pan(int(x)));
 	clk = 0;
-	//  int cmby=int(y)&0xF0;
 	action = climbcovertop;
 	climb_cover_x = int(x) & 0xF0;
 	climb_cover_y = int(y) & 0xF0;
@@ -4627,7 +4464,6 @@ void LinkClass::walkup() { //exiting cave
 	sfx(WAV_STAIRS, pan(int(x)));
 	dir = down;
 	clk = 0;
-	//  int cmby=int(y)&0xF0;
 	action = climbcoverbottom;
 	climb_cover_x = int(x) & 0xF0;
 	climb_cover_y = int(y) & 0xF0;
@@ -4663,7 +4499,6 @@ void LinkClass::walkup2() { //entering cave2
 	sfx(WAV_STAIRS, pan(int(x)));
 	dir = up;
 	clk = 0;
-	//  int cmby=int(y)&0xF0;
 	action = climbcovertop;
 	climb_cover_x = int(x) & 0xF0;
 	climb_cover_y = (int(y) & 0xF0) - 16;
@@ -4741,7 +4576,6 @@ bool edge_of_dmap(int side) {
 				return true;
 			}
 			if ((DMaps[currdmap].type & dmfTYPE) != dmOVERW)
-				//    if(dlevel)
 			{
 				return (((currscr & 15) - DMaps[currdmap].xoff) <= 0);
 			}
@@ -4751,7 +4585,6 @@ bool edge_of_dmap(int side) {
 				return true;
 			}
 			if ((DMaps[currdmap].type & dmfTYPE) != dmOVERW)
-				//    if(dlevel)
 			{
 				return (((currscr & 15) - DMaps[currdmap].xoff) >= 7);
 			}
@@ -5121,7 +4954,6 @@ void LinkClass::scrollscr(int dir, int destscr, int destdmap) {
 				sx += step;
 				break;
 		}
-		//    putsubscr(framebuf,0,0);
 		if (ladderx + laddery) {
 			if (ladderdir == up) {
 				ladderx = int(x);
@@ -5170,9 +5002,6 @@ void LinkClass::scrollscr(int dir, int destscr, int destdmap) {
 		if (dir == up) {
 			ty2 -= 176;
 		}
-
-		//    linkstep();
-		//    draw_screen(newscr, oldscr, tx, ty, tx2, ty2);
 
 		do_layer(framebuf, 0, oldscr, tx2, ty2, 3);
 		do_layer(framebuf, 1, oldscr, tx2, ty2, 3);
@@ -5491,7 +5320,6 @@ void selectBwpn(int xstep, int ystep) {
 			cnt = 20;
 			break;
 	}
-	// int cnt = NEWSUBSCR ? 12 : 8;
 
 	do {
 		switch (zinit.subscreen) {
@@ -5942,7 +5770,6 @@ void getitem(int id) {
 		case iFairyMoving:
 			game.life = min(game.life + (3 * HP_PER_HEART), game.maxlife);
 			break;
-		//  case iCross:      game.misc2|=iCROSS; break;
 		case iAmulet:
 			if (!get_bit(quest_rules, qr_KEEPOLDITEMS)) {
 				if (current_item(itype_amulet, true) < i_amulet1) {
@@ -6243,7 +6070,6 @@ void LinkClass::checkitems() {
 			clear_bitmap(pricesdisplaybuf);
 			anyprice = false;
 		}
-		//   items.del(index);
 	} else {
 		items.del(index);
 		for (int i = 0; i < Lwpns.Count(); i++) {
@@ -6292,7 +6118,6 @@ bool LinkClass::refill() {
 	++refillclk;
 	int speed = get_bit(quest_rules, qr_FASTFILL) ? 6 : 22;
 	if (refillclk % speed == 0) {
-		//   game.life&=0xFFC;
 		switch (refill_what) {
 			case REFILL_LIFE:
 				game.life = min(game.maxlife, (game.life + HP_PER_HEART / 2));
@@ -6316,7 +6141,6 @@ bool LinkClass::refill() {
 				break;
 			case REFILL_ALL:
 				game.life = min(game.maxlife, (game.life + HP_PER_HEART / 2));
-				//        game.magic=min(game.maxmagic, (game.magic+MAGICPERBLOCK/4));
 				game.magic = min(game.maxmagic, (game.magic + MAGICPERBLOCK / 2));
 				if ((game.life >= game.maxlife) && (game.magic >= game.maxmagic)) {
 					game.life = game.maxlife;
@@ -6748,14 +6572,6 @@ void LinkClass::ganon_intro() {
 
 		draw_screen(tmpscr, 0, 0);
 		advanceframe();
-		/*
-		    if(rSbtn())
-		    {
-		      conveyclk=3;
-		      dosubscr();
-		      //      guys.draw(framebuf,false);
-		    }
-		*/
 		if (rSbtn()) {
 			conveyclk = 3;
 			int tmp_subscr_clk = frame;

@@ -224,8 +224,6 @@ extern int readsize, writesize;
 
 #define COMBOS_PER_ROW      20
 
-//#define MAGICDRAINRATE  2
-
 // quest stuff
 #define ZQ_TILES        0
 #define ZQ_MIDIS2       1                                   //4 bytes
@@ -1151,7 +1149,6 @@ typedef struct gamedata {
 	short dmagic;
 	byte  magicdrainrate;
 	byte  canslash;                                           //Link slashes instead of stabs.
-	//byte  padding[2];
 	//636
 	byte  visited[MAXDMAPS];
 	//892 (256)

@@ -236,7 +236,6 @@ weapon::weapon(fix X, fix Y, int Id, int Type, int pow, int Dir) : sprite() {
 			hookshot_used = true;
 			LOADGFX(wHSHEAD);
 			step = 4;
-			//     step = 0;
 			clk2 = 256;
 			switch (dir) {
 				case down:
@@ -574,7 +573,6 @@ bool weapon::clip() {
 		}
 
 	if (id > wEnemyWeapons && id < wHammer) {
-		//   if(id>wEnemyWeapons) {
 		if ((x < 8 && dir == left)
 		        || (y < 8 && dir == up)
 		        || (x > 232 && dir == right)
@@ -714,8 +712,6 @@ bool weapon::animate(int index) {
 					dead = 4;
 				}
 			}
-			//     if ((get_bit(quest_rules,qr_SASPARKLES+current_item(itype_arrow,true)-2)) && (current_item(itype_arrow,true)>=2)) {
-			//       if (!(clk%(16>>(current_item(itype_arrow,true))))) {
 			if ((get_bit(quest_rules, qr_SASPARKLES + type - 2)) && (type >= 2)) {
 				if (!(clk % (16 >> type))) {
 					arrow_x = x;
@@ -780,7 +776,6 @@ bool weapon::animate(int index) {
 						for (int i = CSET(0); i < CSET(15); i++) {
 							int g = min((RAMpal[i].r * 42 + RAMpal[i].g * 75 + RAMpal[i].b * 14) >> 7, 63);
 							g = (g >> 1) + 32;
-							//g = ((g - 32) >> 1) + 32;
 							RAMpal[i] = _RGB(g, g, g);
 						}
 					} else {
@@ -1202,9 +1197,6 @@ bool weapon::animate(int index) {
 			if ((id == wRefFireball) && (findentrance(x, y, mfSTRIKE, true))) {
 				dead = 0;
 			}
-			//     if ((id==wRefFireball)&&(dummy_bool[0])) { //homing
-			//       seekEnemy(-1);
-			//     } else {
 			if ((id == ewFireball) && (!(clk % 8) && 0)) {        //homing (remove &&0 to activate)
 				seekLink();
 			} else {
@@ -1222,7 +1214,6 @@ bool weapon::animate(int index) {
 						x += .5;
 						break;
 				}
-				//     }
 			}
 			if (clk < 16) {
 				++clk;

@@ -859,8 +859,6 @@ void overcombotranslucent(BITMAP *dest, int x, int y, int cmbdat, int cset, int 
 	}
 }
 
-//shnarf
-
 void puttile8(BITMAP *dest, int tile, int x, int y, int cset, int flip) {
 	if (x < 0 || y < 0) {
 		return;

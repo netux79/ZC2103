@@ -744,7 +744,6 @@ void draw_screen(mapscr *layer1, mapscr *layer2, int x1, int y1, int x2, int y2)
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
 		if (((particle *)particles.spr(pcounter))->layer == -3) {
 			particles.spr(pcounter)->draw(framebuf);
-			//particles.del(pcounter);
 		}
 	}
 	if ((Link.getAction() == climbcovertop) || (Link.getAction() == climbcoverbottom)) {
@@ -772,21 +771,18 @@ void draw_screen(mapscr *layer1, mapscr *layer2, int x1, int y1, int x2, int y2)
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
 		if (((particle *)particles.spr(pcounter))->layer == 0) {
 			particles.spr(pcounter)->draw(framebuf);
-			//particles.del(pcounter);
 		}
 	}
 	do_layer(framebuf, 1, layer1, x1, y1, 2);
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
 		if (((particle *)particles.spr(pcounter))->layer == 1) {
 			particles.spr(pcounter)->draw(framebuf);
-			//particles.del(pcounter);
 		}
 	}
 	do_layer(framebuf, -2, layer1, x1, y1, 2);
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
 		if (((particle *)particles.spr(pcounter))->layer == -2) {
 			particles.spr(pcounter)->draw(framebuf);
-			//particles.del(pcounter);
 		}
 	}
 	if (lensclk) {
@@ -875,21 +871,18 @@ void draw_screen(mapscr *layer1, mapscr *layer2, int x1, int y1, int x2, int y2)
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
 		if (((particle *)particles.spr(pcounter))->layer == 2) {
 			particles.spr(pcounter)->draw(framebuf);
-			//particles.del(pcounter);
 		}
 	}
 	do_layer(framebuf, 3, layer1, x1, y1, 2);
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
 		if (((particle *)particles.spr(pcounter))->layer == 3) {
 			particles.spr(pcounter)->draw(framebuf);
-			//particles.del(pcounter);
 		}
 	}
 	do_layer(framebuf, -1, layer1, x1, y1, 2);
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
 		if (((particle *)particles.spr(pcounter))->layer == -1) {
 			particles.spr(pcounter)->draw(framebuf);
-			//particles.del(pcounter);
 		}
 	}
 
@@ -939,17 +932,14 @@ void draw_screen(mapscr *layer1, mapscr *layer2, int x1, int y1, int x2, int y2)
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
 		if (((particle *)particles.spr(pcounter))->layer == 4) {
 			particles.spr(pcounter)->draw(framebuf);
-			//particles.del(pcounter);
 		}
 	}
 	do_layer(framebuf, 5, layer1, x1, y1, 2);
 	for (pcounter = 0; pcounter < particles.Count(); pcounter++) {
 		if (((particle *)particles.spr(pcounter))->layer == 5) {
 			particles.spr(pcounter)->draw(framebuf);
-			//particles.del(pcounter);
 		}
 	}
-	//particles.clear();
 
 	//before clipping, compare messages to saved screen.
 	//pixels in the framebuf which don't match the saved screen
@@ -1395,7 +1385,6 @@ void openshutters() {
 }
 
 void loadscr(int tmp, int scr, int ldir) {
-	//  introclk=intropos=msgclk=msgpos=dmapmsgclk=0;
 	for (word x = 0; x < animated_combos; x++) {
 		if (combobuf[animated_combo_table4[x][0]].nextcombo != 0) {
 			animated_combo_table4[x][1] = 0;
@@ -1476,7 +1465,6 @@ void loadscr2(int tmp, int scr, int ldir) {
 	//these are here to bypass compiler warnings about unused arguments
 	ldir = ldir;
 
-	//  introclk=intropos=msgclk=msgpos=dmapmsgclk=0;
 	for (word x = 0; x < animated_combos; x++) {
 		if (combobuf[animated_combo_table4[x][0]].nextcombo != 0) {
 			animated_combo_table4[x][1] = 0;
@@ -1507,21 +1495,6 @@ void loadscr2(int tmp, int scr, int ldir) {
 		remove_bosslockblocks(tmp, false);
 	}
 
-	//  if(game.maps[(currmap<<7)+scr]&mCHEST)              // if special stuff done before
-	//  {
-	//    remove_chests(tmp,false);
-	//  }
-	//
-	//  if(game.maps[(currmap<<7)+scr]&mLOCKEDCHEST)              // if special stuff done before
-	//  {
-	//    remove_lockedchests(tmp,false);
-	//  }
-	//
-	//  if(game.maps[(currmap<<7)+scr]&mBOSSCHEST)              // if special stuff done before
-	//  {
-	//    remove_bosschests(tmp,false);
-	//  }
-
 	// check doors
 	if (isdungeon()) {
 		for (int i = 0; i < 4; i++) {
@@ -1531,26 +1504,17 @@ void loadscr2(int tmp, int scr, int ldir) {
 			switch (door) {
 				case d1WAYSHUTTER:
 				case dSHUTTER:
-					/*
-					        if((ldir^1)==i)
-					        {
-					          tmpscr[tmp].door[i]=dOPENSHUTTER;
-					          //          putit=false;
-					        }
-					*/
 					break;
 
 				case dLOCKED:
 					if (game.maps[(currmap << 7) + scr] & (1 << i)) {
 						tmpscr[tmp].door[i] = dUNLOCKED;
-						//          putit=false;
 					}
 					break;
 
 				case dBOSS:
 					if (game.maps[(currmap << 7) + scr] & (1 << i)) {
 						tmpscr[tmp].door[i] = dOPENBOSS;
-						//          putit=false;
 					}
 					break;
 
@@ -1598,7 +1562,6 @@ void putscr(BITMAP *dest, int x, int y, mapscr *screen) {
 }
 
 bool _walkflag(int x, int y, int cnt) {
-	//  walkflagx=x; walkflagy=y;
 	if (x < 0 || y < 0) {
 		return false;
 	}
@@ -1612,17 +1575,8 @@ bool _walkflag(int x, int y, int cnt) {
 		return false;
 	}
 	mapscr *s1, *s2;
-	/*
-	  s1=(((*tmpscr).layermap[0]-1)>=0)?
-	       (TheMaps+((*tmpscr).layermap[0]-1)*MAPSCRS+((*tmpscr).layerscreen[0])):
-	       tmpscr;
-	  s2=(((*tmpscr).layermap[1]-1)>=0)?
-	       (TheMaps+((*tmpscr).layermap[1]-1)*MAPSCRS+((*tmpscr).layerscreen[1])):
-	       tmpscr;
-	*/
 	s1 = (((*tmpscr).layermap[0] - 1) >= 0) ? tmpscr2 : tmpscr;
 	s2 = (((*tmpscr).layermap[1] - 1) >= 0) ? tmpscr2 + 1 : tmpscr;
-	//  s2=TheMaps+((*tmpscr).layermap[1]-1)MAPSCRS+((*tmpscr).layerscreen[1]);
 
 	int bx = (x >> 4) + (y & 0xF0);
 	newcombo c = combobuf[tmpscr->data[bx]];
@@ -1678,14 +1632,6 @@ bool water_walkflag(int x, int y, int cnt) {
 	}
 
 	mapscr *s1, *s2;
-	/*
-	  s1=(((*tmpscr).layermap[0]-1)>=0)?
-	       (TheMaps+((*tmpscr).layermap[0]-1)*MAPSCRS+((*tmpscr).layerscreen[0])):
-	       tmpscr;
-	  s2=(((*tmpscr).layermap[1]-1)>=0)?
-	       (TheMaps+((*tmpscr).layermap[1]-1)*MAPSCRS+((*tmpscr).layerscreen[1])):
-	       tmpscr;
-	*/
 	s1 = (((*tmpscr).layermap[0] - 1) >= 0) ? tmpscr2 : tmpscr;
 	s2 = (((*tmpscr).layermap[1] - 1) >= 0) ? tmpscr2 + 1 : tmpscr;
 
@@ -1742,7 +1688,6 @@ bool hit_walkflag(int x, int y, int cnt) {
 	if (x < 16 || y < 16 || (x + (cnt - 1) * 8) >= 240 || y >= 160) {
 		return true;
 	}
-	//  for(int i=0; i<4; i++)
 	if (mblock2.clk && mblock2.hit(x, y, cnt * 8, 1)) {
 		return true;
 	}
@@ -1816,8 +1761,6 @@ void ViewMap() {
 					}
 				}
 
-				//		if((tmpscr+1)->flags7&fLAYER2BG) do_layer(scrollbuf, 1, tmpscr+1, -256, 56, 2);
-				//		if((tmpscr+1)->flags7&fLAYER3BG) do_layer(scrollbuf, 2, tmpscr+1, -256, 56, 2);
 				putscr(scrollbuf, 256, 0, tmpscr + 1);
 				do_layer(scrollbuf, 0, tmpscr + 1, -256, 56, 2);
 				do_layer(scrollbuf, 1, tmpscr + 1, -256, 56, 2);

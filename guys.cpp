@@ -80,12 +80,10 @@ bool m_walkflag(int x, int y, int special) {
 	y &= (special == spw_halfstep) ? (~7) : (~15);
 
 	if (special == spw_water)
-		//    return water_walkflag(x,y+8,1) && water_walkflag(x+8,y+8,1);
 	{
 		return water_walkflag(x, y + 8, 1) || water_walkflag(x + 8, y + 8, 1);
 	}
 
-	//  return _walkflag(x,y+8,1) && _walkflag(x+8,y+8,1);
 	return _walkflag(x, y + 8, 1) || _walkflag(x + 8, y + 8, 1) ||
 	       COMBOTYPE(x, y + 8) == cPIT || COMBOTYPE(x + 8, y + 8) == cPIT;
 }
@@ -483,13 +481,9 @@ void enemy::leave_item()
 		}
 	}
 
-	//    if(i!=-1) {
 	if (i != iFairyMoving || !m_walkflag(x, y, 0)) {
 		items.add(new item(x, y, i, ipBIGRANGE + ipTIMER, 0));
 	}
-	//    }
-
-	//        items.add(new item(x,y,iClock,ipBIGRANGE+ipTIMER,0));
 }
 
 // auomatically kill off enemy (for rooms with ringleaders)
@@ -559,18 +553,12 @@ int enemy::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 	sfx(WAV_EHIT, pan(int(x)));
 	// arrow keeps going
 	return ((wpnId == wArrow) && (current_item(itype_arrow, true) > 2)) ? 0 : 1;
-	//    return 1;
 }
 
 bool enemy::dont_draw() {
 	if (fading == fade_invisible || (fading == fade_flicker && (clk & 1))) {
 		return true;
 	}
-	/*
-	    if((d->flags&guy_invisible) || ((tmpscr->flags3&fINVISROOM))
-	      && !(game.misc2&iCROSS))
-	      return true;
-	*/
 	if (d->flags & guy_invisible) {
 		return true;
 	}
@@ -973,8 +961,6 @@ bool enemy::fslide() {
 void enemy::newdir(int rate, int homing, int special) {
 	int ndir;
 	if (grumble && (rand() & 3) < grumble)
-		//  for super bait
-		//    if(1)
 	{
 		int w = Lwpns.idFirst(wBait);
 		if (w >= 0) {
@@ -1571,7 +1557,6 @@ eArmos::eArmos(fix X, fix Y, int Id, int Clk) : enemy(X, Y, Id, 0) {
 	} else {
 		dummy_int[0] = tile;
 	}
-	//    tile = d->tile + (rand()&1); // wth?
 	fromstatue = true;
 	superman = 1;
 	fading = fade_flicker;
@@ -1658,7 +1643,6 @@ eGhini::eGhini(fix X, fix Y, int Id, int Clk) : enemy(X, Y, Id, Clk) {
 		dummy_int[0] = tile;
 	}
 	if (d->misc1) {
-		//fixing      step=0;
 		fading = fade_flicker;
 		count_enemy = false;
 		dir = 12;
@@ -1769,7 +1753,6 @@ void eGhini::draw(BITMAP *dest) {
 		}
 		tile += dummy_int[1];
 	} else {
-		//      tile+=dummy_int[1];
 		switch (dir) {
 			case 8:
 			case 9:
@@ -2152,8 +2135,6 @@ int ePeahat::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 					misc = 0;
 					clk = 0;
 					step = 0;
-					//            floater_walk(misc?4:0,8,0.625,0.0625,10,240,16);
-
 				}
 				break;
 			}
@@ -2164,7 +2145,6 @@ int ePeahat::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 				sclk = (wpnDir << 8) + 16;
 			}
 	}
-	//    if(wpnId==wBrang && hp<=0)
 	if (((wpnId == wBrang) || (get_bit(quest_rules, qr_NOFLASHDEATH))) && hp <= 0) {
 		fading = fade_blue_poof;
 	}
@@ -2506,7 +2486,6 @@ void eGel::draw(BITMAP *dest) {
 	} else {
 		tile += f2 ? 1 : 0;
 	}
-	//    update_enemy_frame();
 	enemy::draw(dest);
 }
 
@@ -2561,7 +2540,6 @@ void eZol::draw(BITMAP *dest) {
 	} else {
 		tile += f2 ? 1 : 0;
 	}
-	//    update_enemy_frame();
 	enemy::draw(dest);
 }
 
@@ -2655,7 +2633,6 @@ bool eGelTrib::animate(int index) {
 		} else {
 			guys.add(new eZolTrib((fix)x, (fix)y, eZOLTRIB, -21));
 		}
-		//    ((enemy*)guys.spr(kids))->count_enemy = false;
 		((enemy *)guys.spr(kids))->count_enemy = count_enemy;
 		return true;
 	}
@@ -2691,7 +2668,6 @@ void eGelTrib::draw(BITMAP *dest) {
 	} else {
 		tile += f2 ? 1 : 0;
 	}
-	//    update_enemy_frame();
 	enemy::draw(dest);
 }
 
@@ -2747,7 +2723,6 @@ void eZolTrib::draw(BITMAP *dest) {
 	} else {
 		tile += f2 ? 1 : 0;
 	}
-	//    update_enemy_frame();
 	enemy::draw(dest);
 }
 
@@ -2935,8 +2910,6 @@ void eWallM::draw(BITMAP *dest) {
 	if (misc > 0) {
 		masked_draw(dest, 16, 72, 224, 144);
 	}
-	//    enemy::draw(dest);
-	//    tile = clk&8 ? 128:129;
 }
 
 eTrap::eTrap(fix X, fix Y, int Id, int Clk) : enemy(X, Y, Id, Clk) {
@@ -3646,7 +3619,6 @@ void eZora::draw(BITMAP *dest) {
 		return;
 	}
 
-	//shnarf
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / 16) % 4 : ((clk >= (frate >> 1)) ? 1 : 0);
 
@@ -3820,7 +3792,6 @@ bool eGibdo::animate(int index) {
 }
 
 void eGibdo::draw(BITMAP *dest) {
-	//    update_enemy_frame();
 	tile = dummy_int[0];
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
@@ -3917,7 +3888,6 @@ void eBubble::draw(BITMAP *dest) {
 	} else {
 		flip  = f2 ? 1 : 0;
 	}
-	//    if((d->cset > 14)&&(!get_bit(quest_rules,qr_NOBUBBLEFLASH)))
 	if (((id == eBUBBLE) || (id == eIBUBBLE)) && (!get_bit(quest_rules, qr_NOBUBBLEFLASH))) {
 		cs = (frame & 3) + 6;
 	}
@@ -4125,7 +4095,6 @@ void eKeese::draw(BITMAP *dest) {
 		}
 	}
 
-	//    tile=dummy_int[1];
 	tile += foobyte;
 	tile += dummy_int[1];
 
@@ -4248,14 +4217,11 @@ bool eKeeseTrib::animate(int index) {
 	if (clk4 == 256) {
 		if (!m_walkflag(x, y, 0)) {
 			int kids = guys.Count();
-			//        guys.add(new eVire(x,y,eVIRE,-24));
-			//        keesetribgrow(x, y);
 			if (get_bit(quest_rules, qr_OLDTRIBBLES)) {
 				guys.add(new eVire((fix)x, (fix)y, eVIRE, -24));
 			} else {
 				guys.add(new eVireTrib((fix)x, (fix)y, eVIRETRIB, -24));
 			}
-			//      ((enemy*)guys.spr(kids))->count_enemy = false;
 			((enemy *)guys.spr(kids))->count_enemy = count_enemy;
 			return true;
 		} else {
@@ -4334,7 +4300,6 @@ void eKeeseTrib::draw(BITMAP *dest) {
 		}
 	}
 
-	//    tile=dummy_int[1];
 	tile += foobyte;
 	tile += dummy_int[1];
 
@@ -4652,7 +4617,6 @@ void eLikeLike::draw(BITMAP *dest) {
 		enemy::draw(dest);
 	} else {
 		switch (clk & 0x18) {
-			//        case 0:  tile=162; break;
 			case 8:
 			case 24:
 				tile += 1;
@@ -5005,7 +4969,6 @@ bool eGoriya::animate(int index) {
 		return Dead();
 	}
 	if (!WeaponOut()) {
-		//      halting_walk(6,128,0,(id==eRGORIYA)?5:6,48);
 		halting_walk(6, 128, 0, (id == eRGORIYA) ? 5 : 6, 1);
 		if (clk2 == 1 && sclk == 0 && !stunclk && !watch) {
 			misc = index + 100;
@@ -5118,7 +5081,6 @@ bool eDarknut::animate(int index) {
 			}
 			break;
 		case eDKNIGHT:
-			//switch later to:  halting_walk(6,128,0,(id==eRGORIYA)?5:6,1);
 			constant_walk(2, 255, 0);
 			if (sclk == 0 && !stunclk && !watch) {
 				if (clk2 > 64) {
@@ -5366,7 +5328,6 @@ bool eWizzrobe::animate(int index) {
 							return true;
 						}
 					}
-					//         place_on_axis(true);
 					fading = fade_flicker;
 					hxofs = 0;
 					break;
@@ -5765,7 +5726,6 @@ bool eDodongo::animate(int index) {
 		constant_walk(4, 64, spw_clipright);
 	}
 	hxsz = (dir <= down) ? 16 : 32;
-	//    hysz = (dir>=left) ? 16 : 32;
 	return enemy::animate(index);
 }
 
@@ -6101,7 +6061,6 @@ void eDodongo2::draw(BITMAP *dest) {
 		}
 	}
 	previous_dir = dir;
-	//    enemy::draw(dest);
 }
 
 int eDodongo2::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
@@ -6190,14 +6149,7 @@ bool eAquamentus::animate(int index) {
 	if (dying) {
 		return Dead(index);
 	}
-	//  fbx=x+((id==eRAQUAM)?4:-4);
 	fbx = x;
-	/*
-	  if (get_bit(quest_rules,qr_NEWENEMYTILES)&&id==eLAQUAM)
-	  {
-	    fbx+=16;
-	  }
-	*/
 	if (--clk3 == 0) {
 		addEwpn(fbx, y, ewFireball, 0, d->wdp, up + 1);
 		addEwpn(fbx, y, ewFireball, 0, d->wdp, 0);
@@ -6407,14 +6359,11 @@ void eGohma::draw(BITMAP *dest) {
 		// left side
 		xofs = -16;
 		flip = 0;
-		//      if(clk&16) tile=180;
-		//      else { tile=182; flip=1; }
 		tile += (3 * ((clk & 48) >> 4));
 		enemy::draw(dest);
 
 		// right side
 		xofs = 16;
-		//      tile=(180+182)-tile;
 		tile = dummy_int[0];
 		tile += (3 * ((clk & 48) >> 4)) + 2;
 		enemy::draw(dest);
@@ -6422,7 +6371,6 @@ void eGohma::draw(BITMAP *dest) {
 		// body
 		xofs = 0;
 		tile = dummy_int[0];
-		//      tile+=(3*((clk&24)>>3))+2;
 		if (clk3 < 16) {
 			tile += 7;
 		} else if (clk3 < 116) {
@@ -6450,7 +6398,6 @@ void eGohma::draw(BITMAP *dest) {
 		if ((clk & 16)) {
 			tile += 2;
 		}
-		//      tile=(180+182)-tile;
 		enemy::draw(dest);
 
 		// body
@@ -6497,8 +6444,6 @@ int eGohma::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 					hp -= power;
 					hclk = 33;
 					break;
-					//        } else {
-					//          return 0;
 				}
 			}
 		// fall through
@@ -6551,7 +6496,6 @@ bool eLilDig::animate(int index) {
 
 void eLilDig::draw(BITMAP *dest) {
 	tile = dummy_int[0];
-	//    tile = 160;
 	int f2 = get_bit(quest_rules, qr_NEWENEMYTILES) ?
 	         (clk / (frate / 4)) : ((clk >= (frate >> 1)) ? 1 : 0);
 
@@ -7575,7 +7519,6 @@ eGleeok::eGleeok(fix X, fix Y, int Id, int Clk) : enemy((fix)120, (fix)48, Id, C
 	clk3 = clk;                                               // live head count
 	clk = 0;
 	clk2 = 60;                                                // fire ball clock
-	//    hp=(guysbuf[eGLEEOK2+(misc-2)].misc2)*(misc-1)*DAMAGE_MULTIPLIER+guysbuf[eGLEEOK2+(misc-2)].hp;
 	hp = (guysbuf[id].misc2) * (misc) * DAMAGE_MULTIPLIER + guysbuf[id].hp;
 	cs = csBOSS;
 	if (id >= eGLEEOK1F) {
@@ -7585,7 +7528,6 @@ eGleeok::eGleeok(fix X, fix Y, int Id, int Clk) : enemy((fix)120, (fix)48, Id, C
 	}
 	hxofs = 4;
 	hxsz = 8;
-	//    frate=17*4;
 	cont_sfx(WAV_ROAR);
 	fading = fade_blue_poof;
 	if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
@@ -7736,10 +7678,6 @@ void eGleeok::draw2(BITMAP *dest) {
 	} else {
 		tile = 145;
 	}
-	/*
-	  if(hp>0 && !dont_draw())
-	    sprite::draw(dest);
-	*/
 	if (hp > 0 && !dont_draw()) {
 		if ((tmpscr->flags3 & fINVISROOM) && !(current_item(itype_amulet, true))) {
 			sprite::drawcloaked(dest);
@@ -7752,12 +7690,10 @@ void eGleeok::draw2(BITMAP *dest) {
 esGleeok::esGleeok(fix X, fix Y, int Id, int Clk) : enemy(X, Y, Id, Clk) {
 	dummy_bool[0] = false;
 	timer = 0;
-	/*  fixing */
 	hp = 1000;
 	cs = csBOSS;
 	step = 1;
 	item_set = 0;
-	//*/
 	x = 120;
 	y = 70;
 	hxofs = 4;
@@ -7789,7 +7725,6 @@ bool esGleeok::animate(int index) {
 	} else {
 		necktile = 145;
 	}
-	//    ?((dummy_bool[0])?(nets+4052+(16+((clk&24)>>3))):(nets+4040+(8+((clk&24)>>3)))):145)
 
 	switch (misc) {
 		case 0:                                                 // live head
@@ -7797,11 +7732,6 @@ bool esGleeok::animate(int index) {
 			if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 				tile = headtile;
 				tile += ((clk & 24) >> 3);
-				/*
-				        if (dummy_bool[0]) {
-				          tile+=1561;
-				        }
-				*/
 			} else {
 				tile = 146;
 			}
@@ -7850,10 +7780,6 @@ bool esGleeok::animate(int index) {
 
 			{
 				variable_walk_8(2, 9, spw_floater);
-				//        if(++clk2>=80 && !(rand()%63)) {
-				//          addEwpn(x,y,ewFireball,1,d->wdp,0);
-				//          clk2=0;
-				//          }
 			}
 
 			break;
@@ -7922,23 +7848,6 @@ int esGleeok::takehit(int wpnId, int power, int wpnx, int wpny, int wpnDir) {
 void esGleeok::draw(BITMAP *dest) {
 	switch (misc) {
 		case 0:                                                 //neck
-			/*
-			      if(!dont_draw())
-			      {
-			        for(int i=1; i<4; i++)                              //draw the neck
-			        {
-			          if (get_bit(quest_rules,qr_NEWENEMYTILES))
-			          {
-			            overtile16(dest,necktile+(i*40),nx[i]-4,ny[i]+56,cs,0);
-			          }
-			          else
-			          {
-			            overtile16(dest,necktile,nx[i]-4,ny[i]+56,cs,0);
-			          }
-			        }
-			      }
-			*/
-
 			if (!dont_draw()) {
 				for (int i = 1; i < 4; i++) {                       //draw the neck
 					if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
@@ -7963,11 +7872,6 @@ void esGleeok::draw(BITMAP *dest) {
 			if (get_bit(quest_rules, qr_NEWENEMYTILES)) {
 				tile = flyingheadtile;
 				tile += ((clk & 24) >> 3);
-				/*
-				        if (dummy_bool[0]) {
-				          tile+=1561;
-				        }
-				*/
 				break;
 			} else {
 				tile = (clk & 1) ? 147 : 148;
@@ -8056,7 +7960,6 @@ bool ePatra::animate(int index) {
 			} else {
 				((enemy *)guys.spr(i))->dummy_int[0] = dummy_int[0] + 1;
 			}
-			//        ((enemy*)guys.spr(i))->dummy_int[0]=192;
 			if (id == ePATRAL2 || id == ePATRAL3) {
 				((enemy *)guys.spr(i))->hp = 9 * DAMAGE_MULTIPLIER;
 			} else {
@@ -8427,7 +8330,6 @@ bool ePatraBS::animate(int index) {
 		}
 		++misc;
 	}
-	//    double size=1;;
 	for (int i = index + 1; i < index + flycnt + 1; i++) {
 		if (!adjusted) {
 			((enemy *)guys.spr(i))->hp = 6 * DAMAGE_MULTIPLIER;
@@ -8821,7 +8723,6 @@ void addenemy(int x, int y, int id, int clk) {
 		case eBLYNEL:
 			e = new eLynel((fix)x, (fix)y, id, clk);
 			break;
-		// case eBLYNEL:    e = new eShooter((fix)x,(fix)y,id,clk); break;
 		case eRLEV:
 		case eBLEV:
 			e = new eLeever((fix)x, (fix)y, id, clk);
@@ -8863,7 +8764,6 @@ void addenemy(int x, int y, int id, int clk) {
 		case eSTALFOS3:
 			e = new eStalfos((fix)x, (fix)y, id, clk);
 			break;
-		// case eSTALFOS2:  e = new eShooter((fix)x,(fix)y,id,clk); break;
 		case eGEL:
 			e = new eGel((fix)x, (fix)y, id, clk);
 			break;
@@ -9323,34 +9223,9 @@ bool countguy(int id) {
 
 bool ok2add(int id) {
 	switch (id) {
-		/*
-		  case eARMOS:
-		  case eGHINI2:
-		  case eTRAP:
-		  case eGANON:
-		    return false;
-		*/
-		//  case eGHINI2:
 		case eGANON:
 		case eTRAP:
 			return false;
-
-		/*
-		  case eGLEEOK2:
-		  case eGLEEOK3:
-		  case eGLEEOK4:
-		  case eMOLDORM:
-		  case eMANHAN:
-		  case eMANHAN2:
-		  case eLAQUAM:
-		  case eRAQUAM:
-		  case eRGOHMA:
-		  case eBGOHMA:
-		case eDIG1:
-		case eDIG3:
-		case ePATRA1:
-		case ePATRA2:
-		*/
 		case eLAQUAM:
 		case eRAQUAM:
 		case eGLEEOK1:
@@ -9692,7 +9567,6 @@ void loadenemies() {
 	// load enemies
 
 	if (tmpscr->pattern == pRANDOM) {                         // enemies appear at random places
-		//int set=loadside*9;
 		int pos = rand() % 9;
 		int clk = -15, x, y, fastguys = 0;
 		int i = 0, guycnt = 0;
@@ -9831,10 +9705,6 @@ void moneysign() {
 }
 
 void putprices(bool sign) {
-	// refresh what's under the prices
-	// for(int i=5; i<12; i++)
-	//   putcombo(scrollbuf,i<<4,112,tmpscr->data[112+i],tmpscr->cpage);
-
 	rectfill(pricesdisplaybuf, 72, 112, pricesdisplaybuf->w - 1, pricesdisplaybuf->h - 1, 0);
 	int step = 32;
 	int x = 80;
@@ -9913,9 +9783,7 @@ void setupscreen() {
 			break;
 
 		case rREPAIR:                                           // door repair
-			//  if (!get_bit(quest_rules,qr_REPAIRFIX)) {
 			setmapflag();
-			//  }
 			repaircharge = true;
 			break;
 
@@ -10052,10 +9920,6 @@ void putmsg() {
 
 			Link.unfreeze();
 			if (repaircharge) {
-				//       if (get_bit(quest_rules,qr_REPAIRFIX)) {
-				//         fixed_door=true;
-				//       }
-
 				game.drupy -= tmpscr[1].catchall;
 			}
 

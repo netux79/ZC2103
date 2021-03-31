@@ -169,12 +169,9 @@ void ending() {
 
 	for (int x = 0; x < 3; x++) {
 		sprintf(tmpmsg[x], "%.24s", MsgStrings[QMisc.endstring].s + (24 * x));
-		//    sprintf(tmpmsg[x], "%.24s", MsgStrings[QMisc.endstring].s+(24*x));
-		//    strncpy(tmpmsg[x], MsgStrings[QMisc.endstring].s+(24*x), 24);
 	}
 	for (int x = 0; x < 3; x++) {
 		sprintf(tmpmsg[x + 3], "%.24s", MsgStrings[QMisc.endstring + 1].s + (24 * x));
-		//    strncpy(tmpmsg[x+3], MsgStrings[QMisc.endstring+1].s+(24*x), 24);
 	}
 
 	if (QMisc.endstring == 0) {

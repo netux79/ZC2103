@@ -26,7 +26,6 @@ void setup_combo_animations();
 void reset_combo_animations();
 void animate_combos();
 void clear_tiles(byte *buf);
-//void unpack_tile(int tile);
 void unpack_tile(int tile, int flip, bool force);
 
 void pack_tile(byte *src, int tile);

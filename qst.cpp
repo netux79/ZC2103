@@ -661,7 +661,6 @@ int doortranslations_d[9][4] = {
 	{137, 138, 167, 168},
 };
 
-//enum {dt_pass=0, dt_lock, dt_shut, dt_boss, dt_olck, dt_osht, dt_obos, dt_wall, dt_bomb, dt_walk, dt_max};
 int doortranslations_l[9][6] = {
 	{66, 67, 82, 83, 98, 99},
 	{66, 68, 82, 84, 98, 100},
@@ -692,7 +691,6 @@ int tdcmbdat(int map, int scr, int pos) {
 }
 
 int tdcmbcset(int map, int scr, int pos) {
-	//  return TheMaps[map*MAPSCRS+TEMPLATE].cset[pos];
 	return 2;
 }
 
@@ -732,7 +730,6 @@ int MakeDoors(int map, int scr) {
 	tempdcs.walkthroughcset[1] = tdcmbdat(map, scr, 34);
 
 	//left
-	//        TheMaps[i*MAPSCRS+j].warpdmap=TheOldMap.warpdmap;
 	for (int i = 0; i < 9; i++) {
 		for (int j = 0; j < 6; j++) {
 			tempdcs.doorcombo_l[i][j] = tdcmbdat(map, scr, doortranslations_l[i][j]);
