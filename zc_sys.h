@@ -79,14 +79,8 @@ bool DrunkrLbtn();
 bool DrunkrRbtn();
 bool DrunkrMbtn();
 
-enum { bosCIRCLE = 0, bosOVAL, bosTRIANGLE, bosSMAS, bosMAX };
-
 void show_fps();
 bool game_vid_mode(int mode, int wait);
-
-extern int black_opening_count;
-extern int black_opening_x, black_opening_y;
-extern int black_opening_shape;
 
 void zapout();
 void zapin();
