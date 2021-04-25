@@ -499,7 +499,6 @@ int init_game() {
 	Link.init();
 	Link.resetflags(true);
 
-	copy_pal((RGB *)data[PAL_GUI].dat, RAMpal);
 	loadfullpal();
 	ringcolor();
 	loadlvlpal(DMaps[currdmap].color);

@@ -45,9 +45,6 @@ extern const byte nes_pal[];
 
 RGB _RGB(const byte *si);
 RGB _RGB(int r, int g, int b);
-RGB invRGB(RGB s);
-RGB mixRGB(int r1, int g1, int b1, int r2, int g2, int b2, int ratio);
-void copy_pal(RGB *src, RGB *dest);
 void loadfullpal();
 void loadlvlpal(int level);
 void loadpalset(int cset, int dataset);

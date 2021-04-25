@@ -2901,7 +2901,6 @@ int readcolordata(PACKFILE *f, miscQdata *misc, word version, word build, bool k
 		// For this we just read it. No need to save since it not really used.
 		if (!(version < 0x192 || (version == 0x192 && build < 76))) {
 			for (int i = 0; i < MAXLEVELS; ++i) {
-				//memset(temp_palname, 0, PALNAMESIZE);
 				if (!pfread(temp_palname, PALNAMESIZE, f, true)) {
 					return qe_invalid;
 				}

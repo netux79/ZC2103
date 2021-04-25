@@ -97,33 +97,11 @@ RGB _RGB(int r, int g, int b) {
 	return x;
 }
 
-RGB invRGB(RGB s) {
-	RGB x;
-	x.r = 63 - s.r;
-	x.g = 63 - s.g;
-	x.b = 63 - s.b;
-	return x;
-}
-
-RGB mixRGB(int r1, int g1, int b1, int r2, int g2, int b2, int ratio) {
-	RGB x;
-	x.r = (r1 * (64 - ratio) + r2 * ratio) >> 6;
-	x.g = (g1 * (64 - ratio) + g2 * ratio) >> 6;
-	x.b = (b1 * (64 - ratio) + b2 * ratio) >> 6;
-	return x;
-}
-
-void copy_pal(RGB *src, RGB *dest) {
-	for (int i = 0; i < 256; i++) {
-		dest[i] = src[i];
-	}
-}
-
 void loadfullpal() {
 	for (int i = 0; i < 240; i++) {
 		RAMpal[i] = _RGB(colordata + i * 3);
 	}
-	for (int i = 240; i < 255; i++) {
+	for (int i = 240; i < 256; i++) {
 		RAMpal[i] = ((RGB *)data[PAL_GUI].dat)[i];
 	}
 	refreshpal = true;
@@ -132,11 +110,9 @@ void loadfullpal() {
 /* create_zc_trans_table:
  *  Constructs a translucency color table for the specified palette. The
  *  r, g, and b parameters specifiy the solidity of each color component,
- *  ranging from 0 (totally transparent) to 255 (totally solid). If the
- *  callback function is not NULL, it will be called 256 times during the
- *  calculation, allowing you to display a progress indicator.
+ *  ranging from 0 (totally transparent) to 255 (totally solid).
  */
-void create_zc_trans_table(COLOR_MAP *table, AL_CONST PALETTE pal, int r, int g, int b, void (*callback)(int pos)) {
+void create_zc_trans_table(COLOR_MAP *table, AL_CONST PALETTE pal, int r, int g, int b) {
 	int tmp[768], *q;
 	int x, y, i, j, k;
 	unsigned char *p;
@@ -146,10 +122,6 @@ void create_zc_trans_table(COLOR_MAP *table, AL_CONST PALETTE pal, int r, int g,
 		tmp[x * 3]   = pal[x].r * (255 - r) / 255;
 		tmp[x * 3 + 1] = pal[x].g * (255 - g) / 255;
 		tmp[x * 3 + 2] = pal[x].b * (255 - b) / 255;
-	}
-
-	if (callback) {
-		(*callback)(0);
 	}
 
 	for (x = 0; x < PAL_SIZE; x++) {
@@ -175,10 +147,6 @@ void create_zc_trans_table(COLOR_MAP *table, AL_CONST PALETTE pal, int r, int g,
 				p[y] = bestfit_color(pal, c.r, c.g, c.b);
 			}
 		}
-
-		if (callback) {
-			(*callback)(x);
-		}
 	}
 }
 
@@ -200,7 +168,7 @@ void loadlvlpal(int level) {
 	}
 
 	create_rgb_table(&rgb_table, RAMpal, NULL);
-	create_zc_trans_table(&trans_table, RAMpal, 128, 128, 128, NULL);
+	create_zc_trans_table(&trans_table, RAMpal, 128, 128, 128);
 
 	refreshpal = true;
 }
