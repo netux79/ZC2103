@@ -13,7 +13,6 @@
 #ifndef _LINK_H_
 #define _LINK_H_
 
-#include "zcmusic.h"
 #include "zdefs.h"
 #include "zelda.h"
 #include "maps.h"

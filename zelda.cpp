@@ -13,7 +13,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "zcmusic.h"
 #include "zdefs.h"
 #include "zelda.h"
 #include "tiles.h"
@@ -42,7 +41,6 @@ movingblock mblock2;                                        //mblock[4]?
 sprite_list  guys, items, Ewpns, Lwpns, Sitems, chainlinks, decorations, particles;
 LinkClass   Link;
 
-ZCMUSIC *zcmusic = NULL;
 int colordepth;
 int db = 0;
 zinitdata  zinit;
@@ -1272,7 +1270,6 @@ int main(int argc, char *argv[]) {
 		Z_message("Error initialising sound\n%s\n", allegro_error);
 	}
 	Z_init_sound();
-	zcmusic_init();
 	Z_message("OK\n");
 
 	// initialize video driver
@@ -1376,7 +1373,6 @@ int main(int argc, char *argv[]) {
 	destroy_bitmap(tmp_bmp);
 	destroy_bitmap(msgdisplaybuf);
 	destroy_bitmap(pricesdisplaybuf);
-	zcmusic_exit();
 	free_qst_buffers();
 	reset_midis(tunes + MUSIC_COUNT); // free midi memory.
 	Z_message("Armageddon Games web site: http://www.armageddongames.com\n");

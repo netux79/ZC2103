@@ -19,7 +19,6 @@
 #include "zc_sys.h"
 #include "zeldadat.h"
 #include "sfx.h"
-#include "zcmusic.h"
 
 #define  MAXMUSIC     MUSIC_COUNT+MAXMIDIS
 #define  WAV_COUNT    WAV_ZELDA+1
@@ -105,8 +104,6 @@ void reset_status();
 /******** Global Variables ********/
 /**********************************/
 
-
-extern ZCMUSIC *zcmusic;
 
 extern int colordepth;
 extern int db;

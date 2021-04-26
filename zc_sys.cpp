@@ -1941,10 +1941,6 @@ void syskeys() {
 #define MAXTIME  21405240
 
 void advanceframe() {
-	if (zcmusic != NULL) {
-		zcmusic_poll();
-	}
-
 	if (Status) {
 		return;
 	}
@@ -2239,18 +2235,14 @@ void color_layer(RGB *src, RGB *dest, char r, char g, char b, char pos, int from
 }
 
 void music_pause() {
-	zcmusic_pause(zcmusic, ZCM_PAUSE);
 	midi_pause();
 }
 
 void music_resume() {
-	zcmusic_pause(zcmusic, ZCM_RESUME);
 	midi_resume();
 }
 
 void music_stop() {
-	zcmusic_stop(zcmusic);
-	zcmusic_unload_file(zcmusic);
 	stop_midi();
 }
 
@@ -2302,57 +2294,23 @@ void jukebox(int index) {
 }
 
 void play_DmapMusic() {
-	static char tfile[2048];
-	bool domidi = false;
-	if (DMaps[currdmap].tmusic[0] != 0) {
-		if ((zcmusic == NULL) || (strcmp(tfile, DMaps[currdmap].tmusic) != 0)) {
-			char tmfname[2048];
-
-			if (zcmusic != NULL) {
-				zcmusic_stop(zcmusic);
-				zcmusic_unload_file(zcmusic);
-				zcmusic = NULL;
-			}
-			tmfname[0] = 0;
-#ifdef ALLEGRO_MACOSX
-			sprintf(tmfname, "../");
-#endif
-			strcat(tmfname, DMaps[currdmap].tmusic);
-
-			zcmusic = (ZCMUSIC *)zcmusic_load_file(tmfname);
-
-			if (zcmusic != NULL) {
-				stop_midi();
-				strcpy(tfile, DMaps[currdmap].tmusic);
-				zcmusic_play(zcmusic, midi_volume);
+	int m = DMaps[currdmap].midi;
+	switch (m) {
+		case 1:
+			jukebox(MUSIC_OVERWORLD);
+			break;
+		case 2:
+			jukebox(MUSIC_DUNGEON);
+			break;
+		case 3:
+			jukebox(MUSIC_LEVEL9);
+			break;
+		default:
+			if (m >= 4 && m < 4 + MAXMIDIS) {
+				jukebox(m - 4 + MUSIC_COUNT);
 			} else {
-				tfile[0] = 0;
-				domidi = true;
+				music_stop();
 			}
-		}
-	} else {
-		domidi = true;
-	}
-
-	if (domidi) {
-		int m = DMaps[currdmap].midi;
-		switch (m) {
-			case 1:
-				jukebox(MUSIC_OVERWORLD);
-				break;
-			case 2:
-				jukebox(MUSIC_DUNGEON);
-				break;
-			case 3:
-				jukebox(MUSIC_LEVEL9);
-				break;
-			default:
-				if (m >= 4 && m < 4 + MAXMIDIS) {
-					jukebox(m - 4 + MUSIC_COUNT);
-				} else {
-					music_stop();
-				}
-		}
 	}
 }
 
