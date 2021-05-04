@@ -109,7 +109,6 @@ void music_pause();
 void music_resume();
 void music_stop();
 void master_volume(int dv, int mv);
-int  sfx_count();
 void sfx_cleanup();
 bool sfx_init(int index);
 void sfx(int index, int pan, bool loop);

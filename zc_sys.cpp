@@ -2344,16 +2344,6 @@ void Z_init_sound() {
 	master_volume(digi_volume, midi_volume);
 }
 
-// returns number of voices currently allocated
-int sfx_count() {
-	int c = 0;
-	for (int i = 0; i < WAV_COUNT; i++)
-		if (sfx_voice[i] != -1) {
-			++c;
-		}
-	return c;
-}
-
 // clean up finished samples
 void sfx_cleanup() {
 	for (int i = 0; i < WAV_COUNT; i++)

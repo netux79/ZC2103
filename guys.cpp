@@ -9701,7 +9701,7 @@ placed_enemy:
 void moneysign() {
 	additem(48, 108, iRupy, ipDUMMY);
 	anyprice = true;
-	textout_ex(pricesdisplaybuf, zfont, "X", 64, 112, CSET(0) + 1, -1);
+	textout_ex(pricesdisplaybuf, zfont, "X", 64, 112, CSET(0) + 1, 0);
 }
 
 void putprices(bool sign) {
@@ -9721,7 +9721,7 @@ void putprices(bool sign) {
 
 			int l = strlen(buf);
 			anyprice = true;
-			textout_ex(pricesdisplaybuf, zfont, buf, x - (l > 3 ? (l - 3) << 3 : 0), 112, CSET(0) + 1, -1);
+			textout_ex(pricesdisplaybuf, zfont, buf, x - (l > 3 ? (l - 3) << 3 : 0), 112, CSET(0) + 1, 0);
 		}
 		x += step;
 	}
@@ -9898,7 +9898,7 @@ void putmsg() {
 
 	// set the msg flag to indicate we have messages to show
 	anymsg = true;
-	textprintf_ex(msgdisplaybuf, zfont, ((msgpos % 24) << 3) + 32, ((msgpos / 24) << 3) + 40, CSET(0) + 1, -1,
+	textprintf_ex(msgdisplaybuf, zfont, ((msgpos % 24) << 3) + 32, ((msgpos / 24) << 3) + 40, CSET(0) + 1, 0,
 	              "%c", MsgStrings[msgstr].s[msgpos]);
 
 	++msgpos;

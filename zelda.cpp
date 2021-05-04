@@ -806,7 +806,7 @@ void putintro() {
 
 	// set the msg flag to we know we have a msg to show
 	anymsg = true;
-	textprintf_ex(msgdisplaybuf, zfont, ((intropos % 24) << 3) + 32, ((intropos / 24) << 3) + 40, CSET(0) + 1, -1,
+	textprintf_ex(msgdisplaybuf, zfont, ((intropos % 24) << 3) + 32, ((intropos / 24) << 3) + 40, CSET(0) + 1, 0,
 	              "%c", DMaps[currdmap].intro[intropos]);
 
 	++intropos;
