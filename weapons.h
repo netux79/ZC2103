@@ -19,30 +19,32 @@
 extern byte boomframe[16];
 extern byte bszboomflip[4];
 
-class weapon : public sprite {
-	void seekLink();
-	void seekEnemy(int j);
+class weapon : public sprite
+{
+   void seekLink();
+   void seekEnemy(int j);
 
 public:
-	int power, type, dead, clk2, misc2, ignorecombo;
-	int dragging;
-	fix step;
-	bool bounce, ignoreLink;
-	word flash, wid, aframe, csclk;
+   int power, type, dead, clk2, misc2, ignorecombo;
+   int dragging;
+   fix step;
+   bool bounce, ignoreLink;
+   word flash, wid, aframe, csclk;
 
-	weapon(fix X, fix Y, int Id, int Type, int pow, int Dir);
-	void LOADGFX(int wpn);
-	bool Dead();
-	bool clip();
-	virtual bool animate(int index);
-	virtual void onhit(bool clipped);
-	virtual void onhit(bool clipped, int special, int linkdir);
-	// override hit detection to check for invicibility, etc
-	virtual bool hit(sprite *s);
-	virtual bool hit(int tx, int ty, int txsz, int tysz);
-	virtual void draw(BITMAP *dest);
+   weapon(fix X, fix Y, int Id, int Type, int pow, int Dir);
+   void LOADGFX(int wpn);
+   bool Dead();
+   bool clip();
+   virtual bool animate(int index);
+   virtual void onhit(bool clipped);
+   virtual void onhit(bool clipped, int special, int linkdir);
+   // override hit detection to check for invicibility, etc
+   virtual bool hit(sprite *s);
+   virtual bool hit(int tx, int ty, int txsz, int tysz);
+   virtual void draw(BITMAP *dest);
 };
 
-void putweapon(BITMAP *dest, int x, int y, int weapon_id, int type, int dir, int &aclk, int &aframe);
+void putweapon(BITMAP *dest, int x, int y, int weapon_id, int type, int dir,
+               int &aclk, int &aframe);
 #endif
 /*** end of weapons.h ***/

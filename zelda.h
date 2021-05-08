@@ -53,15 +53,17 @@ enum {qQUIT = 1, qRESET, qEXIT, qGAMEOVER, qCONT, qWON, qRESUME};
 enum  {mgc_none, mgc_dinsfire, mgc_nayruslove, mgc_faroreswind};
 
 // "special" walk flags
-enum {
-	spw_none, spw_door, spw_clipright, spw_floater, spw_trap, spw_halfstep,
-	spw_water, spw_wizzrobe, spw_clipbottomright
+enum
+{
+   spw_none, spw_door, spw_clipright, spw_floater, spw_trap, spw_halfstep,
+   spw_water, spw_wizzrobe, spw_clipbottomright
 };
 
 // death & fade defs
-enum {
-	fade_none, fade_flicker, fade_invisible, fade_flash_die,
-	fade_blue_poof
+enum
+{
+   fade_none, fade_flicker, fade_invisible, fade_flash_die,
+   fade_blue_poof
 };
 
 /*********************************/
@@ -109,14 +111,16 @@ extern int colordepth;
 extern int db;
 extern zinitdata  zinit;
 extern int lens_hint_item[MAXITEMS][2];                     //aclk, aframe
-extern int lens_hint_weapon[MAXWPNS][5];                    //aclk, aframe, dir, x, y
+extern int
+lens_hint_weapon[MAXWPNS][5];                    //aclk, aframe, dir, x, y
 extern int strike_hint_counter;
 extern int strike_hint_timer;
 extern int strike_hint;
 
 extern RGB_MAP rgb_table;
 extern COLOR_MAP trans_table;
-extern BITMAP     *framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf, *pricesdisplaybuf, *tb_page[3];
+extern BITMAP     *framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf,
+       *pricesdisplaybuf, *tb_page[3];
 extern DATAFILE *data, *sfxdata, *fontsdata, *mididata;
 extern SAMPLE   wav_refill;
 extern FONT     *zfont;
@@ -129,11 +133,15 @@ extern guydata  *guysbuf;
 extern ZCHEATS  zcheats;
 extern byte     use_tiles;
 
-extern word animated_combo_table[MAXCOMBOS][2];             //[0]=position in act2, [1]=original tile
-extern word animated_combo_table4[MAXCOMBOS][2];            //[0]=combo, [1]=clock
+extern word
+animated_combo_table[MAXCOMBOS][2];             //[0]=position in act2, [1]=original tile
+extern word
+animated_combo_table4[MAXCOMBOS][2];            //[0]=combo, [1]=clock
 extern word animated_combos;
-extern bool blank_tile_table[NEWMAXTILES];                  //keeps track of blank tiles
-extern bool blank_tile_quarters_table[NEWMAXTILES * 4];     //keeps track of blank tiles
+extern bool
+blank_tile_table[NEWMAXTILES];                  //keeps track of blank tiles
+extern bool blank_tile_quarters_table[NEWMAXTILES *
+                                                  4];     //keeps track of blank tiles
 extern bool ewind_restart;
 extern word     msgclk, msgstr, msgpos, msg_count;
 extern word     door_combo_set_count;
@@ -146,14 +154,17 @@ extern bool anymsg, anyprice;
 extern int homescr, currscr, frame, currmap, dlevel, warpscr, worldscr;
 extern int newscr_clk, opendoors, currdmap, fadeclk, currgame, listpos;
 extern int lastentrance, lastentrance_dmap, prices[3][2], loadside, Bwpn, Awpn;
-extern int digi_volume, midi_volume, currmidi, wand_x, wand_y, hasitem, whistleclk, pan_style;
-extern int Akey, Bkey, Ekey, Skey, Lkey, Rkey, Mkey, Abtn, Bbtn, Ebtn, Sbtn, Lbtn, Rbtn, Mbtn;
+extern int digi_volume, midi_volume, currmidi, wand_x, wand_y, hasitem,
+       whistleclk, pan_style;
+extern int Akey, Bkey, Ekey, Skey, Lkey, Rkey, Mkey, Abtn, Bbtn, Ebtn, Sbtn,
+       Lbtn, Rbtn, Mbtn;
 extern int DUkey, DDkey, DLkey, DRkey, JoyN, Status;
 extern int arrow_x, arrow_y, brang_x, brang_y, chainlink_x, chainlink_y;
 extern int hs_startx, hs_starty, hs_xdist, hs_ydist, clockclk, clock_zoras;
 extern int swordhearts[4], currcset, gfc, gfc2, pitx, pity, refill_what;
 extern int heart_beep_timer, new_enemy_tile_start, nets, magictype;
-extern int magiccastclk, castx, casty, df_x, df_y, nl1_x, nl1_y, nl2_x, nl2_y, magicdrainclk, conveyclk, memrequested;
+extern int magiccastclk, castx, casty, df_x, df_y, nl1_x, nl1_y, nl2_x, nl2_y,
+       magicdrainclk, conveyclk, memrequested;
 extern dword fps_secs;
 extern float avgfps;
 
@@ -162,12 +173,14 @@ extern bool blockmoving;
 extern bool Capfps, ShowFPS, Playing, TransLayers, HeartBeep;
 extern bool refreshpal, blockpath, wand_dead, loaded_guys, freeze_guys;
 extern bool loaded_enemies, drawguys, watch;
-extern bool Udown, Ddown, Ldown, Rdown, Adown, Bdown, Edown, Sdown, Mdown, LBdown, RBdown, Mdown;
+extern bool Udown, Ddown, Ldown, Rdown, Adown, Bdown, Edown, Sdown, Mdown,
+       LBdown, RBdown, Mdown;
 extern bool fixed_door, darkroom, BSZ, COOLSCROLL;          //,NEWSUBSCR;
 extern bool hookshot_used, hookshot_frozen, pull_link, add_chainlink;
 extern bool del_chainlink, hs_fix, checklink;
 extern bool ewind_restart, didpit, castnext;
-extern bool add_df1asparkle, add_df1bsparkle, add_nl1asparkle, add_nl1bsparkle, add_nl2asparkle, add_nl2bsparkle;
+extern bool add_df1asparkle, add_df1bsparkle, add_nl1asparkle, add_nl1bsparkle,
+       add_nl2asparkle, add_nl2bsparkle;
 extern bool is_on_conveyor, activated_timed_warp;
 
 extern int add_asparkle, add_bsparkle;
@@ -184,9 +197,11 @@ extern char   sig_str[44];
 
 extern int  VidMode, resx, resy, scrx, scry;
 extern bool sbig;                                           // big screen
-extern bool scanlines;                                      //do scanlines if sbig==1
+extern bool
+scanlines;                                      //do scanlines if sbig==1
 
-extern int cheat;                                           // 0 = none; 1,2,3,4 = cheat level
+extern int
+cheat;                                           // 0 = none; 1,2,3,4 = cheat level
 
 extern int idle_count;
 extern char qstpath[1024];

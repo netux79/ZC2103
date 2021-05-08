@@ -96,7 +96,8 @@ int  TriforceCount();
 bool item_disabled(int item_type, int item);
 bool can_use_item(int item_type, int item);
 bool has_item(int item_type, int item);
-int high_item(int jmax, int item_type, bool consecutive, int itemcluster, bool usecluster);
+int high_item(int jmax, int item_type, bool consecutive, int itemcluster,
+              bool usecluster);
 int current_item(int item_type, bool consecutive);
 int high_flag(int i, int item_type, bool consecutive);
 int item_tile_mod();
@@ -113,11 +114,13 @@ void sfx_cleanup();
 bool sfx_init(int index);
 void sfx(int index, int pan, bool loop);
 
-inline void sfx(int index)         {
-	sfx(index, 128, false);
+inline void sfx(int index)
+{
+   sfx(index, 128, false);
 }
-inline void sfx(int index, int pan) {
-	sfx(index, pan, false);
+inline void sfx(int index, int pan)
+{
+   sfx(index, pan, false);
 }
 
 void cont_sfx(int index);
@@ -142,8 +145,10 @@ bool isinRect(int x, int y, int rx1, int ry1, int rx2, int ry2);
 extern char datapwd[8];
 void resolve_password(char *pwd);
 
-int encode_file_007(const char *srcfile, const char *destfile, unsigned int key, const char *header, int method);
-int decode_file_007(const char *srcfile, const char *destfile, const char *header, int method, bool packed);
+int encode_file_007(const char *srcfile, const char *destfile, unsigned int key,
+                    const char *header, int method);
+int decode_file_007(const char *srcfile, const char *destfile,
+                    const char *header, int method, bool packed);
 
 int  get_bit(byte *bitstr, int bit);
 void set_bit(byte *bitstr, int bit, byte val);

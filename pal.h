@@ -58,8 +58,9 @@ void reset_pal_cycling();
 void cycle_palette();
 int reverse_NESpal(RGB c);
 
-inline RGB NESpal(int i) {
-	return 	_RGB(nes_pal + i * 3);
+inline RGB NESpal(int i)
+{
+   return   _RGB(nes_pal + i * 3);
 }
 
 #endif                                                      // _ZC_PAL_H_

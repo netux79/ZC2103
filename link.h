@@ -28,139 +28,143 @@ extern const byte lsteps[8];
 
 enum {did_fairy = 1, did_candle = 2, did_whistle = 4};
 
-enum actiontype {
-	none, walking, attacking, freeze, holding1, holding2,
-	rafting, gothit, inwind, scrolling, won, swimming, hopping,
-	swimhit, swimhold1, swimhold2, casting, climbcovertop,
-	climbcoverbottom, dying
+enum actiontype
+{
+   none, walking, attacking, freeze, holding1, holding2,
+   rafting, gothit, inwind, scrolling, won, swimming, hopping,
+   swimhit, swimhold1, swimhold2, casting, climbcovertop,
+   climbcoverbottom, dying
 };
 
-enum {
-	ls_walk, ls_jump, ls_slash, ls_stab, ls_pound, ls_swim, ls_dive,
-	ls_hold1, ls_hold2, ls_swimhold1, ls_swimhold2, ls_cast
+enum
+{
+   ls_walk, ls_jump, ls_slash, ls_stab, ls_pound, ls_swim, ls_dive,
+   ls_hold1, ls_hold2, ls_swimhold1, ls_swimhold2, ls_cast
 };
 
-typedef struct tilesequence {
-	word tile;
-	byte frames;                                              // animation frame count
-	byte speed;                                               // animation speed
-	byte exp;                                                 // not used
+typedef struct tilesequence
+{
+   word tile;
+   byte frames;                                              // animation frame count
+   byte speed;                                               // animation speed
+   byte exp;                                                 // not used
 } tilesequence;
 
-class LinkClass : public sprite {
-	int drunkclk, NayrusLoveShieldClk;
-	bool autostep, superman, refilling, inlikelike, inwallm;
-	int attackclk, ladderx, laddery, pushing, fairyclk, refillclk, hclk;
-	int warpx, warpy, holdclk, holditem, attack, swordclk, didstuff, blowcnt;
-	byte skipstep, lstep, hopclk, diveclk, whirlwind;
-	byte hitdir, ladderdir, lastdir[4];
-	actiontype action;
-	int hshandle_id, hshead_id, itemclk;
-	byte conveyor_flags;
-	fix climb_cover_x, climb_cover_y;
-	bool dontdraw;
-	void movelink();
-	void move(int d);
-	void hitlink(int hit);
-	int  nextcombo(int cx, int cy, int cdir);
-	int  nextflag(int cx, int cy, int cdir);
-	bool nextcombo_wf();
-	int  lookahead(int destscr = -1);
-	int  lookaheadflag(int destscr = -1);
-	void checkhit();
-	void checkscroll();
-	void checkspecial();
-	void checkpushblock();
-	void checkbosslockblock();
-	void checklockblock();
-	void checktouchblk();
-	void checklocked();
-	void checkitems();
-	bool startwpn(int wpn);
-	bool doattack();
-	bool can_attack();
-	void do_rafting();
-	void do_hopping();
-	bool walkflag(int wx, int wy, int cnt, byte d);
-	bool checkmaze(mapscr *scr);
-	void scrollscr(int dir, int destscr = -1, int destdmap = -1);
-	void scrollscr2(int dir, int destscr = -1, int destdmap = -1);
-	void walkdown();
-	void walkup();
-	void walkdown2();
-	void walkup2();
-	bool dowarp(int type);
-	void exitcave();
-	void stepout();
-	void masked_draw(BITMAP *dest);
-	void getTriforce(int id);
-	void checkstab();
-	void fairycircle();
-	void StartRefill(int refill_why);
-	int  EwpnHit();
-	int  LwpnHit();
-	void gameover();
-	void ganon_intro();
-	void saved_Zelda();
-	void check_slash_block(int bx, int by);
-	void check_wand_block(int bx, int by);
-	void check_pound_block(int bx, int by);
-	void check_conveyor();
-	bool check_cheat_warp();
+class LinkClass : public sprite
+{
+   int drunkclk, NayrusLoveShieldClk;
+   bool autostep, superman, refilling, inlikelike, inwallm;
+   int attackclk, ladderx, laddery, pushing, fairyclk, refillclk, hclk;
+   int warpx, warpy, holdclk, holditem, attack, swordclk, didstuff, blowcnt;
+   byte skipstep, lstep, hopclk, diveclk, whirlwind;
+   byte hitdir, ladderdir, lastdir[4];
+   actiontype action;
+   int hshandle_id, hshead_id, itemclk;
+   byte conveyor_flags;
+   fix climb_cover_x, climb_cover_y;
+   bool dontdraw;
+   void movelink();
+   void move(int d);
+   void hitlink(int hit);
+   int  nextcombo(int cx, int cy, int cdir);
+   int  nextflag(int cx, int cy, int cdir);
+   bool nextcombo_wf();
+   int  lookahead(int destscr = -1);
+   int  lookaheadflag(int destscr = -1);
+   void checkhit();
+   void checkscroll();
+   void checkspecial();
+   void checkpushblock();
+   void checkbosslockblock();
+   void checklockblock();
+   void checktouchblk();
+   void checklocked();
+   void checkitems();
+   bool startwpn(int wpn);
+   bool doattack();
+   bool can_attack();
+   void do_rafting();
+   void do_hopping();
+   bool walkflag(int wx, int wy, int cnt, byte d);
+   bool checkmaze(mapscr *scr);
+   void scrollscr(int dir, int destscr = -1, int destdmap = -1);
+   void scrollscr2(int dir, int destscr = -1, int destdmap = -1);
+   void walkdown();
+   void walkup();
+   void walkdown2();
+   void walkup2();
+   bool dowarp(int type);
+   void exitcave();
+   void stepout();
+   void masked_draw(BITMAP *dest);
+   void getTriforce(int id);
+   void checkstab();
+   void fairycircle();
+   void StartRefill(int refill_why);
+   int  EwpnHit();
+   int  LwpnHit();
+   void gameover();
+   void ganon_intro();
+   void saved_Zelda();
+   void check_slash_block(int bx, int by);
+   void check_wand_block(int bx, int by);
+   void check_pound_block(int bx, int by);
+   void check_conveyor();
+   bool check_cheat_warp();
 
 public:
 
-	int DrunkClock();
-	LinkClass();
-	void init();
-	virtual void draw(BITMAP *dest);
-	virtual bool animate(int index);
+   int DrunkClock();
+   LinkClass();
+   void init();
+   virtual void draw(BITMAP *dest);
+   virtual bool animate(int index);
 
-	void linkstep();
-	void stepforward(int steps);
-	void draw_under(BITMAP *dest);
+   void linkstep();
+   void stepforward(int steps);
+   void draw_under(BITMAP *dest);
 
-	// called by ALLOFF()
-	void resetflags(bool all);
-	void Freeze();
-	void unfreeze();
-	void beatlikelike();
-	fix  getX();
-	fix  getY();
-	fix  getXOfs();
-	fix  getYOfs();
-	void setXOfs(int newxofs);
-	void setYOfs(int newyofs);
-	int  getHXOfs();
-	int  getHYOfs();
-	int  getHXSz();
-	int  getHYSz();
-	fix  getClimbCoverX();
-	fix  getClimbCoverY();
-	void setX(int new_x);
-	void setY(int new_y);
-	void setClimbCoverX(int new_x);
-	void setClimbCoverY(int new_y);
-	int  getLStep();
-	fix  getModifiedX();
-	fix  getModifiedY();
-	int  getDir();
-	int  getClk();
-	int  getPushing();
-	void reset_hookshot();
-	void reset_ladder();
-	bool refill();
-	void Catch();
-	bool getClock();
-	void setClock(bool state);
-	int  getAction();
-	bool isDiving();
-	bool isSwimming();
-	void setDontDraw(bool new_dontdraw);
-	void setHClk(int newhclk);
-	int  getHClk();
-	void setNayrusLoveShieldClk(int newclk);
-	int  getNayrusLoveShieldClk();
+   // called by ALLOFF()
+   void resetflags(bool all);
+   void Freeze();
+   void unfreeze();
+   void beatlikelike();
+   fix  getX();
+   fix  getY();
+   fix  getXOfs();
+   fix  getYOfs();
+   void setXOfs(int newxofs);
+   void setYOfs(int newyofs);
+   int  getHXOfs();
+   int  getHYOfs();
+   int  getHXSz();
+   int  getHYSz();
+   fix  getClimbCoverX();
+   fix  getClimbCoverY();
+   void setX(int new_x);
+   void setY(int new_y);
+   void setClimbCoverX(int new_x);
+   void setClimbCoverY(int new_y);
+   int  getLStep();
+   fix  getModifiedX();
+   fix  getModifiedY();
+   int  getDir();
+   int  getClk();
+   int  getPushing();
+   void reset_hookshot();
+   void reset_ladder();
+   bool refill();
+   void Catch();
+   bool getClock();
+   void setClock(bool state);
+   int  getAction();
+   bool isDiving();
+   bool isSwimming();
+   void setDontDraw(bool new_dontdraw);
+   void setHClk(int newhclk);
+   int  getHClk();
+   void setNayrusLoveShieldClk(int newclk);
+   int  getNayrusLoveShieldClk();
 };
 
 void linktile(int *tile, int *flip, int state, int dir, int style);

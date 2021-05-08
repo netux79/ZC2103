@@ -194,11 +194,16 @@ enum {ENC_METHOD_192B104 = 0, ENC_METHOD_192B105, ENC_METHOD_192B185, ENC_METHOD
 #define CV_CHEATS       1
 #define CV_SAVEGAME     1
 
-typedef unsigned char         byte;                              //0-                       255  ( 8 bits)
-typedef unsigned short        word;                              //0-                    65,535  (16 bits)
-typedef unsigned int         dword;                              //0-             4,294,967,295  (32 bits)
-typedef int                 long32;                              //0-             4,294,967,295  (32 bits)
-typedef unsigned long long   qword;                              //0-18,446,744,073,709,551,616  (64 bits)
+typedef unsigned char
+byte;                              //0-                       255  ( 8 bits)
+typedef unsigned short
+word;                              //0-                    65,535  (16 bits)
+typedef unsigned int
+dword;                              //0-             4,294,967,295  (32 bits)
+typedef int
+long32;                              //0-             4,294,967,295  (32 bits)
+typedef unsigned long long
+qword;                              //0-18,446,744,073,709,551,616  (64 bits)
 
 extern int readsize, writesize;
 
@@ -343,18 +348,21 @@ extern int readsize, writesize;
 #define ipNODRAW        1024                                // Don't draw this (for underwater items)
 #define ipTMPFLASH      2048                                // not used (delete this?)
 
-enum {
-	wtCAVE, wtPASS, wtEXIT, wtSCROLL, wtIWARP, wtIWARPBLK, wtIWARPOPEN,
-	wtIWARPZAP, wtIWARPWAVE, wtNOWARP, wtWHISTLE, wtMAX
+enum
+{
+   wtCAVE, wtPASS, wtEXIT, wtSCROLL, wtIWARP, wtIWARPBLK, wtIWARPOPEN,
+   wtIWARPZAP, wtIWARPWAVE, wtNOWARP, wtWHISTLE, wtMAX
 };
 
-enum {
-	weINSTANT, weCIRCLE, weOVAL, weTRIANGLE, weSMAS, weBLINDS_SMOOTH, weBLINDS_STEPPED, weMOSAIC, weWAVE_WHITE, weWAVE_BLACK, weFADE_WHITE, weFADE_BLACK, weDEFAULT_OC, weDEST_DEFAULT, weMAX
+enum
+{
+   weINSTANT, weCIRCLE, weOVAL, weTRIANGLE, weSMAS, weBLINDS_SMOOTH, weBLINDS_STEPPED, weMOSAIC, weWAVE_WHITE, weWAVE_BLACK, weFADE_WHITE, weFADE_BLACK, weDEFAULT_OC, weDEST_DEFAULT, weMAX
 };
 // sprite palettes
-enum {
-	spAQUA, spGLEEOK, spDIG, spGANON, spBROWN, spPILE, spBLUE, spRED,
-	spGOLD, spICON1, spICON2, spICON3, spICON4, spGLEEOKF, spFROZEN
+enum
+{
+   spAQUA, spGLEEOK, spDIG, spGANON, spBROWN, spPILE, spBLUE, spRED,
+   spGOLD, spICON1, spICON2, spICON3, spICON4, spGLEEOKF, spFROZEN
 };
 
 // dmap types
@@ -368,87 +376,91 @@ enum { sstOLD, sstNEWSUBSCR, sstREV2, sstMAX };
 #define dmfTYPE          127
 
 // map flags
-enum {
-	mfNONE, mfPUSHUD, mfPUSH4, mfWHISTLE, mfBCANDLE, mfARROW, mfBOMB, mfFAIRY,
-	mfRAFT, mfARMOS_SECRET, mfARMOS_ITEM, mfSBOMB, mfRAFT_BRANCH, mfDIVE_ITEM,
-	mfNONAME, mfZELDA,
-	mfSECRETS01, mfSECRETS02, mfSECRETS03, mfSECRETS04,       /*16*/
-	mfSECRETS05, mfSECRETS06, mfSECRETS07, mfSECRETS08,
-	mfSECRETS09, mfSECRETS10, mfSECRETS11, mfSECRETS12,
-	mfSECRETS13, mfSECRETS14, mfSECRETS15, mfSECRETS16,
-	mfTRAP_H, mfTRAP_V, mfTRAP_4, mfTRAP_LR, mfTRAP_UD,       /*32*/
-	mfENEMY0, mfENEMY1, mfENEMY2, mfENEMY3, mfENEMY4,         /*37*/
-	mfENEMY5, mfENEMY6, mfENEMY7, mfENEMY8, mfENEMY9,
-	mfPUSHLR, mfPUSHU, mfPUSHD, mfPUSHL, mfPUSHR,
-	mfPUSHUDNS, mfPUSHLRNS, mfPUSH4NS, mfPUSHUNS,
-	mfPUSHDNS, mfPUSHLNS, mfPUSHRNS, mfPUSHUDINS,
-	mfPUSHLRINS, mfPUSH4INS, mfPUSHUINS,
-	mfPUSHDINS, mfPUSHLINS, mfPUSHRINS,
-	mfBLOCKTRIGGER, mfNOBLOCKS, mfBRANG, mfMBRANG,
-	mfFBRANG, mfSARROW, mfGARROW, mfRCANDLE, mfWANDFIRE, mfDINSFIRE,
-	mfWANDMAGIC, mfREFMAGIC, mfREFFIREBALL, mfSWORD, mfWSWORD,
-	mfMSWORD, mfXSWORD, mfSWORDBEAM, mfWSWORDBEAM, mfMSWORDBEAM,
-	mfXSWORDBEAM, mfHOOKSHOT, mfWAND, mfHAMMER, mfSTRIKE, mfMAX, mfPUSHED
+enum
+{
+   mfNONE, mfPUSHUD, mfPUSH4, mfWHISTLE, mfBCANDLE, mfARROW, mfBOMB, mfFAIRY,
+   mfRAFT, mfARMOS_SECRET, mfARMOS_ITEM, mfSBOMB, mfRAFT_BRANCH, mfDIVE_ITEM,
+   mfNONAME, mfZELDA,
+   mfSECRETS01, mfSECRETS02, mfSECRETS03, mfSECRETS04,       /*16*/
+   mfSECRETS05, mfSECRETS06, mfSECRETS07, mfSECRETS08,
+   mfSECRETS09, mfSECRETS10, mfSECRETS11, mfSECRETS12,
+   mfSECRETS13, mfSECRETS14, mfSECRETS15, mfSECRETS16,
+   mfTRAP_H, mfTRAP_V, mfTRAP_4, mfTRAP_LR, mfTRAP_UD,       /*32*/
+   mfENEMY0, mfENEMY1, mfENEMY2, mfENEMY3, mfENEMY4,         /*37*/
+   mfENEMY5, mfENEMY6, mfENEMY7, mfENEMY8, mfENEMY9,
+   mfPUSHLR, mfPUSHU, mfPUSHD, mfPUSHL, mfPUSHR,
+   mfPUSHUDNS, mfPUSHLRNS, mfPUSH4NS, mfPUSHUNS,
+   mfPUSHDNS, mfPUSHLNS, mfPUSHRNS, mfPUSHUDINS,
+   mfPUSHLRINS, mfPUSH4INS, mfPUSHUINS,
+   mfPUSHDINS, mfPUSHLINS, mfPUSHRINS,
+   mfBLOCKTRIGGER, mfNOBLOCKS, mfBRANG, mfMBRANG,
+   mfFBRANG, mfSARROW, mfGARROW, mfRCANDLE, mfWANDFIRE, mfDINSFIRE,
+   mfWANDMAGIC, mfREFMAGIC, mfREFFIREBALL, mfSWORD, mfWSWORD,
+   mfMSWORD, mfXSWORD, mfSWORDBEAM, mfWSWORDBEAM, mfMSWORDBEAM,
+   mfXSWORDBEAM, mfHOOKSHOT, mfWAND, mfHAMMER, mfSTRIKE, mfMAX, mfPUSHED
 };
 
 // combo types
-enum {
-	cNONE, cSTAIR, cCAVE, cWATER, cARMOS, cGRAVE, cDOCK,
-	cUNDEF, cPUSH_WAIT, cPUSH_HEAVY, cPUSH_HW, cL_STATUE, cR_STATUE,
-	cWALKSLOW, cCVUP, cCVDOWN, cCVLEFT, cCVRIGHT, cSWIMWARP, cDIVEWARP,
-	cLADDERHOOKSHOT, cTRIGNOFLAG, cTRIGFLAG, cZELDA, cSLASH, cSLASHITEM,
-	cPUSH_HEAVY2, cPUSH_HW2, cPOUND, cHSGRAB, cHSBRIDGE, cDAMAGE1,
-	cDAMAGE2, cDAMAGE3, cDAMAGE4, cC_STATUE, cTRAP_H, cTRAP_V, cTRAP_4,
-	cTRAP_LR, cTRAP_UD, cPIT, cHOOKSHOTONLY, cOVERHEAD, cNOFLYZONE, cMIRROR,
-	cMIRRORSLASH, cMIRRORBACKSLASH, cMAGICPRISM, cMAGICPRISM4,
-	cMAGICSPONGE, cCAVE2, cEYEBALL_A, cEYEBALL_B, cNOJUMPZONE, cBUSH,
-	cFLOWERS, cTALLGRASS, cSHALLOWWATER, cLOCKBLOCK, cLOCKBLOCK2,
-	cBOSSLOCKBLOCK, cBOSSLOCKBLOCK2, cLADDERONLY, cBSGRAVE, cMAX
+enum
+{
+   cNONE, cSTAIR, cCAVE, cWATER, cARMOS, cGRAVE, cDOCK,
+   cUNDEF, cPUSH_WAIT, cPUSH_HEAVY, cPUSH_HW, cL_STATUE, cR_STATUE,
+   cWALKSLOW, cCVUP, cCVDOWN, cCVLEFT, cCVRIGHT, cSWIMWARP, cDIVEWARP,
+   cLADDERHOOKSHOT, cTRIGNOFLAG, cTRIGFLAG, cZELDA, cSLASH, cSLASHITEM,
+   cPUSH_HEAVY2, cPUSH_HW2, cPOUND, cHSGRAB, cHSBRIDGE, cDAMAGE1,
+   cDAMAGE2, cDAMAGE3, cDAMAGE4, cC_STATUE, cTRAP_H, cTRAP_V, cTRAP_4,
+   cTRAP_LR, cTRAP_UD, cPIT, cHOOKSHOTONLY, cOVERHEAD, cNOFLYZONE, cMIRROR,
+   cMIRRORSLASH, cMIRRORBACKSLASH, cMAGICPRISM, cMAGICPRISM4,
+   cMAGICSPONGE, cCAVE2, cEYEBALL_A, cEYEBALL_B, cNOJUMPZONE, cBUSH,
+   cFLOWERS, cTALLGRASS, cSHALLOWWATER, cLOCKBLOCK, cLOCKBLOCK2,
+   cBOSSLOCKBLOCK, cBOSSLOCKBLOCK2, cLADDERONLY, cBSGRAVE, cMAX
 };
 
 #define QUESTRULES_SIZE 20
 
 // "quest rules" flags (bit numbers in bit string)
-enum {
-	qr_SOLIDBLK, qr_NOTMPNORET, qr_ALWAYSRET, qr_MEANTRAPS,
-	qr_BSZELDA, qr_FADE, qr_FADECS5, qr_FASTDNGN,
+enum
+{
+   qr_SOLIDBLK, qr_NOTMPNORET, qr_ALWAYSRET, qr_MEANTRAPS,
+   qr_BSZELDA, qr_FADE, qr_FADECS5, qr_FASTDNGN,
 
-	qr_NOLEVEL3FIX, qr_COOLSCROLL, qr_999R, qr_4TRI,
-	qr_24HC, qr_FASTFILL, qr_VIEWMAP, qr_3TRI,
+   qr_NOLEVEL3FIX, qr_COOLSCROLL, qr_999R, qr_4TRI,
+   qr_24HC, qr_FASTFILL, qr_VIEWMAP, qr_3TRI,
 
-	qr_TIME, qr_FREEFORM, qr_KILLALL, qr_NOFLICKER,
-	qr_CONTFULL, qr_RLFIX, qr_LENSHINTS, qr_LINKDUNGEONPOSFIX,
+   qr_TIME, qr_FREEFORM, qr_KILLALL, qr_NOFLICKER,
+   qr_CONTFULL, qr_RLFIX, qr_LENSHINTS, qr_LINKDUNGEONPOSFIX,
 
-	qr_HOLDITEMANIMATION, qr_HESITANTPUSHBLOCKS, qr_HIDECARRIEDITEMS, qr_SASPARKLES,
-	qr_GASPARKLES, qr_MBSPARKLES, qr_FBSPARKLES, qr_NOFLASHDEATH,
+   qr_HOLDITEMANIMATION, qr_HESITANTPUSHBLOCKS, qr_HIDECARRIEDITEMS, qr_SASPARKLES,
+   qr_GASPARKLES, qr_MBSPARKLES, qr_FBSPARKLES, qr_NOFLASHDEATH,
 
-	qr_KEEPOLDITEMS, qr_FIREPROOFLINK, qr_OUCHBOMBS, qr_NOCLOCKS,
-	qr_TEMPCLOCKS, qr_BRKBLSHLDS, qr_BRKNSHLDTILES, qr_MEANPLACEDTRAPS,
+   qr_KEEPOLDITEMS, qr_FIREPROOFLINK, qr_OUCHBOMBS, qr_NOCLOCKS,
+   qr_TEMPCLOCKS, qr_BRKBLSHLDS, qr_BRKNSHLDTILES, qr_MEANPLACEDTRAPS,
 
-	qr_PHANTOMPLACEDTRAPS, qr_ALLOWFASTMSG, qr_LINKEDCOMBOS, qr_NOGUYFIRES,
-	qr_HEARTRINGFIX, qr_NOHEARTRING, qr_DODONGOCOLORFIX, qr_SWORDWANDFLIPFIX,
+   qr_PHANTOMPLACEDTRAPS, qr_ALLOWFASTMSG, qr_LINKEDCOMBOS, qr_NOGUYFIRES,
+   qr_HEARTRINGFIX, qr_NOHEARTRING, qr_DODONGOCOLORFIX, qr_SWORDWANDFLIPFIX,
 
-	qr_ENABLEMAGIC, qr_MAGICWAND, qr_MAGICCANDLE, qr_MAGICBOOTS,
-	qr_NONBUBBLEMEDICINE, qr_NONBUBBLEFAIRIES, qr_NONBUBBLETRIFORCE, qr_NEWENEMYTILES,
+   qr_ENABLEMAGIC, qr_MAGICWAND, qr_MAGICCANDLE, qr_MAGICBOOTS,
+   qr_NONBUBBLEMEDICINE, qr_NONBUBBLEFAIRIES, qr_NONBUBBLETRIFORCE, qr_NEWENEMYTILES,
 
-	qr_NOROPE2FLASH, qr_NOBUBBLEFLASH, qr_GHINI2BLINK, qr_WPNANIMFIX,
-	qr_PHANTOMGHINI2, qr_Z3BRANG_HSHOT, qr_NOITEMMELEE, qr_SHADOWS,
+   qr_NOROPE2FLASH, qr_NOBUBBLEFLASH, qr_GHINI2BLINK, qr_WPNANIMFIX,
+   qr_PHANTOMGHINI2, qr_Z3BRANG_HSHOT, qr_NOITEMMELEE, qr_SHADOWS,
 
-	qr_TRANSSHADOWS, qr_QUICKSWORD, qr_BOMBHOLDFIX, qr_FULLLTM,
-	qr_NOPOTIONCOMBINE, qr_LINKFLICKER, qr_SHADOWSFLICKER, qr_WALLFLIERS,
+   qr_TRANSSHADOWS, qr_QUICKSWORD, qr_BOMBHOLDFIX, qr_FULLLTM,
+   qr_NOPOTIONCOMBINE, qr_LINKFLICKER, qr_SHADOWSFLICKER, qr_WALLFLIERS,
 
-	qr_NOBOMBPALFLASH, qr_TRANSLUCENTNAYRUSLOVESHIELD, qr_FLICKERINGNAYRUSLOVESHIELD, qr_TRANSLUCENTNAYRUSLOVEROCKET,
-	qr_FLICKERINGNAYRUSLOVEROCKET, qr_NOSCROLLCONTINUE, qr_OLDTRIBBLES,
+   qr_NOBOMBPALFLASH, qr_TRANSLUCENTNAYRUSLOVESHIELD, qr_FLICKERINGNAYRUSLOVESHIELD, qr_TRANSLUCENTNAYRUSLOVEROCKET,
+   qr_FLICKERINGNAYRUSLOVEROCKET, qr_NOSCROLLCONTINUE, qr_OLDTRIBBLES,
 
-	qr_MAX
+   qr_MAX
 };
 
 // room types
-enum {
-	rNONE, rSP_ITEM, rINFO, rMONEY, rGAMBLE, rREPAIR, rRP_HC, rGRUMBLE,
-	rTRIFORCE, rP_SHOP, rSHOP, rBOMBS, rSWINDLE, r10RUPIES, rWARP,
-	rGANON, rZELDA, rITEMPOND, rMUPGRADE, rLEARNSLASH,
-	rMAX
+enum
+{
+   rNONE, rSP_ITEM, rINFO, rMONEY, rGAMBLE, rREPAIR, rRP_HC, rGRUMBLE,
+   rTRIFORCE, rP_SHOP, rSHOP, rBOMBS, rSWINDLE, r10RUPIES, rWARP,
+   rGANON, rZELDA, rITEMPOND, rMUPGRADE, rLEARNSLASH,
+   rMAX
 };
 
 // directions
@@ -472,151 +484,163 @@ enum {REFILL_POTION, REFILL_FAIRY, REFILL_TRIFORCE};
 //other
 #define MAXDRUNKCLOCK 500
 
-enum {
-	dBUSHLEAVES, dFLOWERCLIPPINGS, dGRASSCLIPPINGS, dHAMMERSMACK,
-	dTALLGRASS, dRIPPLES, dNAYRUSLOVESHIELD, dMAXDECORATIONS
+enum
+{
+   dBUSHLEAVES, dFLOWERCLIPPINGS, dGRASSCLIPPINGS, dHAMMERSMACK,
+   dTALLGRASS, dRIPPLES, dNAYRUSLOVESHIELD, dMAXDECORATIONS
 };
 
 // items
-enum {                                                      // value matters because of current quest file data
-	iRupy, i5Rupies, iHeart, iBombs, iClock,
-	iSword, iWSword, iMSword, iShield, iKey,
-	iBCandle, iRCandle, iLetter, iArrow, iSArrow,             /*10*/
-	iBow, iBait, iBRing, iRRing, iBracelet,
-	iTriforce, iMap, iCompass, iBrang, iMBrang,               /*20*/
-	iWand, iRaft, iLadder, iHeartC, iBPotion,
-	iRPotion, iWhistle, iBook, iMKey, iFairyMoving,           /*30*/
-	iFBrang, iXSword, iMShield, i20Rupies, i50Rupies,
-	i200Rupies, iWallet500, iWallet999, iPile, iBigTri,       /*40*/
-	iSelect, iMisc1, iMisc2, iSBomb, iHCPiece,
-	iAmulet, iFlippers, iHookshot, iLens, iHammer,            /*50*/
-	iBoots, iL2Bracelet, iGArrow, iMagicC, iSMagic,
-	iLMagic, iGRing, iKillAll, iL2Amulet, iDinsFire,          /*60*/
-	iFaroresWind, iNayrusLove, iBossKey, iBow2, iFairyStill, iMax
+enum                                                        // value matters because of current quest file data
+{
+   iRupy, i5Rupies, iHeart, iBombs, iClock,
+   iSword, iWSword, iMSword, iShield, iKey,
+   iBCandle, iRCandle, iLetter, iArrow, iSArrow,             /*10*/
+   iBow, iBait, iBRing, iRRing, iBracelet,
+   iTriforce, iMap, iCompass, iBrang, iMBrang,               /*20*/
+   iWand, iRaft, iLadder, iHeartC, iBPotion,
+   iRPotion, iWhistle, iBook, iMKey, iFairyMoving,           /*30*/
+   iFBrang, iXSword, iMShield, i20Rupies, i50Rupies,
+   i200Rupies, iWallet500, iWallet999, iPile, iBigTri,       /*40*/
+   iSelect, iMisc1, iMisc2, iSBomb, iHCPiece,
+   iAmulet, iFlippers, iHookshot, iLens, iHammer,            /*50*/
+   iBoots, iL2Bracelet, iGArrow, iMagicC, iSMagic,
+   iLMagic, iGRing, iKillAll, iL2Amulet, iDinsFire,          /*60*/
+   iFaroresWind, iNayrusLove, iBossKey, iBow2, iFairyStill, iMax
 };
 
 // item sets
-enum {
-	isNONE, isDEFAULT, isBOMBS, isMONEY, isLIFE, isBOMB100, isSBOMB100,
-	isMAGIC, isMAGICBOMBS, isMAGICMONEY, isMAGICLIFE, isMAGIC2
+enum
+{
+   isNONE, isDEFAULT, isBOMBS, isMONEY, isLIFE, isBOMB100, isSBOMB100,
+   isMAGIC, isMAGICBOMBS, isMAGICMONEY, isMAGICLIFE, isMAGIC2
 };
 
 // weapons (in qst data)
-enum {
-	wSWORD, wWSWORD, wMSWORD, wXSWORD, wBRANG, wMBRANG, wFBRANG, wBOMB,
-	wSBOMB, wBOOM, wARROW, wSARROW, wFIRE, wWIND, wBAIT, wWAND, wMAGIC,
-	ewFIREBALL, ewROCK, ewARROW, ewSWORD, ewMAGIC, iwSpawn, iwDeath, iwSwim,
-	wHAMMER, wHSHEAD, wHSCHAIN_H, wHSHANDLE, wSSPARKLE, wGSPARKLE,
-	wMSPARKLE, wFSPARKLE, iwHammerSmack, wGARROW, ewFLAME, ewWIND, iwMMeter,
-	wDINSFIRE1A, wDINSFIRE1B, wDINSFIRES1A, wDINSFIRES1B, wHSCHAIN_V,
-	iwMore, iwBossMarker, iwLinkSlash, wSWORDSLASH, wWSWORDSLASH,
-	wMSWORDSLASH, wXSWORDSLASH, iwShadow, iwLargeShadow, iwBushLeaves,
-	iwFlowerClippings, iwGrassClippings, iwTallGrass, iwRipples, iwNPCs,
-	wNAYRUSLOVE1A, wNAYRUSLOVE1B, wNAYRUSLOVES1A, wNAYRUSLOVES1B,
-	wNAYRUSLOVE2A, wNAYRUSLOVE2B, wNAYRUSLOVES2A, wNAYRUSLOVES2B,
-	iwNayrusLoveShieldFront, iwNayrusLoveShieldBack, wMAX
+enum
+{
+   wSWORD, wWSWORD, wMSWORD, wXSWORD, wBRANG, wMBRANG, wFBRANG, wBOMB,
+   wSBOMB, wBOOM, wARROW, wSARROW, wFIRE, wWIND, wBAIT, wWAND, wMAGIC,
+   ewFIREBALL, ewROCK, ewARROW, ewSWORD, ewMAGIC, iwSpawn, iwDeath, iwSwim,
+   wHAMMER, wHSHEAD, wHSCHAIN_H, wHSHANDLE, wSSPARKLE, wGSPARKLE,
+   wMSPARKLE, wFSPARKLE, iwHammerSmack, wGARROW, ewFLAME, ewWIND, iwMMeter,
+   wDINSFIRE1A, wDINSFIRE1B, wDINSFIRES1A, wDINSFIRES1B, wHSCHAIN_V,
+   iwMore, iwBossMarker, iwLinkSlash, wSWORDSLASH, wWSWORDSLASH,
+   wMSWORDSLASH, wXSWORDSLASH, iwShadow, iwLargeShadow, iwBushLeaves,
+   iwFlowerClippings, iwGrassClippings, iwTallGrass, iwRipples, iwNPCs,
+   wNAYRUSLOVE1A, wNAYRUSLOVE1B, wNAYRUSLOVES1A, wNAYRUSLOVES1B,
+   wNAYRUSLOVE2A, wNAYRUSLOVE2B, wNAYRUSLOVES2A, wNAYRUSLOVES2B,
+   iwNayrusLoveShieldFront, iwNayrusLoveShieldBack, wMAX
 };
 
 // weapon types in game engine
-enum {
-	wNone, wSword, wBeam, wBrang, wBomb, wSBomb, wLitBomb, wLitSBomb, wArrow,
-	wFire, wWhistle, wBait, wWand, wMagic, wCatching, wWind, wRefMagic, wRefFireball,
-	wEnemyWeapons,
-	ewFireball, ewArrow, ewBrang, ewSword, ewRock, ewMagic, wHammer, wHookshot,
-	wHSHandle, wHSChain, wSSparkle, wGSparkle, wMSparkle, wFSparkle,
-	wSmack, wGArrow, ewFlame, ewWind, wPhantom
+enum
+{
+   wNone, wSword, wBeam, wBrang, wBomb, wSBomb, wLitBomb, wLitSBomb, wArrow,
+   wFire, wWhistle, wBait, wWand, wMagic, wCatching, wWind, wRefMagic, wRefFireball,
+   wEnemyWeapons,
+   ewFireball, ewArrow, ewBrang, ewSword, ewRock, ewMagic, wHammer, wHookshot,
+   wHSHandle, wHSChain, wSSparkle, wGSparkle, wMSparkle, wFSparkle,
+   wSmack, wGArrow, ewFlame, ewWind, wPhantom
 };
 
 // phantom weapon types
-enum {
-	pDINSFIREROCKET, pDINSFIREROCKETRETURN, pDINSFIREROCKETTRAIL, pDINSFIREROCKETTRAILRETURN, pMESSAGEMORE,
-	pNAYRUSLOVEROCKET1, pNAYRUSLOVEROCKETRETURN1, pNAYRUSLOVEROCKETTRAIL1, pNAYRUSLOVEROCKETTRAILRETURN1,
-	pNAYRUSLOVEROCKET2, pNAYRUSLOVEROCKETRETURN2, pNAYRUSLOVEROCKETTRAIL2, pNAYRUSLOVEROCKETTRAILRETURN2
+enum
+{
+   pDINSFIREROCKET, pDINSFIREROCKETRETURN, pDINSFIREROCKETTRAIL, pDINSFIREROCKETTRAILRETURN, pMESSAGEMORE,
+   pNAYRUSLOVEROCKET1, pNAYRUSLOVEROCKETRETURN1, pNAYRUSLOVEROCKETTRAIL1, pNAYRUSLOVEROCKETTRAILRETURN1,
+   pNAYRUSLOVEROCKET2, pNAYRUSLOVEROCKETRETURN2, pNAYRUSLOVEROCKETTRAIL2, pNAYRUSLOVEROCKETTRAILRETURN2
 };
 
-enum {
-	gABEI = 1, gAMA, gDUDE, gMOBLIN, gFIRE,
-	gFAIRY, gGORIYA, gZELDA, gDABEI,
+enum
+{
+   gABEI = 1, gAMA, gDUDE, gMOBLIN, gFIRE,
+   gFAIRY, gGORIYA, gZELDA, gDABEI,
 
-	eROCTO1 = 10, eBOCTO1, eROCTO2, eBOCTO2, eRTEK,
-	eBTEK, eRLEV, eBLEV, eRMOBLIN, eBMOBLIN,
-	eRLYNEL, eBLYNEL, ePEAHAT, eZORA, eROCK,                  /*20*/
-	eGHINI1, eGHINI2, eARMOS,
+   eROCTO1 = 10, eBOCTO1, eROCTO2, eBOCTO2, eRTEK,
+   eBTEK, eRLEV, eBLEV, eRMOBLIN, eBMOBLIN,
+   eRLYNEL, eBLYNEL, ePEAHAT, eZORA, eROCK,                  /*20*/
+   eGHINI1, eGHINI2, eARMOS,
 
-	eKEESE1, eKEESE2,
-	eKEESE3, eSTALFOS, eGEL, eZOL, eROPE,                     /*30*/
-	eRGORIYA, eBGORIYA, eTRAP, eWALLM, eRDKNUT,
-	eBDKNUT, eBUBBLE, eVIRE, eLIKE, eGIBDO,                   /*40*/
-	ePOLSV, eRWIZ, eBWIZ,
+   eKEESE1, eKEESE2,
+   eKEESE3, eSTALFOS, eGEL, eZOL, eROPE,                     /*30*/
+   eRGORIYA, eBGORIYA, eTRAP, eWALLM, eRDKNUT,
+   eBDKNUT, eBUBBLE, eVIRE, eLIKE, eGIBDO,                   /*40*/
+   ePOLSV, eRWIZ, eBWIZ,
 
-	eRAQUAM, eMOLDORM,
-	eDODONGO, eMANHAN, eGLEEOK1, eGLEEOK2, eGLEEOK3, eGLEEOK4, /*50*/
-	eDIG1, eDIG3, eDIGPUP1, eDIGPUP2, eDIGPUP3, eDIGPUP4,
-	eRGOHMA, eBGOHMA, eRCENT,
-	eBCENT, ePATRA1, ePATRA2, eGANON,                         /*60*/
-	eSTALFOS2,
-	eROPE2, eRBUBBLE, eBBUBBLE, eFBALL, eITEMFAIRY,
-	eFIRE, eCOCTO, eDKNIGHT, eGELTRIB, eZOLTRIB,              /*70*/
-	eKEESETRIB, eVIRETRIB, eSDKNUT, eLAQUAM, eMANHAN2,
-	eTRAP_H, eTRAP_V, eTRAP_LR, eTRAP_UD, eFWIZ,              /*80*/
-	eWWIZ, eCEILINGM, eFLOORM, ePATRABS, ePATRAL2,
-	/*90*/
-	ePATRAL3, eBAT, eBATROBE, eBATROBEKING, eGLEEOK1F, eGLEEOK2F,
-	eGLEEOK3F, eGLEEOK4F, eMWIZ, eDODONGOBS, eDODONGOF, eTRIGGER,
-	eIBUBBLE, eRIBUBBLE, eBIBUBBLE, eSTALFOS3, eGOHMA3, eGOHMA4,
-	eNPCSTAND1, eNPCSTAND2, eNPCSTAND3, eNPCSTAND4, eNPCSTAND5,
-	eNPCSTAND6, eNPCWALK1, eNPCWALK2, eNPCWALK3, eNPCWALK4, eNPCWALK5,
-	eNPCWALK6, eMAXGUYS
+   eRAQUAM, eMOLDORM,
+   eDODONGO, eMANHAN, eGLEEOK1, eGLEEOK2, eGLEEOK3, eGLEEOK4, /*50*/
+   eDIG1, eDIG3, eDIGPUP1, eDIGPUP2, eDIGPUP3, eDIGPUP4,
+   eRGOHMA, eBGOHMA, eRCENT,
+   eBCENT, ePATRA1, ePATRA2, eGANON,                         /*60*/
+   eSTALFOS2,
+   eROPE2, eRBUBBLE, eBBUBBLE, eFBALL, eITEMFAIRY,
+   eFIRE, eCOCTO, eDKNIGHT, eGELTRIB, eZOLTRIB,              /*70*/
+   eKEESETRIB, eVIRETRIB, eSDKNUT, eLAQUAM, eMANHAN2,
+   eTRAP_H, eTRAP_V, eTRAP_LR, eTRAP_UD, eFWIZ,              /*80*/
+   eWWIZ, eCEILINGM, eFLOORM, ePATRABS, ePATRAL2,
+   /*90*/
+   ePATRAL3, eBAT, eBATROBE, eBATROBEKING, eGLEEOK1F, eGLEEOK2F,
+   eGLEEOK3F, eGLEEOK4F, eMWIZ, eDODONGOBS, eDODONGOF, eTRIGGER,
+   eIBUBBLE, eRIBUBBLE, eBIBUBBLE, eSTALFOS3, eGOHMA3, eGOHMA4,
+   eNPCSTAND1, eNPCSTAND2, eNPCSTAND3, eNPCSTAND4, eNPCSTAND5,
+   eNPCSTAND6, eNPCWALK1, eNPCWALK2, eNPCWALK3, eNPCWALK4, eNPCWALK5,
+   eNPCWALK6, eMAXGUYS
 };
 
 // enemy families
-enum {
-	eeGUY, eeWALK, eeSHOOT, eeTEK, eeLEV, eePEAHAT, eeZORA, eeROCK,
-	eeGHINI, eeARMOS, eeKEESE, eeGEL, eeZOL, eeROPE, eeGORIYA, eeTRAP,
-	eeWALLM, eeBUBBLE, eeVIRE, eeLIKE, eePOLSV, eeWIZZ, eeAQUA, eeMOLD,
-	eeDONGO, eeMANHAN, eeGLEEOK, eeDIG, eeGHOMA, eeLANM, eePATRA, eeGANON,
-	eeFBALL, eeGELTRIB, eeZOLTRIB, eeVIRETRIB, eeKEESETRIB, eeNONE
+enum
+{
+   eeGUY, eeWALK, eeSHOOT, eeTEK, eeLEV, eePEAHAT, eeZORA, eeROCK,
+   eeGHINI, eeARMOS, eeKEESE, eeGEL, eeZOL, eeROPE, eeGORIYA, eeTRAP,
+   eeWALLM, eeBUBBLE, eeVIRE, eeLIKE, eePOLSV, eeWIZZ, eeAQUA, eeMOLD,
+   eeDONGO, eeMANHAN, eeGLEEOK, eeDIG, eeGHOMA, eeLANM, eePATRA, eeGANON,
+   eeFBALL, eeGELTRIB, eeZOLTRIB, eeVIRETRIB, eeKEESETRIB, eeNONE
 };
 
 // enemy animation styles
-enum {
-	aNONE, aFLIP, a2FRM, aOCTO, aTEK, aLEV, aWALK, aZORA, aGHINI, aARMOS,
-	aROPE, aWALLM, aDWALK, aVIRE, a3FRM, aWIZZ, aAQUA, aDONGO, aMANHAN,
-	aGLEEOK, aDIG, aGHOMA, aLANM, aPHAT, aKEESE, aGANON
+enum
+{
+   aNONE, aFLIP, a2FRM, aOCTO, aTEK, aLEV, aWALK, aZORA, aGHINI, aARMOS,
+   aROPE, aWALLM, aDWALK, aVIRE, a3FRM, aWIZZ, aAQUA, aDONGO, aMANHAN,
+   aGLEEOK, aDIG, aGHOMA, aLANM, aPHAT, aKEESE, aGANON
 };
 
 // enemy patters
 enum {pRANDOM, pSIDES};
 
-typedef struct itemdata {
-	word tile;
-	byte misc;                                                // 0000vhtf (vh:flipping, t:two hands, f:flash)
-	byte csets;                                               // ffffcccc (f:flash cset, c:cset)
-	byte frames;                                              // animation frame count
-	byte speed;                                               // animation speed
-	byte delay;                                               // extra delay factor (-1) for first frame
-	//byte padding;
-	long32 ltm;                                                 // Link Tile Modifier
-	byte exp[10];                                             // not used
-	//byte padding[2];
-	// 21 bytes (uses 24)
+typedef struct itemdata
+{
+   word tile;
+   byte misc;                                                // 0000vhtf (vh:flipping, t:two hands, f:flash)
+   byte csets;                                               // ffffcccc (f:flash cset, c:cset)
+   byte frames;                                              // animation frame count
+   byte speed;                                               // animation speed
+   byte delay;                                               // extra delay factor (-1) for first frame
+   //byte padding;
+   long32 ltm;                                                 // Link Tile Modifier
+   byte exp[10];                                             // not used
+   //byte padding[2];
+   // 21 bytes (uses 24)
 } itemdata;
 
-typedef struct wpndata {
-	word tile;
-	byte misc;                                                // 0000vhff (vh:flipping, f:flash (1:NES, 2:BSZ))
-	byte csets;                                               // ffffcccc (f:flash cset, c:cset)
-	byte frames;                                              // animation frame count
-	byte speed;                                               // animation speed
-	byte type;                                                // used by certain weapons
-	byte exp;                                                 // not used
-	// 8 bytes
+typedef struct wpndata
+{
+   word tile;
+   byte misc;                                                // 0000vhff (vh:flipping, f:flash (1:NES, 2:BSZ))
+   byte csets;                                               // ffffcccc (f:flash cset, c:cset)
+   byte frames;                                              // animation frame count
+   byte speed;                                               // animation speed
+   byte type;                                                // used by certain weapons
+   byte exp;                                                 // not used
+   // 8 bytes
 } wpndata;
 
-typedef struct quest_template {
-	char name[31];
-	char path[280];
-	//311 bytes
+typedef struct quest_template
+{
+   char name[31];
+   char path[280];
+   //311 bytes
 } quest_template;
 
 #define guy_bhit        0x00000001
@@ -659,436 +683,458 @@ typedef struct quest_template {
 #define weak_L3brang    0x40000000
 #define lens_only       0x80000000
 
-typedef struct guydata {
-	dword flags;
-	word  tile;
-	short hp;
+typedef struct guydata
+{
+   dword flags;
+   word  tile;
+   short hp;
 
-	short  family, cset, anim, frate;
-	short  dp, wdp, weapon;
+   short  family, cset, anim, frate;
+   short  dp, wdp, weapon;
 
-	short  rate, hrate, step, homing, grumble;
-	short  item_set, misc1, misc2, bosspal;
+   short  rate, hrate, step, homing, grumble;
+   short  item_set, misc1, misc2, bosspal;
 
-	short  startx, starty;
-	short  foo1, foo2, foo3, foo4, foo5, foo6;
-	// 56 bytes
+   short  startx, starty;
+   short  foo1, foo2, foo3, foo4, foo5, foo6;
+   // 56 bytes
 } guydata;
 
-typedef struct mapscr2 {
-	byte valid;
-	byte guy;
-	word str;
-	byte room;
-	byte item;
-	byte warptype;
-	//byte padding;
-	word door_combo_set;
-	byte warpreturnx;
-	byte warpreturny;
-	byte stairx;
-	byte stairy;
-	byte itemx;
-	byte itemy;
-	byte color;
-	byte enemyflags;
-	byte door[4];
-	byte warpdmap;
-	byte warpscr;
-	byte exitdir;
-	byte _FOO3_;
-	word enemy[10];
-	byte pattern;
-	byte warparrivalx;
-	byte warparrivaly;
-	byte path[4];
-	byte sidewarptype;
-	byte sidewarpscr;
-	byte sidewarpdmap;
-	byte itemwarptype;
-	byte itemwarpdmap;
-	byte itemwarpscr;
-	word undercombo;
-	byte old_cpage;
-	byte undercset;
-	word catchall;
-	byte flags;
-	byte flags2;
-	byte flags3;
-	byte flags4;
-	byte layermap[6];
-	byte layerscreen[6];
-	byte layerxsize[6];
-	byte layerxspeed[6];
-	byte layerxdelay[6];
-	byte layerysize[6];
-	byte layeryspeed[6];
-	byte layerydelay[6];
-	byte layeropacity[6];
-	//byte padding;
-	word timedwarptics;
-	byte extra[62];
-	word secretcombo[128];
-	byte secretcset[128];
-	byte secretflag[128];
-	word data[16 * 11];
-	byte sflag[16 * 11];
-	byte cset[16 * 11];
+typedef struct mapscr2
+{
+   byte valid;
+   byte guy;
+   word str;
+   byte room;
+   byte item;
+   byte warptype;
+   //byte padding;
+   word door_combo_set;
+   byte warpreturnx;
+   byte warpreturny;
+   byte stairx;
+   byte stairy;
+   byte itemx;
+   byte itemy;
+   byte color;
+   byte enemyflags;
+   byte door[4];
+   byte warpdmap;
+   byte warpscr;
+   byte exitdir;
+   byte _FOO3_;
+   word enemy[10];
+   byte pattern;
+   byte warparrivalx;
+   byte warparrivaly;
+   byte path[4];
+   byte sidewarptype;
+   byte sidewarpscr;
+   byte sidewarpdmap;
+   byte itemwarptype;
+   byte itemwarpdmap;
+   byte itemwarpscr;
+   word undercombo;
+   byte old_cpage;
+   byte undercset;
+   word catchall;
+   byte flags;
+   byte flags2;
+   byte flags3;
+   byte flags4;
+   byte layermap[6];
+   byte layerscreen[6];
+   byte layerxsize[6];
+   byte layerxspeed[6];
+   byte layerxdelay[6];
+   byte layerysize[6];
+   byte layeryspeed[6];
+   byte layerydelay[6];
+   byte layeropacity[6];
+   //byte padding;
+   word timedwarptics;
+   byte extra[62];
+   word secretcombo[128];
+   byte secretcset[128];
+   byte secretflag[128];
+   word data[16 * 11];
+   byte sflag[16 * 11];
+   byte cset[16 * 11];
 } mapscr2;
-typedef struct mapscr {
-	byte valid;
-	byte guy;
-	word str;
-	byte room;
-	byte item;
-	byte tilewarptype;
-	//byte padding;
-	word door_combo_set;
-	byte warpreturnx;
-	byte warpreturny;
-	byte stairx;
-	byte stairy;
-	byte itemx;
-	byte itemy;
-	byte color;
-	byte enemyflags;
-	byte door[4];
-	byte tilewarpdmap;
-	byte tilewarpscr;
-	byte exitdir;
-	byte _FOO3_;
-	word enemy[10];
-	byte pattern;
-	byte sidewarptype;
-	byte warparrivalx;
-	byte warparrivaly;
-	byte path[4];
-	byte sidewarpscr;
-	byte sidewarpdmap;
-	word undercombo;
-	byte old_cpage;
-	byte undercset;
-	word catchall;
-	byte flags;
-	byte flags2;
-	byte flags3;
-	byte layermap[6];
-	byte layerscreen[6];
-	byte layerxsize[6];
-	byte layerxspeed[6];
-	byte layerxdelay[6];
-	byte layerysize[6];
-	byte layeryspeed[6];
-	byte layerydelay[6];
-	byte layeropacity[6];
-	//byte padding;
-	word timedwarptics;
-	byte extra[62];
-	word secretcombo[128];
-	byte secretcset[128];
-	byte secretflag[128];
-	word data[16 * 11];
-	byte sflag[16 * 11];
-	byte cset[16 * 11];
+typedef struct mapscr
+{
+   byte valid;
+   byte guy;
+   word str;
+   byte room;
+   byte item;
+   byte tilewarptype;
+   //byte padding;
+   word door_combo_set;
+   byte warpreturnx;
+   byte warpreturny;
+   byte stairx;
+   byte stairy;
+   byte itemx;
+   byte itemy;
+   byte color;
+   byte enemyflags;
+   byte door[4];
+   byte tilewarpdmap;
+   byte tilewarpscr;
+   byte exitdir;
+   byte _FOO3_;
+   word enemy[10];
+   byte pattern;
+   byte sidewarptype;
+   byte warparrivalx;
+   byte warparrivaly;
+   byte path[4];
+   byte sidewarpscr;
+   byte sidewarpdmap;
+   word undercombo;
+   byte old_cpage;
+   byte undercset;
+   word catchall;
+   byte flags;
+   byte flags2;
+   byte flags3;
+   byte layermap[6];
+   byte layerscreen[6];
+   byte layerxsize[6];
+   byte layerxspeed[6];
+   byte layerxdelay[6];
+   byte layerysize[6];
+   byte layeryspeed[6];
+   byte layerydelay[6];
+   byte layeropacity[6];
+   //byte padding;
+   word timedwarptics;
+   byte extra[62];
+   word secretcombo[128];
+   byte secretcset[128];
+   byte secretflag[128];
+   word data[16 * 11];
+   byte sflag[16 * 11];
+   byte cset[16 * 11];
 } mapscr;
 
 
-enum {
-	sBCANDLE, sARROW, sBOMB, sSTAIRS, sSECRET01, sSECRET02, sSECRET03,
-	sSECRET04, sSECRET05, sSECRET06, sSECRET07, sSECRET08, sSECRET09,
-	sSECRET10, sSECRET11, sSECRET12, sSECRET13, sSECRET14, sSECRET15,
-	sSECRET16, sRCANDLE, sWANDFIRE, sDINSFIRE, sSARROW, sGARROW,
-	sSBOMB, sBRANG, sMBRANG, sFBRANG, sWANDMAGIC, sREFMAGIC, sREFFIREBALL,
-	sSWORD, sWSWORD, sMSWORD, sXSWORD, sSWORDBEAM, sWSWORDBEAM,
-	sMSWORDBEAM, sXSWORDBEAM, sHOOKSHOT, sWAND, sHAMMER, sSTRIKE
+enum
+{
+   sBCANDLE, sARROW, sBOMB, sSTAIRS, sSECRET01, sSECRET02, sSECRET03,
+   sSECRET04, sSECRET05, sSECRET06, sSECRET07, sSECRET08, sSECRET09,
+   sSECRET10, sSECRET11, sSECRET12, sSECRET13, sSECRET14, sSECRET15,
+   sSECRET16, sRCANDLE, sWANDFIRE, sDINSFIRE, sSARROW, sGARROW,
+   sSBOMB, sBRANG, sMBRANG, sFBRANG, sWANDMAGIC, sREFMAGIC, sREFFIREBALL,
+   sSWORD, sWSWORD, sMSWORD, sXSWORD, sSWORDBEAM, sWSWORDBEAM,
+   sMSWORDBEAM, sXSWORDBEAM, sHOOKSHOT, sWAND, sHAMMER, sSTRIKE
 };
 
 enum {cfOFFSET, cfMAX};
 
-typedef struct newcombo {
-	word tile;
-	byte flip;
-	byte walk;
-	byte type;
-	byte csets;
-	word foo;                                                 //do not change!  used for positioning!  no idea why.
-	byte frames;
-	byte speed;
-	word nextcombo;
-	byte nextcset;
-	byte expansion[11];
-	//24
+typedef struct newcombo
+{
+   word tile;
+   byte flip;
+   byte walk;
+   byte type;
+   byte csets;
+   word foo;                                                 //do not change!  used for positioning!  no idea why.
+   byte frames;
+   byte speed;
+   word nextcombo;
+   byte nextcset;
+   byte expansion[11];
+   //24
 } newcombo;
 
-typedef struct tiletype {
-	byte bitplanes;
-	byte *data;
+typedef struct tiletype
+{
+   byte bitplanes;
+   byte *data;
 } tiletype;
 
-typedef struct ZCHEATS {
-	dword flags;
-	char  codes[4][41];
-	//168
+typedef struct ZCHEATS
+{
+   dword flags;
+   char  codes[4][41];
+   //168
 } ZCHEATS;
 
-typedef struct zquestheader {
-	char  id_str[31];
-	//byte  padding;
-	//32
-	short zelda_version;
-	word  internal;
-	byte  quest_number;
-	byte  old_rules[2];
-	byte  old_map_count;
-	char  old_str_count;
-	//41
-	byte  data_flags[ZQ_MAXDATA];
-	byte  old_rules2[2];
-	char  old_options;
-	char  version[9];
-	//73
-	char  title[65];
-	char  author[65];
-	//byte  padding;
-	//204
-	short pwdkey;
-	char  password[30];
-	//236
-	char  minver[9];
-	byte  build;
-	byte  use_keyfile;
-	byte  old_foo[9];
-	byte  old_rules3[2];
-	byte  old_rules4[2];
-	byte  old_rules5[2];
-	byte  old_rules6[2];
-	byte  old_rules7[2];
-	byte  old_rules8[2];
-	byte  old_rules9[2];
-	byte  old_rules10[2];
-	byte  old_midi_flags[MIDIFLAGS_SIZE];
-	//304
-	byte  old_foo2[18];
-	char  templatepath[280];
-	//602
+typedef struct zquestheader
+{
+   char  id_str[31];
+   //byte  padding;
+   //32
+   short zelda_version;
+   word  internal;
+   byte  quest_number;
+   byte  old_rules[2];
+   byte  old_map_count;
+   char  old_str_count;
+   //41
+   byte  data_flags[ZQ_MAXDATA];
+   byte  old_rules2[2];
+   char  old_options;
+   char  version[9];
+   //73
+   char  title[65];
+   char  author[65];
+   //byte  padding;
+   //204
+   short pwdkey;
+   char  password[30];
+   //236
+   char  minver[9];
+   byte  build;
+   byte  use_keyfile;
+   byte  old_foo[9];
+   byte  old_rules3[2];
+   byte  old_rules4[2];
+   byte  old_rules5[2];
+   byte  old_rules6[2];
+   byte  old_rules7[2];
+   byte  old_rules8[2];
+   byte  old_rules9[2];
+   byte  old_rules10[2];
+   byte  old_midi_flags[MIDIFLAGS_SIZE];
+   //304
+   byte  old_foo2[18];
+   char  templatepath[280];
+   //602
 } zquestheader;
 
 enum {msLINKED};
 
-typedef struct MsgStr {
-	char s[73];
-	//byte padding
-	//74
-	word nextstring;
-	word expansion[16];
-	//108
+typedef struct MsgStr
+{
+   char s[73];
+   //byte padding
+   //74
+   word nextstring;
+   word expansion[16];
+   //108
 } MsgStr;
 
 enum {dt_pass = 0, dt_lock, dt_shut, dt_boss, dt_olck, dt_osht, dt_obos, dt_wall, dt_bomb, dt_walk, dt_max};
 enum {df_walktrans = 0};
 
-typedef struct DoorComboSet {
-	char name[21];
-	//byte padding;
-	//22
-	word doorcombo_u[9][4];                                   //[door type][door combo]
-	byte doorcset_u[9][4];                                    //[door type][door combo]
-	word doorcombo_d[9][4];                                   //[door type][door combo]
-	byte doorcset_d[9][4];                                    //[door type][door combo]
-	//238 (216)
-	word doorcombo_l[9][6];                                   //[door type][door combo]
-	byte doorcset_l[9][6];                                    //[door type][door combo]
-	word doorcombo_r[9][6];                                   //[door type][door combo]
-	byte doorcset_r[9][6];                                    //[door type][door combo]
-	//562 (324)
-	word bombdoorcombo_u[2];                                  //rubble
-	byte bombdoorcset_u[2];                                   //rubble
-	word bombdoorcombo_d[2];                                  //rubble
-	byte bombdoorcset_d[2];                                   //rubble
-	//574 (12)
-	word bombdoorcombo_l[3];                                  //rubble
-	byte bombdoorcset_l[3];                                   //rubble
-	//byte padding;
-	word bombdoorcombo_r[3];                                  //rubble
-	byte bombdoorcset_r[3];                                   //rubble
-	//byte padding;
-	//594 (18)
-	word walkthroughcombo[4];                                 //[n, s, e, w]
-	byte walkthroughcset[4];                                  //[n, s, e, w]
+typedef struct DoorComboSet
+{
+   char name[21];
+   //byte padding;
+   //22
+   word doorcombo_u[9][4];                                   //[door type][door combo]
+   byte doorcset_u[9][4];                                    //[door type][door combo]
+   word doorcombo_d[9][4];                                   //[door type][door combo]
+   byte doorcset_d[9][4];                                    //[door type][door combo]
+   //238 (216)
+   word doorcombo_l[9][6];                                   //[door type][door combo]
+   byte doorcset_l[9][6];                                    //[door type][door combo]
+   word doorcombo_r[9][6];                                   //[door type][door combo]
+   byte doorcset_r[9][6];                                    //[door type][door combo]
+   //562 (324)
+   word bombdoorcombo_u[2];                                  //rubble
+   byte bombdoorcset_u[2];                                   //rubble
+   word bombdoorcombo_d[2];                                  //rubble
+   byte bombdoorcset_d[2];                                   //rubble
+   //574 (12)
+   word bombdoorcombo_l[3];                                  //rubble
+   byte bombdoorcset_l[3];                                   //rubble
+   //byte padding;
+   word bombdoorcombo_r[3];                                  //rubble
+   byte bombdoorcset_r[3];                                   //rubble
+   //byte padding;
+   //594 (18)
+   word walkthroughcombo[4];                                 //[n, s, e, w]
+   byte walkthroughcset[4];                                  //[n, s, e, w]
 
-	byte flags[2];
-	byte expansion[30];
-	//638 (44)
+   byte flags[2];
+   byte expansion[30];
+   //638 (44)
 } DoorComboSet;
 
-typedef struct dmap {
-	byte map;
-	byte level;
-	char xoff;
-	byte compass;
-	byte color;
-	byte midi;
-	byte cont;
-	byte type;
-	//8
-	byte grid[8];
-	//16
-	char name[21];
-	char title[21];
-	char intro[73];
-	//byte padding;
-	//132
-	word minimap_1_tile;                                      //before getting map
-	byte minimap_1_cset;                                      //cset for minimap 1
-	//byte padding;
-	word minimap_2_tile;                                      //after getting map
-	byte minimap_2_cset;                                      //cset for minimap 2
-	//byte padding;
-	//140
-	word largemap_1_tile;                                     //large map
-	byte largemap_1_cset;                                     //cset for large
-	//byte padding;
-	word largemap_2_tile;                                     //large map
-	byte largemap_2_cset;                                     //cset for large
-	char tmusic[56];
-	//byte padding;
-	//204
+typedef struct dmap
+{
+   byte map;
+   byte level;
+   char xoff;
+   byte compass;
+   byte color;
+   byte midi;
+   byte cont;
+   byte type;
+   //8
+   byte grid[8];
+   //16
+   char name[21];
+   char title[21];
+   char intro[73];
+   //byte padding;
+   //132
+   word minimap_1_tile;                                      //before getting map
+   byte minimap_1_cset;                                      //cset for minimap 1
+   //byte padding;
+   word minimap_2_tile;                                      //after getting map
+   byte minimap_2_cset;                                      //cset for minimap 2
+   //byte padding;
+   //140
+   word largemap_1_tile;                                     //large map
+   byte largemap_1_cset;                                     //cset for large
+   //byte padding;
+   word largemap_2_tile;                                     //large map
+   byte largemap_2_cset;                                     //cset for large
+   char tmusic[56];
+   //byte padding;
+   //204
 } dmap;
 
-typedef struct shoptype {
-	byte item[3];
-	byte d1;
-	word price[3];
-	//10
+typedef struct shoptype
+{
+   byte item[3];
+   byte d1;
+   word price[3];
+   //10
 } shoptype;
 
-typedef struct pondtype {
-	byte olditem[3];
-	byte d1;
-	byte newitem[3];
-	byte fairytile;
-	byte aframes;
-	byte aspeed;
-	word msg[15];
-	byte foo[32];
-	//72
+typedef struct pondtype
+{
+   byte olditem[3];
+   byte d1;
+   byte newitem[3];
+   byte fairytile;
+   byte aframes;
+   byte aspeed;
+   word msg[15];
+   byte foo[32];
+   //72
 } pondtype;
 
-typedef struct infotype192b145 {
-	byte str[3];
-	byte d1;
-	word price[3];
-	//10
+typedef struct infotype192b145
+{
+   byte str[3];
+   byte d1;
+   word price[3];
+   //10
 } infotype192b145;
 
-typedef struct infotype {
-	word str[3];
-	byte d1;
-	//byte padding;
-	word price[3];
-	//14
+typedef struct infotype
+{
+   word str[3];
+   byte d1;
+   //byte padding;
+   word price[3];
+   //14
 } infotype;
 
-typedef struct warpring {
-	byte dmap[8];
-	byte scr[8];
-	byte size;
-	byte d1;
-	//18
+typedef struct warpring
+{
+   byte dmap[8];
+   byte scr[8];
+   byte size;
+   byte d1;
+   //18
 } warpring;
 
-typedef struct windwarp {
-	byte dmap;
-	byte scr;
+typedef struct windwarp
+{
+   byte dmap;
+   byte scr;
 
-	//2
+   //2
 } windwarp;
 
-typedef struct zcolors {
-	byte text, caption;
-	byte overw_bg, dngn_bg;
-	byte dngn_fg, cave_fg;
-	byte bs_dk, bs_goal;
-	byte compass_lt, compass_dk;
-	//10
-	byte subscr_bg, triframe_color;
-	byte link_dot;
-	byte bmap_bg, bmap_fg;
-	//15
-	byte triforce_cset;
-	byte triframe_cset;
-	byte overworld_map_cset;
-	byte dungeon_map_cset;
-	byte blueframe_cset;
-	//20
-	word triforce_tile;
-	word triframe_tile;
-	word overworld_map_tile;
-	word dungeon_map_tile;
-	word blueframe_tile;
-	//30
-	word HCpieces_tile;
-	byte HCpieces_cset;
-	byte foo[7];
-	//40
-	byte foo2[256];
-	//296 bytes
+typedef struct zcolors
+{
+   byte text, caption;
+   byte overw_bg, dngn_bg;
+   byte dngn_fg, cave_fg;
+   byte bs_dk, bs_goal;
+   byte compass_lt, compass_dk;
+   //10
+   byte subscr_bg, triframe_color;
+   byte link_dot;
+   byte bmap_bg, bmap_fg;
+   //15
+   byte triforce_cset;
+   byte triframe_cset;
+   byte overworld_map_cset;
+   byte dungeon_map_cset;
+   byte blueframe_cset;
+   //20
+   word triforce_tile;
+   word triframe_tile;
+   word overworld_map_tile;
+   word dungeon_map_tile;
+   word blueframe_tile;
+   //30
+   word HCpieces_tile;
+   byte HCpieces_cset;
+   byte foo[7];
+   //40
+   byte foo2[256];
+   //296 bytes
 } zcolors;
 
-typedef struct palcycle {
-	byte first, count, speed;
-	//3
+typedef struct palcycle
+{
+   byte first, count, speed;
+   //3
 } palcycle;
 
-typedef struct miscQdata {
-	shoptype shop[16];
-	//160 (160=10*16)
-	infotype info[16];
-	//384 (224=14*16)
-	warpring warp[8];
-	//528 (144=18*8)
-	palcycle cycles[256][3];
-	//2832 (2304=3*256*3)
-	windwarp wind[9];                                         // destination of whirlwind for each level
-	//2850 (18=2*2)
-	byte     triforce[8];                                     // positions of triforce pieces on subscreen
-	//2858 (8)
-	zcolors  colors;
-	//3154 (296)
-	word     icons[4];
-	//3162 (8=2*4)
-	pondtype pond[16];
-	//4314 (1152=72*16)
-	word endstring;
-	//  byte dummy;  // left over from a word
-	word expansion[98];
-	//4512
+typedef struct miscQdata
+{
+   shoptype shop[16];
+   //160 (160=10*16)
+   infotype info[16];
+   //384 (224=14*16)
+   warpring warp[8];
+   //528 (144=18*8)
+   palcycle cycles[256][3];
+   //2832 (2304=3*256*3)
+   windwarp wind[9];                                         // destination of whirlwind for each level
+   //2850 (18=2*2)
+   byte     triforce[8];                                     // positions of triforce pieces on subscreen
+   //2858 (8)
+   zcolors  colors;
+   //3154 (296)
+   word     icons[4];
+   //3162 (8=2*4)
+   pondtype pond[16];
+   //4314 (1152=72*16)
+   word endstring;
+   //  byte dummy;  // left over from a word
+   word expansion[98];
+   //4512
 } miscQdata;
 
-typedef struct music {
-	char title[20];
-	//20
-	long32 start;
-	long32 loop_start;
-	long32 loop_end;
-	//32
-	short loop;
-	short volume;
-	//36
-	MIDI *midi;
-	//40
+typedef struct music
+{
+   char title[20];
+   //20
+   long32 start;
+   long32 loop_start;
+   long32 loop_end;
+   //32
+   short loop;
+   short volume;
+   //36
+   MIDI *midi;
+   //40
 } music;
 
-enum {
-	itype_sword, itype_brang, itype_arrow, itype_candle, itype_whistle,
-	itype_bait, itype_letter, itype_potion, itype_wand, itype_ring,
-	itype_wallet, itype_amulet, itype_shield, itype_bow, itype_raft,
-	itype_ladder, itype_book, itype_magickey, itype_bracelet,
-	itype_flippers, itype_boots, itype_hookshot, itype_lens, itype_hammer,
-	itype_dinsfire, itype_faroreswind, itype_nayruslove, itype_bomb,
-	itype_sbomb, itype_clock, itype_key, itype_magiccontainer,
-	itype_triforcepiece, itype_map, itype_compass, itype_bosskey,
-	itype_max
+enum
+{
+   itype_sword, itype_brang, itype_arrow, itype_candle, itype_whistle,
+   itype_bait, itype_letter, itype_potion, itype_wand, itype_ring,
+   itype_wallet, itype_amulet, itype_shield, itype_bow, itype_raft,
+   itype_ladder, itype_book, itype_magickey, itype_bracelet,
+   itype_flippers, itype_boots, itype_hookshot, itype_lens, itype_hammer,
+   itype_dinsfire, itype_faroreswind, itype_nayruslove, itype_bomb,
+   itype_sbomb, itype_clock, itype_key, itype_magiccontainer,
+   itype_triforcepiece, itype_map, itype_compass, itype_bosskey,
+   itype_max
 };
 
 enum {i_sword = 1, i_wsword, i_msword, i_xsword, imax_sword};
@@ -1119,103 +1165,111 @@ enum {i_dinsfire = 1, imax_dinsfire};
 enum {i_faroreswind = 1, imax_faroreswind};
 enum {i_nayruslove = 1, imax_nayruslove};
 
-typedef struct gamedata {
-	char  name[9];
-	byte  quest;
-	//10
-	short life, maxlife, drupy, rupies, deaths;
-	//20
-	byte  keys, maxbombs, wlevel, cheat;
-	//24
-	byte  items[MAXITEMS];
-	//280
+typedef struct gamedata
+{
+   char  name[9];
+   byte  quest;
+   //10
+   short life, maxlife, drupy, rupies, deaths;
+   //20
+   byte  keys, maxbombs, wlevel, cheat;
+   //24
+   byte  items[MAXITEMS];
+   //280
 
-	char  version[9];
-	char  title[65];
-	//354
-	byte  hasplayed;
-	//byte  padding;
-	//356
-	dword time;
-	//360
-	byte  timevalid;
-	byte  lvlitems[256];
-	byte  HCpieces;
-	byte  continue_scrn;
-	byte  continue_dmap;
-	//620
-	short maxmagic;
-	short magic;
-	short dmagic;
-	byte  magicdrainrate;
-	byte  canslash;                                           //Link slashes instead of stabs.
-	//636
-	byte  visited[MAXDMAPS];
-	//892 (256)
-	byte  bmaps[MAXDMAPS * 64];                               // the dungeon progress maps
-	//17276 (16384)
-	word  maps[MAXMAPS2 * 128];                               // info on map changes, items taken, etc.
-	//82556 (65280)
-	byte  guys[MAXMAPS2 * 128];                               // guy counts (though dungeon guys are reset on entry)
-	//115196 (32640)
-	char  qstpath[1024];
-	byte  icon[128];
-	byte  pal[48];
-	//115456 (260)
+   char  version[9];
+   char  title[65];
+   //354
+   byte  hasplayed;
+   //byte  padding;
+   //356
+   dword time;
+   //360
+   byte  timevalid;
+   byte  lvlitems[256];
+   byte  HCpieces;
+   byte  continue_scrn;
+   byte  continue_dmap;
+   //620
+   short maxmagic;
+   short magic;
+   short dmagic;
+   byte  magicdrainrate;
+   byte  canslash;                                           //Link slashes instead of stabs.
+   //636
+   byte  visited[MAXDMAPS];
+   //892 (256)
+   byte  bmaps[MAXDMAPS *
+                        64];                               // the dungeon progress maps
+   //17276 (16384)
+   word  maps[MAXMAPS2 *
+                       128];                               // info on map changes, items taken, etc.
+   //82556 (65280)
+   byte  guys[MAXMAPS2 *
+                       128];                               // guy counts (though dungeon guys are reset on entry)
+   //115196 (32640)
+   char  qstpath[1024];
+   byte  icon[128];
+   byte  pal[48];
+   //115456 (260)
 } gamedata;
 
 
 // "initialization data" flags (bit numbers in bit string)
-enum {
-	idE_RAFT, idE_LADDER, idE_BOOK, idE_KEY,
-	idE_FLIPPERS, idE_BOOTS, idE_MAX
+enum
+{
+   idE_RAFT, idE_LADDER, idE_BOOK, idE_KEY,
+   idE_FLIPPERS, idE_BOOTS, idE_MAX
 };
-enum {
-	idI_WAND, idI_LETTER, idI_LENS, idI_HOOKSHOT,
-	idI_BAIT, idI_HAMMER, idI_MAX
+enum
+{
+   idI_WAND, idI_LETTER, idI_LENS, idI_HOOKSHOT,
+   idI_BAIT, idI_HAMMER, idI_MAX
 };
 enum { idI_DFIRE, idI_FWIND, idI_NLOVE, idI_MAX2 };
 enum { idM_CONTPERCENT, idM_DOUBLEMAGIC, idM_CANSLASH, idM_MAX };
-enum {
-	idBP_WOODENPERCENT, idBP_WHITEPERCENT,
-	idBP_MAGICPERCENT, idBP_MASTERPERCENT, idBP_MAX
+enum
+{
+   idBP_WOODENPERCENT, idBP_WHITEPERCENT,
+   idBP_MAGICPERCENT, idBP_MASTERPERCENT, idBP_MAX
 };
 
-typedef struct zinitdata {
-	byte raft, ladder, book, key, flippers, boots;
-	byte ring, sword, shield, wallet, bracelet, amulet, bow;
-	byte more_eq[32];
-	//45
-	byte candle, boomerang, arrow, potion, whistle, bombs, super_bombs;
-	byte wand, letter, lens, hookshot, bait, hammer, dins_fire, farores_wind;
-	byte nayrus_love, cloak;
-	byte more_items[32];
-	//94
-	byte hc, start_heart, cont_heart, hcp, max_bombs, keys;
-	word rupies;
-	byte triforce;                                            // bit flags
-	byte map[32];
-	byte compass[32];
-	byte boss_key[32];
-	byte misc[16];
-	byte sword_hearts[4];
-	byte last_map;                                            //last map worked on
-	//220
-	byte last_screen;                                         //last screen worked on
-	byte max_magic;
-	byte magic;
-	byte beam_hearts[4];
-	byte beam_percent;                                        //bit flags
-	//228
-	byte beam_power[4];
-	byte hookshot_links;
-	byte msg_more_x, msg_more_y;
-	byte subscreen;
-	byte start_dmap;
-	byte linkwalkstyle;
-	//238
-	byte expansion[98];
-	//336 bytes total
+typedef struct zinitdata
+{
+   byte raft, ladder, book, key, flippers, boots;
+   byte ring, sword, shield, wallet, bracelet, amulet, bow;
+   byte more_eq[32];
+   //45
+   byte candle, boomerang, arrow, potion, whistle, bombs, super_bombs;
+   byte wand, letter, lens, hookshot, bait, hammer, dins_fire, farores_wind;
+   byte nayrus_love, cloak;
+   byte more_items[32];
+   //94
+   byte hc, start_heart, cont_heart, hcp, max_bombs, keys;
+   word rupies;
+   byte triforce;                                            // bit flags
+   byte map[32];
+   byte compass[32];
+   byte boss_key[32];
+   byte misc[16];
+   byte sword_hearts[4];
+   byte last_map;                                            //last map worked on
+   //220
+   byte last_screen;                                         //last screen worked on
+   byte max_magic;
+   byte magic;
+   byte beam_hearts[4];
+   byte beam_percent;                                        //bit flags
+   //228
+   byte beam_power[4];
+   byte hookshot_links;
+   byte msg_more_x, msg_more_y;
+   byte subscreen;
+   byte start_dmap;
+   byte linkwalkstyle;
+   //238
+   byte expansion[98];
+   //336 bytes total
 } zinitdata;
 
 
@@ -1232,298 +1286,302 @@ typedef struct zinitdata {
 #define DCLICK_NOT        3
 
 template <class T>
-static inline void swap(T &a, T &b) {
-	T c = a;
-	a = b;
-	b = c;
+static inline void swap(T &a, T &b)
+{
+   T c = a;
+   a = b;
+   b = c;
 }
 
-INLINE bool pfwrite(void *p, long n, PACKFILE *f) {
-	bool success = (pack_fwrite(p, n, f) == n);
-	if (success) {
-		writesize += n;
-	}
-	return success;
+INLINE bool pfwrite(void *p, long n, PACKFILE *f)
+{
+   bool success = (pack_fwrite(p, n, f) == n);
+   if (success)
+      writesize += n;
+   return success;
 }
 
-INLINE bool pfread(void *p, long n, PACKFILE *f, bool keepdata) {
-	bool success;
-	if (keepdata == true) {
-		success = (pack_fread(p, n, f) == n);
-		if (success) {
-			readsize += n;
-		}
-		return success;
-	} else {
-		success = (pack_fseek(f, n) == 0);
-		if (success) {
-			readsize += n;
-		}
-		return success;
-	}
+INLINE bool pfread(void *p, long n, PACKFILE *f, bool keepdata)
+{
+   bool success;
+   if (keepdata == true)
+   {
+      success = (pack_fread(p, n, f) == n);
+      if (success)
+         readsize += n;
+      return success;
+   }
+   else
+   {
+      success = (pack_fseek(f, n) == 0);
+      if (success)
+         readsize += n;
+      return success;
+   }
 }
 
-INLINE bool p_getc(void *p, PACKFILE *f, bool keepdata) {
-	unsigned char *cp = (unsigned char *)p;
-	int c;
-	if (!f) {
-		return false;
-	}
+INLINE bool p_getc(void *p, PACKFILE *f, bool keepdata)
+{
+   unsigned char *cp = (unsigned char *)p;
+   int c;
+   if (!f)
+      return false;
 #ifdef ALLEGRO_DOS
-	if (f->flags & PACKFILE_FLAG_WRITE) {
-		return false;    //must not be writing to file
-	}
+   if (f->flags & PACKFILE_FLAG_WRITE)
+   {
+      return false;    //must not be writing to file
+   }
 #else
-	if (f->normal.flags & PACKFILE_FLAG_WRITE) {
-		return false;    //must not be writing to file
-	}
+   if (f->normal.flags & PACKFILE_FLAG_WRITE)
+   {
+      return false;    //must not be writing to file
+   }
 #endif
 
-	if (pack_feof(f)) {
-		return false;
-	}
-	c = pack_getc(f);
-	if (pack_ferror(f)) {
-		return false;
-	}
-	if (keepdata == true) {
-		*cp = c;
-	}
-	readsize += 1;
-	return true;
+   if (pack_feof(f))
+      return false;
+   c = pack_getc(f);
+   if (pack_ferror(f))
+      return false;
+   if (keepdata == true)
+      *cp = c;
+   readsize += 1;
+   return true;
 }
 
-INLINE bool p_putc(int c, PACKFILE *f) {
-	if (!f) {
-		return false;
-	}
+INLINE bool p_putc(int c, PACKFILE *f)
+{
+   if (!f)
+      return false;
 #ifdef ALLEGRO_DOS
-	if (!(f->flags & PACKFILE_FLAG_WRITE)) {
-		return false;    //must be writing to file
-	}
+   if (!(f->flags & PACKFILE_FLAG_WRITE))
+   {
+      return false;    //must be writing to file
+   }
 #else
-	if (!(f->normal.flags & PACKFILE_FLAG_WRITE)) {
-		return false;    //must be writing to file
-	}
+   if (!(f->normal.flags & PACKFILE_FLAG_WRITE))
+   {
+      return false;    //must be writing to file
+   }
 #endif
 
-	pack_putc(c, f);
-	bool success = (pack_ferror(f) == 0);
-	if (success) {
-		writesize += 1;
-	}
-	return success;
+   pack_putc(c, f);
+   bool success = (pack_ferror(f) == 0);
+   if (success)
+      writesize += 1;
+   return success;
 }
 
-INLINE bool p_igetw(void *p, PACKFILE *f, bool keepdata) {
-	short *cp = (short *)p;
-	int c;
-	if (!f) {
-		return false;
-	}
+INLINE bool p_igetw(void *p, PACKFILE *f, bool keepdata)
+{
+   short *cp = (short *)p;
+   int c;
+   if (!f)
+      return false;
 #ifdef ALLEGRO_DOS
-	if (f->flags & PACKFILE_FLAG_WRITE) {
-		return false;    //must not be writing to file
-	}
+   if (f->flags & PACKFILE_FLAG_WRITE)
+   {
+      return false;    //must not be writing to file
+   }
 #else
-	if (f->normal.flags & PACKFILE_FLAG_WRITE) {
-		return false;    //must not be writing to file
-	}
+   if (f->normal.flags & PACKFILE_FLAG_WRITE)
+   {
+      return false;    //must not be writing to file
+   }
 #endif
 
-	if (pack_feof(f)) {
-		return false;
-	}
-	c = pack_igetw(f);
-	if (pack_ferror(f)) {
-		return false;
-	}
-	if (keepdata == true) {
-		*cp = c;
-	}
-	readsize += 2;
-	return true;
+   if (pack_feof(f))
+      return false;
+   c = pack_igetw(f);
+   if (pack_ferror(f))
+      return false;
+   if (keepdata == true)
+      *cp = c;
+   readsize += 2;
+   return true;
 }
 
-INLINE bool p_iputw(int c, PACKFILE *f) {
-	if (!f) {
-		return false;
-	}
+INLINE bool p_iputw(int c, PACKFILE *f)
+{
+   if (!f)
+      return false;
 #ifdef ALLEGRO_DOS
-	if (!(f->flags & PACKFILE_FLAG_WRITE)) {
-		return false;    //must be writing to file
-	}
+   if (!(f->flags & PACKFILE_FLAG_WRITE))
+   {
+      return false;    //must be writing to file
+   }
 #else
-	if (!(f->normal.flags & PACKFILE_FLAG_WRITE)) {
-		return false;    //must be writing to file
-	}
+   if (!(f->normal.flags & PACKFILE_FLAG_WRITE))
+   {
+      return false;    //must be writing to file
+   }
 #endif
 
-	pack_iputw(c, f);
-	bool success = (pack_ferror(f) == 0);
-	if (success) {
-		writesize += 2;
-	}
-	return success;
+   pack_iputw(c, f);
+   bool success = (pack_ferror(f) == 0);
+   if (success)
+      writesize += 2;
+   return success;
 }
 
-INLINE bool p_igetl(void *p, PACKFILE *f, bool keepdata) {
-	dword *cp = (dword *)p;
-	long32 c;
-	if (!f) {
-		return false;
-	}
+INLINE bool p_igetl(void *p, PACKFILE *f, bool keepdata)
+{
+   dword *cp = (dword *)p;
+   long32 c;
+   if (!f)
+      return false;
 #ifdef ALLEGRO_DOS
-	if (f->flags & PACKFILE_FLAG_WRITE) {
-		return false;    //must not be writing to file
-	}
+   if (f->flags & PACKFILE_FLAG_WRITE)
+   {
+      return false;    //must not be writing to file
+   }
 #else
-	if (f->normal.flags & PACKFILE_FLAG_WRITE) {
-		return false;    //must not be writing to file
-	}
+   if (f->normal.flags & PACKFILE_FLAG_WRITE)
+   {
+      return false;    //must not be writing to file
+   }
 #endif
 
-	if (pack_feof(f)) {
-		return false;
-	}
-	c = pack_igetl(f);
-	if (pack_ferror(f)) {
-		return false;
-	}
-	if (keepdata == true) {
-		*cp = c;
-	}
-	readsize += 4;
-	return true;
+   if (pack_feof(f))
+      return false;
+   c = pack_igetl(f);
+   if (pack_ferror(f))
+      return false;
+   if (keepdata == true)
+      *cp = c;
+   readsize += 4;
+   return true;
 }
 
-INLINE bool p_iputl(long c, PACKFILE *f) {
-	if (!f) {
-		return false;
-	}
+INLINE bool p_iputl(long c, PACKFILE *f)
+{
+   if (!f)
+      return false;
 #ifdef ALLEGRO_DOS
-	if (!(f->flags & PACKFILE_FLAG_WRITE)) {
-		return false;    //must be writing to file
-	}
+   if (!(f->flags & PACKFILE_FLAG_WRITE))
+   {
+      return false;    //must be writing to file
+   }
 #else
-	if (!(f->normal.flags & PACKFILE_FLAG_WRITE)) {
-		return false;    //must be writing to file
-	}
+   if (!(f->normal.flags & PACKFILE_FLAG_WRITE))
+   {
+      return false;    //must be writing to file
+   }
 #endif
 
-	pack_iputl(c, f);
-	bool success = (pack_ferror(f) == 0);
-	if (success) {
-		writesize += 4;
-	}
-	return success;
+   pack_iputl(c, f);
+   bool success = (pack_ferror(f) == 0);
+   if (success)
+      writesize += 4;
+   return success;
 }
 
-INLINE bool p_mgetw(void *p, PACKFILE *f, bool keepdata) {
-	short *cp = (short *)p;
-	int c;
-	if (!f) {
-		return false;
-	}
+INLINE bool p_mgetw(void *p, PACKFILE *f, bool keepdata)
+{
+   short *cp = (short *)p;
+   int c;
+   if (!f)
+      return false;
 #ifdef ALLEGRO_DOS
-	if (f->flags & PACKFILE_FLAG_WRITE) {
-		return false;    //must not be writing to file
-	}
+   if (f->flags & PACKFILE_FLAG_WRITE)
+   {
+      return false;    //must not be writing to file
+   }
 #else
-	if (f->normal.flags & PACKFILE_FLAG_WRITE) {
-		return false;    //must not be writing to file
-	}
+   if (f->normal.flags & PACKFILE_FLAG_WRITE)
+   {
+      return false;    //must not be writing to file
+   }
 #endif
 
-	if (pack_feof(f)) {
-		return false;
-	}
-	c = pack_mgetw(f);
-	if (pack_ferror(f)) {
-		return false;
-	}
-	if (keepdata == true) {
-		*cp = c;
-	}
-	readsize += 2;
-	return true;
+   if (pack_feof(f))
+      return false;
+   c = pack_mgetw(f);
+   if (pack_ferror(f))
+      return false;
+   if (keepdata == true)
+      *cp = c;
+   readsize += 2;
+   return true;
 }
 
-INLINE bool p_mputw(int c, PACKFILE *f) {
-	if (!f) {
-		return false;
-	}
+INLINE bool p_mputw(int c, PACKFILE *f)
+{
+   if (!f)
+      return false;
 #ifdef ALLEGRO_DOS
-	if (!(f->flags & PACKFILE_FLAG_WRITE)) {
-		return false;    //must be writing to file
-	}
+   if (!(f->flags & PACKFILE_FLAG_WRITE))
+   {
+      return false;    //must be writing to file
+   }
 #else
-	if (!(f->normal.flags & PACKFILE_FLAG_WRITE)) {
-		return false;    //must be writing to file
-	}
+   if (!(f->normal.flags & PACKFILE_FLAG_WRITE))
+   {
+      return false;    //must be writing to file
+   }
 #endif
 
-	pack_mputw(c, f);
-	bool success = (pack_ferror(f) == 0);
-	if (success) {
-		writesize += 2;
-	}
-	return success;
+   pack_mputw(c, f);
+   bool success = (pack_ferror(f) == 0);
+   if (success)
+      writesize += 2;
+   return success;
 }
 
-INLINE bool p_mgetl(void *p, PACKFILE *f, bool keepdata) {
-	dword *cp = (dword *)p;
-	long32 c;
-	if (!f) {
-		return false;
-	}
+INLINE bool p_mgetl(void *p, PACKFILE *f, bool keepdata)
+{
+   dword *cp = (dword *)p;
+   long32 c;
+   if (!f)
+      return false;
 #ifdef ALLEGRO_DOS
-	if (f->flags & PACKFILE_FLAG_WRITE) {
-		return false;    //must not be writing to file
-	}
+   if (f->flags & PACKFILE_FLAG_WRITE)
+   {
+      return false;    //must not be writing to file
+   }
 #else
-	if (f->normal.flags & PACKFILE_FLAG_WRITE) {
-		return false;    //must not be writing to file
-	}
+   if (f->normal.flags & PACKFILE_FLAG_WRITE)
+   {
+      return false;    //must not be writing to file
+   }
 #endif
 
-	if (pack_feof(f)) {
-		return false;
-	}
-	c = pack_mgetl(f);
-	if (pack_ferror(f)) {
-		return false;
-	}
-	if (keepdata == true) {
-		*cp = c;
-	}
-	readsize += 4;
-	return true;
+   if (pack_feof(f))
+      return false;
+   c = pack_mgetl(f);
+   if (pack_ferror(f))
+      return false;
+   if (keepdata == true)
+      *cp = c;
+   readsize += 4;
+   return true;
 }
 
-INLINE bool p_mputl(long c, PACKFILE *f) {
-	if (!f) {
-		return false;
-	}
+INLINE bool p_mputl(long c, PACKFILE *f)
+{
+   if (!f)
+      return false;
 #ifdef ALLEGRO_DOS
-	if (!(f->flags & PACKFILE_FLAG_WRITE)) {
-		return false;    //must be writing to file
-	}
+   if (!(f->flags & PACKFILE_FLAG_WRITE))
+   {
+      return false;    //must be writing to file
+   }
 #else
-	if (!(f->normal.flags & PACKFILE_FLAG_WRITE)) {
-		return false;    //must be writing to file
-	}
+   if (!(f->normal.flags & PACKFILE_FLAG_WRITE))
+   {
+      return false;    //must be writing to file
+   }
 #endif
 
-	pack_mputl(c, f);
-	bool success = (pack_ferror(f) == 0);
-	if (success) {
-		writesize += 4;
-	}
-	return success;
+   pack_mputl(c, f);
+   bool success = (pack_ferror(f) == 0);
+   if (success)
+      writesize += 4;
+   return success;
 }
 
-inline bool isinRect(int x, int y, int rx1, int ry1, int rx2, int ry2) {
-	return x >= rx1 && x <= rx2 && y >= ry1 && y <= ry2;
+inline bool isinRect(int x, int y, int rx1, int ry1, int rx2, int ry2)
+{
+   return x >= rx1 && x <= rx2 && y >= ry1 && y <= ry2;
 }
 #endif                                                      //_ZDEFS_H_
