@@ -304,7 +304,7 @@ void black_opening(BITMAP *dest, int x, int y, int a, int max_a) {
 	int r = int(sqrt((new_w * new_w) + (new_h * new_h)) * a / max_a);
 	circlefill(tmp_scr, x, y, r, 0);
 
-	masked_blit(tmp_scr, dest, 0, 0, 0, 0, 320, 240);
+	masked_blit(tmp_scr, dest, 0, 0, 0, 0, w, h);
 }
 
 //----------------------------------------------------------------

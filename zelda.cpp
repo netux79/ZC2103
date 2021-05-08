@@ -1239,7 +1239,7 @@ int main(int argc, char *argv[]) {
 	Z_message("Allocating bitmap buffers...");
 	framebuf  = create_bitmap_ex(8, 256, 224);
 	scrollbuf = create_bitmap_ex(8, 512, 406);
-	tmp_scr   = create_bitmap_ex(8, 320, 240);
+	tmp_scr   = create_bitmap_ex(8, 256, 224);
 	tmp_bmp   = create_bitmap_ex(8, 32, 32);
 	msgdisplaybuf = create_bitmap_ex(8, 256, 168);
 	pricesdisplaybuf = create_bitmap_ex(8, 256, 168);
