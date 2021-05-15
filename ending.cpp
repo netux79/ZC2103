@@ -197,6 +197,9 @@ void ending()
       putendmsg(tmpmsg[1], 32, 96, 6, noproc);
       putendmsg(tmpmsg[2], 32, 112, 6, noproc);
    }
+   
+   BITMAP *tmp_bmp = create_bitmap_ex(8, 32, 32);
+   
    for (int f = 408; f < 927; f++)
    {
       /*
@@ -212,7 +215,7 @@ void ending()
       */
       if (f == 668)
       {
-         rectfill(framebuf, 120, 129, 152, 145, 0);
+         rectfill(framebuf, 120, 127, 152, 144, 0);
          blit(framebuf, tmp_bmp, 120, 113, 0, 0, 32, 32);
       }
       if (f == 860)
@@ -286,6 +289,7 @@ void ending()
          return;
    }
 
+   destroy_bitmap(tmp_bmp);
    clear_bitmap(scrollbuf);
    blit(framebuf, scrollbuf, 0, 0, 0, 0, 256, 224);
    endingpal();
@@ -408,8 +412,6 @@ void ending()
 
    reset_status();
    ringcolor();
-   load_game(&game);
-   load_game_icon(&game);
    game.continue_dmap = zinit.start_dmap;
    game.continue_scrn = 0xFF;
    saves[currgame] = game;

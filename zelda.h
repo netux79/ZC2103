@@ -119,7 +119,7 @@ extern int strike_hint;
 
 extern RGB_MAP rgb_table;
 extern COLOR_MAP trans_table;
-extern BITMAP     *framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf,
+extern BITMAP     *framebuf, *scrollbuf, *tmp_scr, *msgdisplaybuf,
        *pricesdisplaybuf, *tb_page[3];
 extern DATAFILE *data, *sfxdata, *fontsdata, *mididata;
 extern SAMPLE   wav_refill;

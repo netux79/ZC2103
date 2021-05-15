@@ -51,7 +51,7 @@ int strike_hint_counter = 0;
 int strike_hint_timer = 0;
 int strike_hint;
 
-BITMAP *framebuf, *scrollbuf, *tmp_bmp, *tmp_scr, *msgdisplaybuf,
+BITMAP *framebuf, *scrollbuf, *tmp_scr, *msgdisplaybuf,
        *pricesdisplaybuf;
 DATAFILE *data, *sfxdata, *fontsdata, *mididata;
 FONT *zfont;
@@ -808,7 +808,7 @@ void restart_level()
 
 void putintro()
 {
-   if (!stricmp("                                                                        ",
+   if (!strcmp("                                                                        ",
                 DMaps[currdmap].intro))
    {
       introclk = intropos = 72;
@@ -1312,10 +1312,9 @@ int main(int argc, char *argv[])
    framebuf  = create_bitmap_ex(8, 256, 224);
    scrollbuf = create_bitmap_ex(8, 512, 406);
    tmp_scr   = create_bitmap_ex(8, 256, 224);
-   tmp_bmp   = create_bitmap_ex(8, 32, 32);
    msgdisplaybuf = create_bitmap_ex(8, 256, 168);
    pricesdisplaybuf = create_bitmap_ex(8, 256, 168);
-   if (!framebuf || !scrollbuf || !tmp_bmp || !tmp_scr || !msgdisplaybuf
+   if (!framebuf || !scrollbuf || !tmp_scr || !msgdisplaybuf
          || !pricesdisplaybuf)
       Z_error("Error");
    clear_bitmap(scrollbuf);
@@ -1440,7 +1439,6 @@ int main(int argc, char *argv[])
    destroy_bitmap(framebuf);
    destroy_bitmap(scrollbuf);
    destroy_bitmap(tmp_scr);
-   destroy_bitmap(tmp_bmp);
    destroy_bitmap(msgdisplaybuf);
    destroy_bitmap(pricesdisplaybuf);
    free_qst_buffers();

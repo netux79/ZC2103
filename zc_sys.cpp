@@ -2111,22 +2111,20 @@ void updatescr()
 
    if (Link.DrunkClock())
       draw_wavy(Link.DrunkClock() / (MAXDRUNKCLOCK / 32));
-   BITMAP *panorama = NULL;
 
-   bool nosubscr = (tmpscr->flags3 & fNOSUBSCR) != 0;
+   bool nosubscr = (tmpscr->flags3 & fNOSUBSCR);
 
    if (nosubscr)
    {
-      panorama = create_bitmap_ex(8, 256, 224);
-      rectfill(panorama, 0, 0, 255, 56 / 2, 0);
-      rectfill(panorama, 0, 168 + 56 / 2, 255, 168 + 56 - 1, 0);
-      blit(framebuf, panorama, 0, 56, 0, 56 / 2, 256, 224 - 56);
+      rectfill(tmp_scr, 0, 0, 255, 56 / 2, 0);
+      rectfill(tmp_scr, 0, 168 + 56 / 2, 255, 168 + 56 - 1, 0);
+      blit(framebuf, tmp_scr, 0, 56, 0, 56 / 2, 256, 224 - 56);
    }
 
    if (scanlines && sbig)
    {
       BITMAP *scanlinesbmp = create_bitmap_ex(8, 512, 448);
-      stretch_blit(nosubscr ? panorama : framebuf, scanlinesbmp, 0, 0, 256, 224, 0, 0,
+      stretch_blit(nosubscr ? tmp_scr : framebuf, scanlinesbmp, 0, 0, 256, 224, 0, 0,
                    512, 448);
       for (int i = 0; i < 224; ++i)
          hline(scanlinesbmp, 0, i * 2 + 1, 512, BLACK);
@@ -2138,20 +2136,17 @@ void updatescr()
    {
       BITMAP *tempscreen = create_bitmap_ex(8, 512, 448);
       clear_bitmap(tempscreen);
-      stretch_blit(nosubscr ? panorama : framebuf, tempscreen, 0, 0, 256, 224, 0, 0,
+      stretch_blit(nosubscr ? tmp_scr : framebuf, tempscreen, 0, 0, 256, 224, 0, 0,
                    512, 448);
       blit(tempscreen, screen, 0, 0, scrx + 32 - 128, scry + 8 - 112, 512, 448);
       destroy_bitmap(tempscreen);
    }
    else
-      blit(nosubscr ? panorama : framebuf, screen, 0, 0, scrx + 32, scry + 8, 256,
+      blit(nosubscr ? tmp_scr : framebuf, screen, 0, 0, scrx + 32, scry + 8, 256,
            224);
 
    if (ShowFPS)
       show_fps();
-
-   if (panorama != NULL)
-      destroy_bitmap(panorama);
 
    ++framecnt;
 }
