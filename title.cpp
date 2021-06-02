@@ -436,9 +436,6 @@ static void list_save(int save_num, int ypos)
       if (saves[save_num].quest)
          textprintf_ex(framebuf, zfont, 72, ypos + 24, 1, -1, "%3d",
                        saves[save_num].deaths);
-
-      textprintf_ex(framebuf, zfont, 72, ypos + 16, 1, -1, "%s",
-                    saves[save_num].name);
    }
 
    byte *hold = tilebuf;

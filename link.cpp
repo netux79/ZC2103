@@ -2258,13 +2258,7 @@ bool LinkClass::animate(int index)
       heart_beep_timer = -1;
       stop_sfx(WAV_ER);
    }
-   /*
-     if(rSbtn())
-     {
-       conveyclk=3;
-       dosubscr();
-     }
-   */
+
    if (rSbtn())
    {
       conveyclk = 3;
