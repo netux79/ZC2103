@@ -594,7 +594,7 @@ void reset_scr(int scr)
 
 int operator ==(DoorComboSet a, DoorComboSet b)
 {
-   for (int i = 0; i < 9; i++)
+   for (int i = 8; i >= 0; i--)
    {
       for (int j = 0; j < 6; j++)
       {
